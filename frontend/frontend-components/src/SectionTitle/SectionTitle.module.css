@@ -1,0 +1,16 @@
+.title {
+  display: flex;
+  flex-direction: row;
+  font-family: "Source Sans Pro", sans-serif;
+  margin-top: 60px;
+  text-transform: uppercase;
+}
+.title > span {
+  display: block;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-right: 20px;
+}
+.title img {
+  width: 100px;
+}

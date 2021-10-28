@@ -1,0 +1,33 @@
+.main {
+  height: 700px;
+  width: 100%;
+  display: flex;
+  border-bottom: 1px solid #000000;
+  box-sizing: border-box;
+}
+.section {
+  width: 50%;
+}
+.cover {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: grey;
+  border-right: 1px solid #000000;
+  box-sizing: border-box;
+}
+.content {
+  padding: 60px;
+}
+.main a {
+  color: inherit;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.main h2 {
+  transition: 0.3s all;
+}
+.main h2:hover {
+  webkit-filter: blur(4px); /* Chrome, Safari, Opera */
+  filter: blur(4px);
+}

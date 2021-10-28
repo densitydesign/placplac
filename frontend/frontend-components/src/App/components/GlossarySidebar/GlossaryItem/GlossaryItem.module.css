@@ -1,0 +1,32 @@
+.main {
+  padding: 25px 45px;
+  border-bottom: 1px solid black;
+  flex: 1 auto;
+}
+.image {
+  width: auto;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+}
+.see_more_button {
+  cursor: pointer;
+  display: block;
+  margin-left: auto;
+}
+.image_container {
+  position: relative;
+}
+
+.pill {
+  position: absolute;
+  top: 20px;
+  left: -20px;
+  border-radius: 50px;
+  padding: 0 10px;
+  color: white;
+  font-family: Source Sans Pro;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 36px;
+}

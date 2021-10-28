@@ -1,0 +1,45 @@
+.experiment_diagram_container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 60px 0;
+  row-gap: 30px;
+}
+.step {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  height: 100%;
+  width: 255px;
+}
+.step_title {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.step_number_content {
+  background-image: url("../../../../../assets/ellipse.png");
+  min-width: 122px;
+  height: 65px;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.step_number {
+  position: relative;
+}
+.step:not(:last-child) > .step_number:before {
+  content: "";
+  background-image: url("../../../../../assets/arrow.png");
+  width: 100px;
+  height: 65px;
+  background-repeat: no-repeat;
+  background-position: center;
+  left: 207px;
+  position: absolute;
+}

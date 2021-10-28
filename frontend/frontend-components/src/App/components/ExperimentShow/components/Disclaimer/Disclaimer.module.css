@@ -1,0 +1,13 @@
+.disclaimer {
+  padding: 20px 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  border-radius: 80px;
+  flex-direction: column;
+  margin-bottom: 60px;
+}
+.disclaimer h3 {
+  margin-top: 0;
+}
