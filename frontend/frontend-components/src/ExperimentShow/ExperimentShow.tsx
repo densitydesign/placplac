@@ -10,12 +10,15 @@ import { Experiment, GlossaryTerm } from "../types";
 import { ExperimentDiagram } from "./components/ExperimentDiagram";
 import { Disclaimer } from "./components/Disclaimer";
 import { ImageShow } from "../ImageShow";
-import React from "react";
+import React, { ComponentType } from "react";
+import { GlossarySidebar } from "../App/components/GlossarySidebar";
 
 interface ExperimentShowProps {
   experiment: Experiment;
   glossaryTerms: GlossaryTerm[];
   basePath: string;
+  backend: boolean;
+  linkComponent: ComponentType<{ href: string }>;
 }
 export const ExperimentShow = (props: ExperimentShowProps) => {
   const {
@@ -31,6 +34,8 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
     },
     glossaryTerms,
     basePath,
+    linkComponent,
+    backend,
   } = props;
   const renderItem = (item: { type: string } & any, noPadding: boolean) => {
     switch (item.type) {
@@ -191,29 +196,29 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
             className={classnames(styles.container_column, styles.grid_4)}
           >
             <h3 style={{ marginTop: 0 }}>TABLE OF CONTENTS</h3>
-            {/* <ul className={styles.content_list}>
+            <ul className={styles.content_list}>
               <li>
-                <HashLink to="#context">Context</HashLink>
+                <a href="#context">Context</a>
               </li>
               <li>
-                <HashLink to="#researchQuestion">Research question</HashLink>
+                <a href="#researchQuestion">Research question</a>
               </li>
               <li>
-                <HashLink to="#experimentSetup">Experiment setup</HashLink>
+                <a href="#experimentSetup">Experiment setup</a>
               </li>
               <li>
-                <HashLink to="#disclaimer">Disclaimer</HashLink>
+                <a href="#disclaimer">Disclaimer</a>
               </li>
               <li>
-                <HashLink to="#experimentDiagram">Experiment diagram</HashLink>
+                <a href="#experimentDiagram">Experiment diagram</a>
               </li>
               <li>
-                <HashLink to="#steps">Steps</HashLink>
+                <a href="#steps">Steps</a>
               </li>
               <li>
-                <HashLink to="#findings">Findings</HashLink>
+                <a href="#findings">Findings</a>
               </li>
-            </ul> */}
+            </ul>
           </div>
         </div>
       </div>
@@ -288,6 +293,12 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
           <div>{renderSection(findings)}</div>
         </div>
       )}
+      <GlossarySidebar
+        linkComponent={linkComponent}
+        basePath={basePath}
+        backend={backend}
+        glossaryTerms={glossaryTerms}
+      />
     </>
   );
 };

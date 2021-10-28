@@ -1,0 +1,111 @@
+{
+    "id": 1,
+    "title": "Algocount",
+    "short_description": "<p>Exploring the action of algorithms on social media platforms by studying infodemics.</p>",
+    "experiments_description": "<p>We have studied how the algorithms present in five social media platforms (Facebook, Youtube, TikTok, Twitter and Reddit) handle the content that reaches users specifically around the topic of infodemics. Through 5 experiments we tell how we study each platform to try to see how the algorithms work. Each experiment is a story in which we share the process so that it can perhaps be replicated.</p><p>Translated with www.DeepL.com/Translator (free version)</p>",
+    "long_description": "<p>Placeholder text. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Interdum consectetur libero id faucibus. Mauris sit amet massa vitae tortor condimentum. Arcu dui vivamus arcu felis bibendum ut tristique. Adipiscing enim eu turpis egestas pretium aenean. Viverra accumsan in nisl nisi scelerisque eu ultrices vitae auctor. Sed adipiscing diam donec adipiscing. Nulla aliquet enim tortor at auctor urna nunc. Nunc pulvinar sapien et ligula ullamcorper malesuada. Maecenas accumsan lacus vel facilisis volutpat. Elit ut aliquam purus sit amet luctus. Massa enim nec dui nunc mattis enim ut. Nibh ipsum consequat nisl vel pretium lectus quam id. Nibh tellus molestie nunc non blandit.</p><p>Pharetra vel turpis nunc eget lorem dolor. Tristique et egestas quis ipsum suspendisse. Odio aenean sed adipiscing diam donec. Elementum integer enim neque volutpat ac tincidunt vitae semper. Consectetur adipiscing elit pellentesque habitant morbi tristique. Velit laoreet id donec ultrices. Ultrices sagittis orci a scelerisque purus semper eget duis at. Duis ultricies lacus sed turpis tincidunt. Orci porta non pulvinar neque laoreet suspendisse interdum consectetur. Nulla aliquet enim tortor at auctor urna nunc id cursus. Volutpat maecenas volutpat blandit aliquam etiam erat. In egestas erat imperdiet sed euismod nisi porta lorem. Id interdum velit laoreet id donec ultrices tincidunt arcu non. Pellentesque pulvinar pellentesque habitant morbi tristique senectus et netus. Faucibus interdum posuere lorem ipsum dolor. Hendrerit dolor magna eget est. Consectetur lorem donec massa sapien. Nulla porttitor massa id neque.</p><p>Ut eu sem integer vitae justo eget. Nunc congue nisi vitae suscipit tellus mauris. Auctor eu augue ut lectus. Laoreet non curabitur gravida arcu ac tortor dignissim convallis aenean. Auctor urna nunc id cursus metus. Nam aliquam sem et tortor consequat id porta. Aliquam purus sit amet luctus venenatis lectus magna. Pellentesque diam volutpat commodo sed egestas egestas fringilla phasellus faucibus. Feugiat nibh sed pulvinar proin gravida hendrerit. Cum sociis natoque penatibus et magnis dis parturient montes nascetur. Curabitur gravida arcu ac tortor dignissim convallis aenean et tortor. Turpis cursus in hac habitasse platea dictumst quisque sagittis. Urna duis convallis convallis tellus id interdum velit. Adipiscing at in tellus integer feugiat scelerisque varius. A lacus vestibulum sed arcu non odio. Ut etiam sit amet nisl purus in. Mi proin sed libero enim sed faucibus.</p>",
+    "status": "2",
+    "created_date": "2021-10-28T19:46:31.701789+02:00",
+    "last_update": "2021-10-28T19:46:31.701814+02:00",
+    "experiments": [
+        {
+            "id": 1,
+            "title": "Why I am seeing this infodemic on my Facebook's News feed?",
+            "description": "<p>The project focuses on:</p><p>\u2022\texploring the day by day development of a newborn facebook \u2728News Feed interested in no mask related issues in Italy;</p><p>\u2022\tcollecting data about \u2728News Feed and use activity;&nbsp;</p><p>\u2022\tvisualize and tell the radicalization process following platform affordance.</p><p><span class=\"mention\" data-index=\"0\" data-denotation-char=\"\" data-id=\"1\" data-value=\"<a href=&quot;#glossary/1&quot; target=_self><span style=&quot;background-color:#FF6B6B&quot;>rerewetw</span>\" data-link=\"#glossary/1\" data-target=\"_self\">\ufeff<span contenteditable=\"false\"><span class=\"ql-mention-denotation-char\"></span><a href=\"#glossary/1\" target=\"_self\"><span style=\"background-color:#FF6B6B\">rerewetw</span></a></span>\ufeff</span> </p>",
+            "context": [
+                [
+                    {
+                        "type": "text",
+                        "content": {
+                            "text": "<p>\u2728News Feed is the centerpiece of your Facebook\u2019s Home page. It\u2019s a constantly updating list of stories by and about your friends. Stories here refers to actions that your friends have taken on Facebook \u2014 things like writing a status update, sharing a photo or link, or becoming friends. You may also see stories from Pages that you follow. More accurately, \u2728News Feed&nbsp;is an algorithm. It doesn\u2019t show you everything from your friends; instead, it tries to show you things it thinks you will find interesting. It makes its selections based on a complicated calculus of who is posting what and when.&nbsp;&nbsp;</p><p>\u2728News Feed will likely show you more stories from people you interact with more often on Facebook. It also has a tendency to show you \u201cbig events\u201d like engagements or new babies even from more distant acquaintances. News Feed also learns the sorts of stories you are likely to click on, like, or comment on, and will try to show you more of those. Simply browsing \u2728News Feed and interacting with the things you see helps \u2728News Feed o improve. There are ways for you to manually fine-tune \u2728News Feed as well.</p><p>From GDPR &gt; new approach to transparency. Facebook includes the \"Why I'm seeing this\" feature as some others (download of personal data and data about advertisment). With this, Facebook recognizes the existence of algorithms that manage content but, are they really accounting on how they work? Can I really understand why I am seeing this in my \u2728News Feed?</p><p>The \"Why I am seeing this\" mobile app and desktop feature (they appear differently in both), [qui descrizione \"se tu vedi una pubblicit\u00e0...\"]</p>"
+                        }
+                    }
+                ]
+            ],
+            "research_question": "How does Facebook's algorithm facilitate the radicalization of a newborn user through suggestions started by \"no mask Italia\"?",
+            "experiment_setup": [
+                [
+                    {
+                        "type": "listExperimentSetup",
+                        "content": {
+                            "list": [
+                                "You will use Facebook always from the same computer. \n\nNavigate in a clean browser (we use Brave) in Incognito mode."
+                            ],
+                            "title": "INFRASTRUCTURE",
+                            "subtitle": "{How to setup your device and browser}"
+                        }
+                    },
+                    {
+                        "type": "listExperimentSetup",
+                        "content": {
+                            "list": [
+                                "No Off Activity"
+                            ],
+                            "title": "PLATFORM",
+                            "subtitle": "How to setup the platform in use"
+                        }
+                    },
+                    {
+                        "type": "listExperimentSetup",
+                        "content": {
+                            "list": [
+                                "The generated newborn profile activity doesn\u2019t include posting, sharing, commenting, liking and chatting ctions "
+                            ],
+                            "title": "BEHAVIOUR",
+                            "subtitle": "How to setup your actions on the platform before starting"
+                        }
+                    }
+                ]
+            ],
+            "disclaimers": null,
+            "findings": [
+                [
+                    {
+                        "type": "text",
+                        "content": {
+                            "text": "<p>Through an experiment carried out under super-controlled conditions, the hypothesis that Facebook's algorithm quickly brings you closer to strongly radicalized groups and pages is confirmed. Using stories to showcase how the platform brings users closer to radicalization turned out to be a good way to highlight different sides of the same radicalization process.</p><p><br></p><p>From the trigger Why I\u2019m seeing this ad/post it was not possible to truly understand the reasons why I was seeing this: the information provided by Facebook seemed depthless. On the other hand, following the effects of actions and decisions it is possible to connect the motivations of why I am effectively seeing this.</p><p>From \u201cWhy I see this ad/post\u201d to \u201cWhere certain actions/choices will take me\u201d.&nbsp;</p>"
+                        }
+                    }
+                ]
+            ],
+            "project": 1,
+            "steps": [
+                {
+                    "id": 1,
+                    "title": "SEARCH \u201cNO MASK ITALIA\u201d ON FACEBOOK",
+                    "description": "<p>The idea is to animate and contaminate Anastasio\u2019s profile with some infodemic searches. We choose \u201cNo Mask Italia\u201d as our infodemic topic. This is the input for exploring what output will be provided by Facebook\u2019s algorithms into our \u2728News Feed. Take record of all these inputs on a spreadsheet, following the Facebook links for each Groups, Pages and Friends you will join, follow and add. Move to the following step after waiting 2 days.</p>",
+                    "content": [
+                        [
+                            {
+                                "type": "image",
+                                "content": {
+                                    "image": 1,
+                                    "isWide": false,
+                                    "caption": "FIG 3 \u2014 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Gravida mi semper sed turpis in tristique.",
+                                    "description": "<p>On Facebook,&nbsp;we search:&nbsp;</p><p>\u2022\tIn Public Groups and join into the first 6 of them.</p><p>\u2022\tIn Pages and follow the first 7 of them.</p><p>\u2022\tBy Friends and add the first 8 of them.</p><p><br></p>"
+                                }
+                            }
+                        ]
+                    ],
+                    "step_number": 1,
+                    "experiment": 1
+                }
+            ],
+            "cover": null
+        }
+    ],
+    "glossary_terms": [
+        {
+            "id": 1,
+            "title": "rerewetw",
+            "image": null,
+            "description": "<p>ret</p>",
+            "related": [],
+            "glossary_category": 1,
+            "color": "#FF6B6B",
+            "more_info_url": null,
+            "project": 1,
+            "category_title": "Techniques"
+        }
+    ]
+}

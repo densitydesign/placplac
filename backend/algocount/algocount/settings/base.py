@@ -158,3 +158,5 @@ logging.basicConfig(
 )
 
 LOGGER = logging.getLogger()
+
+EXPORT_IMPORT = os.path.join(BASE_DIR, '../../export/')

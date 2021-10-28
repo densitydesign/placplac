@@ -34,10 +34,10 @@
     },
     "sideEffects": false,
     "peerDependencies": {
+        "classnames": "^2.3.1",
+        "history": "^4.10.1",
         "react": "^17.0.2",
         "react-dom": "^17.0.2",
-        "history": "^4.10.1",
-        "classnames": "^2.3.1",
         "react-router-hash-link": "^2.4.3"
     },
     "files": [

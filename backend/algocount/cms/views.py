@@ -1,3 +1,5 @@
+import os
+
 from django.http import Http404
 from rest_framework.decorators import action
 from rest_framework.parsers import MultiPartParser
@@ -12,6 +14,8 @@ from cms.serializers.experiment import ExperimentSerializer
 from cms.serializers.glossary import GlossaryCategorySerializer, GlossaryTermSerializer
 from cms.serializers.project import ProjectSerializer, ProjectMediaSerializer, FullProjectSerializer
 from cms.serializers.step import StepSerializer
+import json
+from django.conf import settings
 
 
 class ProjectViewSet(CustomModelView):
@@ -23,6 +27,18 @@ class ProjectViewSet(CustomModelView):
         try:
             instance = self.get_object()
             serializer = FullProjectSerializer(instance)
+            return Response(serializer.data)
+        except Project.DoesNotExist:
+            raise Http404
+
+    @action(detail=True, methods=["GET"])
+    def export(self, request, pk):
+        try:
+            instance = self.get_object()
+            serializer = FullProjectSerializer(instance)
+            print(os.path.join(settings.EXPORT_IMPORT,"data.json" ))
+            with open("data.json", 'w') as f:
+                json.dump(serializer.data, f)
             return Response(serializer.data)
         except Project.DoesNotExist:
             raise Http404

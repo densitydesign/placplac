@@ -5,6 +5,7 @@ from cms.serializers.step import StepSerializer
 
 
 class ExperimentSerializer(serializers.ModelSerializer):
+    step_set = serializers.PrimaryKeyRelatedField(required=False, read_only=True, many=True)
     class Meta:
         model = Experiment
         fields = ["id", "title",
