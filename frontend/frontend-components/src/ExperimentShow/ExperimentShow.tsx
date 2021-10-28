@@ -1,15 +1,15 @@
 import classnames from "classnames";
-import { TextShow } from "../../../TextShow";
+import { TextShow } from "../TextShow";
 import styles from "./ExperimentShow.module.css";
 
-import { ExperimentSetupListShow } from "../../../ExperimentSetupListShow";
-import { SectionTitle } from "../../../SectionTitle";
+import { ExperimentSetupListShow } from "../ExperimentSetupListShow";
+import { SectionTitle } from "../SectionTitle";
 import { ResearchQuestion } from "./components/ResearchQuestion";
-import { HashLink } from "react-router-hash-link";
-import { Experiment, GlossaryTerm } from "../../../types";
+// import { HashLink } from "react-router-hash-link";
+import { Experiment, GlossaryTerm } from "../types";
 import { ExperimentDiagram } from "./components/ExperimentDiagram";
 import { Disclaimer } from "./components/Disclaimer";
-import { ImageShow } from "../../../ImageShow";
+import { ImageShow } from "../ImageShow";
 import React from "react";
 
 interface ExperimentShowProps {
@@ -191,7 +191,7 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
             className={classnames(styles.container_column, styles.grid_4)}
           >
             <h3 style={{ marginTop: 0 }}>TABLE OF CONTENTS</h3>
-            <ul className={styles.content_list}>
+            {/* <ul className={styles.content_list}>
               <li>
                 <HashLink to="#context">Context</HashLink>
               </li>
@@ -213,7 +213,7 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
               <li>
                 <HashLink to="#findings">Findings</HashLink>
               </li>
-            </ul>
+            </ul> */}
           </div>
         </div>
       </div>

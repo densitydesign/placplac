@@ -19,7 +19,7 @@
   padding-right: 20px;
 }
 .step_number_content {
-  background-image: url("../../../../../assets/ellipse.png");
+  background-image: url("../../../assets/ellipse.png");
   min-width: 122px;
   height: 65px;
   width: 100%;
@@ -35,7 +35,7 @@
 }
 .step:not(:last-child) > .step_number:before {
   content: "";
-  background-image: url("../../../../../assets/arrow.png");
+  background-image: url("../../../assets/arrow.png");
   width: 100px;
   height: 65px;
   background-repeat: no-repeat;

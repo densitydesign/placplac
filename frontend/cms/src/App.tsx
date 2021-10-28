@@ -1,11 +1,9 @@
-import "./App.css";
 import jwtTokenAuthProvider from "./authProvider";
 import drfProvider from "./dataProvider";
 import { url } from "./constants";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import { Admin, Resource, RouteWithoutLayout } from "react-admin";
-import { createBrowserHistory } from "history";
 import { CustomLayout } from "./components/CustomLayout";
 import { ProjectList } from "./Projects/ProjectList";
 import { ProjectEdit } from "./Projects/ProjectEdit";

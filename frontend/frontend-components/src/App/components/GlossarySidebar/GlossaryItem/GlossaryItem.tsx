@@ -4,15 +4,16 @@ import { GlossaryTerm } from "../../../../types";
 import { renderUrlImage } from "../../../utils";
 import styles from "./GlossaryItem.module.css";
 import seeMoreImage from "../../../../assets/see more.png";
-import { History } from "history";
+// import { History } from "history";
+// import { useHistory } from "react-router";
 
 interface GlossaryItemProps {
   glossaryTerm: GlossaryTerm;
   backend: boolean;
-  mainHistory: History<unknown>;
 }
 export const GlossaryItem = (props: GlossaryItemProps) => {
-  const { glossaryTerm, backend, mainHistory } = props;
+  const { glossaryTerm, backend } = props;
+//   const history = useHistory()
   return (
     <div id={`glossary/${glossaryTerm.id}`} className={styles.main}>
       {glossaryTerm.image && (
@@ -34,7 +35,7 @@ export const GlossaryItem = (props: GlossaryItemProps) => {
       <TextShow text={glossaryTerm.description} />
 
       <img
-        onClick={() => mainHistory.push("/code/project/glossary/")}
+        // onClick={() => history.push("/code/project/glossary/")}
         className={styles.see_more_button}
         src={seeMoreImage}
         width="28px"

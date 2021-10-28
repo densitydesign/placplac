@@ -1,7 +1,7 @@
-import { TextShow } from "../../../TextShow";
-import { Project } from "../../../types";
+import { TextShow } from "../TextShow";
+import { Project } from "../types";
 import styles from "./ProjectShow.module.css";
-import { SectionTitle } from "../../../SectionTitle";
+import { SectionTitle } from "../SectionTitle";
 import { ExperimentSection } from "./components/ExperimentSection";
 import React from "react";
 interface ProjectProps {

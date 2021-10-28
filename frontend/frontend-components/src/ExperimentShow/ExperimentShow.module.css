@@ -1,4 +1,3 @@
-
 .title {
   padding: 1em 2em;
 }
@@ -108,7 +107,7 @@
 }
 
 .content_list {
-  list-style-image: url("../../../assets/right-arrow.png");
+  list-style-image: url("../assets/right-arrow.png");
   font-family: Source Sans Pro;
   font-size: 28px;
 }
@@ -149,7 +148,7 @@
 }
 
 .step_number {
-  background-image: url("../../../assets/ellipse.png");
+  background-image: url("../assets/ellipse.png");
   min-width: 122px;
   height: 65px;
   width: 100%;
