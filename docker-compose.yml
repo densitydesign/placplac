@@ -1,5 +1,19 @@
 version: "3.3"
 services:
+  nginx:
+      build: nginx
+
+      container_name:
+        timon_nginx
+
+      ports:
+        - 8000:80
+      # volumes:
+      #   - static_volume:/home/timon/static
+
+      depends_on:
+        - web
+      restart: "on-failure"
   db:
     image: postgres
     volumes:
@@ -10,10 +24,8 @@ services:
       - POSTGRES_PASSWORD=postgres
   web:
     build: .
-    command: python backend/algocount/manage.py runserver 0.0.0.0:8000
-    volumes:
-      - .:/code
-    ports:
-      - "8000:8000"
+    command:  "gunicorn algocount.wsgi:application --bind 0.0.0.0:8000"
+    expose:
+      - 8000
     depends_on:
       - db

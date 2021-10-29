@@ -5,7 +5,9 @@ import { promises as fs } from "fs";
 import Link from "../components/link";
 
 export async function getStaticProps() {
-  const filePath = path.join(process.cwd(), process.env.NODE_ENV);
+  const filePath = process.env.FILE_PATH!;
+
+  //const filePath = path.join(process.cwd(), process.env.NODE_ENV);
   const fileContents = JSON.parse(await fs.readFile(filePath, "utf8"));
   return {
     props: {

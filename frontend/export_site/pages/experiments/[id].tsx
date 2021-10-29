@@ -5,7 +5,9 @@ import { promises as fs } from "fs";
 import Link from "../../components/link";
 
 export async function getStaticPaths() {
-  const filePath = path.join(process.cwd(), "data.json");
+  //const filePath = path.join(process.cwd(), "data.json");
+  const filePath = process.env.FILE_PATH!;
+
   const fileContents = await fs.readFile(filePath, "utf8");
   const experiments = JSON.parse(fileContents).experiments.map(
     (experiment: any) => ({ params: { id: experiment.id.toString() } })

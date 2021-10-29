@@ -1,7 +1,9 @@
 import os
+import shutil
 import subprocess
+import tempfile
 
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from rest_framework.decorators import action
 from rest_framework.parsers import MultiPartParser
 from rest_framework.response import Response
@@ -37,11 +39,22 @@ class ProjectViewSet(CustomModelView):
         try:
             instance = self.get_object()
             serializer = FullProjectSerializer(instance)
-            with open(os.path.join(settings.EXPORT_IMPORT,"data.json" ), 'w') as f:
-                json.dump(serializer.data, f)
-            subprocess.check_call('npm --help', shell=True)
+            with tempfile.TemporaryDirectory() as tmpdirname:
+                shutil.copytree(settings.PROJECT_FRONTEND_EXPORT, tmpdirname, dirs_exist_ok=True, symlinks=True)
+                file = os.path.join(tmpdirname, "data.json")
+                with open(file, 'w') as f:
+                    json.dump(serializer.data, f)
+                subprocess.check_call('npx cross-env-shell FILE_PATH="{}" next build && npx next export'.format(file),
+                                      shell=True,
+                                      cwd=tmpdirname)
 
-            return Response(serializer.data)
+                zip_name = os.path.join(tmpdirname, "site")
+                out_directory = os.path.join(tmpdirname, "out")
+                zip_file = open(shutil.make_archive(zip_name, 'zip', out_directory), 'rb')
+                response = HttpResponse(zip_file, content_type='application/zip')
+                response['Content-Disposition'] = 'attachment; filename=site.zip'
+                return response
+            #return Response(serializer.data)
         except Project.DoesNotExist:
             raise Http404
 
