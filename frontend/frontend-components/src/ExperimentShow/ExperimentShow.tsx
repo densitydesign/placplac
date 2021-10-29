@@ -11,7 +11,7 @@ import { ExperimentDiagram } from "./components/ExperimentDiagram";
 import { Disclaimer } from "./components/Disclaimer";
 import { ImageShow } from "../ImageShow";
 import React, { ComponentType } from "react";
-import { GlossarySidebar } from "../App/components/GlossarySidebar";
+import { GlossarySidebar } from "../GlossarySidebar";
 
 interface ExperimentShowProps {
   experiment: Experiment;

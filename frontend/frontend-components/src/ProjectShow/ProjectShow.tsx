@@ -1,16 +1,19 @@
 import { TextShow } from "../TextShow";
-import { Project } from "../types";
+import { GlossaryTerm, Project } from "../types";
 import styles from "./ProjectShow.module.css";
 import { SectionTitle } from "../SectionTitle";
 import { ExperimentSection } from "./components/ExperimentSection";
-import React from "react";
+import React, { ComponentType } from "react";
+import { GlossarySidebar } from "../GlossarySidebar";
 interface ProjectProps {
   project: Project;
   backend: boolean;
   basePath: string;
+  linkComponent: ComponentType<{ href: string }>;
+  glossaryTerms: GlossaryTerm[];
 }
 export const ProjectShow = (props: ProjectProps) => {
-  const { project, backend, basePath } = props;
+  const { project, backend, basePath, linkComponent, glossaryTerms } = props;
   return (
     <>
       <div className={styles.hero_section}>
@@ -29,8 +32,9 @@ export const ProjectShow = (props: ProjectProps) => {
       </div>
       {project.experiments.map((experiment) => (
         <ExperimentSection
+          linkComponent={linkComponent}
           backend={backend}
-          basePath = {basePath}
+          basePath={basePath}
           key={experiment.id}
           experiment={experiment}
         />
@@ -43,6 +47,12 @@ export const ProjectShow = (props: ProjectProps) => {
           </div>
         </div>
       </div>
+      <GlossarySidebar
+        linkComponent={linkComponent}
+        basePath={basePath}
+        backend={backend}
+        glossaryTerms={glossaryTerms}
+      />
     </>
   );
 };

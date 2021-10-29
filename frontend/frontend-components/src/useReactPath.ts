@@ -4,7 +4,6 @@ export const useReactHash = () => {
   const [path, setPath] = React.useState(window.location.hash);
   const listenToPopstate = () => {
     const winPath = window.location.hash;
-    console.log("window.locartion.hash", window.location.hash);
     setPath(winPath);
   };
   React.useEffect(() => {

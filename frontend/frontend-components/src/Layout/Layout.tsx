@@ -1,7 +1,7 @@
 import classnames from "classnames";
 import React, { ComponentType } from "react";
-import { GlossarySidebar } from "../App/components/GlossarySidebar";
-import { Header } from "../App/components/Header";
+import { GlossarySidebar } from "../GlossarySidebar";
+import { Header } from "./components/Header";
 import { GlossaryTerm } from "../types";
 import styles from "./Layout.module.css";
 

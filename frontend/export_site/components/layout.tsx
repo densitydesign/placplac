@@ -1,7 +1,6 @@
 import React from "react";
 import { Layout as MainLayout } from "frontend-components";
-import Link from "next/link";
-import { useRouter } from "next/dist/client/router";
+import Link from "../components/link";
 
 interface LayoutProps {
   children: React.ReactNode;

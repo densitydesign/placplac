@@ -1,12 +1,12 @@
 // import { useHistory } from "react-router-dom";
-import { GlossaryTerm } from "../../../types";
+import { GlossaryTerm } from "../types";
 import { GlossaryItem } from "./GlossaryItem";
 import styles from "./GlossarySidebar.module.css";
-import close from "../../../assets/close.png";
+import close from "../assets/close.png";
 // import { History } from "history";
 import { ComponentType, useEffect, useState } from "react";
 import React from "react";
-import { useReactHash } from "../../../useReactPath";
+import { useReactHash } from "../useReactPath";
 
 interface GlossarySidebarProps {
   glossaryTerms: GlossaryTerm[];
@@ -16,18 +16,11 @@ interface GlossarySidebarProps {
 }
 
 export const GlossarySidebar = (props: GlossarySidebarProps) => {
-  //   const history = useHistory();
-  const {
-    glossaryTerms,
-    backend,
-    basePath,
-    linkComponent: Link,
-  } = props;
+  const { glossaryTerms, backend, basePath, linkComponent: Link } = props;
   const hash = useReactHash();
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    console.log("hash", hash);
     if (hash && hash.includes("glossary")) {
       setOpen(true);
     } else {
@@ -44,7 +37,6 @@ export const GlossarySidebar = (props: GlossarySidebarProps) => {
         <img
           className={styles.close_button}
           onClick={() => {
-    
             window.history.replaceState(null, "", "#");
             window.dispatchEvent(new HashChangeEvent("hashchange"));
           }}
@@ -56,7 +48,12 @@ export const GlossarySidebar = (props: GlossarySidebarProps) => {
       </div>
       <div className={styles.content}>
         {glossaryTerms.map((term) => (
-          <GlossaryItem key={term.id} glossaryTerm={term} backend={backend} />
+          <GlossaryItem
+            linkComponent={Link}
+            key={term.id}
+            glossaryTerm={term}
+            backend={backend}
+          />
         ))}
       </div>
     </div>
