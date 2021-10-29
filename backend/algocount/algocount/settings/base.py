@@ -148,15 +148,11 @@ SIMPLE_JWT = {
 }
 
 # LOG CONFIG
-LOG_PATH = "../LOG/"
-if not os.path.exists(LOG_PATH):
-    os.makedirs(LOG_PATH)
-
+LOG_PATH = os.path.join(BASE_DIR, '../../../LOG/')
 logging.basicConfig(
     level=logging.DEBUG,
     format='%(asctime)s %(levelname)s %(message)s',
 )
 
 LOGGER = logging.getLogger()
-
-EXPORT_IMPORT = os.path.join(BASE_DIR, '../../export/')
+EXPORT_IMPORT = os.path.join(BASE_DIR, '../../../export/')

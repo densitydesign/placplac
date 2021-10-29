@@ -1,4 +1,5 @@
 import os
+import subprocess
 
 from django.http import Http404
 from rest_framework.decorators import action
@@ -36,9 +37,10 @@ class ProjectViewSet(CustomModelView):
         try:
             instance = self.get_object()
             serializer = FullProjectSerializer(instance)
-            print(os.path.join(settings.EXPORT_IMPORT,"data.json" ))
-            with open("data.json", 'w') as f:
+            with open(os.path.join(settings.EXPORT_IMPORT,"data.json" ), 'w') as f:
                 json.dump(serializer.data, f)
+            subprocess.check_call('npm --help', shell=True)
+
             return Response(serializer.data)
         except Project.DoesNotExist:
             raise Http404
