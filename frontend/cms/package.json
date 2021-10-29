@@ -16,7 +16,7 @@
         "axios": "^0.22.0",
         "classnames": "^2.3.1",
         "date-fns": "^2.25.0",
-        "frontend-components": "file:../frontend-components",
+        "frontend-components": "file:.yalc/frontend-components",
         "history": "^4.10.1",
         "quill-mention": "^3.0.4",
         "ra-input-rich-text": "^3.18.3",
