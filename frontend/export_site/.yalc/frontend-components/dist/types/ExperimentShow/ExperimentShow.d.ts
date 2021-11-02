@@ -4,7 +4,6 @@ interface ExperimentShowProps {
     experiment: Experiment;
     glossaryTerms: GlossaryTerm[];
     basePath: string;
-    backend: boolean;
     linkComponent: ComponentType<{
         href: string;
     }>;

@@ -46,7 +46,7 @@ class ProjectViewSet(CustomModelView):
                     json.dump(serializer.data, f)
                 subprocess.check_call('npx cross-env-shell FILE_PATH="{}" next build && npx next export'.format(file),
                                       shell=True,
-                                      cwd=tmpdirname)
+                                      cwd=tmpdirname,close_fds=True)
 
                 zip_name = os.path.join(tmpdirname, "site")
                 out_directory = os.path.join(tmpdirname, "out")

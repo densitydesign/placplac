@@ -1,11 +1,14 @@
 from rest_framework import serializers
 
 from cms.models import Experiment
-from cms.serializers.step import StepSerializer
+from cms.serializers.step import FullStepSerializer
+
+from base.serializer_fields import Base64ImageFieldAllImages, FormattedJSONField
 
 
 class ExperimentSerializer(serializers.ModelSerializer):
     step_set = serializers.PrimaryKeyRelatedField(required=False, read_only=True, many=True)
+
     class Meta:
         model = Experiment
         fields = ["id", "title",
@@ -20,10 +23,11 @@ class ExperimentSerializer(serializers.ModelSerializer):
 
 
 class FullExperimentSerializer(serializers.ModelSerializer):
-    cover = serializers.SerializerMethodField(method_name="get_image")
-    steps = StepSerializer(many=True, source="step_set")
-    def get_image(self, obj):
-        return obj.cover.file.url if obj.cover else None
+    cover = Base64ImageFieldAllImages(source="cover.file", )
+    context = FormattedJSONField()
+    findings = FormattedJSONField()
+    experiment_setup = FormattedJSONField()
+    steps = FullStepSerializer(many=True, source="step_set")
 
     class Meta:
         model = Experiment

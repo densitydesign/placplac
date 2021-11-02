@@ -1,5 +1,7 @@
 FROM nikolaik/python-nodejs:python3.8-nodejs14
 ENV PATH="$PATH:/home/pn/.local/bin/"
+RUN mkdir -p /var/log/gunicorn
+RUN chown pn /var/log/gunicorn
 USER pn
 WORKDIR /home/pn/app
 RUN  mkdir /home/pn/LOG/

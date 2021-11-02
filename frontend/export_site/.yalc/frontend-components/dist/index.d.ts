@@ -1,5 +1,33 @@
 import React, { CSSProperties, ComponentType } from 'react';
 
+interface ExperimentSetupListShowProps {
+    title: string;
+    subtitle: string;
+    list: string[];
+}
+declare const ExperimentSetupListShow: (props: ExperimentSetupListShowProps) => JSX.Element;
+
+interface ImageShowProps {
+    caption?: string;
+    title?: string;
+    subtitle?: string;
+    image: string;
+    imageTitle?: string;
+    isWide?: boolean;
+    description?: string;
+}
+declare const ImageShow: (props: ImageShowProps) => JSX.Element;
+
+declare const SectionTitle: (props: {
+    title: string;
+}) => JSX.Element;
+
+interface TextShowProps {
+    text: string;
+    style?: CSSProperties;
+}
+declare const TextShow: ({ text, style }: TextShowProps) => JSX.Element;
+
 declare type Step = {
     title: string;
     description: string;
@@ -42,42 +70,6 @@ declare type Experiment = {
     disclaimers?: string[];
 };
 
-interface AppProps {
-    project: Project;
-    backend?: boolean;
-    mainHistory?: any;
-    basePath: string;
-}
-declare const App: (props: AppProps) => JSX.Element;
-
-interface ExperimentSetupListShowProps {
-    title: string;
-    subtitle: string;
-    list: string[];
-}
-declare const ExperimentSetupListShow: (props: ExperimentSetupListShowProps) => JSX.Element;
-
-interface ImageShowProps {
-    caption?: string;
-    title?: string;
-    subtitle?: string;
-    image: string;
-    imageTitle?: string;
-    isWide?: boolean;
-    description?: string;
-}
-declare const ImageShow: (props: ImageShowProps) => JSX.Element;
-
-declare const SectionTitle: (props: {
-    title: string;
-}) => JSX.Element;
-
-interface TextShowProps {
-    text: string;
-    style?: CSSProperties;
-}
-declare const TextShow: ({ text, style }: TextShowProps) => JSX.Element;
-
 interface LayoutProps {
     basePath: string;
     linkComponent: ComponentType<{
@@ -89,7 +81,6 @@ declare const Layout: (props: LayoutProps) => JSX.Element;
 
 interface ProjectProps {
     project: Project;
-    backend: boolean;
     basePath: string;
     linkComponent: ComponentType<{
         href: string;
@@ -102,11 +93,10 @@ interface ExperimentShowProps {
     experiment: Experiment;
     glossaryTerms: GlossaryTerm[];
     basePath: string;
-    backend: boolean;
     linkComponent: ComponentType<{
         href: string;
     }>;
 }
 declare const ExperimentShow: (props: ExperimentShowProps) => JSX.Element;
 
-export { App, Experiment, ExperimentSetupListShow, ExperimentShow, GlossaryCategory, GlossaryTerm, ImageShow, Layout, Project, ProjectShow, SectionTitle, Step, TextShow };
+export { Experiment, ExperimentSetupListShow, ExperimentShow, GlossaryCategory, GlossaryTerm, ImageShow, Layout, Project, ProjectShow, SectionTitle, Step, TextShow };

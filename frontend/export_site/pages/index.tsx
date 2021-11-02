@@ -22,7 +22,6 @@ const Home: NextPage = ({ project, glossaryTerms }: any) => {
     <ProjectShow
       glossaryTerms={glossaryTerms}
       basePath=""
-      backend={false}
       project={project}
       linkComponent={Link}
     />

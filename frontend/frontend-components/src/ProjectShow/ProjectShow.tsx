@@ -7,13 +7,12 @@ import React, { ComponentType } from "react";
 import { GlossarySidebar } from "../GlossarySidebar";
 interface ProjectProps {
   project: Project;
-  backend: boolean;
   basePath: string;
   linkComponent: ComponentType<{ href: string }>;
   glossaryTerms: GlossaryTerm[];
 }
 export const ProjectShow = (props: ProjectProps) => {
-  const { project, backend, basePath, linkComponent, glossaryTerms } = props;
+  const { project, basePath, linkComponent, glossaryTerms } = props;
   return (
     <>
       <div className={styles.hero_section}>
@@ -33,7 +32,6 @@ export const ProjectShow = (props: ProjectProps) => {
       {project.experiments.map((experiment) => (
         <ExperimentSection
           linkComponent={linkComponent}
-          backend={backend}
           basePath={basePath}
           key={experiment.id}
           experiment={experiment}
@@ -50,7 +48,6 @@ export const ProjectShow = (props: ProjectProps) => {
       <GlossarySidebar
         linkComponent={linkComponent}
         basePath={basePath}
-        backend={backend}
         glossaryTerms={glossaryTerms}
       />
     </>

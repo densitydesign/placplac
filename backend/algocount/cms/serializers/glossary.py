@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from cms.models import GlossaryCategory, GlossaryTerm
+from base.serializer_fields import Base64ImageFieldAllImages
 
 
 class GlossaryTermSerializer(serializers.ModelSerializer):
@@ -20,7 +21,7 @@ class GlossaryTermSerializer(serializers.ModelSerializer):
 class FullGlossaryTermSerializer(serializers.ModelSerializer):
     color = serializers.CharField(source="glossary_category.color", read_only=True)
     category_title = serializers.CharField(source="glossary_category.title", read_only=True)
-    image = serializers.SerializerMethodField(method_name="get_image")
+    image = Base64ImageFieldAllImages(source="image.file", )
 
     def get_image(self, obj):
         return obj.image.file.url if obj.image else None

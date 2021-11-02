@@ -7,11 +7,10 @@ import seeMoreImage from "../../assets/see more.png";
 
 interface GlossaryItemProps {
   glossaryTerm: GlossaryTerm;
-  backend: boolean;
   linkComponent: ComponentType<{ href: string }>;
 }
 export const GlossaryItem = (props: GlossaryItemProps) => {
-  const { glossaryTerm, backend, linkComponent: Link } = props;
+  const { glossaryTerm, linkComponent: Link } = props;
   return (
     <div id={`glossary/${glossaryTerm.id}`} className={styles.main}>
       {glossaryTerm.image && (
@@ -19,7 +18,7 @@ export const GlossaryItem = (props: GlossaryItemProps) => {
           <img
             width="100%"
             height="auto"
-            src={renderUrlImage(glossaryTerm.image, backend)}
+            src={glossaryTerm.image}
             alt={glossaryTerm.category_title}
           />
           <div

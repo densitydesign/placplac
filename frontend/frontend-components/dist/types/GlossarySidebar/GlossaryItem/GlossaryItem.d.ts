@@ -2,7 +2,6 @@ import { ComponentType } from "react";
 import { GlossaryTerm } from "../../types";
 interface GlossaryItemProps {
     glossaryTerm: GlossaryTerm;
-    backend: boolean;
     linkComponent: ComponentType<{
         href: string;
     }>;

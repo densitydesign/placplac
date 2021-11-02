@@ -39,7 +39,6 @@ const Experiment: NextPage = ({ experiment, glossaryTerms }: any) => {
       basePath=""
       glossaryTerms={glossaryTerms}
       experiment={experiment}
-      backend={false}
       linkComponent={Link}
     />
   );

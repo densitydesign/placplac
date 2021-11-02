@@ -10,13 +10,12 @@ import { useReactHash } from "../useReactPath";
 
 interface GlossarySidebarProps {
   glossaryTerms: GlossaryTerm[];
-  backend: boolean;
   basePath: string;
   linkComponent: ComponentType<{ href: string }>;
 }
 
 export const GlossarySidebar = (props: GlossarySidebarProps) => {
-  const { glossaryTerms, backend, basePath, linkComponent: Link } = props;
+  const { glossaryTerms, basePath, linkComponent: Link } = props;
   const hash = useReactHash();
   const [open, setOpen] = useState(false);
 
@@ -52,7 +51,6 @@ export const GlossarySidebar = (props: GlossarySidebarProps) => {
             linkComponent={Link}
             key={term.id}
             glossaryTerm={term}
-            backend={backend}
           />
         ))}
       </div>

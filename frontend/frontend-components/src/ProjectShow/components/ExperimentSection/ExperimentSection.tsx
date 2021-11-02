@@ -7,25 +7,21 @@ import styles from "./ExperimentSection.module.css";
 
 interface ExperimentSectionProps {
   experiment: Experiment;
-  backend: boolean;
   basePath: string;
   linkComponent: ComponentType<{ href: string }>;
 }
 export const ExperimentSection = ({
   experiment,
-  backend,
   basePath,
   linkComponent: Link,
 }: ExperimentSectionProps) => {
+  console.log(experiment.cover);
   return (
     <div className={styles.main}>
       <div
         className={classNames(styles.section, styles.cover)}
         style={{
-          backgroundImage: `url('${renderUrlImage(
-            experiment.cover,
-            backend
-          )}')`,
+          backgroundImage: `url('${experiment.cover}')`,
         }}
       ></div>
       <div className={classNames(styles.section, styles.content)}>

@@ -1,19 +1,16 @@
 version: "3.3"
 services:
   nginx:
-      build: nginx
+    build: nginx
 
-      container_name:
-        timon_nginx
+    container_name: timon_nginx
 
-      ports:
-        - 8000:80
-      # volumes:
-      #   - static_volume:/home/timon/static
+    ports:
+      - 8000:80
 
-      depends_on:
-        - web
-      restart: "on-failure"
+    depends_on:
+      - web
+    restart: "on-failure"
   db:
     image: postgres
     volumes:
@@ -24,7 +21,7 @@ services:
       - POSTGRES_PASSWORD=postgres
   web:
     build: .
-    command:  "gunicorn algocount.wsgi:application --bind 0.0.0.0:8000"
+    command: "gunicorn --access-logfile '/var/log/gunicorn/access.log' --error-logfile '/var/log/gunicorn/error.log' algocount.wsgi:application --bind 0.0.0.0:8000 "
     expose:
       - 8000
     depends_on:

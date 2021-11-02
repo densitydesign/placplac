@@ -17,7 +17,6 @@ interface ExperimentShowProps {
   experiment: Experiment;
   glossaryTerms: GlossaryTerm[];
   basePath: string;
-  backend: boolean;
   linkComponent: ComponentType<{ href: string }>;
 }
 export const ExperimentShow = (props: ExperimentShowProps) => {
@@ -35,7 +34,6 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
     glossaryTerms,
     basePath,
     linkComponent,
-    backend,
   } = props;
   const renderItem = (item: { type: string } & any, noPadding: boolean) => {
     switch (item.type) {
@@ -296,7 +294,6 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
       <GlossarySidebar
         linkComponent={linkComponent}
         basePath={basePath}
-        backend={backend}
         glossaryTerms={glossaryTerms}
       />
     </>
