@@ -1,9 +1,8 @@
 from rest_framework import serializers
 
+from base.serializer_fields import Base64ImageFieldAllImages, FormattedJSONField
 from cms.models import Experiment
 from cms.serializers.step import FullStepSerializer
-
-from base.serializer_fields import Base64ImageFieldAllImages, FormattedJSONField
 
 
 class ExperimentSerializer(serializers.ModelSerializer):
@@ -23,7 +22,7 @@ class ExperimentSerializer(serializers.ModelSerializer):
 
 
 class FullExperimentSerializer(serializers.ModelSerializer):
-    cover = Base64ImageFieldAllImages(source="cover.file", )
+    cover = Base64ImageFieldAllImages( read_only=True)
     context = FormattedJSONField()
     findings = FormattedJSONField()
     experiment_setup = FormattedJSONField()

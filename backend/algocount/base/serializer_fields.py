@@ -4,12 +4,12 @@ from cms.models import ProjectMedia
 from base.utils import file_to_base64
 
 
-class Base64ImageFieldAllImages(serializers.ImageField):
+class Base64ImageFieldAllImages(serializers.RelatedField):
 
     def to_representation(self, file):
         if not file:
             return ""
-        return file_to_base64(file.path)
+        return file_to_base64( file.file.path)
 
 
 class FormattedJSONField(serializers.Field):

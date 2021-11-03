@@ -30,11 +30,10 @@
         "web-vitals": "^1.1.2"
     },
     "scripts": {
-        "start": "react-app-rewired start",
-        "build": "react-app-rewired build",
-        "test": "react-app-rewired test",
-        "eject": "react-scripts eject",
-        "preinstall": "cd ../frontend-components && npm install && npm run build"
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject"
     },
     "eslintConfig": {
         "extends": [
@@ -60,7 +59,6 @@
         "@types/react-final-form-listeners": "^1.0.0",
         "@types/react-router": "^5.1.17",
         "@types/react-router-dom": "^5.3.1",
-        "@types/react-router-hash-link": "^2.4.2",
-        "react-app-rewired": "^2.1.8"
+        "@types/react-router-hash-link": "^2.4.2"
     }
 }
