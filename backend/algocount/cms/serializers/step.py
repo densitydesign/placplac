@@ -1,10 +1,11 @@
 from rest_framework import serializers
 
-from cms.models import Step
 from base.serializer_fields import FormattedJSONField
+from cms.models import Step
 
 
 class StepSerializer(serializers.ModelSerializer):
+    project = serializers.SlugRelatedField(read_only=True, source="experiment", slug_field="project_id")
 
     class Meta:
         model = Step
@@ -12,7 +13,8 @@ class StepSerializer(serializers.ModelSerializer):
                   "description",
                   "content",
                   "step_number",
-                  "experiment"]
+                  "experiment", "project"]
+
 
 class FullStepSerializer(serializers.ModelSerializer):
     content = FormattedJSONField()

@@ -9,10 +9,7 @@ import { ImageShowBackend } from "../showComponentsBackend/ImageShowBackend";
 import { EmptyColumn } from "./components/EmptyColumn";
 import { AddRowButton } from "./components/AddRowButton";
 import { DialogForm, PossibleColumns, PossibleComponent } from "./types";
-import {
-  ExperimentSetupListShow,
-  TextShow,
-} from "frontend-components";
+import { ExperimentSetupListShow, TextShow } from "frontend-components";
 
 const initialStatus: DialogForm = undefined;
 
@@ -24,7 +21,7 @@ interface BuilderInputProps {
   gap?: number | string;
 }
 export const BuilderInput = (props: BuilderInputProps) => {
-  const { source, project, possibleColumns, possibleComponents, gap } = props;
+  const { source, project, possibleColumns, possibleComponents } = props;
   const [activeStep, setActiveStep] = React.useState(0);
 
   const {

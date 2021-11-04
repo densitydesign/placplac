@@ -1,26 +1,32 @@
-import { makeStyles } from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 import RichTextInput, { RichTextInputProps } from "ra-input-rich-text";
 
 import "quill-mention";
 import "quill-mention/dist/quill.mention.css";
-import { useDataProvider, useGetList } from "ra-core";
+import { useDataProvider } from "ra-core";
 import { useMemo } from "react";
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles<Theme, CustomRichTextInputProps>((theme) => ({
   "@global": {
     ".ra-rich-text-input": {
       "& .ql-editor": {
         minHeight: "300px",
       },
+      "& .small": {
+        "& .ql-editor": {
+          minHeight: "150px",
+        },
+      },
     },
   },
 }));
-
-export const CustomRichTextInput = (
-  props: RichTextInputProps & { project?: number }
-) => {
+interface CustomRichTextInputProps extends RichTextInputProps {
+  project?: number;
+  small?: boolean;
+}
+export const CustomRichTextInput = (props: CustomRichTextInputProps) => {
   const dataProvider = useDataProvider();
 
-  const classes = useStyles();
+  const classes = useStyles(props);
   const modules = useMemo(() => {
     const toolbarOptions = [
       ["bold", "italic", "underline", "strike"], // toggled buttons
@@ -80,5 +86,12 @@ export const CustomRichTextInput = (
     return { modules: { toolbar: toolbarOptions } };
   }, [dataProvider, props.project]);
 
-  return <RichTextInput {...props} classes={classes} options={modules} />;
+  return (
+    <RichTextInput
+      {...props}
+      variant={props.small ? "small" : undefined}
+      classes={classes}
+      options={modules}
+    />
+  );
 };

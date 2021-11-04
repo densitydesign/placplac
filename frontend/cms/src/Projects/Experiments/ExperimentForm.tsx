@@ -1,9 +1,7 @@
 import {
   ArrayInput,
-  Button,
   Datagrid,
   FormTab,
-  FunctionField,
   maxLength,
   ReferenceArrayField,
   required,
@@ -11,26 +9,40 @@ import {
   TabbedForm,
   TabbedFormProps,
   TextField,
-  Record,
   TextInput,
   ReferenceInput,
+  DeleteButton,
+  SaveButton,
+  Toolbar,
+  ToolbarProps,
+  EditButton,
 } from "react-admin";
 import { BuilderInput } from "../../components/BuilderInput/BuilderInput";
 import { CustomRichTextInput } from "../../components/CustomRichTextInput";
-import { AddStepButton } from "../AddStepButton";
-import ContentCreate from "@material-ui/icons/Create";
-import { Link } from "react-router-dom";
+import { AddStepButton } from "./AddStepButton";
+
 import { ProjectMediaDialogCreate } from "../ProjectMediaCreate";
 import { SelectImage } from "../../components/SelectImage";
 
+const ExperimentFormToolbar = (props: ToolbarProps) => (
+  <Toolbar
+    style={{ display: "flex", justifyContent: "space-between" }}
+    {...props}
+  >
+    <SaveButton />
+    {props.record && props.record.id && (
+      <DeleteButton redirect={`/projects/${props.record.project}/1`} />
+    )}
+  </Toolbar>
+);
 export const ExperimentForm = (props: Omit<TabbedFormProps, "children">) => {
   const project =
     props.initialValues && "project" in props.initialValues
       ? props.initialValues.project
       : props.record.project;
-  const redirect = `/projects/${project}/2`;
+
   return (
-    <TabbedForm {...props} redirect={redirect}>
+    <TabbedForm {...props} redirect="edit" toolbar={<ExperimentFormToolbar />}>
       <FormTab label="summary">
         <TextInput
           multiline
@@ -59,51 +71,47 @@ export const ExperimentForm = (props: Omit<TabbedFormProps, "children">) => {
           <SelectImage fileSource="file" titleSource="description" />
         </ReferenceInput>
       </FormTab>
-      <FormTab label="disclaimers">
-        <ArrayInput source="disclaimers">
-          <SimpleFormIterator>
-            <TextInput multiline source="" hiddenLabel label="" />
-          </SimpleFormIterator>
-        </ArrayInput>
-      </FormTab>
-      <FormTab label="context">
-        <BuilderInput source={"context"} project={project} />
-      </FormTab>
-      <FormTab label="experiment_setup">
-        <BuilderInput
-          possibleColumns={[2, 3, 4]}
-          possibleComponents={["image", "listExperimentSetup"]}
-          source={"experiment_setup"}
-          project={project}
-          gap="30px"
-        />
-      </FormTab>
-      <FormTab label="findings">
-        <BuilderInput source={"findings"} project={project} />
-      </FormTab>
-      <FormTab label="steps">
-        <AddStepButton />
-        <ReferenceArrayField label="" reference="steps" source="step_set">
-          <Datagrid>
-            <TextField source="title" />
-            <FunctionField
-              render={(record: Record | undefined) =>
-                record && props.record ? (
-                  <Button
-                    component={Link}
-                    to={`/steps/${encodeURIComponent(
-                      record.id
-                    )}?project=${project}&experiment=${props.record.id}`}
-                    label={"ra.action.edit"}
-                  >
-                    <ContentCreate />
-                  </Button>
-                ) : null
-              }
-            />
-          </Datagrid>
-        </ReferenceArrayField>
-      </FormTab>
+      {props.record.id && (
+        <FormTab label="disclaimers">
+          <ArrayInput source="disclaimers">
+            <SimpleFormIterator>
+              <TextInput multiline source="" hiddenLabel label="" />
+            </SimpleFormIterator>
+          </ArrayInput>
+        </FormTab>
+      )}
+      {props.record.id && (
+        <FormTab label="context">
+          <BuilderInput source={"context"} project={project} />
+        </FormTab>
+      )}
+      {props.record.id && (
+        <FormTab label="experiment_setup">
+          <BuilderInput
+            possibleColumns={[2, 3, 4]}
+            possibleComponents={["image", "listExperimentSetup"]}
+            source={"experiment_setup"}
+            project={project}
+            gap="30px"
+          />
+        </FormTab>
+      )}
+      {props.record.id && (
+        <FormTab label="findings">
+          <BuilderInput source={"findings"} project={project} />
+        </FormTab>
+      )}
+      {props.record.id && (
+        <FormTab label="steps">
+          <AddStepButton />
+          <ReferenceArrayField label="" reference="steps" source="step_set">
+            <Datagrid>
+              <TextField source="title" />
+              <EditButton />
+            </Datagrid>
+          </ReferenceArrayField>
+        </FormTab>
+      )}
     </TabbedForm>
   );
 };

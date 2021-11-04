@@ -8,7 +8,7 @@ export const AddStepButton = () => {
   return (
     <Button
       component={Link}
-      to={`/steps/create?experiment=${record.id}&project=${record.project}`}
+      to={`/steps/create?experiment=${record.id}`}
       label="Add step"
       title="Add step"
     >

@@ -1,24 +1,41 @@
 import {
+  DeleteButton,
   FormTab,
   maxLength,
   NumberInput,
   required,
+  SaveButton,
   TabbedForm,
   TabbedFormProps,
   TextInput,
+  Toolbar,
+  ToolbarProps,
 } from "react-admin";
 import { BuilderInput } from "../../../components/BuilderInput";
 import { CustomRichTextInput } from "../../../components/CustomRichTextInput";
 
-export const StepForm = (
-  props: Omit<TabbedFormProps, "children"> & {
-    project: number;
-  }
-) => {
-  const { project } = props;
+const StepFormToolbar = (props: ToolbarProps) => {
+  return (
+    <Toolbar
+      style={{ display: "flex", justifyContent: "space-between" }}
+      {...props}
+    >
+      <SaveButton />
+      {props.record && props.record.id && (
+        <DeleteButton redirect={`/experiments/${props.record.experiment}/5`} />
+      )}
+    </Toolbar>
+  );
+};
+
+export const StepForm = (props: Omit<TabbedFormProps, "children">) => {
+  const project =
+    props.initialValues && "project" in props.initialValues
+      ? props.initialValues.project
+      : props.record.project;
 
   return (
-    <TabbedForm {...props}>
+    <TabbedForm {...props} redirect="edit" toolbar={<StepFormToolbar />}>
       <FormTab label="summary">
         <NumberInput source="step_number" validate={[required()]} />
         <TextInput

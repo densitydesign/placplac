@@ -8,9 +8,9 @@ from base.models import CustomModel
 class Project(CustomModel):
     STATUS_CHOICES = (("1", "Published"), ("2", "Draft"))
     title = models.CharField(max_length=255)
-    short_description = models.TextField()
-    experiments_description = models.TextField()
-    long_description = models.TextField()
+    short_description = models.TextField(null=True)
+    experiments_description = models.TextField(null=True)
+    long_description = models.TextField(null=True)
     status = models.CharField(default="2", choices=STATUS_CHOICES, max_length=1)
 
 

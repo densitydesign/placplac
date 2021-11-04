@@ -1,28 +1,47 @@
 import {
-  AutocompleteInput,
+  DeleteButton,
   maxLength,
   ReferenceArrayInput,
   ReferenceInput,
   required,
+  SaveButton,
   SelectArrayInput,
   SelectInput,
   SimpleForm,
   SimpleFormProps,
   TextInput,
+  Toolbar,
+  ToolbarProps,
 } from "react-admin";
 import { CustomRichTextInput } from "../../components/CustomRichTextInput";
 import { SelectImage } from "../../components/SelectImage";
 import { ProjectMediaDialogCreate } from "../ProjectMediaCreate";
+
+const GlossaryTermFormToolbar = (props: ToolbarProps) => (
+  <Toolbar
+    style={{ display: "flex", justifyContent: "space-between" }}
+    {...props}
+  >
+    <SaveButton />
+    {props.record && props.record.id && (
+      <DeleteButton redirect={`/projects/${props.record.project}/2`} />
+    )}
+  </Toolbar>
+);
 
 export const GlossaryTermForm = (props: Omit<SimpleFormProps, "children">) => {
   const project =
     props.initialValues && "project" in props.initialValues
       ? props.initialValues.project
       : props.record.project;
-  const redirect = `/projects/${project}/3`;
+  const redirect = `/projects/${project}/2`;
 
   return (
-    <SimpleForm {...props} redirect={redirect}>
+    <SimpleForm
+      {...props}
+      redirect={redirect}
+      toolbar={<GlossaryTermFormToolbar />}
+    >
       <ReferenceInput
         label="Category"
         source="glossary_category"
