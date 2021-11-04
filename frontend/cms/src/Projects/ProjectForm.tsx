@@ -49,6 +49,7 @@ export const ProjectForm = (props: Omit<TabbedFormProps, "children">) => {
             label=""
             reference="experiments"
             source="experiment_set"
+            fullWidth
           >
             <Datagrid>
               <TextField source="title" />

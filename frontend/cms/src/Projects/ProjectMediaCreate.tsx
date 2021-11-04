@@ -1,19 +1,12 @@
 import { Dialog, DialogActions, DialogContent } from "@material-ui/core";
 import {
   Button,
-  Create,
-  CreateProps,
-  FileField,
-  FileInput,
   FormWithRedirect,
   ImageField,
   ImageInput,
   required,
   SaveButton,
-  SimpleForm,
   TextInput,
-  useCreate,
-  useDataProvider,
   useMutation,
   useNotify,
 } from "react-admin";

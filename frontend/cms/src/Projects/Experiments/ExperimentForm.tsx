@@ -63,7 +63,7 @@ export const ExperimentForm = (props: Omit<TabbedFormProps, "children">) => {
         />
         <ProjectMediaDialogCreate project={project} />
         <ReferenceInput
-          label="Image"
+          label="Cover image"
           source="cover"
           reference="media"
           filter={{ project }}
@@ -104,7 +104,12 @@ export const ExperimentForm = (props: Omit<TabbedFormProps, "children">) => {
       {props.record.id && (
         <FormTab label="steps">
           <AddStepButton />
-          <ReferenceArrayField label="" reference="steps" source="step_set">
+          <ReferenceArrayField
+            label=""
+            reference="steps"
+            source="step_set"
+            fullWidth
+          >
             <Datagrid>
               <TextField source="title" />
               <EditButton />

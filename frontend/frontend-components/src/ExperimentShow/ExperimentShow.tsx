@@ -71,8 +71,7 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
   const renderRow = (
     row: any[],
     rowIndex: number,
-    noPadding: boolean = false,
-    rowClass: string = styles.container_row
+    noPadding: boolean = false
   ) => {
     const nCols = row.length;
     const size = 12 / nCols;
@@ -94,17 +93,9 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
       </div>
     );
   };
-  const renderContext = () => {
-    return context!.map((row, index) => renderRow(row, index, true));
-  };
 
-  const renderSection = (
-    section: any[],
-    rowClass: string = styles.container_row
-  ) => {
-    return section!.map((row, index) =>
-      renderRow(row, index, undefined, rowClass)
-    );
+  const renderSection = (section: any[]) => {
+    return section!.map((row, index) => renderRow(row, index, undefined));
   };
 
   const renderToolsCategory = () => {
@@ -224,7 +215,7 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
       {context && (
         <div id="context" className={"section"}>
           <SectionTitle title="context" />
-          <div className={styles.context}>{renderContext()}</div>
+          {renderSection(context)}
         </div>
       )}
       {researchQuestion && (

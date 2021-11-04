@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, Prompt } from "react-router-dom";
+import { Prompt } from "react-router-dom";
 import CloudDownload from "@material-ui/icons/CloudDownload";
 import { Button, useNotify, Record, useLoading } from "react-admin";
 import { clientNoJson } from "../dataProvider";
@@ -14,6 +14,7 @@ export const DownloadButton = (props: DownloadButtonProps) => {
   const [loading, setLoading] = useState(false);
   const mainIsLoading = useLoading();
   const notify = useNotify();
+  
   const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.stopPropagation();
     setLoading(true);
