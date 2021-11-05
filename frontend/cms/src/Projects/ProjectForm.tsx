@@ -5,6 +5,7 @@ import {
   FormTab,
   maxLength,
   ReferenceArrayField,
+  ReferenceField,
   required,
   SelectInput,
   TabbedForm,
@@ -70,6 +71,23 @@ export const ProjectForm = (props: Omit<TabbedFormProps, "children">) => {
           >
             <Datagrid>
               <TextField source="title" />
+              <EditButton />
+              <DeleteButton redirect={false} mutationMode="optimistic" />
+            </Datagrid>
+          </ReferenceArrayField>
+        </FormTab>
+      )}
+      {props.record.id && (
+        <FormTab label="Collaborators">
+          <AddGlossaryTermButton />
+          <ReferenceArrayField
+            label=""
+            reference="project-collaborators"
+            source="projectuser_set"
+            fullWidth
+          >
+            <Datagrid>
+              <TextField source="user" />
               <EditButton />
               <DeleteButton redirect={false} mutationMode="optimistic" />
             </Datagrid>

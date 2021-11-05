@@ -13,7 +13,7 @@ function jwtTokenAuthProvider(options: Options = {}): AuthProvider {
     login: async ({ username, password }) => {
       const request = new Request(opts.obtainAuthTokenUrl, {
         method: "POST",
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ email: username, password }),
         headers: new Headers({ "Content-Type": "application/json" }),
       });
       return fetch(request)
@@ -41,9 +41,7 @@ function jwtTokenAuthProvider(options: Options = {}): AuthProvider {
     },
     getPermissions: () => {
       const user = getUser();
-      return user && user.permissions
-        ? Promise.resolve(user.permissions)
-        : Promise.reject();
+      return Promise.resolve(user ? user.permissions : []);
     },
   };
 }

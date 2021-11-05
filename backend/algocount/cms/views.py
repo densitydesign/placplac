@@ -12,12 +12,13 @@ from rest_framework.response import Response
 
 from base.viewsets import CustomModelView
 from cms.filters.glossary_term import GlossaryTermFilter
-from cms.filters.project import ProjectMediaFilter
+from cms.filters.project import ProjectMediaFilter, ProjectUserFilter
 from cms.filters.step import StepFilter
 from cms.models import Project, Experiment, ProjectMedia, GlossaryCategory, GlossaryTerm, Step, ProjectUser
 from cms.serializers.experiment import ExperimentSerializer
 from cms.serializers.glossary import GlossaryCategorySerializer, GlossaryTermSerializer
-from cms.serializers.project import ProjectSerializer, ProjectMediaSerializer, FullProjectSerializer
+from cms.serializers.project import ProjectSerializer, ProjectMediaSerializer, FullProjectSerializer, \
+    ProjectUserSerializer
 from cms.serializers.step import StepSerializer
 
 
@@ -32,6 +33,8 @@ class ProjectViewSet(CustomModelView):
 
     def get_queryset(self):
         user = self.request.user
+        if user.is_superuser:
+            return Project.objects.all()
         return Project.objects.filter(projectuser__user=user)
 
     @action(detail=True, methods=["GET"])
@@ -76,7 +79,22 @@ class ProjectMediaViewSet(CustomModelView):
 
     def get_queryset(self):
         user = self.request.user
+        if user.is_superuser:
+            return ProjectMedia.objects.all()
         return ProjectMedia.objects.filter(project__projectuser__user=user)
+
+
+class ProjectUserViewSet(CustomModelView):
+    queryset = ProjectUser.objects.all()
+    serializer_class = ProjectUserSerializer
+    filterset_class = ProjectUserFilter
+
+    # filterset_class = CachetFilter
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_superuser:
+            return ProjectUser.objects.all()
+        return ProjectUser.objects.filter(project__projectuser__user=user)
 
 
 class ExperimentViewSet(CustomModelView):
@@ -86,10 +104,12 @@ class ExperimentViewSet(CustomModelView):
     # filterset_class = CachetFilter
     def get_queryset(self):
         user = self.request.user
+        if user.is_superuser:
+            return Experiment.objects.all()
         return Experiment.objects.filter(project__projectuser__user=user)
 
 
-class GlossaryCategorytViewSet(CustomModelView):
+class GlossaryCategoryViewSet(CustomModelView):
     queryset = GlossaryCategory.objects.all()
     serializer_class = GlossaryCategorySerializer
 
@@ -101,6 +121,8 @@ class GlossaryTermViewSet(CustomModelView):
 
     def get_queryset(self):
         user = self.request.user
+        if user.is_superuser:
+            return GlossaryTerm.objects.all()
         return GlossaryTerm.objects.filter(project__projectuser__user=user)
 
 
@@ -111,4 +133,6 @@ class StepViewSet(CustomModelView):
 
     def get_queryset(self):
         user = self.request.user
+        if user.is_superuser:
+            return Step.objects.all()
         return Step.objects.filter(experiment__project__projectuser__user=user)

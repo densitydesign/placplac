@@ -20,9 +20,11 @@ from django.urls import path, include
 from rest_framework import routers
 
 from cms.urls import router as cms_registry
+from authentication.urls import router as auth_registry
 
 router = routers.DefaultRouter()
 router.registry.extend(cms_registry.registry)
+router.registry.extend(auth_registry.registry)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
