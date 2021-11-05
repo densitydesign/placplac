@@ -23,6 +23,9 @@ class ProjectUser(CustomModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     level = models.CharField(choices=LEVEL_CHOICES, max_length=1)
 
+    class Meta:
+        unique_together = (('user', 'project'),)
+
 
 class ProjectMedia(CustomModel):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
