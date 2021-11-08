@@ -58,7 +58,7 @@ class Step(CustomModel):
 
 
 class GlossaryCategory(CustomModel):
-    title = models.CharField(max_length=50)
+    title = models.CharField(max_length=50, unique=True)
     description = models.TextField()
     color = models.CharField(max_length=10)
 
@@ -70,4 +70,4 @@ class GlossaryTerm(CustomModel):
     related = models.ManyToManyField("self", blank=True)
     glossary_category = models.ForeignKey(GlossaryCategory, on_delete=models.CASCADE)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    more_info_url = models.TextField(null=True, blank=True)
+    more_info_url = models.TextField()

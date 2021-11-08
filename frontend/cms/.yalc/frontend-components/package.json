@@ -6,7 +6,7 @@
     "module": "dist/index.js",
     "types": "dist/index.d.ts",
     "scripts": {
-        "build": "rollup -c"
+        "build": "rollup -c && yalc push"
     },
     "keywords": [],
     "author": "",
@@ -25,5 +25,5 @@
     "dependencies": {
         "postcss-url": "^10.1.3"
     },
-    "yalcSig": "18e2a003a0aab3ef66fe4dd62790b267"
+    "yalcSig": "7dcce9092f2bb5ef2708401caf261be4"
 }

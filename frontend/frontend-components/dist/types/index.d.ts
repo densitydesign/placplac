@@ -7,3 +7,5 @@ export * from "./types";
 export * from "./Layout";
 export * from "./ProjectShow";
 export * from "./ExperimentShow";
+export * from "./GlossaryShow";
+export * from "./GlossaryCategoryShow";

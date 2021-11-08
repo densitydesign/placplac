@@ -40,6 +40,7 @@ declare type GlossaryTerm = {
     color: string;
     glossary_category: string;
     category_title: string;
+    more_info_url: string;
     image: string | null;
     description: string;
 };
@@ -76,6 +77,7 @@ interface LayoutProps {
         href: string;
     }>;
     children: React.ReactNode;
+    experiments: Experiment[];
 }
 declare const Layout: (props: LayoutProps) => JSX.Element;
 
@@ -86,6 +88,7 @@ interface ProjectProps {
         href: string;
     }>;
     glossaryTerms: GlossaryTerm[];
+    glossaryCategories: GlossaryCategory[];
 }
 declare const ProjectShow: (props: ProjectProps) => JSX.Element;
 
@@ -96,7 +99,24 @@ interface ExperimentShowProps {
     linkComponent: ComponentType<{
         href: string;
     }>;
+    glossaryCategories: GlossaryCategory[];
 }
 declare const ExperimentShow: (props: ExperimentShowProps) => JSX.Element;
 
-export { Experiment, ExperimentSetupListShow, ExperimentShow, GlossaryCategory, GlossaryTerm, ImageShow, Layout, Project, ProjectShow, SectionTitle, Step, TextShow };
+interface GlossaryShowProps {
+    glossaryCategories: GlossaryCategory[];
+    glossaryTerms: GlossaryTerm[];
+    linkComponent: ComponentType<{
+        href: string;
+    }>;
+    basePath: string;
+}
+declare const GlossaryShow: (props: GlossaryShowProps) => JSX.Element;
+
+interface GlossaryCategoryShowProps {
+    glossaryCategory: GlossaryCategory;
+    glossaryTerms: GlossaryTerm[];
+}
+declare const GlossaryCategoryShow: (props: GlossaryCategoryShowProps) => JSX.Element;
+
+export { Experiment, ExperimentSetupListShow, ExperimentShow, GlossaryCategory, GlossaryCategoryShow, GlossaryShow, GlossaryTerm, ImageShow, Layout, Project, ProjectShow, SectionTitle, Step, TextShow };

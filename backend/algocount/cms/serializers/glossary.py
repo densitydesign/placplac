@@ -45,3 +45,5 @@ class GlossaryCategorySerializer(serializers.ModelSerializer):
                   "description",
                   "color",
                   ]
+
+

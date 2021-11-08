@@ -5,14 +5,22 @@ import { SectionTitle } from "../SectionTitle";
 import { ExperimentSection } from "./components/ExperimentSection";
 import React, { ComponentType } from "react";
 import { GlossarySidebar } from "../GlossarySidebar";
+import { GlossaryCategory } from "..";
 interface ProjectProps {
   project: Project;
   basePath: string;
   linkComponent: ComponentType<{ href: string }>;
   glossaryTerms: GlossaryTerm[];
+  glossaryCategories: GlossaryCategory[];
 }
 export const ProjectShow = (props: ProjectProps) => {
-  const { project, basePath, linkComponent, glossaryTerms } = props;
+  const {
+    project,
+    basePath,
+    linkComponent,
+    glossaryTerms,
+    glossaryCategories,
+  } = props;
   return (
     <>
       <div className={styles.hero_section}>
@@ -38,7 +46,7 @@ export const ProjectShow = (props: ProjectProps) => {
         />
       ))}
       <div className={"section"}>
-        <div className={styles.experiments}>
+        <div id="abouttheproject" className={styles.experiments}>
           <SectionTitle title={"about the project"} />
           <div className={styles.experiments_description}>
             <TextShow text={project.long_description} />
@@ -46,6 +54,7 @@ export const ProjectShow = (props: ProjectProps) => {
         </div>
       </div>
       <GlossarySidebar
+        glossaryCategories={glossaryCategories}
         linkComponent={linkComponent}
         basePath={basePath}
         glossaryTerms={glossaryTerms}

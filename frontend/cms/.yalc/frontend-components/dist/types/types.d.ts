@@ -10,6 +10,7 @@ export declare type GlossaryTerm = {
     color: string;
     glossary_category: string;
     category_title: string;
+    more_info_url: string;
     image: string | null;
     description: string;
 };

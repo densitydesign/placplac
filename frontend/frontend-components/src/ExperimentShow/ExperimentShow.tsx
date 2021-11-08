@@ -12,12 +12,15 @@ import { Disclaimer } from "./components/Disclaimer";
 import { ImageShow } from "../ImageShow";
 import React, { ComponentType } from "react";
 import { GlossarySidebar } from "../GlossarySidebar";
+import { GlossaryTermsList } from "../components/GlossaryTermsList";
+import { GlossaryCategory } from "..";
 
 interface ExperimentShowProps {
   experiment: Experiment;
   glossaryTerms: GlossaryTerm[];
   basePath: string;
   linkComponent: ComponentType<{ href: string }>;
+  glossaryCategories: GlossaryCategory[];
 }
 export const ExperimentShow = (props: ExperimentShowProps) => {
   const {
@@ -34,6 +37,7 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
     glossaryTerms,
     basePath,
     linkComponent,
+    glossaryCategories,
   } = props;
   const renderItem = (item: { type: string } & any, noPadding: boolean) => {
     switch (item.type) {
@@ -98,33 +102,6 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
     return section!.map((row, index) => renderRow(row, index, undefined));
   };
 
-  const renderToolsCategory = () => {
-    return glossaryTerms
-      .filter((term) => term.category_title === "Tools")
-      .map((term) => {
-        return (
-          <span key={term.id} className="mention">
-            <a href={`#glossary/${term.id}`}>
-              <span style={{ backgroundColor: term.color }}>{term.title}</span>
-            </a>
-          </span>
-        );
-      });
-  };
-  const renderTeqniquesCategory = () => {
-    return glossaryTerms
-      .filter((term) => term.category_title === "Techniques")
-      .map((term) => {
-        return (
-          <span key={term.id} className="mention" style={{ display: "flex" }}>
-            <a href={`#glossary/${term.id}`}>
-              <span style={{ backgroundColor: term.color }}>{term.title}</span>
-            </a>
-          </span>
-        );
-      });
-  };
-
   return (
     <>
       <div className={styles.top_section}>
@@ -145,14 +122,11 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
               className={classnames(styles.container_column, styles.grid_auto)}
             >
               <h3 style={{ marginTop: 0 }}>TOOLS</h3>
-              <div
-                className={classnames(
-                  styles.container_row,
-                  styles.glossary_terms_list
+              <GlossaryTermsList
+                glossaryTerms={glossaryTerms.filter(
+                  (term) => term.category_title === "Tools"
                 )}
-              >
-                {renderToolsCategory()}
-              </div>
+              />
             </div>
             <div
               style={{
@@ -161,14 +135,11 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
               className={classnames(styles.container_column, styles.grid_auto)}
             >
               <h3 style={{ marginTop: 0 }}>TECHNIQUES</h3>
-              <div
-                className={classnames(
-                  styles.container_row,
-                  styles.glossary_terms_list
+              <GlossaryTermsList
+                glossaryTerms={glossaryTerms.filter(
+                  (term) => term.category_title === "Techniques"
                 )}
-              >
-                {renderTeqniquesCategory()}
-              </div>
+              />
             </div>
           </div>
         </div>
@@ -240,7 +211,6 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
           {renderSection(experimentSetup)}
         </div>
       )}
-      <ResearchQuestion researchQuestion={researchQuestion} />
       {steps && (
         <div id="experimentDiagram" className={"section"}>
           <SectionTitle title="experiment diagram" />
@@ -255,7 +225,6 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
           )}
         </div>
       )}
-      <ResearchQuestion researchQuestion={researchQuestion} />
       {steps &&
         steps.map((step) => (
           <div key={step.title}>
@@ -273,7 +242,6 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
                 {renderSection(step.content)}
               </div>
             </div>
-            <ResearchQuestion researchQuestion={researchQuestion} />
           </div>
         ))}
       {findings && (
@@ -283,6 +251,7 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
         </div>
       )}
       <GlossarySidebar
+        glossaryCategories={glossaryCategories}
         linkComponent={linkComponent}
         basePath={basePath}
         glossaryTerms={glossaryTerms}

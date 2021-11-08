@@ -5,6 +5,7 @@ interface GlossaryItemProps {
     linkComponent: ComponentType<{
         href: string;
     }>;
+    basePath: string;
 }
 export declare const GlossaryItem: (props: GlossaryItemProps) => JSX.Element;
 export {};

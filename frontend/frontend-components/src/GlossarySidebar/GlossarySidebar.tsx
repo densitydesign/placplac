@@ -7,15 +7,22 @@ import close from "../assets/close.png";
 import { ComponentType, useEffect, useState } from "react";
 import React from "react";
 import { useReactHash } from "../useReactPath";
+import { GlossaryCategory } from "..";
 
 interface GlossarySidebarProps {
   glossaryTerms: GlossaryTerm[];
   basePath: string;
   linkComponent: ComponentType<{ href: string }>;
+  glossaryCategories: GlossaryCategory[];
 }
 
 export const GlossarySidebar = (props: GlossarySidebarProps) => {
-  const { glossaryTerms, basePath, linkComponent: Link } = props;
+  const {
+    glossaryTerms,
+    basePath,
+    linkComponent: Link,
+    glossaryCategories,
+  } = props;
   const hash = useReactHash();
   const [open, setOpen] = useState(false);
 
@@ -31,8 +38,11 @@ export const GlossarySidebar = (props: GlossarySidebarProps) => {
     <div style={open ? {} : { display: "none" }} className={styles.glossary}>
       <div className={styles.header}>
         <Link href={`${basePath}glossary`}>Glossary</Link>
-        <Link href={`${basePath}glossary/tools`}>Tools</Link>
-        <Link href={`${basePath}glossary/tecniques`}>Tecniques</Link>
+        {glossaryCategories.map((category) => (
+          <Link href={`${basePath}glossary/${category.id}`}>
+            {category.title}
+          </Link>
+        ))}
         <img
           className={styles.close_button}
           onClick={() => {
@@ -48,6 +58,7 @@ export const GlossarySidebar = (props: GlossarySidebarProps) => {
       <div className={styles.content}>
         {glossaryTerms.map((term) => (
           <GlossaryItem
+            basePath={basePath}
             linkComponent={Link}
             key={term.id}
             glossaryTerm={term}

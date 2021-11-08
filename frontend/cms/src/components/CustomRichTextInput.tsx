@@ -89,7 +89,7 @@ export const CustomRichTextInput = (props: CustomRichTextInputProps) => {
   return (
     <RichTextInput
       {...props}
-      variant={props.small ? "small" : undefined}
+      variant={props.small ? "small main-application" : "main-application"}
       classes={classes}
       options={modules}
     />

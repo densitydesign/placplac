@@ -1,9 +1,9 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
-from cms.models import Project, ProjectMedia, ProjectUser
+from cms.models import Project, ProjectMedia, ProjectUser, GlossaryCategory
 from cms.serializers.experiment import FullExperimentSerializer
-from cms.serializers.glossary import FullGlossaryTermSerializer
+from cms.serializers.glossary import FullGlossaryTermSerializer, GlossaryCategorySerializer
 
 User = get_user_model()
 
@@ -34,14 +34,17 @@ class ProjectMediaSerializer(serializers.ModelSerializer):
 class FullProjectSerializer(serializers.ModelSerializer):
     experiments = FullExperimentSerializer(many=True, source="experiment_set")
     glossary_terms = FullGlossaryTermSerializer(many=True, source="glossaryterm_set")
+    glossary_categories = serializers.SerializerMethodField('get_categories')
 
+    def get_categories(self, value):
+        return GlossaryCategorySerializer(GlossaryCategory.objects.all(), many=True).data
     class Meta:
         model = Project
         fields = ["id", "title",
                   "short_description",
                   "experiments_description",
                   "long_description",
-                  "status", "created_date", "last_update", "experiments", "glossary_terms"]
+                  "status", "created_date", "last_update", "experiments", "glossary_terms", "glossary_categories"]
 
 
 class ProjectUserSerializer(serializers.ModelSerializer):

@@ -1,0 +1,52 @@
+.main {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin-top: 55px;
+}
+.main .sidebar {
+  width: 480px;
+  height: auto;
+  background: white;
+  padding: 40px 50px;
+  box-sizing: border-box;
+  border-right: 1px solid black;
+  min-width: 480px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.title {
+  display: flex;
+  align-items: center;
+  line-height: 50px;
+  color: white;
+  padding: 6px 12px;
+  font-family: Source Sans Pro;
+}
+
+.title .arrow {
+  margin-left: 15px;
+}
+.glossary_term_item {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  border-bottom: 1px solid black;
+  box-sizing: border-box;
+}
+.description {
+  padding: 60px 120px;
+}
+.term_image {
+  margin-bottom: 60px;
+}
+
+.more_info_url {
+  border-top: 1px solid black;
+  text-align: center;
+  width: 100%;
+}

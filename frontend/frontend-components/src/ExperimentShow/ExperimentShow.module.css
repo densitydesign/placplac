@@ -177,3 +177,12 @@
 .top_section_part > div:last-child {
   border-right: none;
 }
+
+.content_list li {
+  transition: 0.3s all;
+}
+
+.content_list li:hover {
+  webkit-filter: blur(2px); /* Chrome, Safari, Opera */
+  filter: blur(2px);
+}

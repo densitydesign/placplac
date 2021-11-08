@@ -62,7 +62,7 @@ export const GlossaryTermForm = (props: Omit<SimpleFormProps, "children">) => {
         source="description"
         addLabel={false}
       />
-      <TextInput fullWidth source="more_info_url" />
+      <TextInput validate={[required()]} fullWidth source="more_info_url" />
       <ReferenceArrayInput
         label="Related terms"
         source="related"

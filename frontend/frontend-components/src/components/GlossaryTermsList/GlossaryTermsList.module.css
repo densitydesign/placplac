@@ -1,0 +1,9 @@
+.glossary_terms_list {
+    column-gap: 10px;
+    row-gap: 10px;
+    flex-wrap: wrap;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+  }
+  

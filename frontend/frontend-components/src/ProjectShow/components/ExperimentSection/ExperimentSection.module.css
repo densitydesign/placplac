@@ -1,5 +1,5 @@
 .main {
-  height: 700px;
+  min-height: 700px;
   width: 100%;
   display: flex;
   border-bottom: 1px solid #000000;
@@ -28,6 +28,6 @@
   transition: 0.3s all;
 }
 .main h2:hover {
-  webkit-filter: blur(4px); /* Chrome, Safari, Opera */
-  filter: blur(4px);
+  webkit-filter: blur(2px); /* Chrome, Safari, Opera */
+  filter: blur(2px);
 }

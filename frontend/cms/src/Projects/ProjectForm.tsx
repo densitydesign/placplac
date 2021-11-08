@@ -5,7 +5,6 @@ import {
   FormTab,
   maxLength,
   ReferenceArrayField,
-  ReferenceField,
   required,
   SelectInput,
   TabbedForm,
@@ -35,8 +34,15 @@ export const ProjectForm = (props: Omit<TabbedFormProps, "children">) => {
           validate={[required(), maxLength(255)]}
         />
 
-        <CustomRichTextInput small source="short_description" />
-        <CustomRichTextInput source="long_description" />
+        <CustomRichTextInput
+          label="Description"
+          small
+          source="short_description"
+        />
+        <CustomRichTextInput
+          label="About the project"
+          source="long_description"
+        />
       </FormTab>
 
       {props.record.id && (

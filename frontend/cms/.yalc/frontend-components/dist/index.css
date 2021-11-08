@@ -251,6 +251,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 }
 .Header-module_left__1XQgd > .Header-module_item__3otTF {
   border-right: 1px solid black;
@@ -261,6 +262,51 @@
 .Header-module_item__3otTF > a {
   color: inherit;
   text-decoration: none;
+}
+.Header-module_submenu__3D878 {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  border-top: 1px solid black;
+}
+.Header-module_submenu__3D878 ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.Header-module_submenu__3D878 li {
+  font-family: Source Sans Pro;
+  font-style: normal;
+  font-weight: bold;
+  border-bottom: 1px solid black;
+  line-height: 60px;
+  text-transform: uppercase;
+  padding-left: 15px;
+  background: white;
+}
+.Header-module_submenu__3D878 li:before {
+  content: "";
+  border-style: solid;
+  border-width: 1px;
+  width: 10px;
+  height: 10px;
+  margin-right: 0.3em;
+  position: relative;
+  display: inline-block;
+  background: black;
+  transform: rotate(45deg);
+}
+.Header-module_submenu__3D878 li:hover {
+  background: black;
+  color: white;
+}
+
+.Header-module_submenu__3D878 li:hover:before {
+  background: white;
 }
 
 .Layout-module_main__3lgQE {
@@ -302,7 +348,7 @@
 }
 
 .ExperimentSection-module_main__2A8KP {
-  height: 700px;
+  min-height: 700px;
   width: 100%;
   display: flex;
   border-bottom: 1px solid #000000;
@@ -331,8 +377,8 @@
   transition: 0.3s all;
 }
 .ExperimentSection-module_main__2A8KP h2:hover {
-  webkit-filter: blur(4px); /* Chrome, Safari, Opera */
-  filter: blur(4px);
+  webkit-filter: blur(2px); /* Chrome, Safari, Opera */
+  filter: blur(2px);
 }
 
 .GlossaryItem-module_main__3bcnm {
@@ -588,6 +634,15 @@ a {
   border-right: none;
 }
 
+.ExperimentShow-module_content_list__l10lK li {
+  transition: 0.3s all;
+}
+
+.ExperimentShow-module_content_list__l10lK li:hover {
+  webkit-filter: blur(2px); /* Chrome, Safari, Opera */
+  filter: blur(2px);
+}
+
 .ResearchQuestion-module_container__1X15L {
   background: black;
   color: white;
@@ -602,6 +657,8 @@ a {
   font-weight: bold;
   letter-spacing: 0.03em;
   line-height: 24px;
+  position: sticky;
+  top: 55px;
 }
 
 .ResearchQuestion-module_research_question_title__aKWc6 {
@@ -681,4 +738,91 @@ a {
 }
 .Disclaimer-module_disclaimer__1c4YT h3 {
   margin-top: 0;
+}
+
+.GlossaryTermsList-module_glossary_terms_list__271x5 {
+    column-gap: 10px;
+    row-gap: 10px;
+    flex-wrap: wrap;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+  }
+  
+.GlossaryShow-module_container__25ML8 {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 55px;
+}
+.GlossaryShow-module_glossary_row__J-bMi {
+  flex-grow: 0;
+  max-width: 100%;
+  flex-basis: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 60px;
+  border-bottom: 1px solid black;
+}
+.GlossaryShow-module_glossary_row__J-bMi  h1 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.GlossaryShow-module_glossary_row__J-bMi.GlossaryShow-module_main__2S8R2 p {
+  font-size: 32px;
+}
+
+.GlossaryCategoryShow-module_main__3xU2a {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin-top: 55px;
+}
+.GlossaryCategoryShow-module_main__3xU2a .GlossaryCategoryShow-module_sidebar__38ORS {
+  width: 480px;
+  height: auto;
+  background: white;
+  padding: 40px 50px;
+  box-sizing: border-box;
+  border-right: 1px solid black;
+  min-width: 480px;
+}
+
+.GlossaryCategoryShow-module_content__3t9h_ {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.GlossaryCategoryShow-module_title__3IuGg {
+  display: flex;
+  align-items: center;
+  line-height: 50px;
+  color: white;
+  padding: 6px 12px;
+  font-family: Source Sans Pro;
+}
+
+.GlossaryCategoryShow-module_title__3IuGg .GlossaryCategoryShow-module_arrow__3F4QB {
+  margin-left: 15px;
+}
+.GlossaryCategoryShow-module_glossary_term_item__2u9W4 {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  border-bottom: 1px solid black;
+  box-sizing: border-box;
+}
+.GlossaryCategoryShow-module_description__2kA_r {
+  padding: 60px 120px;
+}
+.GlossaryCategoryShow-module_term_image__16-JZ {
+  margin-bottom: 60px;
+}
+
+.GlossaryCategoryShow-module_more_info_url__3JGXt {
+  border-top: 1px solid black;
+  text-align: center;
+  width: 100%;
 }
