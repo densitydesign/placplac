@@ -1,0 +1,30 @@
+.main {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  background: black;
+  color: white;
+  align-items: stretch;
+  font-family: Source Serif Pro;
+  font-style: italic;
+  font-weight: normal;
+  font-size: 18px;
+  padding: 30px 0;
+}
+.column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 10px;
+  row-gap: 15px;
+}
+.divider {
+  width: 1px;
+  background: #ffffff66;
+}
+.image_list {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  column-gap: 33px;
+}

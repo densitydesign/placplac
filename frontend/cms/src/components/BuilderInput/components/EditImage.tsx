@@ -1,17 +1,11 @@
 import { Grid } from "@material-ui/core";
-import { FormDataConsumer, required } from "ra-core";
-import {
-  BooleanInput,
-  CheckboxGroupInput,
-  ReferenceInput,
-  TextInput,
-} from "ra-ui-materialui";
+import { FormDataConsumer } from "ra-core";
+import { BooleanInput, CheckboxGroupInput, TextInput } from "ra-ui-materialui";
 
 import { OnChange } from "react-final-form-listeners";
 import { useForm } from "react-final-form";
-import { ProjectMediaDialogCreate } from "../../../Projects/ProjectMediaCreate";
-import { SelectImage } from "../../SelectImage";
 import { CustomRichTextInput } from "../../CustomRichTextInput";
+import { ReferenceInputImage } from "../../ReferenceInputImage";
 interface Props {
   project: number;
 }
@@ -115,16 +109,7 @@ export const EditImage = ({ project }: Props) => {
         </Grid>
 
         <Grid item>
-          <ProjectMediaDialogCreate project={project} />
-          <ReferenceInput
-            label="Image"
-            source="image"
-            reference="media"
-            filter={{ project }}
-            validate={required()}
-          >
-            <SelectImage fileSource="file" titleSource="description" />
-          </ReferenceInput>
+          <ReferenceInputImage source="image" project={project} />
         </Grid>
       </Grid>
     </>

@@ -13,12 +13,13 @@ import {
   TextInput,
 } from "react-admin";
 import { CustomRichTextInput } from "../components/CustomRichTextInput";
+import { Tabs } from "../components/Tabs";
 import { AddExperimentButton } from "./AddExperimentButton";
 import { AddGlossaryTermButton } from "./AddGlossaryTermButton";
 
 export const ProjectForm = (props: Omit<TabbedFormProps, "children">) => {
   return (
-    <TabbedForm {...props}>
+    <TabbedForm tabs={<Tabs />} {...props}>
       <FormTab label="summary">
         <SelectInput
           defaultValue="2"

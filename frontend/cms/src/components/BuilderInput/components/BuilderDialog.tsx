@@ -12,7 +12,7 @@ import {
   DialogActions,
 } from "@material-ui/core";
 import IconCancel from "@material-ui/icons/Cancel";
-import { Button, required } from "react-admin";
+import { Button, required, TextInput } from "react-admin";
 import { Form } from "react-final-form";
 import { FormSaveButton } from "../../FormSaveButton";
 import { CustomRichTextInput } from "../../CustomRichTextInput";
@@ -20,7 +20,6 @@ import { DialogForm, PossibleComponent } from "../types";
 import { EditImage } from "./EditImage";
 import { EditListExperimentSetup } from "./EditListExperimentSetup";
 import arrayMutators from "final-form-arrays";
-
 interface BuilderDialogProps {
   onClose: () => void;
   open: boolean;
@@ -101,6 +100,7 @@ export const BuilderDialog = (props: BuilderDialogProps) => {
           />
         );
       }
+
       case "image": {
         return <EditImage project={project} />;
       }

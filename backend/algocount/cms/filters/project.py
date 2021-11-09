@@ -6,7 +6,7 @@ from cms.models import ProjectMedia, ProjectUser
 class ProjectMediaFilter(django_filters.FilterSet):
     class Meta:
         model = ProjectMedia
-        fields = ["project"]
+        fields = ["project", "type"]
 
 
 class ProjectUserFilter(django_filters.FilterSet):

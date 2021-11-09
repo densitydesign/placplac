@@ -35,6 +35,7 @@ const RadioButtonInputItem = ({
         <Radio
           id={nodeId}
           color="primary"
+          style={{ backgroundColor: "white" }}
           {...inputProps}
           onChange={(_, isActive) => isActive && onChange(value)}
         />

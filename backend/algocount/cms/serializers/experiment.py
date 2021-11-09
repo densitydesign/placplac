@@ -10,7 +10,7 @@ class ExperimentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Experiment
-        fields = ["id", "title",
+        fields = ["id", "title","tags",
                   "description",
                   "context",
                   "research_question",
@@ -31,6 +31,7 @@ class FullExperimentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Experiment
         fields = ["id", "title",
+                  "tags",
                   "description",
                   "context",
                   "research_question",

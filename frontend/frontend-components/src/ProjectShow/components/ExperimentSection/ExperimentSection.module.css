@@ -31,3 +31,11 @@
   webkit-filter: blur(2px); /* Chrome, Safari, Opera */
   filter: blur(2px);
 }
+.pointing_hand {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 0;
+  border-bottom: 1px solid black;
+}

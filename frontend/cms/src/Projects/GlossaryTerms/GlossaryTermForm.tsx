@@ -14,8 +14,7 @@ import {
   ToolbarProps,
 } from "react-admin";
 import { CustomRichTextInput } from "../../components/CustomRichTextInput";
-import { SelectImage } from "../../components/SelectImage";
-import { ProjectMediaDialogCreate } from "../ProjectMediaCreate";
+import { ReferenceInputImage } from "../../components/ReferenceInputImage";
 
 const GlossaryTermFormToolbar = (props: ToolbarProps) => (
   <Toolbar
@@ -72,16 +71,7 @@ export const GlossaryTermForm = (props: Omit<SimpleFormProps, "children">) => {
       >
         <SelectArrayInput optionText="title" />
       </ReferenceArrayInput>
-      <ProjectMediaDialogCreate project={project} />
-
-      <ReferenceInput
-        label="Image"
-        source="image"
-        reference="media"
-        filter={{ project }}
-      >
-        <SelectImage fileSource="file" titleSource="description" />
-      </ReferenceInput>
+      <ReferenceInputImage source="image" project={project} />
     </SimpleForm>
   );
 };

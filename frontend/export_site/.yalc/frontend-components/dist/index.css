@@ -314,6 +314,37 @@
   height: 100%;
 }
 
+.Footer-module_main__19YGG {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  background: black;
+  color: white;
+  align-items: stretch;
+  font-family: Source Serif Pro;
+  font-style: italic;
+  font-weight: normal;
+  font-size: 18px;
+  padding: 30px 0;
+}
+.Footer-module_column__2T5zt {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 10px;
+  row-gap: 15px;
+}
+.Footer-module_divider__20e35 {
+  width: 1px;
+  background: #ffffff66;
+}
+.Footer-module_image_list__12_wP {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  column-gap: 33px;
+}
+
 .ProjectShow-module_hero_section__23NuB {
   position: relative;
   height: 100vh;
@@ -345,6 +376,39 @@
 
 .ProjectShow-module_experiments_description__j0hGX {
   padding: 60px 0px;
+}
+
+.TagsSliding-module_wrapper__21cc3 {
+  width: 100%;
+  overflow: hidden;
+  background: black;
+  color: white;
+  font-family: Source Sans Pro;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.TagsSliding-module_marquee__3CUjh {
+  white-space: nowrap;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  animation: TagsSliding-module_marquee__3CUjh 25s linear infinite;
+}
+
+.TagsSliding-module_marquee__3CUjh span {
+  display: inline-block;
+  margin: 0 4px;
+}
+
+@keyframes TagsSliding-module_marquee__3CUjh {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
 }
 
 .ExperimentSection-module_main__2A8KP {
@@ -379,6 +443,14 @@
 .ExperimentSection-module_main__2A8KP h2:hover {
   webkit-filter: blur(2px); /* Chrome, Safari, Opera */
   filter: blur(2px);
+}
+.ExperimentSection-module_pointing_hand__1nN5K {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 0;
+  border-bottom: 1px solid black;
 }
 
 .GlossaryItem-module_main__3bcnm {
@@ -576,6 +648,7 @@ a {
   display: flex;
   flex-direction: row;
   width: 100%;
+  border-bottom: 1px solid black;
 }
 .ExperimentShow-module_step__2QgMf .ExperimentShow-module_sidebar__2igHp {
   width: 360px;

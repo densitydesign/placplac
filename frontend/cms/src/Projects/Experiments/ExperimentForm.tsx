@@ -10,7 +10,6 @@ import {
   TabbedFormProps,
   TextField,
   TextInput,
-  ReferenceInput,
   DeleteButton,
   SaveButton,
   Toolbar,
@@ -21,8 +20,8 @@ import { BuilderInput } from "../../components/BuilderInput/BuilderInput";
 import { CustomRichTextInput } from "../../components/CustomRichTextInput";
 import { AddStepButton } from "./AddStepButton";
 
-import { ProjectMediaDialogCreate } from "../ProjectMediaCreate";
-import { SelectImage } from "../../components/SelectImage";
+import { ReferenceInputImage } from "../../components/ReferenceInputImage";
+import { Tabs } from "../../components/Tabs";
 
 const ExperimentFormToolbar = (props: ToolbarProps) => (
   <Toolbar
@@ -42,7 +41,12 @@ export const ExperimentForm = (props: Omit<TabbedFormProps, "children">) => {
       : props.record.project;
 
   return (
-    <TabbedForm {...props} redirect="edit" toolbar={<ExperimentFormToolbar />}>
+    <TabbedForm
+      {...props}
+      tabs={<Tabs />}
+      redirect="edit"
+      toolbar={<ExperimentFormToolbar />}
+    >
       <FormTab label="summary">
         <TextInput
           multiline
@@ -61,16 +65,18 @@ export const ExperimentForm = (props: Omit<TabbedFormProps, "children">) => {
           source="description"
           addLabel={false}
         />
-        <ProjectMediaDialogCreate project={project} />
-        <ReferenceInput
-          label="Cover image"
-          source="cover"
-          reference="media"
-          filter={{ project }}
-        >
-          <SelectImage fileSource="file" titleSource="description" />
-        </ReferenceInput>
+
+        <ReferenceInputImage source="cover" project={project} />
       </FormTab>
+      {props.record.id && (
+        <FormTab label="tags">
+          <ArrayInput source="tags">
+            <SimpleFormIterator>
+              <TextInput multiline source="" hiddenLabel label="" />
+            </SimpleFormIterator>
+          </ArrayInput>
+        </FormTab>
+      )}
       {props.record.id && (
         <FormTab label="disclaimers">
           <ArrayInput source="disclaimers">

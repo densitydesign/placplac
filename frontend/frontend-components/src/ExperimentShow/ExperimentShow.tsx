@@ -61,6 +61,7 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
           />
         );
       }
+
       case "listExperimentSetup": {
         return (
           <ExperimentSetupListShow
@@ -225,10 +226,10 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
           )}
         </div>
       )}
-      {steps &&
-        steps.map((step) => (
-          <div key={step.title}>
-            <div id="steps" className={styles.step}>
+      <div id="steps">
+        {steps &&
+          steps.map((step) => (
+            <div key={step.title} className={styles.step}>
               <div className={styles.sidebar}>
                 <div className={styles.step_number}>
                   <h3>step {step.step_number}</h3>
@@ -242,8 +243,8 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
                 {renderSection(step.content)}
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+      </div>
       {findings && (
         <div id="findings" className={"section"}>
           <SectionTitle title="findings" />

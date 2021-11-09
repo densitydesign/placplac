@@ -27,7 +27,7 @@ class ProjectMediaSerializer(serializers.ModelSerializer):
         model = ProjectMedia
         fields = ["id", "project",
                   "file",
-                  "description",
+                  "description","type"
                   ]
 
 

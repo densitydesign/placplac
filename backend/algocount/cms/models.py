@@ -30,12 +30,17 @@ class ProjectUser(CustomModel):
 
 
 class ProjectMedia(CustomModel):
+    TYPE_CHOICES = (("image", "Image"), ("file", "File"))
+
+
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     file = models.FileField()
     description = models.TextField(null=True, blank=True)
+    type = models.CharField(default="image", choices=TYPE_CHOICES, max_length=10)
 
 
 class Experiment(CustomModel):
+    tags = ArrayField(base_field=models.TextField(), null=True, blank=True)
     cover = models.ForeignKey(ProjectMedia, on_delete=models.SET_NULL, null=True)
     title = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True)

@@ -39,4 +39,5 @@ export declare type Experiment = {
     findings?: any[];
     steps: Step[];
     disclaimers?: string[];
+    tags: string[];
 };

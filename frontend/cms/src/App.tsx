@@ -28,6 +28,7 @@ function App() {
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <Admin
+        theme={{ palette: { primary: { main: "#000000" } } }}
         loginPage={LoginPage}
         customRoutes={[
           <RouteWithoutLayout

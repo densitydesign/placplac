@@ -1,0 +1,32 @@
+.wrapper {
+  width: 100%;
+  overflow: hidden;
+  background: black;
+  color: white;
+  font-family: Source Sans Pro;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.marquee {
+  white-space: nowrap;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  animation: marquee 25s linear infinite;
+}
+
+.marquee span {
+  display: inline-block;
+  margin: 0 4px;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}

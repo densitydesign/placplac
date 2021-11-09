@@ -39,7 +39,7 @@ export const GlossarySidebar = (props: GlossarySidebarProps) => {
       <div className={styles.header}>
         <Link href={`${basePath}glossary`}>Glossary</Link>
         {glossaryCategories.map((category) => (
-          <Link href={`${basePath}glossary/${category.id}`}>
+          <Link key={category.id} href={`${basePath}glossary/${category.id}`}>
             {category.title}
           </Link>
         ))}

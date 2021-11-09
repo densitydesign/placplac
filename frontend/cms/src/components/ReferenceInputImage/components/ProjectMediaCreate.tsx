@@ -12,14 +12,23 @@ import {
 } from "react-admin";
 import IconCancel from "@material-ui/icons/Cancel";
 import IconContentAdd from "@material-ui/icons/Add";
-import { useToggler } from "../useToggler";
+import { useToggler } from "../../../useToggler";
+import { useForm } from "react-final-form";
 
 interface Props {
   project: number;
+  source: string;
+  onChange: () => void;
 }
-export const ProjectMediaDialogCreate = ({ project }: Props) => {
+export const ProjectMediaDialogCreate = ({
+  project,
+  source,
+  onChange,
+}: Props) => {
   const { value, setTrue, setFalse } = useToggler();
   const [mutate, { loading }] = useMutation();
+  const form = useForm();
+
   const notify = useNotify();
   return (
     <>
@@ -29,7 +38,7 @@ export const ProjectMediaDialogCreate = ({ project }: Props) => {
       <Dialog open={value}>
         <FormWithRedirect
           resource="media"
-          defaultValue={{ project }}
+          defaultValue={{ project, type: "image" }}
           save={(values) => {
             mutate(
               {
@@ -38,7 +47,9 @@ export const ProjectMediaDialogCreate = ({ project }: Props) => {
                 payload: { data: values },
               },
               {
-                onSuccess: () => {
+                onSuccess: (data) => {
+                  form.change(source, data.id);
+                  onChange();
                   setFalse();
                 },
                 onFailure: ({ error }) => {
