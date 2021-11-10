@@ -3,6 +3,7 @@ import os
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
+from base.serializer_fields import CustomFileField
 from cms.models import Project, ProjectMedia, ProjectUser, GlossaryCategory
 from cms.serializers.experiment import FullExperimentSerializer
 from cms.serializers.glossary import FullGlossaryTermSerializer, GlossaryCategorySerializer
@@ -28,15 +29,16 @@ class ProjectSerializer(serializers.ModelSerializer):
 
 class ProjectMediaSerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField('get_filename')
+    file = CustomFileField()
 
     def get_filename(self, object):
-        return os.path.basename(object.file.path)
+        return os.path.basename(object.file.path) if object.file else None
 
     class Meta:
         model = ProjectMedia
         fields = ["id", "project",
                   "file",
-                  "description", "type", "name"
+                  "description", "type", "name",
                   ]
 
 

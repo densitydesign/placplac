@@ -1,14 +1,15 @@
 import React from "react";
-import { Layout as MainLayout } from "frontend-components";
+import { Experiment, Layout as MainLayout } from "frontend-components";
 import Link from "../components/link";
 
 interface LayoutProps {
   children: React.ReactNode;
+  experiments: Experiment[];
 }
 const Layout = (props: LayoutProps) => {
-  const { children } = props;
+  const { children, experiments } = props;
   return (
-    <MainLayout basePath="/" linkComponent={Link}>
+    <MainLayout experiments={experiments} basePath="/" linkComponent={Link}>
       {children}
     </MainLayout>
   );

@@ -90,7 +90,7 @@ export const ProjectForm = (props: Omit<TabbedFormProps, "children">) => {
       )}
       {props.record.id && (
         <FormTab label="Media">
-          <AddGlossaryTermButton />
+          {/* <AddGlossaryTermButton /> */}
           <ReferenceArrayField
             label=""
             reference="media"

@@ -312,7 +312,18 @@
 
 .Layout-module_main__3lgQE {
   width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.Layout-module_content_wrapper__2ARvt {
+  padding-top: 55px;
   height: 100%;
+  box-sizing: border-box;
+  position: relative;
+  flex: 1 auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .Footer-module_main__19YGG {
@@ -327,6 +338,8 @@
   font-weight: normal;
   font-size: 18px;
   padding: 30px 0;
+  height: 170px;
+  box-sizing: border-box;
 }
 .Footer-module_column__2T5zt {
   display: flex;
@@ -543,7 +556,6 @@ a {
   box-sizing: border-box;
 }
 
-
 .ExperimentShow-module_grid_container__bXa01 {
   width: 100%;
   display: flex;
@@ -694,7 +706,6 @@ a {
 .ExperimentShow-module_top_section__3meJ7 {
   display: flex;
   flex-direction: column;
-  margin-top: 55px;
 }
 
 .ExperimentShow-module_top_section_part__17BMn {
@@ -830,7 +841,6 @@ a {
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin-top: 55px;
 }
 .GlossaryShow-module_glossary_row__J-bMi {
   flex-grow: 0;
@@ -843,7 +853,7 @@ a {
   padding: 60px;
   border-bottom: 1px solid black;
 }
-.GlossaryShow-module_glossary_row__J-bMi  h1 {
+.GlossaryShow-module_glossary_row__J-bMi h1 {
   margin-top: 0;
   margin-bottom: 0;
 }
@@ -855,7 +865,8 @@ a {
   display: flex;
   flex-direction: row;
   width: 100%;
-  margin-top: 55px;
+  height: 100%;
+  flex: 1;
 }
 .GlossaryCategoryShow-module_main__3xU2a .GlossaryCategoryShow-module_sidebar__38ORS {
   width: 480px;

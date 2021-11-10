@@ -1,4 +1,15 @@
 .main {
   width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.content_wrapper {
+  padding-top: 55px;
   height: 100%;
+  box-sizing: border-box;
+  position: relative;
+  flex: 1 auto;
+  display: flex;
+  flex-direction: column;
 }

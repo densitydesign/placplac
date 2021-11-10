@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework.settings import api_settings
 
 from cms.models import ProjectMedia
 from base.utils import file_to_base64
@@ -24,7 +25,25 @@ class FormattedJSONField(serializers.Field):
                 if col["type"] == "image":
                     try:
                         image = ProjectMedia.objects.get(id=col["content"]["image"])
-                        col["content"]["image"] = file_to_base64(image.file.path)
+                        col["content"]["image"] = file_to_base64(image.file.path) if image.file else None
                     except ProjectMedia.DoesNotExist:
                         col["content"]["image"] = None
         return context
+
+
+class CustomFileField(serializers.FileField):
+
+    def to_representation(self, value):
+        if not value:
+            return None
+
+        use_url = getattr(self, 'use_url', api_settings.UPLOADED_FILES_USE_URL)
+        if use_url:
+            try:
+                url = value.url
+            except AttributeError:
+                return None
+
+            return url
+
+        return value.name

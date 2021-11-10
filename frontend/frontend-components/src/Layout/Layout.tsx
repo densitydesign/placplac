@@ -21,7 +21,7 @@ export const Layout = (props: LayoutProps) => {
         basePath={basePath}
         linkComponent={linkComponent}
       />
-      {children}
+      <div className={styles.content_wrapper}>{children}</div>
       <Footer />
     </div>
   );

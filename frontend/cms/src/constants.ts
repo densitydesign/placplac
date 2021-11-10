@@ -1,4 +1,4 @@
-export const url = `${window.location.protocol}//${window.location.hostname}:8000/api`;
+export const url = `/api`;
 export const PERMISSIONS: any = {
   logs: {
     deliveries: "distribution.view_historicaldelivery",

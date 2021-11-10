@@ -1,20 +1,19 @@
 import type { NextPage } from "next";
-import { ExperimentShow } from "frontend-components";
+import { ExperimentShow, GlossaryCategoryShow } from "frontend-components";
 import path from "path";
 import { promises as fs } from "fs";
 import Link from "../../components/link";
 import dynamic from "next/dynamic";
 
 export async function getStaticPaths() {
-  //const filePath = path.join(process.cwd(), "data.json");
   const filePath = process.env.FILE_PATH!;
 
   const fileContents = await fs.readFile(filePath, "utf8");
-  const experiments = JSON.parse(fileContents).experiments.map(
-    (experiment: any) => ({ params: { id: experiment.id.toString() } })
+  const categories = JSON.parse(fileContents).glossary_categories.map(
+    (category: any) => ({ params: { id: category.id.toString() } })
   );
   return {
-    paths: experiments,
+    paths: categories,
     fallback: false,
   };
 }
@@ -22,35 +21,29 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }: { params: { id: number } }) {
   const filePath = path.join(process.cwd(), "data.json");
   const fileContents = JSON.parse(await fs.readFile(filePath, "utf8"));
-  const experiment = fileContents.experiments.find(
-    (experiment: any) => experiment.id.toString() === params.id.toString()
+  const category = fileContents.glossary_categories.find(
+    (category: any) => category.id.toString() === params.id.toString()
+  );
+  const terms = fileContents.glossary_terms.filter(
+    (term: any) => category.title === term.category_title
   );
 
   return {
     props: {
-      experiment,
-      glossaryCategories: fileContents.glossary_categories,
       experiments: fileContents.experiments,
+      category,
+      terms,
     },
   };
 }
 const Layout = dynamic(() => import("../../components/layout"), { ssr: false });
 
-const Experiment: NextPage = ({
-  experiment,
-  glossaryCategories,
-  experiments,
-}: any) => {
+const GlossaryCategory: NextPage = ({ category, terms, experiments }: any) => {
   return (
     <Layout experiments={experiments}>
-      <ExperimentShow
-        glossaryCategories={glossaryCategories}
-        basePath="/"
-        experiment={experiment}
-        linkComponent={Link}
-      />
+      <GlossaryCategoryShow glossaryCategory={category} glossaryTerms={terms} />
     </Layout>
   );
 };
 
-export default Experiment;
+export default GlossaryCategory;

@@ -11,7 +11,7 @@ RUN pip install -r requirements.txt
 RUN pip install -q gunicorn
 COPY --chown=pn:pn . /home/pn/app
 WORKDIR /home/pn/app/frontend/export_site
-RUN  npm install
+RUN  npm install --silent
 WORKDIR /home/pn/app/backend/algocount/
 
 # CMD [ "python", "manage.py", "runserver", "0.0.0.0:8000" ]
