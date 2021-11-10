@@ -13,6 +13,7 @@ export const ColumnContainer = (props: ColumnContainerProps) => {
         display: "flex",
         width: "100%",
       }}
+      className="inner-column"
       onClick={onClick}
     >
       {children}

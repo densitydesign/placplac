@@ -14,9 +14,7 @@
   box-sizing: border-box;
 }
 
-.inner-column {
-  padding: 30px 45px;
-}
+
 .grid_container {
   width: 100%;
   display: flex;

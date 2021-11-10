@@ -126,3 +126,7 @@
   box-sizing: border-box;
   display: block;
 }
+
+:global(.main-application .inner-column) {
+  padding: 30px 45px;
+}

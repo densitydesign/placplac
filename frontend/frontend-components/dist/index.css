@@ -127,6 +127,10 @@
   display: block;
 }
 
+.main-application .inner-column {
+  padding: 30px 45px;
+}
+
 .ExperimentSetupListShow-module_container__3UuZb {
   display: flex;
   flex-direction: column;
@@ -539,9 +543,7 @@ a {
   box-sizing: border-box;
 }
 
-.ExperimentShow-module_inner-column__3RpOG {
-  padding: 30px 45px;
-}
+
 .ExperimentShow-module_grid_container__bXa01 {
   width: 100%;
   display: flex;

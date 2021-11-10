@@ -87,7 +87,7 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
             className={classnames(
               styles[classGrid],
               styles.grid_container,
-              styles.inner_column
+              "inner-column"
             )}
           >
             {renderItem(col, noPadding)}
@@ -139,7 +139,7 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
           </div>
         </div>
         <div className={styles.top_section_part}>
-          <div className={classnames(styles.grid_8, styles.inner_column)}>
+          <div className={classnames(styles.grid_8, "inner-column")}>
             <div className={styles.description}>
               {description && <TextShow text={description} />}
             </div>
