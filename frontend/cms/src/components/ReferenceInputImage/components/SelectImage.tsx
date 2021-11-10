@@ -5,7 +5,6 @@ import {
   Grid,
   InputLabel,
 } from "@material-ui/core";
-import { styles } from "@material-ui/pickers/views/Calendar/Calendar";
 import { makeStyles } from "@material-ui/styles";
 import { FieldTitle, InputHelperText, Record } from "react-admin";
 import RadioButton from "../../RadioButton";

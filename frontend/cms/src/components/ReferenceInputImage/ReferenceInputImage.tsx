@@ -2,7 +2,6 @@ import { makeStyles } from "@material-ui/styles";
 import { required } from "ra-core";
 import { ReferenceInput } from "ra-ui-materialui";
 import React, { useCallback, useState } from "react";
-import { ProjectMediaDialogCreate } from "./components/ProjectMediaCreate";
 import { SelectImage } from "./components/SelectImage";
 
 const useStyles = makeStyles(() => ({
@@ -12,9 +11,10 @@ const useStyles = makeStyles(() => ({
 interface ReferenceInputImageProps {
   source: string;
   project: number;
+  label?: string;
 }
 export const ReferenceInputImage = (props: ReferenceInputImageProps) => {
-  const { source, project } = props;
+  const { source, project, label } = props;
   const classes = useStyles();
   const [version, setVersion] = useState(0);
 
@@ -24,7 +24,7 @@ export const ReferenceInputImage = (props: ReferenceInputImageProps) => {
     <div className={classes.root}>
       <ReferenceInput
         key={version}
-        label="Image"
+        label={label ? label : "Image"}
         source={source}
         reference="media"
         filter={{ project, type: "image" }}

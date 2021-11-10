@@ -1,86 +1,64 @@
 import { Dialog, DialogActions, DialogContent } from "@material-ui/core";
 import {
+  AutocompleteInput,
   Button,
   FormWithRedirect,
+  ReferenceInput,
   SaveButton,
-  TextInput,
   useMutation,
   useNotify,
   useRecordContext,
-  Record,
-  useRedirect,
-  required,
-  maxLength,
-  SelectInput,
-  ReferenceInput,
+  useRefresh,
 } from "react-admin";
 import IconCancel from "@material-ui/icons/Cancel";
 import IconContentAdd from "@material-ui/icons/Add";
 import { useToggler } from "../useToggler";
-import { CustomRichTextInput } from "../components/CustomRichTextInput";
 
-export const AddGlossaryTermButton = () => {
+export const AddCollaboratorButton = () => {
   const { value, setTrue, setFalse } = useToggler();
   const [mutate, { loading }] = useMutation();
   const record = useRecordContext();
   const { id: project } = record;
   const notify = useNotify();
-  const redirect = useRedirect();
-  const onSave = (values: Partial<Record>) =>
-    mutate(
-      {
-        type: "create",
-        resource: "glossary-terms",
-        payload: { data: values },
-      },
-      {
-        onSuccess: ({ data }) => {
-          setFalse();
-          redirect("edit", "/glossary-terms", data.id);
-        },
-        onFailure: (error) => {
-          notify("ra.page.error", "error");
-        },
-      }
-    );
-
+  const refresh = useRefresh();
   return (
     <>
       <Button
         style={{ marginBottom: "10px" }}
         onClick={setTrue}
-        label="Add glossary term"
+        label="Add collaborator"
       >
         <IconContentAdd />
       </Button>
-      <Dialog maxWidth="sm" fullWidth open={value}>
+      <Dialog open={value}>
         <FormWithRedirect
-          resource="glossary-terms"
+          resource="project-collaborators"
           initialValues={{ project }}
-          save={onSave}
+          save={(values) => {
+            mutate(
+              {
+                type: "create",
+                resource: "project-collaborators",
+                payload: { data: values },
+              },
+              {
+                onSuccess: (data) => {
+                  refresh();
+                  setFalse();
+                },
+                onFailure: (error) => {
+                  console.log(error);
+                  notify("ra.page.error", "error");
+                },
+              }
+            );
+          }}
           render={({ handleSubmitWithRedirect, pristine, saving }) => (
             <>
               <DialogContent>
-                <ReferenceInput
-                  label="Category"
-                  source="glossary_category"
-                  reference="glossary-categories"
-                  filter={{ project }}
-                  validate={required()}
-                >
-                  <SelectInput optionText="title" />
+                <ReferenceInput reference="users" source="user_id">
+                  <AutocompleteInput optionText="email" />
                 </ReferenceInput>
-                <TextInput
-                  multiline
-                  fullWidth
-                  source="title"
-                  validate={[required(), maxLength(100)]}
-                />
-                <CustomRichTextInput
-                  validate={[required()]}
-                  source="description"
-                  addLabel={false}
-                />
               </DialogContent>
               <DialogActions>
                 <Button

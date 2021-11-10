@@ -18,7 +18,7 @@ export const StepActions = (props: StepActionsProps) => {
           redirect(
             `/experiments/${
               record && record.experiment ? record.experiment : props.experiment
-            }/5`
+            }/6`
           )
         }
       >

@@ -1,4 +1,4 @@
-from rest_framework.permissions import DjangoModelPermissions
+from rest_framework.permissions import DjangoModelPermissions, BasePermission, SAFE_METHODS
 
 
 class DjangoModelViewPermissions(DjangoModelPermissions):
@@ -24,3 +24,16 @@ class DjangoModelViewPermissions(DjangoModelPermissions):
         if request.method == 'OPTIONS':
             return True
         return super(DjangoModelViewPermissions, self).has_permission(request, view)
+
+
+class IsSuperUserOrReadOnly(BasePermission):
+    """
+    The request is authenticated as a user, or is a read-only request.
+    """
+
+    def has_permission(self, request, view):
+        return bool(
+            request.method in SAFE_METHODS or
+            request.user and
+            request.user.is_superuser
+        )

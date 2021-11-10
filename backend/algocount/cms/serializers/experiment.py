@@ -1,7 +1,10 @@
+import json
+
 from rest_framework import serializers
 
 from base.serializer_fields import Base64ImageFieldAllImages, FormattedJSONField
 from cms.models import Experiment
+from cms.serializers.glossary import FullGlossaryTermSerializer
 from cms.serializers.step import FullStepSerializer
 
 
@@ -10,7 +13,7 @@ class ExperimentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Experiment
-        fields = ["id", "title","tags",
+        fields = ["id", "title", "tags",
                   "description",
                   "context",
                   "research_question",
@@ -22,11 +25,27 @@ class ExperimentSerializer(serializers.ModelSerializer):
 
 
 class FullExperimentSerializer(serializers.ModelSerializer):
-    cover = Base64ImageFieldAllImages( read_only=True)
+    cover = Base64ImageFieldAllImages(read_only=True)
     context = FormattedJSONField()
     findings = FormattedJSONField()
     experiment_setup = FormattedJSONField()
     steps = FullStepSerializer(many=True, source="step_set")
+    glossary_terms = serializers.SerializerMethodField('get_glossary_terms')
+
+    def get_glossary_terms(self, object):
+        glossary_terms = object.project.glossaryterm_set.all()
+        found_glossary_terms = []
+        steps_content = "".join(["{}{}".format(json.dumps(step.content) , step.description) for step in object.step_set.all()])
+        content_str = "{}{}{}{}{}".format(json.dumps(object.context), json.dumps(object.findings), json.dumps(
+            object.experiment_setup), object.description, steps_content)
+
+        for term in glossary_terms:
+            check_link = "glossary/{}".format(term.id)
+            if check_link in content_str:
+                found_glossary_terms.append(term)
+                continue
+
+        return FullGlossaryTermSerializer(found_glossary_terms, many=True).data
 
     class Meta:
         model = Experiment
@@ -39,4 +58,4 @@ class FullExperimentSerializer(serializers.ModelSerializer):
                   "disclaimers",
                   "findings",
                   "project",
-                  "steps", "cover"]
+                  "steps", "cover", "glossary_terms"]

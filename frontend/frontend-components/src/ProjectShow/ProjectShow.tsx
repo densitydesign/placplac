@@ -26,14 +26,18 @@ export const ProjectShow = (props: ProjectProps) => {
       <div className={styles.hero_section}>
         <div className={styles.hero_section_content}>
           <h1>{project.title}</h1>
-          <TextShow text={project.short_description} />
+          {project.short_description && (
+            <TextShow text={project.short_description} />
+          )}
         </div>
       </div>
       <div className={"section"}>
         <div className={styles.experiments}>
           <SectionTitle title={"experiments"} />
           <div className={styles.experiments_description}>
-            <TextShow text={project.experiments_description} />
+            {project.experiments_description && (
+              <TextShow text={project.experiments_description} />
+            )}
           </div>
         </div>
       </div>
@@ -49,7 +53,9 @@ export const ProjectShow = (props: ProjectProps) => {
         <div id="abouttheproject" className={styles.experiments}>
           <SectionTitle title={"about the project"} />
           <div className={styles.experiments_description}>
-            <TextShow text={project.long_description} />
+            {project.long_description && (
+              <TextShow text={project.long_description} />
+            )}
           </div>
         </div>
       </div>

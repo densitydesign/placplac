@@ -66,7 +66,7 @@ export const ExperimentForm = (props: Omit<TabbedFormProps, "children">) => {
           addLabel={false}
         />
 
-        <ReferenceInputImage source="cover" project={project} />
+        <ReferenceInputImage label="Cover" source="cover" project={project} />
       </FormTab>
       {props.record.id && (
         <FormTab label="tags">
@@ -119,6 +119,7 @@ export const ExperimentForm = (props: Omit<TabbedFormProps, "children">) => {
             <Datagrid>
               <TextField source="title" />
               <EditButton />
+              <DeleteButton redirect={false} mutationMode="optimistic" />
             </Datagrid>
           </ReferenceArrayField>
         </FormTab>

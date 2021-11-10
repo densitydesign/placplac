@@ -33,70 +33,71 @@ export const ProjectShowBackend = () => {
   );
   const basePath = `/preview/${id}/`;
   return project ? (
-    <Layout
-      experiments={project.experiments}
-      linkComponent={Link}
-      basePath={basePath}
-    >
-      <ScrollToTop />
-      <Switch>
-        {project.experiments.map((experiment: any) => (
+    <>
+      <Layout
+        experiments={project.experiments}
+        linkComponent={Link}
+        basePath={basePath}
+      >
+        <ScrollToTop />
+        <Switch>
+          {project.experiments.map((experiment: any) => (
+            <Route
+              key={experiment.id}
+              exact
+              path={`${basePath}experiments/${experiment.id}`}
+              render={() => (
+                <ExperimentShow
+                  glossaryCategories={project.glossary_categories}
+                  basePath={basePath}
+                  experiment={experiment}
+                  linkComponent={Link}
+                />
+              )}
+            />
+          ))}
           <Route
-            key={experiment.id}
             exact
-            path={`${basePath}experiments/${experiment.id}`}
+            path={basePath}
             render={() => (
-              <ExperimentShow
+              <ProjectShow
                 glossaryCategories={project.glossary_categories}
                 basePath={basePath}
-                experiment={experiment}
-                glossaryTerms={project.glossary_terms}
+                project={project}
                 linkComponent={Link}
+                glossaryTerms={project.glossary_terms}
               />
             )}
           />
-        ))}
-        <Route
-          exact
-          path={basePath}
-          render={() => (
-            <ProjectShow
-              glossaryCategories={project.glossary_categories}
-              basePath={basePath}
-              project={project}
-              linkComponent={Link}
-              glossaryTerms={project.glossary_terms}
-            />
-          )}
-        />
-        <Route
-          exact
-          path={`${basePath}glossary/`}
-          render={() => (
-            <GlossaryShow
-              basePath={basePath}
-              linkComponent={Link}
-              glossaryCategories={project.glossary_categories}
-              glossaryTerms={project.glossary_terms}
-            />
-          )}
-        />
-        {project.glossary_categories.map((category: any) => (
           <Route
-            key={category.id}
             exact
-            path={`${basePath}glossary/${category.id}/`}
+            path={`${basePath}glossary/`}
             render={() => (
-              <GlossaryCategoryShow
-                glossaryCategory={category}
-                glossaryTerms={project.glossary_terms.filter(
-                  (term: any) => term.category_title === category.title
-                )}
+              <GlossaryShow
+                basePath={basePath}
+                linkComponent={Link}
+                glossaryCategories={project.glossary_categories}
+                glossaryTerms={project.glossary_terms}
               />
             )}
           />
-        ))}
-      </Switch>
-    </Layout>
+          {project.glossary_categories.map((category: any) => (
+            <Route
+              key={category.id}
+              exact
+              path={`${basePath}glossary/${category.id}/`}
+              render={() => (
+                <GlossaryCategoryShow
+                  glossaryCategory={category}
+                  glossaryTerms={project.glossary_terms.filter(
+                    (term: any) => term.category_title === category.title
+                  )}
+                />
+              )}
+            />
+          ))}
+        </Switch>
+      </Layout>
+    </>
   ) : null;
 };

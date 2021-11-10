@@ -70,6 +70,7 @@ declare type Experiment = {
     steps: Step[];
     disclaimers?: string[];
     tags: string[];
+    glossary_terms: GlossaryTerm[];
 };
 
 interface LayoutProps {
@@ -95,7 +96,6 @@ declare const ProjectShow: (props: ProjectProps) => JSX.Element;
 
 interface ExperimentShowProps {
     experiment: Experiment;
-    glossaryTerms: GlossaryTerm[];
     basePath: string;
     linkComponent: ComponentType<{
         href: string;

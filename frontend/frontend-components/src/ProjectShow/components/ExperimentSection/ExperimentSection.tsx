@@ -16,10 +16,9 @@ export const ExperimentSection = ({
   basePath,
   linkComponent: Link,
 }: ExperimentSectionProps) => {
-  console.log(experiment.cover);
   return (
     <>
-      <TagsSliding strings={experiment.tags} />
+      {experiment.tags && <TagsSliding strings={experiment.tags} />}
       <div className={styles.main}>
         <div
           className={classNames(styles.section, styles.cover)}

@@ -15,7 +15,7 @@
 }
 
 .inner-column {
-  padding: 60px 45px;
+  padding: 30px 45px;
 }
 .grid_container {
   width: 100%;
@@ -70,8 +70,7 @@
   padding: 60px 45px;
 }
 .description {
-  font-size: 32px;
-  line-height: 48px;
+  font-size: 1.5em;
 }
 
 .research_question_title {
@@ -96,17 +95,24 @@
   padding: 6em 2em;
   line-height: 64px;
 }
-
+.context {
+  font-size: 1.4em;
+}
 .glossary_terms_list {
-  column-gap: 10px;
-  row-gap: 10px;
-  flex-wrap: wrap;
+  padding: 45px 60px;
+}
+.glossary_terms_list h3 {
+  text-transform: uppercase;
+  margin-top: 0;
+}
+.glossary_terms_list:not(:last-child) {
+  border-bottom: 1px solid black;
 }
 
 .content_list {
   list-style-image: url("../assets/right-arrow.png");
   font-family: Source Sans Pro;
-  font-size: 28px;
+  font-size: 1.4em;
 }
 .content_list > li {
   margin: 10px 0;

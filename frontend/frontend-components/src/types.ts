@@ -42,4 +42,5 @@ export type Experiment = {
   steps: Step[];
   disclaimers?: string[];
   tags: string[];
+  glossary_terms: GlossaryTerm[];
 };

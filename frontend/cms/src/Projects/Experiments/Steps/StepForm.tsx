@@ -22,7 +22,7 @@ const StepFormToolbar = (props: ToolbarProps) => {
     >
       <SaveButton />
       {props.record && props.record.id && (
-        <DeleteButton redirect={`/experiments/${props.record.experiment}/5`} />
+        <DeleteButton redirect={`/experiments/${props.record.experiment}/6`} />
       )}
     </Toolbar>
   );

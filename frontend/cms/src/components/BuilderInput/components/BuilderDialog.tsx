@@ -12,7 +12,7 @@ import {
   DialogActions,
 } from "@material-ui/core";
 import IconCancel from "@material-ui/icons/Cancel";
-import { Button, required, TextInput } from "react-admin";
+import { Button, required } from "react-admin";
 import { Form } from "react-final-form";
 import { FormSaveButton } from "../../FormSaveButton";
 import { CustomRichTextInput } from "../../CustomRichTextInput";

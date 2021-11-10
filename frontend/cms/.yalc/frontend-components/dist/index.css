@@ -69,7 +69,7 @@
   font-family: Domine;
   font-style: normal;
   font-weight: bold;
-  line-height: 95px;
+  line-height: 1.2em;
 }
 
 .main-application h2 {
@@ -82,8 +82,6 @@
   font-family: Source Sans Pro;
   font-style: normal;
   font-weight: bold;
-  font-size: 20px;
-  line-height: 34px;
   letter-spacing: 0.1em;
   color: #000000;
   text-transform: uppercase;
@@ -128,7 +126,6 @@
   box-sizing: border-box;
   display: block;
 }
-
 
 .ExperimentSetupListShow-module_container__3UuZb {
   display: flex;
@@ -543,7 +540,7 @@ a {
 }
 
 .ExperimentShow-module_inner-column__3RpOG {
-  padding: 60px 45px;
+  padding: 30px 45px;
 }
 .ExperimentShow-module_grid_container__bXa01 {
   width: 100%;
@@ -598,8 +595,7 @@ a {
   padding: 60px 45px;
 }
 .ExperimentShow-module_description__2HJMD {
-  font-size: 32px;
-  line-height: 48px;
+  font-size: 1.5em;
 }
 
 .ExperimentShow-module_research_question_title__3W2KL {
@@ -624,17 +620,24 @@ a {
   padding: 6em 2em;
   line-height: 64px;
 }
-
+.ExperimentShow-module_context__2YXjO {
+  font-size: 1.4em;
+}
 .ExperimentShow-module_glossary_terms_list__ldMaL {
-  column-gap: 10px;
-  row-gap: 10px;
-  flex-wrap: wrap;
+  padding: 45px 60px;
+}
+.ExperimentShow-module_glossary_terms_list__ldMaL h3 {
+  text-transform: uppercase;
+  margin-top: 0;
+}
+.ExperimentShow-module_glossary_terms_list__ldMaL:not(:last-child) {
+  border-bottom: 1px solid black;
 }
 
 .ExperimentShow-module_content_list__l10lK {
   list-style-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAASCAYAAABFGc6jAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAABYSURBVHgB7ZWxDYAwDAQfJvlVmIQRYAQ2hU3CR0rqRErsJj7pJBeWrnBhYJxLEsbcMsnXOsYSiVjE+mObfDAfyrPMnzx22JDgAOFwJ0ZkzUjG7U3UGFtLP3JOLPrZ+b1wAAAAAElFTkSuQmCC");
   font-family: Source Sans Pro;
-  font-size: 28px;
+  font-size: 1.4em;
 }
 .ExperimentShow-module_content_list__l10lK > li {
   margin: 10px 0;
@@ -814,14 +817,13 @@ a {
 }
 
 .GlossaryTermsList-module_glossary_terms_list__271x5 {
-    column-gap: 10px;
-    row-gap: 10px;
-    flex-wrap: wrap;
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-  }
-  
+  row-gap: 10px;
+  flex-wrap: wrap;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
 .GlossaryShow-module_container__25ML8 {
   display: flex;
   flex-direction: column;

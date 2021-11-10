@@ -12,8 +12,10 @@ import {
   TextField,
   TextInput,
 } from "react-admin";
+import { CustomFileField } from "../components/CustomFileField";
 import { CustomRichTextInput } from "../components/CustomRichTextInput";
 import { Tabs } from "../components/Tabs";
+import { AddCollaboratorButton } from "./AddCollaboratorButton";
 import { AddExperimentButton } from "./AddExperimentButton";
 import { AddGlossaryTermButton } from "./AddGlossaryTermButton";
 
@@ -67,6 +69,7 @@ export const ProjectForm = (props: Omit<TabbedFormProps, "children">) => {
           </ReferenceArrayField>
         </FormTab>
       )}
+
       {props.record.id && (
         <FormTab label="Glossary">
           <AddGlossaryTermButton />
@@ -78,6 +81,26 @@ export const ProjectForm = (props: Omit<TabbedFormProps, "children">) => {
           >
             <Datagrid>
               <TextField source="title" />
+              <TextField source="category_title" />
+              <EditButton />
+              <DeleteButton redirect={false} mutationMode="optimistic" />
+            </Datagrid>
+          </ReferenceArrayField>
+        </FormTab>
+      )}
+      {props.record.id && (
+        <FormTab label="Media">
+          <AddGlossaryTermButton />
+          <ReferenceArrayField
+            label=""
+            reference="media"
+            source="projectmedia_set"
+            fullWidth
+          >
+            <Datagrid>
+              <CustomFileField source="file" title="name" />
+              <TextField source="type" />
+              <TextField source="description" />
               <EditButton />
               <DeleteButton redirect={false} mutationMode="optimistic" />
             </Datagrid>
@@ -86,7 +109,7 @@ export const ProjectForm = (props: Omit<TabbedFormProps, "children">) => {
       )}
       {props.record.id && (
         <FormTab label="Collaborators">
-          <AddGlossaryTermButton />
+          <AddCollaboratorButton />
           <ReferenceArrayField
             label=""
             reference="project-collaborators"
@@ -95,7 +118,6 @@ export const ProjectForm = (props: Omit<TabbedFormProps, "children">) => {
           >
             <Datagrid>
               <TextField source="user" />
-              <EditButton />
               <DeleteButton redirect={false} mutationMode="optimistic" />
             </Datagrid>
           </ReferenceArrayField>

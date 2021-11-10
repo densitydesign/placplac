@@ -23,7 +23,7 @@ class ProjectUser(CustomModel):
 
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    level = models.CharField(choices=LEVEL_CHOICES, max_length=1)
+    level = models.CharField(choices=LEVEL_CHOICES, max_length=1, default="2")
 
     class Meta:
         unique_together = (('user', 'project'),)
@@ -57,7 +57,7 @@ class Experiment(CustomModel):
 class Step(CustomModel):
     title = models.CharField(max_length=255)
     description = models.TextField(null=True)
-    content = models.JSONField()
+    content = models.JSONField(null=True, blank=True)
     step_number = models.SmallIntegerField()
     experiment = models.ForeignKey(Experiment, on_delete=models.CASCADE)
 
@@ -75,4 +75,4 @@ class GlossaryTerm(CustomModel):
     related = models.ManyToManyField("self", blank=True)
     glossary_category = models.ForeignKey(GlossaryCategory, on_delete=models.CASCADE)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    more_info_url = models.TextField()
+    more_info_url = models.TextField(null=True, blank=True)

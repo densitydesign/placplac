@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import classnames from "classnames";
-import { createMuiTheme, makeStyles } from "@material-ui/core/styles";
+import { createTheme, makeStyles } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 import { Container } from "@material-ui/core";
 import { ReduxState } from "ra-core";
@@ -38,7 +38,7 @@ export const Layout = ({
   ...props
 }: LayoutProps): JSX.Element => {
   const themeProp = useRef(themeOverride);
-  const [theme, setTheme] = useState(() => createMuiTheme(themeOverride));
+  const [theme, setTheme] = useState(() => createTheme(themeOverride));
   const {
     appBar: DefaultAppBar = AppBar,
     children,
@@ -53,7 +53,7 @@ export const Layout = ({
   useEffect(() => {
     if (themeProp.current !== themeOverride) {
       themeProp.current = themeOverride;
-      setTheme(createMuiTheme(themeOverride));
+      setTheme(createTheme(themeOverride));
     }
   }, [themeOverride, themeProp, theme, setTheme]);
   const open = useSelector<ReduxState, boolean>(

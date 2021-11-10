@@ -5,7 +5,6 @@ import styles from "./ExperimentShow.module.css";
 import { ExperimentSetupListShow } from "../ExperimentSetupListShow";
 import { SectionTitle } from "../SectionTitle";
 import { ResearchQuestion } from "./components/ResearchQuestion";
-// import { HashLink } from "react-router-hash-link";
 import { Experiment, GlossaryTerm } from "../types";
 import { ExperimentDiagram } from "./components/ExperimentDiagram";
 import { Disclaimer } from "./components/Disclaimer";
@@ -17,7 +16,6 @@ import { GlossaryCategory } from "..";
 
 interface ExperimentShowProps {
   experiment: Experiment;
-  glossaryTerms: GlossaryTerm[];
   basePath: string;
   linkComponent: ComponentType<{ href: string }>;
   glossaryCategories: GlossaryCategory[];
@@ -33,8 +31,8 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
       steps,
       findings,
       disclaimers,
+      glossary_terms,
     },
-    glossaryTerms,
     basePath,
     linkComponent,
     glossaryCategories,
@@ -100,7 +98,9 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
   };
 
   const renderSection = (section: any[]) => {
-    return section!.map((row, index) => renderRow(row, index, undefined));
+    return section
+      ? section.map((row, index) => renderRow(row, index, undefined))
+      : null;
   };
 
   return (
@@ -115,33 +115,27 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
             )}
           </div>
           <div className={classnames(styles.container_column, styles.grid_4)}>
-            <div
-              style={{
-                padding: "45px 60px",
-                borderBottom: "1px solid black",
-              }}
-              className={classnames(styles.container_column, styles.grid_auto)}
-            >
-              <h3 style={{ marginTop: 0 }}>TOOLS</h3>
-              <GlossaryTermsList
-                glossaryTerms={glossaryTerms.filter(
-                  (term) => term.category_title === "Tools"
-                )}
-              />
-            </div>
-            <div
-              style={{
-                padding: "45px 60px",
-              }}
-              className={classnames(styles.container_column, styles.grid_auto)}
-            >
-              <h3 style={{ marginTop: 0 }}>TECHNIQUES</h3>
-              <GlossaryTermsList
-                glossaryTerms={glossaryTerms.filter(
-                  (term) => term.category_title === "Techniques"
-                )}
-              />
-            </div>
+            {glossaryCategories.map((category) =>
+              glossary_terms.some(
+                (term) => term.category_title === category.title
+              ) ? (
+                <div
+                  key={category.id}
+                  className={classnames(
+                    styles.container_column,
+                    styles.grid_auto,
+                    styles.glossary_terms_list
+                  )}
+                >
+                  <h3>{category.title}</h3>
+                  <GlossaryTermsList
+                    glossaryTerms={glossary_terms.filter(
+                      (term) => term.category_title === category.title
+                    )}
+                  />
+                </div>
+              ) : null
+            )}
           </div>
         </div>
         <div className={styles.top_section_part}>
@@ -168,13 +162,7 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
                 <a href="#experimentSetup">Experiment setup</a>
               </li>
               <li>
-                <a href="#disclaimer">Disclaimer</a>
-              </li>
-              <li>
-                <a href="#experimentDiagram">Experiment diagram</a>
-              </li>
-              <li>
-                <a href="#steps">Steps</a>
+                <a href="#experimentDiagram">Experiment steps</a>
               </li>
               <li>
                 <a href="#findings">Findings</a>
@@ -185,27 +173,29 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
       </div>
 
       {context && (
-        <div id="context" className={"section"}>
+        <div id="context" className={classnames("section", styles.context)}>
           <SectionTitle title="context" />
           {renderSection(context)}
         </div>
       )}
       {researchQuestion && (
-        <div id="researchQuestion" className={"section"}>
-          <div className={styles.research_question_title}>
-            <span>
-              RESEARCH
-              <br />
-              QUESTION
-            </span>
-            <span className={styles.slashes}>{"//"}</span>
+        <>
+          <div id="researchQuestion" className={"section"}>
+            <div className={styles.research_question_title}>
+              <span>
+                RESEARCH
+                <br />
+                QUESTION
+              </span>
+              <span className={styles.slashes}>{"//"}</span>
+            </div>
+            <div className={styles.research_question_content}>
+              <h2>{researchQuestion}</h2>
+            </div>
           </div>
-          <div className={styles.research_question_content}>
-            <h2>{researchQuestion}</h2>
-          </div>
-        </div>
+          <ResearchQuestion researchQuestion={researchQuestion} />
+        </>
       )}
-      <ResearchQuestion researchQuestion={researchQuestion} />
       {experimentSetup && (
         <div id="experimentSetup" className={"section"}>
           <SectionTitle title="experiment setup" />
@@ -229,7 +219,11 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
       <div id="steps">
         {steps &&
           steps.map((step) => (
-            <div key={step.title} className={styles.step}>
+            <div
+              id={`step${step.step_number}`}
+              key={step.title}
+              className={styles.step}
+            >
               <div className={styles.sidebar}>
                 <div className={styles.step_number}>
                   <h3>step {step.step_number}</h3>
@@ -255,7 +249,7 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
         glossaryCategories={glossaryCategories}
         linkComponent={linkComponent}
         basePath={basePath}
-        glossaryTerms={glossaryTerms}
+        glossaryTerms={glossary_terms}
       />
     </>
   );

@@ -150,9 +150,9 @@ const dataprovider = (
     },
 
     getMany: (resource, params) => {
-      return Promise.all(params.ids.map((id) => getOneJson(resource, id))).then(
-        (data) => ({ data })
-      );
+      return Promise.all(params.ids.map((id) => getOneJson(resource, id)))
+        .then((data) => ({ data }))
+        .catch(() => ({ data: [] }));
     },
 
     getManyReference: async (resource, params) => {
@@ -224,7 +224,7 @@ const dataprovider = (
     delete: (resource, params) =>
       app(`${apiUrl}/${resource}/${params.id}/`, {
         method: "DELETE",
-      }),
+      }).then(() => ({ data: params.previousData as any })),
 
     deleteMany: (resource, params) =>
       app(`${apiUrl}/${resource}/bulk_delete/`, {

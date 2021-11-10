@@ -3,7 +3,6 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 
-
 class AutocompleteViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
 
     def check_permissions(self, request):
@@ -22,4 +21,3 @@ class CustomModelView(viewsets.ModelViewSet):
             return Response(status=status.HTTP_400_BAD_REQUEST)
         self.filter_queryset(self.get_queryset()).filter(id__in=request.data["ids"]).delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
