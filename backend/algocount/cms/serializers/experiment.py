@@ -29,13 +29,17 @@ class FullExperimentSerializer(serializers.ModelSerializer):
     context = FormattedJSONField()
     findings = FormattedJSONField()
     experiment_setup = FormattedJSONField()
-    steps = FullStepSerializer(many=True, source="step_set")
+    steps = serializers.SerializerMethodField('get_steps')
     glossary_terms = serializers.SerializerMethodField('get_glossary_terms')
+
+    def get_steps(self, object):
+        return FullStepSerializer(object.step_set.all().order_by("step_number"), many=True, source="step_set").data
 
     def get_glossary_terms(self, object):
         glossary_terms = object.project.glossaryterm_set.all()
         found_glossary_terms = []
-        steps_content = "".join(["{}{}".format(json.dumps(step.content) , step.description) for step in object.step_set.all()])
+        steps_content = "".join(
+            ["{}{}".format(json.dumps(step.content), step.description) for step in object.step_set.all()])
         content_str = "{}{}{}{}{}".format(json.dumps(object.context), json.dumps(object.findings), json.dumps(
             object.experiment_setup), object.description, steps_content)
 

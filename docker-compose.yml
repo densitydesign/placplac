@@ -9,7 +9,7 @@ services:
     volumes:
       - media:/home/pn/app/backend/algocount/media/
     ports:
-      - 3000:80
+      - 3001:80
 
     depends_on:
       - web

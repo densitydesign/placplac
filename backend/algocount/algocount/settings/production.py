@@ -52,3 +52,4 @@ logging.config.dictConfig({
 
 
 LOGGER = logging.getLogger('django')
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
