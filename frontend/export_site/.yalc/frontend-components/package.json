@@ -1,29 +1,31 @@
 {
-    "name": "frontend-components",
-    "version": "1.1.2",
-    "description": "",
-    "main": "dist/index.js",
-    "module": "dist/index.js",
-    "types": "dist/index.d.ts",
-    "scripts": {
-        "build": "rollup -c && yalc push"
-    },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
-    "sideEffects": false,
-    "peerDependencies": {
-        "classnames": "^2.3.1",
-        "history": "^4.10.1",
-        "react": "^17.0.2",
-        "react-dom": "^17.0.2",
-        "react-router-hash-link": "^2.4.3"
-    },
-    "files": [
-        "/dist"
-    ],
-    "dependencies": {
-        "postcss-url": "^10.1.3"
-    },
-    "yalcSig": "71fae236e3d40cc9240fbd5beec9fb22"
+  "name": "frontend-components",
+  "version": "1.1.2",
+  "description": "",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "rollup -c && yalc push",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "sideEffects": false,
+  "peerDependencies": {
+    "classnames": "^2.3.1",
+    "history": "^4.10.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-router-hash-link": "^2.4.3"
+  },
+  "files": [
+    "/dist"
+  ],
+  "dependencies": {
+    "postcss-url": "^10.1.3"
+  },
+  "yalcSig": "1db823514d6aead09c0aa496e9812e23"
 }

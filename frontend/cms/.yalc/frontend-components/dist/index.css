@@ -815,20 +815,6 @@ a {
   position: absolute;
 }
 
-.Disclaimer-module_disclaimer__1c4YT {
-  padding: 20px 45px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid black;
-  border-radius: 80px;
-  flex-direction: column;
-  margin-bottom: 60px;
-}
-.Disclaimer-module_disclaimer__1c4YT h3 {
-  margin-top: 0;
-}
-
 .GlossaryTermsList-module_glossary_terms_list__271x5 {
   row-gap: 10px;
   flex-wrap: wrap;

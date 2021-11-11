@@ -18,7 +18,6 @@ class ExperimentSerializer(serializers.ModelSerializer):
                   "context",
                   "research_question",
                   "experiment_setup",
-                  "disclaimers",
                   "findings",
                   "project",
                   "step_set", "cover"]
@@ -59,7 +58,6 @@ class FullExperimentSerializer(serializers.ModelSerializer):
                   "context",
                   "research_question",
                   "experiment_setup",
-                  "disclaimers",
                   "findings",
                   "project",
                   "steps", "cover", "glossary_terms"]

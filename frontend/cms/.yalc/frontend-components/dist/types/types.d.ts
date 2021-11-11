@@ -38,7 +38,6 @@ export declare type Experiment = {
     experiment_setup?: any[];
     findings?: any[];
     steps: Step[];
-    disclaimers?: string[];
     tags: string[];
     glossary_terms: GlossaryTerm[];
 };

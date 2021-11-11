@@ -77,22 +77,14 @@ export const ExperimentForm = (props: Omit<TabbedFormProps, "children">) => {
           </ArrayInput>
         </FormTab>
       )}
-      {props.record.id && (
-        <FormTab label="disclaimers">
-          <ArrayInput source="disclaimers">
-            <SimpleFormIterator>
-              <TextInput multiline source="" hiddenLabel label="" />
-            </SimpleFormIterator>
-          </ArrayInput>
-        </FormTab>
-      )}
+
       {props.record.id && (
         <FormTab label="context">
           <BuilderInput source={"context"} project={project} />
         </FormTab>
       )}
       {props.record.id && (
-        <FormTab label="experiment_setup">
+        <FormTab label="experiment setup">
           <BuilderInput
             possibleColumns={[2, 3, 4]}
             possibleComponents={["image", "listExperimentSetup"]}

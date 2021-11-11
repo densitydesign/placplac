@@ -22,7 +22,7 @@ class FormattedJSONField(serializers.Field):
         context = value.copy()
         for row in context:
             for col in row:
-                if col["type"] == "image":
+                if "type" in col and col["type"] == "image":
                     try:
                         image = ProjectMedia.objects.get(id=col["content"]["image"])
                         col["content"]["image"] = file_to_base64(image.file.path) if image.file else None

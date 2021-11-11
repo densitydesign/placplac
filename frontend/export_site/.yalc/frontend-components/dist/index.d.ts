@@ -1,4 +1,4 @@
-import React, { CSSProperties, ComponentType } from 'react';
+import React, { ComponentType } from 'react';
 
 interface ExperimentSetupListShowProps {
     title: string;
@@ -24,9 +24,8 @@ declare const SectionTitle: (props: {
 
 interface TextShowProps {
     text: string;
-    style?: CSSProperties;
 }
-declare const TextShow: ({ text, style }: TextShowProps) => JSX.Element;
+declare const TextShow: ({ text }: TextShowProps) => JSX.Element;
 
 declare type Step = {
     title: string;
@@ -68,7 +67,6 @@ declare type Experiment = {
     experiment_setup?: any[];
     findings?: any[];
     steps: Step[];
-    disclaimers?: string[];
     tags: string[];
     glossary_terms: GlossaryTerm[];
 };
@@ -120,4 +118,4 @@ interface GlossaryCategoryShowProps {
 }
 declare const GlossaryCategoryShow: (props: GlossaryCategoryShowProps) => JSX.Element;
 
-export { Experiment, ExperimentSetupListShow, ExperimentShow, GlossaryCategory, GlossaryCategoryShow, GlossaryShow, GlossaryTerm, ImageShow, Layout, Project, ProjectShow, SectionTitle, Step, TextShow };
+export { Experiment, ExperimentSetupListShow, ExperimentSetupListShowProps, ExperimentShow, GlossaryCategory, GlossaryCategoryShow, GlossaryShow, GlossaryTerm, ImageShow, Layout, Project, ProjectShow, SectionTitle, Step, TextShow, TextShowProps };

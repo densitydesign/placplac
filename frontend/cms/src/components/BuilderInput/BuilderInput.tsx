@@ -3,14 +3,19 @@ import { useDialoglUpdate } from "../../useDialogUpdate";
 import { useInput } from "react-admin";
 import { BuilderDialog } from "./components/BuilderDialog";
 import { AddRowButton } from "./components/AddRowButton";
-import { DialogForm, PossibleColumns, PossibleComponent } from "./types";
+import {
+  BuilderBlock,
+  DialogForm,
+  PossibleColumns,
+  PossibleComponent,
+} from "./types";
 import { Row } from "./components/Row";
 
 interface BuilderInputProps {
   source: string;
   project: number;
   possibleColumns?: PossibleColumns;
-  possibleComponents?: PossibleComponent[];
+  possibleComponents?: BuilderBlock[];
   gap?: number | string;
 }
 
@@ -43,7 +48,7 @@ export const BuilderInput = (props: BuilderInputProps) => {
   };
 
   const onColumnClick = (
-    type: PossibleComponent,
+    type: BuilderBlock,
     rowIndex: number,
     colIndex: number
   ) => {

@@ -30,7 +30,6 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
       experiment_setup: experimentSetup,
       steps,
       findings,
-      disclaimers,
       glossary_terms,
     },
     basePath,
@@ -40,12 +39,7 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
   const renderItem = (item: { type: string } & any, noPadding: boolean) => {
     switch (item.type) {
       case "text": {
-        return (
-          <TextShow
-            style={noPadding ? { padding: "0" } : undefined}
-            text={item.content.text}
-          />
-        );
+        return <TextShow text={item.content.text} />;
       }
       case "image": {
         return (
@@ -206,14 +200,14 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
         <div id="experimentDiagram" className={"section"}>
           <SectionTitle title="experiment diagram" />
           <ExperimentDiagram steps={steps} />
-
+          {/* 
           {disclaimers && (
             <div id="disclaimer">
               {disclaimers.map((disclaimer) => (
                 <Disclaimer key={disclaimer} disclaimer={disclaimer} />
               ))}
             </div>
-          )}
+          )} */}
         </div>
       )}
       <div id="steps">
@@ -229,7 +223,7 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
                   <h3>step {step.step_number}</h3>
                 </div>
                 <h3>{step.title}</h3>
-                <TextShow style={{ padding: "0" }} text={step.description} />
+                <TextShow text={step.description} />
               </div>
               <div
                 className={classnames(styles.grid_auto, styles.sidebar_content)}

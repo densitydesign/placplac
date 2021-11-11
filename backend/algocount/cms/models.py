@@ -47,7 +47,6 @@ class Experiment(CustomModel):
     context = models.JSONField(null=True, blank=True)
     research_question = models.CharField(max_length=255, null=True, blank=True)
     experiment_setup = models.JSONField(null=True, blank=True)
-    disclaimers = ArrayField(base_field=models.TextField(), null=True, blank=True)
     findings = models.JSONField(null=True, blank=True)
     order = models.SmallIntegerField(default=0)
 

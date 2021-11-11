@@ -16,7 +16,7 @@ import { Button, required } from "react-admin";
 import { Form } from "react-final-form";
 import { FormSaveButton } from "../../FormSaveButton";
 import { CustomRichTextInput } from "../../CustomRichTextInput";
-import { DialogForm, PossibleComponent } from "../types";
+import { BuilderBlock, DialogForm, PossibleComponent } from "../types";
 import { EditImage } from "./EditImage";
 import { EditListExperimentSetup } from "./EditListExperimentSetup";
 import arrayMutators from "final-form-arrays";
@@ -30,9 +30,14 @@ interface BuilderDialogProps {
   project: number;
   content?: any;
   updateItem: (content: any) => void;
-  possibleComponents?: PossibleComponent[];
+  possibleComponents?: BuilderBlock[];
 }
-
+const ALLCOMPONENTS: PossibleComponent = {
+  image: { title: "Image" },
+  text: { title: "Simple text" },
+  listExperimentSetup: { title: "Experiment setup card" },
+  rawGraph: { title: "Graph" },
+};
 export const BuilderDialog = (props: BuilderDialogProps) => {
   const steps = ["Select component", "Configure"];
 
@@ -46,7 +51,7 @@ export const BuilderDialog = (props: BuilderDialogProps) => {
     project,
     content,
     updateItem,
-    possibleComponents = ["image", "text"],
+    possibleComponents = ["image", "text", "listExperimentSetup", "rawGraph"],
   } = props;
 
   const onSubmit = (values: any) => {
@@ -82,7 +87,7 @@ export const BuilderDialog = (props: BuilderDialogProps) => {
       >
         <Card>
           <CardContent>
-            <Typography>{component}</Typography>
+            <Typography>{ALLCOMPONENTS[component].title}</Typography>
           </CardContent>
         </Card>
       </Grid>
@@ -129,7 +134,7 @@ export const BuilderDialog = (props: BuilderDialogProps) => {
       {activeStep === 0 && (
         <>
           <DialogContent>
-            <Grid container alignItems="center">
+            <Grid container spacing={2} alignItems="center">
               {renderPossibleComponents()}
             </Grid>
           </DialogContent>

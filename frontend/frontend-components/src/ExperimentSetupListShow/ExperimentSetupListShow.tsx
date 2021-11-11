@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./ExperimentSetupListShow.module.css";
-interface ExperimentSetupListShowProps {
+
+export interface ExperimentSetupListShowProps {
   title: string;
   subtitle: string;
   list: string[];
