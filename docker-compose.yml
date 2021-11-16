@@ -28,7 +28,7 @@ services:
       - media:/home/pn/app/backend/algocount/media/
     command:
       bash -c  "python manage.py migrate --settings=algocount.settings.production &&
-      gunicorn --access-logfile '/var/log/gunicorn/access.log' --error-logfile '/var/log/gunicorn/error.log' algocount.wsgi:application --bind 0.0.0.0:8000 "
+      gunicorn  --workers=2 --threads=4 --access-logfile '/var/log/gunicorn/access.log' --error-logfile '/var/log/gunicorn/error.log' algocount.wsgi:application --bind 0.0.0.0:8000 "
     expose:
       - 8000
     depends_on:
