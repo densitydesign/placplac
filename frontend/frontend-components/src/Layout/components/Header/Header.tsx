@@ -12,6 +12,7 @@ export const Header = (props: HeaderProps) => {
   const { basePath, linkComponent: Link, experiments } = props;
   const [submenuVisible, setSubmenuVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     const checkIfClickedOutside = (e: any) => {
       // If the menu is open and the clicked target is not within the menu,
@@ -29,6 +30,11 @@ export const Header = (props: HeaderProps) => {
     };
   }, [submenuVisible]);
 
+  useEffect(() => {
+    // define callback as separate function so it can be removed later with cleanup function
+    setSubmenuVisible(false);
+  }, [window.location.pathname]);
+
   return (
     <div className={styles.header}>
       <div ref={ref} className={classnames(styles.header_menu, styles.left)}>
@@ -45,11 +51,12 @@ export const Header = (props: HeaderProps) => {
           >
             <ul>
               {experiments.map((experiment) => (
-                <li key={experiment.id}>
-                  <Link href={`${basePath}experiments/${experiment.id}`}>
-                    {experiment.title}
-                  </Link>
-                </li>
+                <Link
+                  key={experiment.id}
+                  href={`${basePath}experiments/${experiment.id}`}
+                >
+                  <li>{experiment.title}</li>{" "}
+                </Link>
               ))}
             </ul>
           </div>

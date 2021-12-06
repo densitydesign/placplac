@@ -278,6 +278,9 @@
   padding: 0;
   list-style: none;
 }
+.Header-module_submenu__3D878 a {
+  padding: 0;
+}
 
 .Header-module_submenu__3D878 li {
   font-family: Source Sans Pro;
@@ -755,6 +758,7 @@ a {
   line-height: 24px;
   position: sticky;
   top: 55px;
+  z-index: 1;
 }
 
 .ResearchQuestion-module_research_question_title__aKWc6 {
