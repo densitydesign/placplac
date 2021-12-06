@@ -121,7 +121,6 @@
 
 .step {
   display: flex;
-  flex-direction: row;
   width: 100%;
   border-bottom: 1px solid black;
 }
@@ -131,8 +130,16 @@
   background: white;
   padding: 40px 50px;
   box-sizing: border-box;
-  border-right: 1px solid black;
+  //border-right: 1px solid black;
   min-width: 360px;
+  top: 123px;
+  position: sticky;
+  align-self: flex-start;
+}
+
+.sidebar_content {
+  width: calc(100% - 360px);
+  border-left: 1px solid black;
 }
 .sidebar_content > div {
   border-bottom: 1px solid black;

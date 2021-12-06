@@ -663,7 +663,6 @@ a {
 
 .ExperimentShow-module_step__2QgMf {
   display: flex;
-  flex-direction: row;
   width: 100%;
   border-bottom: 1px solid black;
 }
@@ -673,8 +672,16 @@ a {
   background: white;
   padding: 40px 50px;
   box-sizing: border-box;
-  border-right: 1px solid black;
+  //border-right: 1px solid black;
   min-width: 360px;
+  top: 123px;
+  position: sticky;
+  align-self: flex-start;
+}
+
+.ExperimentShow-module_sidebar_content__SAQd0 {
+  width: calc(100% - 360px);
+  border-left: 1px solid black;
 }
 .ExperimentShow-module_sidebar_content__SAQd0 > div {
   border-bottom: 1px solid black;
