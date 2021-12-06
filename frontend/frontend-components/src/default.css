@@ -130,3 +130,7 @@
 :global(.main-application .inner-column) {
   padding: 30px 45px;
 }
+
+:global(html) {
+  font-size: 20px;
+}
