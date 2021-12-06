@@ -74,6 +74,7 @@
 
 :global(.main-application h2) {
   font-size: 2em;
+  line-height: 1.5em;
   font-family: Domine;
   font-style: normal;
   font-weight: bold;
@@ -86,6 +87,15 @@
   color: #000000;
   text-transform: uppercase;
 }
+
+:global(.main-application .text-only) {
+  font-family: Source Serif Pro;
+  font-size: 1.5em;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1.5em;
+}
+
 :global(.main-application div p:first-child) {
   margin-top: 0px;
 }
@@ -118,7 +128,9 @@
 :global(.main-application .mention a) {
   text-decoration: none !important;
 }
-
+:global(.main-application a) {
+  padding: 0;
+}
 :global(.main-application .section) {
   padding-left: 2em;
   padding-right: 2em;
@@ -129,8 +141,4 @@
 
 :global(.main-application .inner-column) {
   padding: 30px 45px;
-}
-
-:global(html) {
-  font-size: 20px;
 }

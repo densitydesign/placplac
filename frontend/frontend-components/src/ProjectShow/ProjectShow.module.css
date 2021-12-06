@@ -16,17 +16,24 @@
   padding: 4rem 8rem;
   box-sizing: border-box;
 }
-.hero_section p {
-  font-size: 30px;
-}
-.experiments {
+
+.section {
   max-width: 960px;
   position: relative;
   margin-left: auto;
   margin-right: auto;
+  border-bottom: 1px solid black;
+  box-sizing: border-box;
+  display: block;
+}
+.section_content {
+  padding: 50px 0;
 }
 
+.section_content_smaller {
+  padding-left: 70px;
+}
 .experiments_description {
-  padding: 60px 0px;
-  
+  font-family: Source Sans Pro;
+  font-size: 1em;
 }

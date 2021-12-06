@@ -25,7 +25,8 @@
     "/dist"
   ],
   "dependencies": {
-    "postcss-url": "^10.1.3"
+    "postcss-url": "^10.1.3",
+    "react-lines-ellipsis": "^0.15.0"
   },
-  "yalcSig": "3081484dfcce659acdd9444da1f26aa4"
+  "yalcSig": "6eee14790b83df163936e79ab98cfac3"
 }

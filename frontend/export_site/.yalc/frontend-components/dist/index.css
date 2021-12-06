@@ -74,6 +74,7 @@
 
 .main-application h2 {
   font-size: 2em;
+  line-height: 1.5em;
   font-family: Domine;
   font-style: normal;
   font-weight: bold;
@@ -86,6 +87,15 @@
   color: #000000;
   text-transform: uppercase;
 }
+
+.main-application .text-only {
+  font-family: Source Serif Pro;
+  font-size: 1.5em;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1.5em;
+}
+
 .main-application div p:first-child {
   margin-top: 0px;
 }
@@ -118,7 +128,9 @@
 .main-application .mention a {
   text-decoration: none !important;
 }
-
+.main-application a {
+  padding: 0;
+}
 .main-application .section {
   padding-left: 2em;
   padding-right: 2em;
@@ -129,10 +141,6 @@
 
 .main-application .inner-column {
   padding: 30px 45px;
-}
-
-html {
-  font-size: 20px;
 }
 
 .ExperimentSetupListShow-module_container__3UuZb {
@@ -384,18 +392,26 @@ html {
   padding: 4rem 8rem;
   box-sizing: border-box;
 }
-.ProjectShow-module_hero_section__23NuB p {
-  font-size: 30px;
-}
-.ProjectShow-module_experiments__2JnOO {
+
+.ProjectShow-module_section__2qcOx {
   max-width: 960px;
   position: relative;
   margin-left: auto;
   margin-right: auto;
+  border-bottom: 1px solid black;
+  box-sizing: border-box;
+  display: block;
+}
+.ProjectShow-module_section_content__-7nm9 {
+  padding: 50px 0;
 }
 
+.ProjectShow-module_section_content_smaller__3ilh_ {
+  padding-left: 70px;
+}
 .ProjectShow-module_experiments_description__j0hGX {
-  padding: 60px 0px;
+  font-family: Source Sans Pro;
+  font-size: 1em;
 }
 
 .TagsSliding-module_wrapper__21cc3 {
@@ -432,11 +448,14 @@ html {
 }
 
 .ExperimentSection-module_main__2A8KP {
-  min-height: 700px;
   width: 100%;
-  display: flex;
+
   border-bottom: 1px solid #000000;
   box-sizing: border-box;
+}
+.ExperimentSection-module_content__1T2yC {
+  display: flex;
+  height: 700px;
 }
 .ExperimentSection-module_section__3uV7D {
   width: 50%;
@@ -448,17 +467,20 @@ html {
   border-right: 1px solid #000000;
   box-sizing: border-box;
 }
-.ExperimentSection-module_content__1T2yC {
-  padding: 60px;
+.ExperimentSection-module_description__D7HCU {
+  padding: 40px;
+  overflow: hidden;
 }
 .ExperimentSection-module_main__2A8KP a {
   color: inherit;
   cursor: pointer;
   text-decoration: none;
+  padding: 0;
 }
 
 .ExperimentSection-module_main__2A8KP h2 {
   transition: 0.3s all;
+  margin-top: 0;
 }
 .ExperimentSection-module_main__2A8KP h2:hover {
   webkit-filter: blur(2px); /* Chrome, Safari, Opera */
