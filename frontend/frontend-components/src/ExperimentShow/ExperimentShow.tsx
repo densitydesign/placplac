@@ -9,7 +9,7 @@ import { Experiment, GlossaryTerm } from "../types";
 import { ExperimentDiagram } from "./components/ExperimentDiagram";
 import { Disclaimer } from "./components/Disclaimer";
 import { ImageShow } from "../ImageShow";
-import React, { ComponentType } from "react";
+import React, { ComponentType, useEffect, useState } from "react";
 import { GlossarySidebar } from "../GlossarySidebar";
 import { GlossaryTermsList } from "../components/GlossaryTermsList";
 import { GlossaryCategory } from "..";
@@ -36,6 +36,18 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
     linkComponent,
     glossaryCategories,
   } = props;
+  const [topPositionStep, setTopPositionStep] = useState(123);
+
+  useEffect(() => {
+    const element = document.getElementById("researchQuestionDiv")!;
+    const resizeObserver = new ResizeObserver((event) => {
+      setTopPositionStep(event[0].contentBoxSize[0].blockSize + 55);
+    });
+
+    resizeObserver.observe(element);
+    return () => resizeObserver.unobserve(element);
+  });
+
   const renderItem = (item: { type: string } & any, noPadding: boolean) => {
     switch (item.type) {
       case "text": {
@@ -146,21 +158,31 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
           >
             <h3 style={{ marginTop: 0 }}>TABLE OF CONTENTS</h3>
             <ul className={styles.content_list}>
-              <li>
-                <a href="#context">Context</a>
-              </li>
-              <li>
-                <a href="#researchQuestion">Research question</a>
-              </li>
-              <li>
-                <a href="#experimentSetup">Experiment setup</a>
-              </li>
-              <li>
-                <a href="#experimentDiagram">Experiment steps</a>
-              </li>
-              <li>
-                <a href="#findings">Findings</a>
-              </li>
+              {context && (
+                <li>
+                  <a href="#context">Context</a>
+                </li>
+              )}
+              {researchQuestion && (
+                <li>
+                  <a href="#researchQuestion">Research question</a>
+                </li>
+              )}
+              {experimentSetup && (
+                <li>
+                  <a href="#experimentSetup">Experiment setup</a>
+                </li>
+              )}
+              {steps && (
+                <li>
+                  <a href="#experimentDiagram">Experiment steps</a>
+                </li>
+              )}
+              {findings && (
+                <li>
+                  <a href="#findings">Findings</a>
+                </li>
+              )}
             </ul>
           </div>
         </div>
@@ -200,14 +222,6 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
         <div id="experimentDiagram" className={"section"}>
           <SectionTitle title="experiment diagram" />
           <ExperimentDiagram steps={steps} />
-          {/* 
-          {disclaimers && (
-            <div id="disclaimer">
-              {disclaimers.map((disclaimer) => (
-                <Disclaimer key={disclaimer} disclaimer={disclaimer} />
-              ))}
-            </div>
-          )} */}
         </div>
       )}
       <div id="steps">
@@ -218,7 +232,10 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
               key={step.title}
               className={styles.step}
             >
-              <div className={styles.sidebar}>
+              <div
+                className={styles.sidebar}
+                style={{ top: `${topPositionStep}px` }}
+              >
                 <div className={styles.step_number}>
                   <h3>step {step.step_number}</h3>
                 </div>

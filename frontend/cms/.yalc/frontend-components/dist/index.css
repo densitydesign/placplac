@@ -675,7 +675,6 @@ a {
   background: white;
   padding: 40px 50px;
   box-sizing: border-box;
-  //border-right: 1px solid black;
   min-width: 360px;
   top: 123px;
   position: sticky;
@@ -770,8 +769,6 @@ a {
   font-weight: normal;
   font-family: "Source Sans Pro";
   line-height: 18px;
-  /* or 129% */
-
   letter-spacing: 0.1em;
 }
 .ResearchQuestion-module_research_question_title__aKWc6 .ResearchQuestion-module_slashes__10fFg {

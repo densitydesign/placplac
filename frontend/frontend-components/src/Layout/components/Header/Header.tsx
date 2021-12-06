@@ -36,7 +36,7 @@ export const Header = (props: HeaderProps) => {
   }, [window.location.pathname]);
 
   return (
-    <div className={styles.header}>
+    <div className={styles.header} id="header">
       <div ref={ref} className={classnames(styles.header_menu, styles.left)}>
         <div className={styles.item}>
           <Link href={basePath}>Home</Link>

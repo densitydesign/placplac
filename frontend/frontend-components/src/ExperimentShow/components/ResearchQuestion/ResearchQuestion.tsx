@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./ResearchQuestion.module.css";
 export const ResearchQuestion = (props: { researchQuestion?: string }) => {
   return (
-    <div className={styles.container}>
+    <div className={styles.container} id="researchQuestionDiv">
       <div className={styles.research_question_title}>
         <span>
           RESEARCH
