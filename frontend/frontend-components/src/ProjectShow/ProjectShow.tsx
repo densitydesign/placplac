@@ -34,17 +34,19 @@ export const ProjectShow = (props: ProjectProps) => {
           )}
         </div>
       </div>
-      <div className={styles.section}>
-        <SectionTitle title={"experiments"} />
-        <div
-          className={classNames(
-            styles.section_content,
-            styles.experiments_description
-          )}
-        >
-          {project.experiments_description && (
-            <TextShow text={project.experiments_description} />
-          )}
+      <div className={styles.section_outer}>
+        <div className={styles.section}>
+          <SectionTitle title={"experiments"} />
+          <div
+            className={classNames(
+              styles.section_content,
+              styles.experiments_description
+            )}
+          >
+            {project.experiments_description && (
+              <TextShow text={project.experiments_description} />
+            )}
+          </div>
         </div>
       </div>
       {project.experiments.map((experiment) => (
@@ -55,18 +57,20 @@ export const ProjectShow = (props: ProjectProps) => {
           experiment={experiment}
         />
       ))}
-      <div className={styles.section} id="abouttheproject">
-        <SectionTitle title={"about the project"} />
-        <div
-          className={classNames(
-            styles.section_content_smaller,
-            styles.section_content,
-            "text-only"
-          )}
-        >
-          {project.long_description && (
-            <TextShow text={project.long_description} />
-          )}
+      <div className={styles.section_outer}>
+        <div className={styles.section} id="abouttheproject">
+          <SectionTitle title={"about the project"} />
+          <div
+            className={classNames(
+              styles.section_content_smaller,
+              styles.section_content,
+              "text-only"
+            )}
+          >
+            {project.long_description && (
+              <TextShow text={project.long_description} />
+            )}
+          </div>
         </div>
       </div>
       <GlossarySidebar

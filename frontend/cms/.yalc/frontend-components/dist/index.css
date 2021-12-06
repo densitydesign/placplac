@@ -392,13 +392,16 @@
   padding: 4rem 8rem;
   box-sizing: border-box;
 }
-
+.ProjectShow-module_section_outer__1_f1K {
+  border-bottom: 1px solid black;
+  width: 100%;
+}
 .ProjectShow-module_section__2qcOx {
   max-width: 960px;
   position: relative;
   margin-left: auto;
   margin-right: auto;
-  border-bottom: 1px solid black;
+
   box-sizing: border-box;
   display: block;
 }
@@ -457,9 +460,11 @@
   display: flex;
   height: 700px;
 }
+
 .ExperimentSection-module_section__3uV7D {
   width: 50%;
 }
+
 .ExperimentSection-module_cover__GOHtU {
   background-repeat: no-repeat;
   background-size: cover;
