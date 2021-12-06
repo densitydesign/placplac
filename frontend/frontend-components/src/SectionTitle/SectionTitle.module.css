@@ -4,6 +4,7 @@
   font-family: "Source Sans Pro", sans-serif;
   margin-top: 60px;
   text-transform: uppercase;
+  letter-spacing: 0.1rem;
 }
 .title > span {
   display: block;

@@ -32,7 +32,7 @@ export const ExperimentSection = ({
             <div className={classNames(styles.section, styles.description)}>
               <h2>{experiment.title}</h2>
               <LinesEllipsis
-                maxLine="8"
+                maxLine="7"
                 ellipsis="..."
                 unsafeHTML={experiment.description}
               />

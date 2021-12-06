@@ -131,6 +131,7 @@
 }
 .main-application a {
   padding: 0;
+  text-decoration: none;
 }
 .main-application .section {
   padding-left: 2em;
@@ -229,6 +230,7 @@
   font-family: "Source Sans Pro", sans-serif;
   margin-top: 60px;
   text-transform: uppercase;
+  letter-spacing: 0.1rem;
 }
 .SectionTitle-module_title__1Q-TV > span {
   display: block;
@@ -459,7 +461,7 @@
 }
 .ExperimentSection-module_content__1T2yC {
   display: flex;
-  height: 700px;
+  height: 600px;
 }
 
 .ExperimentSection-module_section__3uV7D {
@@ -555,7 +557,7 @@
   align-items: center;
   box-sizing: border-box;
 }
-a {
+.GlossarySidebar-module_header__sjrp3 a {
   color: inherit;
   text-decoration: none;
   padding: 0 14px;
@@ -699,6 +701,7 @@ a {
   display: flex;
   width: 100%;
   border-bottom: 1px solid black;
+  min-height: calc(100vh - 123px);
 }
 .ExperimentShow-module_step__2QgMf .ExperimentShow-module_sidebar__2igHp {
   width: 360px;
@@ -824,6 +827,10 @@ a {
   height: 100%;
   width: 255px;
 }
+.ExperimentDiagram-module_step__38HF4 a {
+  text-decoration: none;
+  color: unset;
+}
 .ExperimentDiagram-module_step_title__3GqaU {
   padding-left: 20px;
   padding-right: 20px;
@@ -843,15 +850,31 @@ a {
 .ExperimentDiagram-module_step_number__1unch {
   position: relative;
 }
-.ExperimentDiagram-module_step__38HF4:not(:last-child) > .ExperimentDiagram-module_step_number__1unch:before {
+
+.ExperimentDiagram-module_arrow_left__3NiIU {
   content: "";
   background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGUAAAASCAYAAABCWxC2AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAADGSURBVHgB7dhBDcJAFATQAQWVMBKQAA6QUAcgoQ5AAhIqAQk4oBLqAP6meyjLbriROcxL5rL5bbOdJm0K2D+dIoTJOEdekSdcjAxiKcTFiCFcjCTCxUgiXIwkwsVIIirFbCJDHrjntA7ui7U5ckVb+gTsirVbZGrM73PWHpGxMd/la5QGtPX4fiLHfJ2aXeRYrE1Y9tEyVNbSfZob82kPl9W5D1uY2QfC7xUphAuRQrgQKYQLkUK4ECmEC5HjX/eiUjH8NfQGLIw6+wBYKqIAAAAASUVORK5CYII=");
   width: 100px;
   height: 65px;
   background-repeat: no-repeat;
   background-position: center;
-  left: 207px;
+  left: -44px;
   position: absolute;
+  top: 0;
+  background-color: white;
+}
+
+.ExperimentDiagram-module_arrow_right__24nSr {
+  content: "";
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGUAAAASCAYAAABCWxC2AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAADGSURBVHgB7dhBDcJAFATQAQWVMBKQAA6QUAcgoQ5AAhIqAQk4oBLqAP6meyjLbriROcxL5rL5bbOdJm0K2D+dIoTJOEdekSdcjAxiKcTFiCFcjCTCxUgiXIwkwsVIIirFbCJDHrjntA7ui7U5ckVb+gTsirVbZGrM73PWHpGxMd/la5QGtPX4fiLHfJ2aXeRYrE1Y9tEyVNbSfZob82kPl9W5D1uY2QfC7xUphAuRQrgQKYQLkUK4ECmEC5HjX/eiUjH8NfQGLIw6+wBYKqIAAAAASUVORK5CYII=");
+  width: 100px;
+  height: 65px;
+  background-repeat: no-repeat;
+  background-position: center;
+  left: 211px;
+  position: absolute;
+  background-color: white;
+  top: 0;
 }
 
 .GlossaryTermsList-module_glossary_terms_list__271x5 {

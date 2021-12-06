@@ -131,6 +131,7 @@
 }
 :global(.main-application a) {
   padding: 0;
+  text-decoration: none;
 }
 :global(.main-application .section) {
   padding-left: 2em;

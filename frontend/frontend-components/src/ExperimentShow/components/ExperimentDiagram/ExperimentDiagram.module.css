@@ -14,6 +14,10 @@
   height: 100%;
   width: 255px;
 }
+.step a {
+  text-decoration: none;
+  color: unset;
+}
 .step_title {
   padding-left: 20px;
   padding-right: 20px;
@@ -33,13 +37,29 @@
 .step_number {
   position: relative;
 }
-.step:not(:last-child) > .step_number:before {
+
+.arrow_left {
   content: "";
   background-image: url("../../../assets/arrow.png");
   width: 100px;
   height: 65px;
   background-repeat: no-repeat;
   background-position: center;
-  left: 207px;
+  left: -44px;
   position: absolute;
+  top: 0;
+  background-color: white;
+}
+
+.arrow_right {
+  content: "";
+  background-image: url("../../../assets/arrow.png");
+  width: 100px;
+  height: 65px;
+  background-repeat: no-repeat;
+  background-position: center;
+  left: 211px;
+  position: absolute;
+  background-color: white;
+  top: 0;
 }
