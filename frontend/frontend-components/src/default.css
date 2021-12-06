@@ -127,6 +127,7 @@
 
 :global(.main-application .mention a) {
   text-decoration: none !important;
+  padding: 0 14px;
 }
 :global(.main-application a) {
   padding: 0;
