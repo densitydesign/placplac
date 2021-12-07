@@ -1,0 +1,36 @@
+.small {
+  margin-left: 240px;
+  margin-right: 240px;
+}
+
+.main {
+  width: auto;
+  position: relative;
+
+  box-sizing: border-box;
+  display: block;
+}
+
+.normal {
+  margin-left: 120px;
+  margin-right: 120px;
+}
+
+.content {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.content_align_title {
+  margin-left: 120px;
+  margin-right: 120px;
+}
+
+.content_align_arrow {
+  margin-left: 60px;
+}
+
+.content_has_padding {
+  margin-right: 90px;
+  margin-left: 90px;
+}

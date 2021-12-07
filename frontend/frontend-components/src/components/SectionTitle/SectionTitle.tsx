@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./SectionTitle.module.css";
-import imgTitle from "../assets/arrow_title.webp";
+import imgTitle from "../../assets/arrow_title.webp";
 
 export const SectionTitle = (props: { title: string }) => {
   return (

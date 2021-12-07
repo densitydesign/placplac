@@ -1,0 +1,21 @@
+.content_list {
+  list-style-image: url("../../../assets/right-arrow.png");
+  font-family: Source Sans Pro;
+  font-size: 1.4em;
+}
+.content_list > li {
+  margin: 10px 0;
+}
+.content_list > li a {
+  color: black;
+  text-decoration: none;
+}
+
+.content_list li {
+  transition: 0.3s all;
+}
+
+.content_list li:hover {
+  webkit-filter: blur(2px); /* Chrome, Safari, Opera */
+  filter: blur(2px);
+}

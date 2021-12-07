@@ -2,7 +2,7 @@ import "./default.css";
 
 export * from "./ExperimentSetupListShow";
 export * from "./ImageShow";
-export * from "./SectionTitle";
+export * from "./components/SectionTitle";
 export * from "./TextShow";
 export * from "./types";
 export * from "./Layout";
