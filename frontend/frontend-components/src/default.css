@@ -139,5 +139,12 @@
 }
 
 :global(.main-application .inner-column) {
-  padding: 30px 45px;
+  padding: 30px 20px;
+  box-sizing: border-box;
+}
+
+:global(.main-application .inner-no-top) {
+  padding: 30px 20px;
+  padding-top: 0px;
+  box-sizing: border-box;
 }

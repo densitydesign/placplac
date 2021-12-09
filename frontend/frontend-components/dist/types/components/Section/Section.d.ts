@@ -4,6 +4,7 @@ interface SectionProps extends ComponentProps<"div"> {
     children: React.ReactNode;
     title?: string;
     contentAlign?: "start" | "arrow" | "title";
+    marginFix?: boolean;
 }
 export declare const Section: (props: SectionProps) => JSX.Element;
 export {};

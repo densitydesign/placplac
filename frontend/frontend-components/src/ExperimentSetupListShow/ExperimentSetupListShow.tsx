@@ -1,5 +1,4 @@
 import React from "react";
-import { Grid } from "../components/Grid";
 import styles from "./ExperimentSetupListShow.module.css";
 
 export interface ExperimentSetupListShowProps {
@@ -12,20 +11,16 @@ export const ExperimentSetupListShow = (
 ) => {
   const { title, subtitle, list } = props;
   return (
-    <Grid container border className={styles.container}>
-      <Grid size={12} className={styles.title}>
-        {title}
-      </Grid>
-      <Grid size={12} className={styles.subtitle}>
-        {subtitle}
-      </Grid>
-      <Grid size={12} className={styles.content}>
+    <div className={styles.container}>
+      <div className={styles.title}>{title}</div>
+      <div className={styles.subtitle}>{subtitle}</div>
+      <div className={styles.content}>
         <ul>
           {list.map((str, index) => (
             <li key={index}>{str}</li>
           ))}
         </ul>
-      </Grid>
-    </Grid>
+      </div>
+    </div>
   );
 };

@@ -9,6 +9,7 @@ interface SectionProps extends ComponentProps<"div"> {
   children: React.ReactNode;
   title?: string;
   contentAlign?: "start" | "arrow" | "title";
+  marginFix?: boolean;
 }
 export const Section = (props: SectionProps) => {
   const {
@@ -17,6 +18,7 @@ export const Section = (props: SectionProps) => {
     title,
     contentAlign = "start",
     className,
+    marginFix,
     ...rest
   } = props;
   return (
@@ -38,7 +40,9 @@ export const Section = (props: SectionProps) => {
             className
           )}
         >
-          {children}
+          <div className={classNames({ [styles.margin_fix]: marginFix })}>
+            {children}
+          </div>
         </div>
       </div>
     </SectionOuter>

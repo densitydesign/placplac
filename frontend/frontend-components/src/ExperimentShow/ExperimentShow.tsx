@@ -14,8 +14,10 @@ import { GlossarySidebar } from "../GlossarySidebar";
 import { GlossaryTermsList } from "../components/GlossaryTermsList";
 import { GlossaryCategory } from "..";
 import { Section } from "../components/Section";
-import { Grid, GridSize } from "../components/Grid";
+import { Flex, GridSize } from "../components/Flex";
 import { ContentList } from "./components/ContentList/ContentList";
+import { Grid } from "../components/Grid";
+import classNames from "classnames";
 
 interface ExperimentShowProps {
   experiment: Experiment;
@@ -83,64 +85,83 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
     }
   };
 
-  const renderRow = (row: any[], rowIndex: number) => {
-    const nCols = row.length;
-    const size = (12 / nCols) as GridSize;
+  const renderRow = (
+    row: any[],
+    rowIndex: number,
+    firstChildNoToppadding: boolean = false
+  ) => {
     return (
-      <Grid container key={rowIndex}>
+      <Grid key={rowIndex}>
         {row.map((col, colIndex) => (
-          <Grid key={colIndex} size={size}>
+          <div
+            className={classNames({
+              "inner-column": !firstChildNoToppadding,
+              "inner-no-top": firstChildNoToppadding,
+            })}
+            key={colIndex}
+          >
             {renderItem(col)}
-          </Grid>
+          </div>
         ))}
       </Grid>
     );
   };
 
-  const renderSection = (section: any[]) => {
-    return section ? section.map((row, index) => renderRow(row, index)) : null;
+  const renderSection = (
+    section: any[],
+    firstChildNoToppadding: boolean = false
+  ) => {
+    return section
+      ? section.map((row, index) =>
+          renderRow(
+            row,
+            index,
+            firstChildNoToppadding && index === 0 ? true : false
+          )
+        )
+      : null;
   };
 
   return (
     <>
-      <Grid container>
-        <Grid container size={12} borderBottom>
-          <Grid size={8} borderRight innerPadding>
+      <Flex container>
+        <Flex container size={12} borderBottom>
+          <Flex size={8} borderRight innerPadding>
             {title && <h1>{title}</h1>}
-          </Grid>
-          <Grid size={4} container>
+          </Flex>
+          <Flex size={4} container>
             {glossaryCategoriesInText.map((category) => (
-              <Grid
+              <Flex
                 container
                 size={12}
                 key={category.id}
                 className={styles.glossary_terms_list}
                 innerPadding
               >
-                <Grid size={12}>
+                <Flex size={12}>
                   <h3>{category.title}</h3>
-                </Grid>
-                <Grid size={12}>
+                </Flex>
+                <Flex size={12}>
                   <GlossaryTermsList
                     glossaryTerms={glossary_terms.filter(
                       (term) => term.category_title === category.title
                     )}
                   />
-                </Grid>
-              </Grid>
+                </Flex>
+              </Flex>
             ))}
-          </Grid>
-        </Grid>
-        <Grid container size={12} borderBottom>
-          <Grid size={8} borderRight innerPadding className={"text-only"}>
+          </Flex>
+        </Flex>
+        <Flex container size={12} borderBottom>
+          <Flex size={8} borderRight innerPadding className={"text-only"}>
             {description && <TextShow text={description} />}
-          </Grid>
-          <Grid size={4} innerPadding>
+          </Flex>
+          <Flex size={4} innerPadding>
             <h3>TABLE OF CONTENTS</h3>
             <ContentList experiment={props.experiment} />
-          </Grid>
-        </Grid>
-      </Grid>
+          </Flex>
+        </Flex>
+      </Flex>
 
       {context && (
         <Section
@@ -148,16 +169,17 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
           id="context"
           contentAlign="title"
           className={"text-only"}
+          marginFix
         >
-          {renderSection(context)}
+          {renderSection(context, true)}
         </Section>
       )}
       {researchQuestion && (
         <ResearchQuestion researchQuestion={researchQuestion} />
       )}
       {experimentSetup && (
-        <Section id="experimentSetup" title="experiment setup">
-          {renderSection(experimentSetup)}
+        <Section id="experimentSetup" title="experiment setup" marginFix>
+          {renderSection(experimentSetup, true)}
         </Section>
       )}
       {steps && (
@@ -194,7 +216,7 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
       </div>
       {findings && (
         <Section id="findings" title="findings" className={"section"}>
-          {renderSection(findings)}
+          {renderSection(findings, true)}
         </Section>
       )}
       <GlossarySidebar

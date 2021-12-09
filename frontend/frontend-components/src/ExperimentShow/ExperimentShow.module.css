@@ -7,32 +7,34 @@
 }
 
 .step {
-  display: flex;
+  display: grid;
+  grid-template-columns: 360px auto;
   width: 100%;
   border-bottom: 1px solid black;
   min-height: calc(100vh - 123px);
 }
 .step .sidebar {
-  width: 360px;
   height: auto;
   background: white;
   padding: 40px 50px;
   box-sizing: border-box;
-  min-width: 360px;
   top: 123px;
   position: sticky;
   align-self: flex-start;
 }
 
 .sidebar_content {
-  width: calc(100% - 360px);
+  /* width: calc(100% - 360px); */
   border-left: 1px solid black;
+  display: flex;
+  flex-direction: column;
 }
 .sidebar_content > div {
   border-bottom: 1px solid black;
 }
 .sidebar_content > div:last-child {
   border-bottom: none;
+  flex: 1 auto;
 }
 
 .sidebar_content > div > div {
@@ -53,4 +55,9 @@
   justify-content: center;
   align-items: center;
   margin-bottom: 20px;
+}
+
+.step_number h3 {
+  margin-top: auto;
+  margin-bottom: auto;
 }

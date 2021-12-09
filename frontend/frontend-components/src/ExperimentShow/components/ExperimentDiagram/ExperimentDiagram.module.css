@@ -34,6 +34,10 @@
   align-items: center;
   margin-bottom: 20px;
 }
+.step_number_content h3 {
+  margin-top: auto;
+  margin-bottom: auto;
+}
 .step_number {
   position: relative;
 }
