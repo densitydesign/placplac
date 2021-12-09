@@ -41,7 +41,7 @@
   justify-content: flex-start;
   align-items: center;
   font-family: "Source Sans Pro";
-  margin-top: 60px;
+  align-self: center;
 }
 .research_question_title_big .slashes {
   font-size: 2.3em;
@@ -53,6 +53,37 @@
   display: block;
   margin-left: auto;
   margin-right: auto;
-  padding: 6em 2em;
-  line-height: 64px;
+  align-self: center;
+}
+.research_question_content_big h2 {
+  margin: 0;
+}
+.research_question_container {
+  display: grid;
+  grid-template-rows: 1fr 5fr;
+  transition: 0.3s;
+}
+
+.research_question_container_to_small {
+  grid-template-rows: 1fr;
+  grid-template-columns: auto auto;
+  gap: 30px;
+}
+.research_question_outer {
+  background: transparent;
+  transition: 0.3s;
+  position: sticky;
+  top: 55px;
+  z-index: 1;
+}
+
+.research_question_outer_to_small {
+  background: black;
+  color: white;
+  font-size: 0.6rem;
+  line-height: 1rem;
+}
+.section_no_margin {
+  margin-top: 10px;
+  margin-bottom: 10px;
 }

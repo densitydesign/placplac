@@ -125,6 +125,7 @@
   font-weight: 400;
   font-size: 20px;
   line-height: 36px;
+  white-space: pre;
 }
 
 .main-application .mention a > span,
@@ -136,7 +137,7 @@
 
 .main-application .mention a {
   text-decoration: none !important;
-  padding: 0 14px;
+  padding: 0;
 }
 .main-application a {
   padding: 0;
