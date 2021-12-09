@@ -118,4 +118,4 @@ interface GlossaryCategoryShowProps {
 }
 declare const GlossaryCategoryShow: (props: GlossaryCategoryShowProps) => JSX.Element;
 
-export { Experiment, ExperimentSetupListShow, ExperimentSetupListShowProps, ExperimentShow, GlossaryCategory, GlossaryCategoryShow, GlossaryShow, GlossaryTerm, ImageShow, Layout, Project, ProjectShow, SectionTitle, Step, TextShow, TextShowProps };
+export { Experiment, ExperimentSetupListShow, ExperimentSetupListShowProps, ExperimentShow, ExperimentShowProps, GlossaryCategory, GlossaryCategoryShow, GlossaryShow, GlossaryTerm, ImageShow, Layout, Project, ProjectShow, SectionTitle, Step, TextShow, TextShowProps };

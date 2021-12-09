@@ -14,9 +14,13 @@ export const GlossaryTermsList = (props: GlossaryTermsListProps) => {
       {glossaryTerms.map((term) => {
         return (
           <span key={term.id} className="mention" style={{ display: "flex" }}>
-            <a href={`${linkTo}#glossary/${term.id}`}>
-              <span style={{ backgroundColor: term.color }}>{term.title}</span>
-            </a>
+            <span>
+              <a href={`${linkTo}#glossary/${term.id}`}>
+                <span style={{ backgroundColor: term.color }}>
+                  {term.title}
+                </span>
+              </a>
+            </span>
           </span>
         );
       })}

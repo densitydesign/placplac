@@ -1,8 +1,3 @@
-:root {
-  --gutter-width: 1rem;
-  --gutter-compensation: calc((var(--gutter-width) * 0.5) * -1);
-}
-
 .row {
   box-sizing: border-box;
   display: flex;
@@ -10,8 +5,7 @@
   flex-direction: row;
   flex-wrap: wrap;
 }
-/* grid-gap: 20px;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); */
+
 .col,
 .col_1,
 .col_2,
