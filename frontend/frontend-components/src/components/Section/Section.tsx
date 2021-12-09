@@ -8,7 +8,7 @@ interface SectionProps extends ComponentProps<"div"> {
   small?: boolean;
   children: React.ReactNode;
   title?: string;
-  contentAlign?: "start" | "arrow" | "title";
+  contentAlign?: "start" | "title";
   marginFix?: boolean;
 }
 export const Section = (props: SectionProps) => {
@@ -34,7 +34,6 @@ export const Section = (props: SectionProps) => {
           className={classNames(
             {
               [styles.content_align_title]: contentAlign === "title",
-              [styles.content_align_arrow]: contentAlign === "arrow",
             },
             styles.content,
             className

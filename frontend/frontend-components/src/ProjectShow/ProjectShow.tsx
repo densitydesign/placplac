@@ -57,7 +57,7 @@ export const ProjectShow = (props: ProjectProps) => {
           small
           id="abouttheproject"
           title="about the project"
-          contentAlign="arrow"
+          contentAlign="title"
           className="text-only"
         >
           <TextShow text={project.long_description} />

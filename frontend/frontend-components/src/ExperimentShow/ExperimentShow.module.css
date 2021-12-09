@@ -45,9 +45,8 @@
 
 .step_number {
   background-image: url("../assets/ellipse.png");
-  min-width: 122px;
   height: 65px;
-  width: 100%;
+  width: 122px;
   background-repeat: no-repeat;
   background-position: center;
   display: flex;
@@ -59,4 +58,5 @@
 .step_number h3 {
   margin-top: auto;
   margin-bottom: auto;
+  font-size: 1em;
 }
