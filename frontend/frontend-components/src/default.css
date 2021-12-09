@@ -1,6 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Domine:wght@700&family=Source+Serif+Pro:wght@200;400&family=Source+Sans+Pro:wght@200;400&display=swap");
 
-:global(.main-application .ql-mention-list-container) {
+:root {
+  --gutter-width: 1rem;
+  --lateral-spacing: 20px;
+  --vertical-spacing: 30px;
+}
+
+.main-application .ql-mention-list-container {
   width: 270px;
   border: 1px solid #f0f0f0;
   border-radius: 4px;
@@ -10,21 +16,21 @@
   overflow: auto;
 }
 
-:global(.main-application .ql-mention-loading) {
+.main-application .ql-mention-loading {
   line-height: 44px;
   padding: 0 20px;
   vertical-align: middle;
   font-size: 16px;
 }
 
-:global(.main-application .ql-mention-list) {
+.main-application .ql-mention-list {
   list-style: none;
   margin: 0;
   padding: 0;
   overflow: hidden;
 }
 
-:global(.main-application .ql-mention-list-item) {
+.main-application .ql-mention-list-item {
   cursor: pointer;
   line-height: 44px;
   font-size: 16px;
@@ -32,16 +38,16 @@
   vertical-align: middle;
 }
 
-:global(.main-application .ql-mention-list-item.disabled) {
+.main-application .ql-mention-list-item.disabled {
   cursor: auto;
 }
 
-:global(.main-application .ql-mention-list-item.selected) {
+.main-application .ql-mention-list-item.selected {
   background-color: #d3e1eb;
   text-decoration: none;
 }
 
-:global(.main-application .mention) {
+.main-application .mention {
   height: 24px;
   width: 65px;
   border-radius: 6px;
@@ -51,11 +57,11 @@
   user-select: all;
 }
 
-:global(.main-application .mention > span) {
+.main-application .mention > span {
   margin: 0 3px;
 }
 
-:global(.main-application) {
+.main-application {
   font-size: 20px;
   font-family: "Source Serif Pro", sans-serif;
   line-height: 36px;
@@ -64,7 +70,7 @@
   width: 100%;
 }
 
-:global(.main-application h1) {
+.main-application h1 {
   font-size: 3.5em;
   font-family: Domine;
   font-style: normal;
@@ -73,7 +79,7 @@
   margin-top: 0;
 }
 
-:global(.main-application h2) {
+.main-application h2 {
   font-size: 2em;
   line-height: 1.5em;
   font-family: Domine;
@@ -81,7 +87,7 @@
   font-weight: bold;
   margin-top: 0;
 }
-:global(.main-application h3) {
+.main-application h3 {
   font-family: Source Sans Pro;
   font-style: normal;
   font-weight: bold;
@@ -91,7 +97,7 @@
   margin-top: 0;
 }
 
-:global(.main-application .text-only) {
+.main-application .text-only {
   font-family: Source Serif Pro;
   font-size: 1.5em;
   font-style: normal;
@@ -99,14 +105,14 @@
   line-height: 1.5em;
 }
 
-:global(.main-application div p:first-child) {
+.main-application div p:first-child {
   margin-top: 0px;
 }
-:global(.main-application div p:last-child) {
+.main-application div p:last-child {
   margin-bottom: 0px;
 }
 
-:global(.main-application .mention) {
+.main-application .mention {
   height: auto;
   width: auto;
   border-radius: 0;
@@ -121,30 +127,48 @@
   line-height: 36px;
 }
 
-:global(.main-application .mention a > span),
-:global(.main-application .ql-mention-list-item span) {
+.main-application .mention a > span,
+.main-application .ql-mention-list-item span {
   border-radius: 50px;
   padding: 5px 10px;
   color: white;
 }
 
-:global(.main-application .mention a) {
+.main-application .mention a {
   text-decoration: none !important;
   padding: 0 14px;
 }
-:global(.main-application a) {
+.main-application a {
   padding: 0;
   text-decoration: none;
   color: unset;
 }
 
-:global(.main-application .inner-column) {
-  padding: 30px 20px;
+.main-application .inner-column {
+  padding: var(--vertical-spacing) var(--lateral-spacing);
   box-sizing: border-box;
 }
 
-:global(.main-application .inner-no-top) {
-  padding: 30px 20px;
+.main-application .inner-no-top {
+  padding: var(--vertical-spacing) var(--lateral-spacing);
   padding-top: 0px;
   box-sizing: border-box;
+}
+
+.main-application .ql-emojiblot {
+  vertical-align: unset;
+}
+
+.main-application .ql-editor {
+  box-sizing: unset;
+  line-height: unset;
+  height: unset;
+  outline: unset;
+  overflow-y: unset;
+  padding: unset;
+  tab-size: unset;
+  -moz-tab-size: unset;
+  text-align: unset;
+  white-space: unset;
+  word-wrap: unset;
 }

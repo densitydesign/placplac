@@ -16,10 +16,10 @@ import { GlossaryCategory } from "..";
 import { Section } from "../components/Section";
 import { Flex, GridSize } from "../components/Flex";
 import { ContentList } from "./components/ContentList/ContentList";
-import { Grid } from "../components/Grid";
+import { Row } from "../components/Row";
 import classNames from "classnames";
 
-interface ExperimentShowProps {
+export interface ExperimentShowProps {
   experiment: Experiment;
   basePath: string;
   linkComponent: ComponentType<{ href: string }>;
@@ -91,7 +91,7 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
     firstChildNoToppadding: boolean = false
   ) => {
     return (
-      <Grid key={rowIndex}>
+      <Row key={rowIndex}>
         {row.map((col, colIndex) => (
           <div
             className={classNames({
@@ -103,7 +103,7 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
             {renderItem(col)}
           </div>
         ))}
-      </Grid>
+      </Row>
     );
   };
 

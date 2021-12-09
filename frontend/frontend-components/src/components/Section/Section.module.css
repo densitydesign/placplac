@@ -35,6 +35,6 @@
   margin-left: 90px;
 }
 .margin_fix {
-  margin-right: -20px;
-  margin-left: -20px;
+  margin-right: calc(-1 * var(--lateral-spacing));
+  margin-left: calc(-1 * var(--lateral-spacing));
 }
