@@ -1,9 +1,9 @@
 .container {
+  padding: 1.5em;
+  height: 100%;
+  border: 1px solid black;
   display: flex;
   flex-direction: column;
-  border: 1px solid black;
-  padding: 1.5em;
-  width: 100%;
   box-sizing: border-box;
 }
 .title {
@@ -24,10 +24,8 @@
   padding-bottom: 1em;
 }
 .content {
-  max-width: 275px;
   display: block;
   margin-left: auto;
   margin-right: auto;
   flex: 1 auto;
-  padding-bottom: 1.5em;
 }

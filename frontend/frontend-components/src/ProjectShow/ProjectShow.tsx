@@ -1,12 +1,12 @@
 import { TextShow } from "../TextShow";
 import { GlossaryTerm, Project } from "../types";
 import styles from "./ProjectShow.module.css";
-import { SectionTitle } from "../SectionTitle";
 import { ExperimentSection } from "./components/ExperimentSection";
 import React, { ComponentType } from "react";
 import { GlossarySidebar } from "../GlossarySidebar";
 import { GlossaryCategory } from "..";
 import classNames from "classnames";
+import { Section } from "../components/Section";
 interface ProjectProps {
   project: Project;
   basePath: string;
@@ -34,21 +34,16 @@ export const ProjectShow = (props: ProjectProps) => {
           )}
         </div>
       </div>
-      <div className={styles.section_outer}>
-        <div className={styles.section}>
-          <SectionTitle title={"experiments"} />
-          <div
-            className={classNames(
-              styles.section_content,
-              styles.experiments_description
-            )}
-          >
-            {project.experiments_description && (
-              <TextShow text={project.experiments_description} />
-            )}
-          </div>
-        </div>
-      </div>
+      {project.experiments_description && (
+        <Section
+          title="experiments"
+          small
+          className={styles.experiments_description}
+        >
+          <TextShow text={project.experiments_description} />
+        </Section>
+      )}
+
       {project.experiments.map((experiment) => (
         <ExperimentSection
           linkComponent={linkComponent}
@@ -57,22 +52,18 @@ export const ProjectShow = (props: ProjectProps) => {
           experiment={experiment}
         />
       ))}
-      <div className={styles.section_outer}>
-        <div className={styles.section} id="abouttheproject">
-          <SectionTitle title={"about the project"} />
-          <div
-            className={classNames(
-              styles.section_content_smaller,
-              styles.section_content,
-              "text-only"
-            )}
-          >
-            {project.long_description && (
-              <TextShow text={project.long_description} />
-            )}
-          </div>
-        </div>
-      </div>
+      {project.long_description && (
+        <Section
+          small
+          id="abouttheproject"
+          title="about the project"
+          contentAlign="arrow"
+          className="text-only"
+        >
+          <TextShow text={project.long_description} />
+        </Section>
+      )}
+
       <GlossarySidebar
         glossaryCategories={glossaryCategories}
         linkComponent={linkComponent}
