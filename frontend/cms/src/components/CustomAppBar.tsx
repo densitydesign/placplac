@@ -17,12 +17,9 @@ export const CustomAppBar = (props: AppBarProps) => {
   const classes = useStyles();
   return (
     <AppBar color="primary" {...props}>
-      <Typography
-        variant="h6"
-        color="inherit"
-        className={classes.title}
-        id="react-admin-title"
-      />
+      <Typography variant="h6" color="inherit" className={classes.title}>
+        ALGOCOUNT
+      </Typography>
 
       <span className={classes.spacer} />
     </AppBar>

@@ -1,29 +1,36 @@
-import { TopToolbar, Button } from "ra-ui-materialui";
-import React from "react";
-import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
-import { useRecordContext, useRedirect } from "ra-core";
+import { Link } from "ra-ui-materialui";
+import { useGetOne, useRecordContext } from "ra-core";
+import { Typography, Breadcrumbs } from "@material-ui/core";
+import { TopToolbarWithTitle } from "../../components/TopToolbarWithTitle";
 
 interface ExperimentActionsProps {
   project?: number | string;
 }
 export const ExperimentActions = (props: ExperimentActionsProps) => {
-  const redirect = useRedirect();
   const record = useRecordContext();
-
+  const { data } = useGetOne("projects", record?.project, {
+    enabled: !!record,
+  });
   return (
-    <TopToolbar>
-      <Button
-        label="Back to project"
-        onClick={() =>
-          redirect(
-            `/projects/${
-              record && record.project ? record.project : props.project
-            }/1`
-          )
-        }
-      >
-        <KeyboardBackspaceIcon />
-      </Button>
-    </TopToolbar>
+    <TopToolbarWithTitle
+      title={
+        <>
+          <Typography variant="h5">Experiment</Typography>
+          {record && data && (
+            <Breadcrumbs
+              aria-label="breadcrumb"
+              separator={<Typography variant="h6">{`>`}</Typography>}
+            >
+              <Link to={`/projects/${data.id}/1`}>
+                <Typography variant="subtitle1">{data.title}</Typography>
+              </Link>
+              <Link to={`/experiments/${record.id}`}>
+                <Typography variant="subtitle1">{record.title}</Typography>
+              </Link>
+            </Breadcrumbs>
+          )}
+        </>
+      }
+    ></TopToolbarWithTitle>
   );
 };

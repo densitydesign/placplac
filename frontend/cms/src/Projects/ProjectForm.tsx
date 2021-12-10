@@ -21,7 +21,7 @@ import { AddGlossaryTermButton } from "./AddGlossaryTermButton";
 
 export const ProjectForm = (props: Omit<TabbedFormProps, "children">) => {
   return (
-    <TabbedForm tabs={<Tabs />} {...props}>
+    <TabbedForm tabs={<Tabs />} {...props} redirect="edit">
       <FormTab label="summary">
         <SelectInput
           defaultValue="2"

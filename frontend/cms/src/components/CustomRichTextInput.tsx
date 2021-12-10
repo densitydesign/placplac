@@ -12,6 +12,10 @@ const useStyles = makeStyles<Theme, CustomRichTextInputProps>((theme) => ({
     ".ra-rich-text-input": {
       "& .ql-editor": {
         minHeight: "300px",
+        backgroundColor: "unset",
+      },
+      "& .ql-container": {
+        backgroundColor: "rgba(0, 0, 0, 0.04)",
       },
       "& .small": {
         "& .ql-editor": {

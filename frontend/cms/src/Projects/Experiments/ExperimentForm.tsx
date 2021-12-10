@@ -95,11 +95,6 @@ export const ExperimentForm = (props: Omit<TabbedFormProps, "children">) => {
         </FormTab>
       )}
       {props.record.id && (
-        <FormTab label="findings">
-          <BuilderInput source={"findings"} project={project} />
-        </FormTab>
-      )}
-      {props.record.id && (
         <FormTab label="steps">
           <AddStepButton />
           <ReferenceArrayField
@@ -114,6 +109,11 @@ export const ExperimentForm = (props: Omit<TabbedFormProps, "children">) => {
               <DeleteButton redirect={false} mutationMode="optimistic" />
             </Datagrid>
           </ReferenceArrayField>
+        </FormTab>
+      )}
+      {props.record.id && (
+        <FormTab label="findings">
+          <BuilderInput source={"findings"} project={project} />
         </FormTab>
       )}
     </TabbedForm>

@@ -72,7 +72,6 @@
 .research_question_outer {
   background: transparent;
   transition: 0.3s;
-  position: sticky;
   top: 55px;
   z-index: 1;
 }
@@ -82,6 +81,7 @@
   color: white;
   font-size: 0.6rem;
   line-height: 1rem;
+  position: sticky;
 }
 .section_no_margin {
   margin-top: 10px;

@@ -1,3 +1,4 @@
+import { Typography, makeStyles } from "@material-ui/core";
 import { cloneElement } from "react";
 import {
   Datagrid,
@@ -12,19 +13,26 @@ import {
   TopToolbar,
   List,
 } from "react-admin";
+import { CustomList } from "../components/CustomList";
 import { DownloadButton } from "./DownloadButton";
 import { PreviewButton } from "./PreviewButton";
 
-const ProjectListActions = (props: ListActionsProps) => (
-  <TopToolbar>
-    {props.filters && cloneElement(props.filters, { context: "button" })}
-    <CreateButton />
-  </TopToolbar>
-);
+const ProjectListActions = (props: ListActionsProps) => {
+  return (
+    <TopToolbar className={props.className}>
+      {props.filters && cloneElement(props.filters, { context: "button" })}
+      <CreateButton />
+    </TopToolbar>
+  );
+};
 
 export const ProjectList = (props: ListProps) => {
   return (
-    <List actions={<ProjectListActions />} {...props}>
+    <CustomList
+      breacrubms={<Typography variant="h5">Projects</Typography>}
+      actions={<ProjectListActions />}
+      {...props}
+    >
       <Datagrid rowClick="edit">
         <TextField source="title" label="Titolo" />
         <DateField source="last_update" label="Ultima modifica" />
@@ -51,6 +59,6 @@ export const ProjectList = (props: ListProps) => {
           )}
         />
       </Datagrid>
-    </List>
+    </CustomList>
   );
 };
