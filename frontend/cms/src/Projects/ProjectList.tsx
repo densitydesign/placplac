@@ -1,4 +1,4 @@
-import { Typography, makeStyles } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import { cloneElement } from "react";
 import {
   Datagrid,
@@ -11,7 +11,6 @@ import {
   CreateButton,
   ListActionsProps,
   TopToolbar,
-  List,
 } from "react-admin";
 import { CustomList } from "../components/CustomList";
 import { DownloadButton } from "./DownloadButton";
