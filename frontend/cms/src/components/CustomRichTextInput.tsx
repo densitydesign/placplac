@@ -176,6 +176,11 @@ export const CustomRichTextInput = (props: CustomRichTextInputProps) => {
               onAction: () => setJ(12),
             });
           },
+          init_instance_callback: function (editor) {
+            editor.on("keydown", function (e) {
+              console.log(editor.selection.getNode().append("dijoasdjsajdajd"));
+            });
+          },
         }}
       />
       <FormHelperText
