@@ -3,12 +3,7 @@ import { useDialoglUpdate } from "../../useDialogUpdate";
 import { useInput } from "react-admin";
 import { BuilderDialog } from "./components/BuilderDialog";
 import { AddRowButton } from "./components/AddRowButton";
-import {
-  BuilderBlock,
-  DialogForm,
-  PossibleColumns,
-  PossibleComponent,
-} from "./types";
+import { BuilderBlock, DialogForm, PossibleColumns } from "./types";
 import { Row } from "./components/Row";
 
 interface BuilderInputProps {

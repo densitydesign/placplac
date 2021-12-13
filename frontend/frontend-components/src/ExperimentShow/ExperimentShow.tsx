@@ -140,14 +140,13 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
               >
                 <Flex size={12}>
                   <h3>{category.title}</h3>
-                </Flex>
-                <Flex size={12}>
                   <GlossaryTermsList
                     glossaryTerms={glossary_terms.filter(
                       (term) => term.category_title === category.title
                     )}
                   />
                 </Flex>
+                <Flex size={12}></Flex>
               </Flex>
             ))}
           </Flex>
@@ -215,7 +214,7 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
           ))}
       </div>
       {findings && (
-        <Section id="findings" title="findings" className={"section"}>
+        <Section id="findings" title="findings" className={"section"} marginFix>
           {renderSection(findings, true)}
         </Section>
       )}

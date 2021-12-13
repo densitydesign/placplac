@@ -1,7 +1,4 @@
 .glossary_terms_list {
-  row-gap: 10px;
-  flex-wrap: wrap;
-  display: flex;
-  flex-direction: row;
-  width: 100%;
+  overflow: hidden;
+  overflow-wrap: break-word;
 }

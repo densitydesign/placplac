@@ -1,3 +1,4 @@
+import { FormControl } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import { required } from "ra-core";
 import { ReferenceInput } from "ra-ui-materialui";
@@ -21,22 +22,24 @@ export const ReferenceInputImage = (props: ReferenceInputImageProps) => {
   const handleChange = useCallback(() => setVersion(version + 1), [version]);
 
   return (
-    <div className={classes.root}>
-      <ReferenceInput
-        key={version}
-        label={label ? label : "Image"}
-        source={source}
-        reference="media"
-        filter={{ project, type: "image" }}
-        validate={required()}
-      >
-        <SelectImage
-          project={project}
-          fileSource="file"
-          titleSource="description"
-          handleChange={handleChange}
-        />
-      </ReferenceInput>
-    </div>
+    <FormControl margin="normal">
+      <div className={classes.root}>
+        <ReferenceInput
+          key={version}
+          label={label ? label : "Image"}
+          source={source}
+          reference="media"
+          filter={{ project, type: "image" }}
+          validate={required()}
+        >
+          <SelectImage
+            project={project}
+            fileSource="file"
+            titleSource="description"
+            handleChange={handleChange}
+          />
+        </ReferenceInput>
+      </div>
+    </FormControl>
   );
 };

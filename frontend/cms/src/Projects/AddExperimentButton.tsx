@@ -62,6 +62,9 @@ export const AddExperimentButton = () => {
                   multiline
                   validate={[required()]}
                   source="title"
+                  label="Title (70)"
+                  placeholder="a short title representative of the experiment"
+                  helperText="The title of the experiment"
                 />
               </DialogContent>
               <DialogActions>

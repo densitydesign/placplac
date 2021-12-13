@@ -10,7 +10,7 @@ export const ResearchQuestion = (props: { researchQuestion?: string }) => {
       if (ref.current && refContainer.current) {
         console.log(ref.current.getBoundingClientRect());
 
-        if (refContainer.current.getBoundingClientRect().top <= 57) {
+        if (refContainer.current.getBoundingClientRect().top < 56) {
           ref.current.classList.add(
             styles.research_question_container_to_small
           );

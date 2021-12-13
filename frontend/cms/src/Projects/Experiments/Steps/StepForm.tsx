@@ -12,7 +12,6 @@ import {
   ToolbarProps,
 } from "react-admin";
 import { BuilderInput } from "../../../components/BuilderInput";
-import { CustomRichTextInput } from "../../../components/CustomRichTextInput";
 
 const StepFormToolbar = (props: ToolbarProps) => {
   return (
@@ -22,7 +21,7 @@ const StepFormToolbar = (props: ToolbarProps) => {
     >
       <SaveButton />
       {props.record && props.record.id && (
-        <DeleteButton redirect={`/experiments/${props.record.experiment}/6`} />
+        <DeleteButton redirect={`/experiments/${props.record.experiment}/3`} />
       )}
     </Toolbar>
   );
@@ -37,18 +36,24 @@ export const StepForm = (props: Omit<TabbedFormProps, "children">) => {
   return (
     <TabbedForm {...props} redirect="edit" toolbar={<StepFormToolbar />}>
       <FormTab label="summary">
-        <NumberInput source="step_number" validate={[required()]} />
+        <NumberInput
+          source="step_number"
+          validate={[required()]}
+          helperText="The number indicating the order in which the steps are displayed"
+        />
         <TextInput
           multiline
           fullWidth
           source="title"
+          label="Title"
+          helperText="The title of the step"
           validate={[required(), maxLength(255)]}
         />
-        <CustomRichTextInput
+        {/* <CustomRichTextInput
           project={project}
           source="description"
           addLabel={false}
-        />
+        /> */}
       </FormTab>
       <FormTab label="content">
         <BuilderInput source={"content"} project={project} />

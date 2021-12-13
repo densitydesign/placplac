@@ -59,11 +59,17 @@ export const AddStepButton = () => {
           render={({ handleSubmitWithRedirect, pristine, saving }) => (
             <>
               <DialogContent>
-                <NumberInput source="step_number" validate={[required()]} />
+                <NumberInput
+                  source="step_number"
+                  validate={[required()]}
+                  helperText="The number indicating the order in which the steps are displayed"
+                />
                 <TextInput
                   multiline
                   fullWidth
                   source="title"
+                  label="Title"
+                  helperText="The title of the step"
                   validate={[required(), maxLength(255)]}
                 />
               </DialogContent>

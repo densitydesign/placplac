@@ -1,5 +1,3 @@
-import "quill/dist/quill.core.css";
-import "quill-emoji/dist/quill-emoji.css";
 import "./default.css";
 export * from "./ExperimentSetupListShow";
 export * from "./ImageShow";

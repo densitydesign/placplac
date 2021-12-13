@@ -6,47 +6,6 @@
   --vertical-spacing: 30px;
 }
 
-.main-application .ql-mention-list-container {
-  width: 270px;
-  border: 1px solid #f0f0f0;
-  border-radius: 4px;
-  background-color: #ffffff;
-  box-shadow: 0 2px 12px 0 rgba(30, 30, 30, 0.08);
-  z-index: 9001;
-  overflow: auto;
-}
-
-.main-application .ql-mention-loading {
-  line-height: 44px;
-  padding: 0 20px;
-  vertical-align: middle;
-  font-size: 16px;
-}
-
-.main-application .ql-mention-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-}
-
-.main-application .ql-mention-list-item {
-  cursor: pointer;
-  line-height: 44px;
-  font-size: 16px;
-  padding: 0 20px;
-  vertical-align: middle;
-}
-
-.main-application .ql-mention-list-item.disabled {
-  cursor: auto;
-}
-
-.main-application .ql-mention-list-item.selected {
-  background-color: #d3e1eb;
-  text-decoration: none;
-}
-
 .main-application .mention {
   height: 24px;
   width: 65px;
@@ -66,8 +25,6 @@
   font-family: "Source Serif Pro", sans-serif;
   line-height: 36px;
   background: white;
-  height: 100%;
-  width: 100%;
 }
 
 .main-application h1 {
@@ -112,33 +69,6 @@
   margin-bottom: 0px;
 }
 
-.main-application .mention {
-  height: auto;
-  width: auto;
-  border-radius: 0;
-  background-color: transparent;
-  padding: 0;
-  margin-right: 0;
-  -webkit-user-select: none;
-  user-select: none;
-  font-family: Source Sans Pro;
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 36px;
-  white-space: pre;
-}
-
-.main-application .mention a > span,
-.main-application .ql-mention-list-item span {
-  border-radius: 50px;
-  padding: 5px 10px;
-  color: white;
-}
-
-.main-application .mention a {
-  text-decoration: none !important;
-  padding: 0;
-}
 .main-application a {
   padding: 0;
   text-decoration: none;
@@ -156,20 +86,17 @@
   box-sizing: border-box;
 }
 
-.main-application .ql-emojiblot {
-  vertical-align: unset;
+.main-application .mention {
+  background-color: rgb(0, 0, 0);
+  border-radius: 50px;
+  color: white;
+  font-family: Source Sans Pro;
+  font-weight: 400;
+  font-size: 20px;
+  padding: 5px 10px;
+  line-height: 36px;
 }
-
-.main-application .ql-editor {
-  box-sizing: unset;
-  line-height: unset;
-  height: unset;
-  outline: unset;
-  overflow-y: unset;
-  padding: unset;
-  tab-size: unset;
-  -moz-tab-size: unset;
-  text-align: unset;
-  white-space: unset;
-  word-wrap: unset;
+.main-application .mention a {
+  color: inherit;
+  text-decoration: unset;
 }
