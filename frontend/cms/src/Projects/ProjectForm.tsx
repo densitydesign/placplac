@@ -21,7 +21,7 @@ import { AddGlossaryTermButton } from "./AddGlossaryTermButton";
 
 export const ProjectForm = (props: Omit<TabbedFormProps, "children">) => {
   return (
-    <TabbedForm tabs={<Tabs />} {...props} redirect="edit">
+    <TabbedForm tabs={<Tabs />} {...props} redirect="edit" margin="dense">
       <FormTab label="summary">
         <SelectInput
           defaultValue="2"
@@ -30,19 +30,27 @@ export const ProjectForm = (props: Omit<TabbedFormProps, "children">) => {
             { name: "Draft", id: "2" },
           ]}
           source="status"
+          helperText="Is the project ready?"
         />
         <TextInput
+          placeholder="Place your project description here. A good idea is to fill this area with the main concept of the project."
           source="title"
+          label="Title (100)"
           fullWidth
           validate={[required(), maxLength(255)]}
+          helperText="The project title"
         />
 
-        <CustomRichTextInput
-          label="Description"
-          small
+        <TextInput
+          fullWidth
+          placeholder="A good idea is to fill this area with a short but effective description"
+          label="Description (255)"
           source="short_description"
+          helperText={"A small summary description"}
         />
         <CustomRichTextInput
+          placeholder="A good idea is to fill this area with the main concept of the project."
+          helperText={"Describe the project"}
           label="About the project"
           source="long_description"
         />
@@ -52,7 +60,9 @@ export const ProjectForm = (props: Omit<TabbedFormProps, "children">) => {
         <FormTab label="Experiments">
           <CustomRichTextInput
             source="experiments_description"
-            addLabel={false}
+            helperText={"Describe what the experiments consist of"}
+            placeholder="Describe briefly the experiments"
+            small
           />
           <AddExperimentButton />
           <ReferenceArrayField

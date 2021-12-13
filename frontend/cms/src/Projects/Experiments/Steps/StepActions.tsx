@@ -29,7 +29,7 @@ export const StepActions = (props: StepActionsProps) => {
               <Link to={`/projects/${data.id}`}>
                 <Typography variant="subtitle1">{data.title}</Typography>
               </Link>
-              <Link to={`/experiments/${dataExp.id}/4`}>
+              <Link to={`/experiments/${dataExp.id}/3`}>
                 <Typography variant="subtitle1">{dataExp.title}</Typography>
               </Link>
               <Link to={`/steps/${record.id}`}>

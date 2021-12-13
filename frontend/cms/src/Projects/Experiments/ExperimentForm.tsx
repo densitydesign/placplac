@@ -46,37 +46,52 @@ export const ExperimentForm = (props: Omit<TabbedFormProps, "children">) => {
       tabs={<Tabs />}
       redirect="edit"
       toolbar={<ExperimentFormToolbar />}
+      margin="dense"
     >
       <FormTab label="summary">
         <TextInput
           multiline
           fullWidth
           source="title"
+          label="Title (70)"
+          placeholder="a short title representative of the experiment"
+          helperText="The title of the experiment"
           validate={[required(), maxLength(255)]}
         />
         <TextInput
           multiline
           fullWidth
           source="research_question"
+          label="Research question (150)"
+          placeholder="What question are you trying to answer through this experiment"
+          helperText="The research question of the experiment"
           validate={[maxLength(255)]}
         />
         <CustomRichTextInput
           project={project}
           source="description"
+          label="Description (400)"
+          placeholder="What question are you trying to answer through this experiment"
+          helperText="A breif description of the experiment (this will be the experiment description in the main project page)"
           addLabel={false}
+          small
         />
+        <ArrayInput source="tags" helperText="The tags of the experiment">
+          <SimpleFormIterator>
+            <TextInput
+              margin="none"
+              multiline
+              source=""
+              hiddenLabel
+              label=""
+              variant="standard"
+              helperText={false}
+            />
+          </SimpleFormIterator>
+        </ArrayInput>
 
         <ReferenceInputImage label="Cover" source="cover" project={project} />
       </FormTab>
-      {props.record.id && (
-        <FormTab label="tags">
-          <ArrayInput source="tags">
-            <SimpleFormIterator>
-              <TextInput multiline source="" hiddenLabel label="" />
-            </SimpleFormIterator>
-          </ArrayInput>
-        </FormTab>
-      )}
 
       {props.record.id && (
         <FormTab label="context">

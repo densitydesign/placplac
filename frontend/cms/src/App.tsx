@@ -22,7 +22,15 @@ function App() {
   const dataProvider = drfProvider(url);
   return (
     <Admin
-      theme={{ palette: { primary: { main: "#000000" } } }}
+      theme={{
+        palette: { primary: { main: "#000000" } },
+        overrides: {
+          MuiFormLabel: { root: { color: "black", fontWeight: "bold" } },
+          MuiFilledInput: {
+            inputMarginDense: { paddingTop: "30px" },
+          },
+        },
+      }}
       loginPage={LoginPage}
       customRoutes={[
         <RouteWithoutLayout

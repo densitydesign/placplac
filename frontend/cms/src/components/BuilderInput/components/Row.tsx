@@ -6,7 +6,7 @@ import { ColumnContainer } from "./ColumnContainer";
 import { EmptyColumn } from "./EmptyColumn";
 import DeleteIcon from "@material-ui/icons/Delete";
 import AddIcon from "@material-ui/icons/Add";
-import { BuilderBlock, PossibleComponent } from "../types";
+import { BuilderBlock } from "../types";
 
 interface RowProps {
   row: any[];
