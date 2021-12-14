@@ -49,6 +49,7 @@ export const StepForm = (props: Omit<TabbedFormProps, "children">) => {
           helperText="The title of the step"
           validate={[required(), maxLength(255)]}
         />
+
         {/* <CustomRichTextInput
           project={project}
           source="description"

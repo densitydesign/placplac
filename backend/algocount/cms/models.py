@@ -34,7 +34,6 @@ class ProjectUser(CustomModel):
 class ProjectMedia(CustomModel):
     TYPE_CHOICES = (("image", "Image"), ("file", "File"))
 
-
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     file = models.FileField()
     description = models.TextField(null=True, blank=True)
@@ -67,6 +66,7 @@ class GlossaryCategory(CustomModel):
     title = models.CharField(max_length=50, unique=True)
     description = models.TextField()
     color = models.CharField(max_length=10)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True)
 
 
 class GlossaryTerm(CustomModel):

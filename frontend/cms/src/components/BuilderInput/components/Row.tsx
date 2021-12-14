@@ -1,4 +1,4 @@
-import { Grid, Box, IconButton, GridSize } from "@material-ui/core";
+import { Grid, Box, IconButton, GridSize, Button } from "@material-ui/core";
 import { TextShow, ExperimentSetupListShow } from "frontend-components";
 import React from "react";
 import { ImageShowBackend } from "../../showComponentsBackend/ImageShowBackend";
@@ -26,10 +26,27 @@ interface RowProps {
     rowIndex: number,
     colIndex: number
   ) => void;
+  deleteCell: (rowIndex: number, cellIndex: number) => void;
+
+  moveCellLeft: (rowIndex: number, cellIndex: number) => void;
+  moveCellRight: (rowIndex: number, cellIndex: number) => void;
+  moveCellUp: (rowIndex: number, cellIndex: number) => void;
+  moveCellDown: (rowIndex: number, cellIndex: number) => void;
 }
 
 export const Row = (props: RowProps) => {
-  const { row, rowIndex, deleteRow, setActiveItem, onColumnClick } = props;
+  const {
+    row,
+    rowIndex,
+    deleteRow,
+    setActiveItem,
+    onColumnClick,
+    moveCellLeft,
+    moveCellRight,
+    moveCellDown,
+    moveCellUp,
+    deleteCell
+  } = props;
   const nCols = row.length;
   const size = (12 / nCols) as GridSize;
   return (
@@ -68,6 +85,13 @@ export const Row = (props: RowProps) => {
             </EmptyColumn>
           ) : (
             <ColumnContainer
+            deleteCell={deleteCell}
+              rowIndex={rowIndex}
+              colIndex={colIndex}
+              moveCellLeft={moveCellLeft}
+              moveCellDown={moveCellDown}
+              moveCellUp={moveCellUp}
+              moveCellRight={moveCellRight}
               onClick={() => {
                 onColumnClick(col.type, rowIndex, colIndex);
               }}
