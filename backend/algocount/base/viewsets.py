@@ -19,5 +19,8 @@ class CustomModelView(viewsets.ModelViewSet):
     def bulk_delete(self, request):
         if "ids" not in request.data or len(request.data["ids"]) <= 0:
             return Response(status=status.HTTP_400_BAD_REQUEST)
-        self.filter_queryset(self.get_queryset()).filter(id__in=request.data["ids"]).delete()
+        queryset = self.filter_queryset(self.get_queryset()).filter(id__in=request.data["ids"])
+        for obj in queryset:
+            self.check_object_permissions(request, obj)
+        queryset.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)

@@ -8,16 +8,22 @@ import facebook from "../../../assets/facebook-logo-white.png";
 import point from "../../../assets/point.png";
 import twitter from "../../../assets/twitter-icon-18-256.png";
 import email from "../../../assets/email.png";
-export const Footer = () => {
+import { LanguageOptions } from "../../..";
+import { translations } from "../../../translations";
+interface FooterProps {
+  language: LanguageOptions;
+}
+export const Footer = (props: FooterProps) => {
+  const { language } = props;
   return (
     <div className={styles.main}>
       <div className={styles.column}>
-        <span>Founded by:</span>
+        <span>{translations[language].foundedby_footer}:</span>
         <img src={cariplo} />
       </div>
       <div className={styles.divider} />
       <div className={styles.column}>
-        <span>Partners:</span>
+        <span>{translations[language].partners_footer}:</span>
         <div className={styles.image_list}>
           <img src={uni} />
           <img src={poli} />
@@ -26,7 +32,7 @@ export const Footer = () => {
       </div>
       <div className={styles.divider} />
       <div className={styles.column}>
-        <span>Contacts:</span>
+        <span>{translations[language].contacts_footer}:</span>
         <div className={styles.image_list}>
           <img src={facebook} />
           <img src={point} />

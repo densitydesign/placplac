@@ -13,6 +13,7 @@ import {
   TopToolbar,
 } from "react-admin";
 import { CustomList } from "../components/CustomList";
+import { CloneButton } from "./CloneButton";
 import { DownloadButton } from "./DownloadButton";
 import { PreviewButton } from "./PreviewButton";
 
@@ -32,16 +33,25 @@ export const ProjectList = (props: ListProps) => {
       actions={<ProjectListActions />}
       {...props}
     >
-      <Datagrid rowClick="edit">
-        <TextField source="title" label="Titolo" />
-        <DateField source="last_update" label="Ultima modifica" />
-        <DateField source="created_date" label="Creato il " />
+      <Datagrid
+        rowClick="edit"
+        isRowSelectable={(record) => record.user_level === "1"}
+      >
+        <TextField source="title" />
+        <DateField source="last_update" />
+        <DateField source="created_date" />
         <SelectField
           source="status"
-          label="Stato"
           choices={[
             { id: "1", name: "Published" },
             { id: "2", name: "Draft" },
+          ]}
+        />
+        <SelectField
+          source="language"
+          choices={[
+            { id: "en", name: "English" },
+            { id: "it", name: "Italian" },
           ]}
         />
         <FunctionField
@@ -49,6 +59,7 @@ export const ProjectList = (props: ListProps) => {
           render={(record?: Record) => (
             <>
               {record && <PreviewButton project={record.id} />}
+              {record && <CloneButton project={record.id} />}
               {record && record.status === "1" && (
                 <>
                   <DownloadButton project={record} />

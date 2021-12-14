@@ -8,6 +8,7 @@ import {
   useMutation,
   useNotify,
   useRecordContext,
+  SelectInput,
   useRefresh,
 } from "react-admin";
 import IconCancel from "@material-ui/icons/Cancel";
@@ -59,6 +60,15 @@ export const AddCollaboratorButton = () => {
                 <ReferenceInput reference="users" source="user_id">
                   <AutocompleteInput optionText="email" />
                 </ReferenceInput>
+                <SelectInput
+                  defaultValue="2"
+                  fullWidth
+                  choices={[
+                    { name: "Author", id: "1" },
+                    { name: "Collaborator", id: "2" },
+                  ]}
+                  source="level"
+                />
               </DialogContent>
               <DialogActions>
                 <Button

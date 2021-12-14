@@ -7,6 +7,7 @@ import { GlossarySidebar } from "../GlossarySidebar";
 import { GlossaryCategory } from "..";
 import classNames from "classnames";
 import { Section } from "../components/Section";
+import { translations } from "../translations";
 interface ProjectProps {
   project: Project;
   basePath: string;
@@ -28,15 +29,13 @@ export const ProjectShow = (props: ProjectProps) => {
         <div className={styles.hero_section_content}>
           <h1>{project.title}</h1>
           {project.short_description && (
-            <div className="text-only">
-              <TextShow text={project.short_description} />
-            </div>
+            <div className="text-only">{project.short_description}</div>
           )}
         </div>
       </div>
       {project.experiments_description && (
         <Section
-          title="experiments"
+          title={translations[project.language].experiments_title}
           small
           className={styles.experiments_description}
         >
@@ -56,8 +55,7 @@ export const ProjectShow = (props: ProjectProps) => {
         <Section
           small
           id="abouttheproject"
-          title="about the project"
-          contentAlign="title"
+          title={translations[project.language].abouttheproject_title}
           className="text-only"
         >
           <TextShow text={project.long_description} />

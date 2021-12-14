@@ -6,6 +6,7 @@ import tempfile
 
 from django.conf import settings
 from django.http import Http404, HttpResponse
+from rest_framework import permissions, exceptions
 from rest_framework.decorators import action
 from rest_framework.parsers import MultiPartParser
 from rest_framework.response import Response
@@ -25,6 +26,15 @@ from cms.serializers.step import StepSerializer
 class ProjectViewSet(CustomModelView):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
+
+    def check_object_permissions(self, request, instance):
+        if not self.request.user.is_superuser and not ProjectUser.objects.filter(project=instance,
+                                                                                 user=self.request.user,
+                                                                                 level="1").exists() \
+                and request.method not in permissions.SAFE_METHODS:
+            raise exceptions.PermissionDenied()
+
+        return super(ProjectViewSet, self).check_object_permissions(request, instance)
 
     def perform_create(self, serializer):
         project = serializer.save()
@@ -48,27 +58,73 @@ class ProjectViewSet(CustomModelView):
 
     @action(detail=True, methods=["GET"])
     def export(self, request, pk):
-        try:
-            instance = self.get_object()
-            serializer = FullProjectSerializer(instance)
-            with tempfile.TemporaryDirectory() as tmpdirname:
-                shutil.copytree(settings.PROJECT_FRONTEND_EXPORT, tmpdirname, dirs_exist_ok=True, symlinks=True)
-                file = os.path.join(tmpdirname, "data.json")
-                with open(file, 'w') as f:
-                    json.dump(serializer.data, f)
-                subprocess.check_call('npx cross-env-shell FILE_PATH="{}" next build && npx next export'.format(file),
-                                      shell=True,
-                                      cwd=tmpdirname, close_fds=True)
+        instance = self.get_object()
+        serializer = FullProjectSerializer(instance)
+        with tempfile.TemporaryDirectory() as tmpdirname:
+            shutil.copytree(settings.PROJECT_FRONTEND_EXPORT, tmpdirname, dirs_exist_ok=True, symlinks=True)
+            file = os.path.join(tmpdirname, "data.json")
+            with open(file, 'w') as f:
+                json.dump(serializer.data, f)
+            subprocess.check_call('npx cross-env-shell FILE_PATH="{}" next build && npx next export'.format(file),
+                                  shell=True,
+                                  cwd=tmpdirname, close_fds=True)
 
-                zip_name = os.path.join(tmpdirname, "site")
-                out_directory = os.path.join(tmpdirname, "out")
-                zip_file = open(shutil.make_archive(zip_name, 'zip', out_directory), 'rb')
-                response = HttpResponse(zip_file, content_type='application/zip')
-                response['Content-Disposition'] = 'attachment; filename=site.zip'
-                return response
-            # return Response(serializer.data)
-        except Project.DoesNotExist:
-            raise Http404
+            zip_name = os.path.join(tmpdirname, "site")
+            out_directory = os.path.join(tmpdirname, "out")
+            zip_file = open(shutil.make_archive(zip_name, 'zip', out_directory), 'rb')
+            response = HttpResponse(zip_file, content_type='application/zip')
+            response['Content-Disposition'] = 'attachment; filename=site.zip'
+            return response
+
+    @action(detail=True, methods=["GET"])
+    def clone(self, request, pk):
+        instance = self.get_object()
+        new_instance = instance
+        new_instance.pk = None
+        new_instance._state.adding = True
+        new_instance.save()
+        instance = self.get_object()
+
+        for project_user in instance.projectuser_set.all():
+            new_project_user = project_user
+            new_project_user.pk = None
+            new_project_user._state.adding = True
+            new_project_user.project = new_instance
+            new_project_user.save()
+        for project_media in instance.projectmedia_set.all():
+            new_project_media = project_media
+            new_project_media.pk = None
+            new_project_media._state.adding = True
+            new_project_media.project = new_instance
+            new_project_media.save()
+
+        for glossary_term in instance.glossaryterm_set.all():
+            new_glossary_term = glossary_term
+            new_glossary_term.pk = None
+            new_glossary_term._state.adding = True
+            new_glossary_term.project = new_instance
+            new_glossary_term.save()
+
+        for experiment in instance.experiment_set.all():
+            steps = []
+            for step in experiment.step_set.all():
+                step.pk = None
+                step._state.adding = True
+                steps.append(step)
+            new_experiment = experiment
+            new_experiment.pk = None
+            new_experiment._state.adding = True
+            new_experiment.project = new_instance
+            new_experiment.save()
+            for step in steps:
+                step.experiment = new_experiment
+                step.save()
+
+        project_user, result = ProjectUser.objects.get_or_create(project=new_instance, user=self.request.user)
+        project_user.level = "1"
+        project_user.save()
+        serializer = ProjectSerializer(new_instance, context={"request": self.request})
+        return Response(serializer.data)
 
 
 class ProjectMediaViewSet(CustomModelView):
@@ -88,6 +144,23 @@ class ProjectUserViewSet(CustomModelView):
     queryset = ProjectUser.objects.all()
     serializer_class = ProjectUserSerializer
     filterset_class = ProjectUserFilter
+
+    def perform_create(self, serializer):
+        if not self.request.user.is_superuser and not ProjectUser.objects.filter(
+                project=serializer.validated_data["project"],
+                user=self.request.user,
+                level="1").exists():
+            raise exceptions.PermissionDenied()
+        serializer.save()
+
+    def check_object_permissions(self, request, obj):
+
+        if not self.request.user.is_superuser and not ProjectUser.objects.filter(project=obj.project,
+                                                                                 user=self.request.user,
+                                                                                 level="1").exists() and request.method not in permissions.SAFE_METHODS:
+            raise exceptions.PermissionDenied()
+
+        return super(ProjectUserViewSet, self).check_object_permissions(request, obj)
 
     # filterset_class = CachetFilter
     def get_queryset(self):
@@ -136,4 +209,3 @@ class StepViewSet(CustomModelView):
         if user.is_superuser:
             return Step.objects.all()
         return Step.objects.filter(experiment__project__projectuser__user=user)
-

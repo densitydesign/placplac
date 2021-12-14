@@ -9,17 +9,19 @@ User = get_user_model()
 
 class Project(CustomModel):
     STATUS_CHOICES = (("1", "Published"), ("2", "Draft"))
+    LANGUAGE_CHOICES = (("it", "Italian"), ("en", "English"))
     title = models.CharField(max_length=255)
     short_description = models.TextField(null=True)
     experiments_description = models.TextField(null=True)
     long_description = models.TextField(null=True)
     status = models.CharField(default="2", choices=STATUS_CHOICES, max_length=1)
+    language = models.CharField(default="en", choices=LANGUAGE_CHOICES, max_length=2)
 
 
 class ProjectUser(CustomModel):
     # the administrator can delete the project
     # the editor can only edit the project
-    LEVEL_CHOICES = (("1", "Author"), ("2", "Editor"))
+    LEVEL_CHOICES = (("1", "Author"), ("2", "Collaborator"))
 
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
