@@ -21,6 +21,8 @@ export type GlossaryCategory = {
   color: string;
 };
 
+export type LanguageOptions = "it" | "en";
+
 export type Project = {
   title: string;
   short_description: string;
@@ -28,8 +30,8 @@ export type Project = {
   long_description: string;
   experiments: Experiment[];
   glossary_terms: GlossaryTerm[];
+  language: LanguageOptions;
 };
-
 export type Experiment = {
   id: number;
   cover: string;

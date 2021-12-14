@@ -35,6 +35,7 @@ export const ProjectShowBackend = () => {
   return project ? (
     <>
       <Layout
+        language={project.language}
         experiments={project.experiments}
         linkComponent={Link}
         basePath={basePath}
@@ -48,6 +49,7 @@ export const ProjectShowBackend = () => {
               path={`${basePath}experiments/${experiment.id}`}
               render={() => (
                 <ExperimentShow
+                  language={project.language}
                   glossaryCategories={project.glossary_categories}
                   basePath={basePath}
                   experiment={experiment}
@@ -74,6 +76,7 @@ export const ProjectShowBackend = () => {
             path={`${basePath}glossary/`}
             render={() => (
               <GlossaryShow
+                language={project.language}
                 basePath={basePath}
                 linkComponent={Link}
                 glossaryCategories={project.glossary_categories}

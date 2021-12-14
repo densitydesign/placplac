@@ -24,7 +24,7 @@ class UserViewSet(CustomModelView):
     def get_queryset(self):
         if self.request.user and self.request.user.is_superuser:
             return User.objects.all()
-        return User.objects.filter(is_active=True).exclude(user=self.request.user)
+        return User.objects.filter(is_active=True).exclude(id=self.request.user.id)
 
 
 class UserRegistrationViewSet(CreateModelMixin, GenericViewSet):

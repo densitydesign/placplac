@@ -1,7 +1,8 @@
 import classnames from "classnames";
 import React, { ComponentType } from "react";
-import { GlossaryTerm } from "..";
+import { GlossaryTerm, LanguageOptions } from "..";
 import { GlossaryTermsList } from "../components/GlossaryTermsList";
+import { translations } from "../translations";
 import { GlossaryCategory } from "../types";
 import styles from "./GlossaryShow.module.css";
 
@@ -10,6 +11,7 @@ interface GlossaryShowProps {
   glossaryTerms: GlossaryTerm[];
   linkComponent: ComponentType<{ href: string }>;
   basePath: string;
+  language: LanguageOptions;
 }
 export const GlossaryShow = (props: GlossaryShowProps) => {
   const {
@@ -17,17 +19,13 @@ export const GlossaryShow = (props: GlossaryShowProps) => {
     glossaryTerms,
     linkComponent: Link,
     basePath,
+    language,
   } = props;
   return (
     <div className={styles.container}>
       <div className={classnames(styles.glossary_row, styles.main)}>
-        <h1>Glossary</h1>
-        <p>
-          This is a glossary of techniques and tools for following and
-          replicating the experiments. We provide brief descriptions and links
-          to various techniques and tools that are referenced throughout
-          Algocount.
-        </p>
+        <h1>{translations[language].glossary_title}</h1>
+        <p>{translations[language].glossary_description}</p>
       </div>
       {glossaryCategories.map((category) =>
         glossaryTerms.some((term) => term.category_title === category.title) ? (

@@ -20,6 +20,7 @@ export declare type GlossaryCategory = {
     description: string;
     color: string;
 };
+export declare type LanguageOptions = "it" | "en";
 export declare type Project = {
     title: string;
     short_description: string;
@@ -27,6 +28,7 @@ export declare type Project = {
     long_description: string;
     experiments: Experiment[];
     glossary_terms: GlossaryTerm[];
+    language: LanguageOptions;
 };
 export declare type Experiment = {
     id: number;

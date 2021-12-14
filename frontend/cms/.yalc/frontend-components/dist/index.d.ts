@@ -49,6 +49,7 @@ declare type GlossaryCategory = {
     description: string;
     color: string;
 };
+declare type LanguageOptions = "it" | "en";
 declare type Project = {
     title: string;
     short_description: string;
@@ -56,6 +57,7 @@ declare type Project = {
     long_description: string;
     experiments: Experiment[];
     glossary_terms: GlossaryTerm[];
+    language: LanguageOptions;
 };
 declare type Experiment = {
     id: number;
@@ -78,6 +80,7 @@ interface LayoutProps {
     }>;
     children: React.ReactNode;
     experiments: Experiment[];
+    language: LanguageOptions;
 }
 declare const Layout: (props: LayoutProps) => JSX.Element;
 
@@ -99,6 +102,7 @@ interface ExperimentShowProps {
         href: string;
     }>;
     glossaryCategories: GlossaryCategory[];
+    language: LanguageOptions;
 }
 declare const ExperimentShow: (props: ExperimentShowProps) => JSX.Element;
 
@@ -109,6 +113,7 @@ interface GlossaryShowProps {
         href: string;
     }>;
     basePath: string;
+    language: LanguageOptions;
 }
 declare const GlossaryShow: (props: GlossaryShowProps) => JSX.Element;
 
@@ -118,4 +123,4 @@ interface GlossaryCategoryShowProps {
 }
 declare const GlossaryCategoryShow: (props: GlossaryCategoryShowProps) => JSX.Element;
 
-export { Experiment, ExperimentSetupListShow, ExperimentSetupListShowProps, ExperimentShow, ExperimentShowProps, GlossaryCategory, GlossaryCategoryShow, GlossaryShow, GlossaryTerm, ImageShow, Layout, Project, ProjectShow, SectionTitle, Step, TextShow, TextShowProps };
+export { Experiment, ExperimentSetupListShow, ExperimentSetupListShowProps, ExperimentShow, ExperimentShowProps, GlossaryCategory, GlossaryCategoryShow, GlossaryShow, GlossaryTerm, ImageShow, LanguageOptions, Layout, Project, ProjectShow, SectionTitle, Step, TextShow, TextShowProps };

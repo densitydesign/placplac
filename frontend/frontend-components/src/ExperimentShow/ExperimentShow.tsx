@@ -12,18 +12,20 @@ import { ImageShow } from "../ImageShow";
 import React, { ComponentType, useEffect, useState } from "react";
 import { GlossarySidebar } from "../GlossarySidebar";
 import { GlossaryTermsList } from "../components/GlossaryTermsList";
-import { GlossaryCategory } from "..";
+import { GlossaryCategory, LanguageOptions } from "..";
 import { Section } from "../components/Section";
 import { Flex, GridSize } from "../components/Flex";
 import { ContentList } from "./components/ContentList/ContentList";
 import { Row } from "../components/Row";
 import classNames from "classnames";
+import { translations } from "../translations";
 
 export interface ExperimentShowProps {
   experiment: Experiment;
   basePath: string;
   linkComponent: ComponentType<{ href: string }>;
   glossaryCategories: GlossaryCategory[];
+  language: LanguageOptions;
 }
 export const ExperimentShow = (props: ExperimentShowProps) => {
   const {
@@ -37,6 +39,7 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
       findings,
       glossary_terms,
     },
+    language,
     basePath,
     linkComponent,
     glossaryCategories,
@@ -156,15 +159,15 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
             {description && <TextShow text={description} />}
           </Flex>
           <Flex size={4} innerPadding>
-            <h3>TABLE OF CONTENTS</h3>
-            <ContentList experiment={props.experiment} />
+            <h3>{translations[language].experiment_tableofcontents}</h3>
+            <ContentList language={language} experiment={props.experiment} />
           </Flex>
         </Flex>
       </Flex>
 
       {context && (
         <Section
-          title="context"
+          title={translations[language].experiment_context}
           id="context"
           contentAlign="title"
           className={"text-only"}
@@ -177,12 +180,19 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
         <ResearchQuestion researchQuestion={researchQuestion} />
       )}
       {experimentSetup && (
-        <Section id="experimentSetup" title="experiment setup" marginFix>
+        <Section
+          id="experimentSetup"
+          title={translations[language].experiment_experimentsetup}
+          marginFix
+        >
           {renderSection(experimentSetup, true)}
         </Section>
       )}
       {steps && (
-        <Section id="experimentDiagram" title="experiment diagram">
+        <Section
+          id="experimentDiagram"
+          title={translations[language].experiment_experimentdiagram}
+        >
           <ExperimentDiagram steps={steps} />
         </Section>
       )}
@@ -200,7 +210,9 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
                 style={{ top: `${topPositionStep}px` }}
               >
                 <div className={styles.step_number}>
-                  <h3>step {step.step_number}</h3>
+                  <h3>
+                    {translations[language].experiment_step} {step.step_number}
+                  </h3>
                 </div>
                 <h3>{step.title}</h3>
                 <TextShow text={step.description} />
@@ -214,7 +226,12 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
           ))}
       </div>
       {findings && (
-        <Section id="findings" title="findings" className={"section"} marginFix>
+        <Section
+          id="findings"
+          title={translations[language].experiment_findings}
+          className={"section"}
+          marginFix
+        >
           {renderSection(findings, true)}
         </Section>
       )}

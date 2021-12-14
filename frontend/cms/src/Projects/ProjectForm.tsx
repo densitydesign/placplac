@@ -6,11 +6,15 @@ import {
   maxLength,
   ReferenceArrayField,
   required,
+  SaveButton,
+  SelectField,
   SelectInput,
   TabbedForm,
   TabbedFormProps,
   TextField,
   TextInput,
+  Toolbar,
+  ToolbarProps,
 } from "react-admin";
 import { CustomFileField } from "../components/CustomFileField";
 import { CustomRichTextInput } from "../components/CustomRichTextInput";
@@ -19,9 +23,26 @@ import { AddCollaboratorButton } from "./AddCollaboratorButton";
 import { AddExperimentButton } from "./AddExperimentButton";
 import { AddGlossaryTermButton } from "./AddGlossaryTermButton";
 
+const ProjectFormToolbar = (props: ToolbarProps) => (
+  <Toolbar
+    style={{ display: "flex", justifyContent: "space-between" }}
+    {...props}
+  >
+    <SaveButton />
+    {props.record && props.record.id && props.record.user_level === "1" && (
+      <DeleteButton />
+    )}
+  </Toolbar>
+);
 export const ProjectForm = (props: Omit<TabbedFormProps, "children">) => {
   return (
-    <TabbedForm tabs={<Tabs />} {...props} redirect="edit" margin="dense">
+    <TabbedForm
+      tabs={<Tabs />}
+      {...props}
+      redirect="edit"
+      margin="dense"
+      toolbar={<ProjectFormToolbar />}
+    >
       <FormTab label="summary">
         <SelectInput
           defaultValue="2"
@@ -32,8 +53,16 @@ export const ProjectForm = (props: Omit<TabbedFormProps, "children">) => {
           source="status"
           helperText="Is the project ready?"
         />
+        <SelectInput
+          defaultValue="en"
+          choices={[
+            { name: "Italian", id: "it" },
+            { name: "English", id: "en" },
+          ]}
+          source="language"
+          helperText="The language of the project"
+        />
         <TextInput
-          placeholder="Place your project description here. A good idea is to fill this area with the main concept of the project."
           source="title"
           label="Title (100)"
           fullWidth
@@ -46,6 +75,7 @@ export const ProjectForm = (props: Omit<TabbedFormProps, "children">) => {
           placeholder="A good idea is to fill this area with a short but effective description"
           label="Description (255)"
           source="short_description"
+          multiline
           helperText={"A small summary description"}
         />
         <CustomRichTextInput
@@ -117,7 +147,7 @@ export const ProjectForm = (props: Omit<TabbedFormProps, "children">) => {
           </ReferenceArrayField>
         </FormTab>
       )}
-      {props.record.id && (
+      {props.record.id && props.record.user_level === "1" && (
         <FormTab label="Collaborators">
           <AddCollaboratorButton />
           <ReferenceArrayField
@@ -128,7 +158,14 @@ export const ProjectForm = (props: Omit<TabbedFormProps, "children">) => {
           >
             <Datagrid>
               <TextField source="user" />
-              <DeleteButton redirect={false} mutationMode="optimistic" />
+              <SelectField
+                choices={[
+                  { name: "Author", id: "1" },
+                  { name: "Collaborator", id: "2" },
+                ]}
+                source="level"
+              />
+              <DeleteButton redirect={false} mutationMode="pessimistic" />
             </Datagrid>
           </ReferenceArrayField>
         </FormTab>

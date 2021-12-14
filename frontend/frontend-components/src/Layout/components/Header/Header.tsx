@@ -1,5 +1,7 @@
 import classnames from "classnames";
 import React, { ComponentType, useEffect, useRef, useState } from "react";
+import { LanguageOptions } from "../../..";
+import { translations } from "../../../translations";
 import { Experiment } from "../../../types";
 import styles from "./Header.module.css";
 
@@ -7,9 +9,10 @@ interface HeaderProps {
   basePath: string;
   linkComponent: ComponentType<{ href: string }>;
   experiments: Experiment[];
+  language: LanguageOptions;
 }
 export const Header = (props: HeaderProps) => {
-  const { basePath, linkComponent: Link, experiments } = props;
+  const { basePath, linkComponent: Link, experiments, language } = props;
   const [submenuVisible, setSubmenuVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -43,7 +46,7 @@ export const Header = (props: HeaderProps) => {
         </div>
         <div className={styles.item}>
           <span onClick={() => setSubmenuVisible((old) => !old)}>
-            Experiments
+            {translations[language].experiments_title}
           </span>
           <div
             style={{ visibility: submenuVisible ? "visible" : "hidden" }}
@@ -55,19 +58,23 @@ export const Header = (props: HeaderProps) => {
                   key={experiment.id}
                   href={`${basePath}experiments/${experiment.id}`}
                 >
-                  <li>{experiment.title}</li>{" "}
+                  <li>{experiment.title}</li>
                 </Link>
               ))}
             </ul>
           </div>
         </div>
         <div className={styles.item}>
-          <Link href={`${basePath}#abouttheproject`}>About</Link>
+          <Link href={`${basePath}#abouttheproject`}>
+            {translations[language].abouttheproject_menu}
+          </Link>
         </div>
       </div>
       <div className={classnames(styles.header_menu, styles.right)}>
         <div className={styles.item}>
-          <Link href={`${basePath}glossary`}>Glossary</Link>
+          <Link href={`${basePath}glossary`}>
+            {translations[language].glossary_menu}
+          </Link>
         </div>
       </div>
     </div>

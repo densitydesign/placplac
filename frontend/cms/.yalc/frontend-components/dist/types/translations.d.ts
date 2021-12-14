@@ -1,0 +1,40 @@
+export declare const translations: {
+    en: {
+        abouttheproject_title: string;
+        abouttheproject_menu: string;
+        experiments_title: string;
+        experiments_menu: string;
+        experiment_tableofcontents: string;
+        experiment_context: string;
+        experiment_experimentsetup: string;
+        experiment_experimentdiagram: string;
+        experiment_step: string;
+        experiment_findings: string;
+        experiment_researchquestion: string;
+        glossary_menu: string;
+        glossary_title: string;
+        glossary_description: string;
+        foundedby_footer: string;
+        partners_footer: string;
+        contacts_footer: string;
+    };
+    it: {
+        abouttheproject_title: string;
+        abouttheproject_menu: string;
+        experiments_title: string;
+        experiments_menu: string;
+        experiment_context: string;
+        experiment_experimentsetup: string;
+        experiment_experimentdiagram: string;
+        experiment_step: string;
+        experiment_findings: string;
+        experiment_researchquestion: string;
+        experiment_tableofcontents: string;
+        glossary_menu: string;
+        glossary_title: string;
+        glossary_description: string;
+        foundedby_footer: string;
+        partners_footer: string;
+        contacts_footer: string;
+    };
+};

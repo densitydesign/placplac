@@ -16,6 +16,14 @@ class ProjectSerializer(serializers.ModelSerializer):
     glossaryterm_set = serializers.PrimaryKeyRelatedField(read_only=True, many=True)
     projectuser_set = serializers.PrimaryKeyRelatedField(read_only=True, many=True)
     projectmedia_set = serializers.PrimaryKeyRelatedField(read_only=True, many=True)
+    user_level = serializers.SerializerMethodField(method_name="get_user_level")
+
+    def get_user_level(self, object):
+        request = self.context["request"]
+        if request.user.is_superuser:
+            return "1"
+        project_user = ProjectUser.objects.get(project=object, user=request.user)
+        return project_user.level
 
     class Meta:
         model = Project
@@ -24,7 +32,7 @@ class ProjectSerializer(serializers.ModelSerializer):
                   "experiments_description",
                   "long_description",
                   "status", "created_date", "last_update", "experiment_set", "glossaryterm_set", "projectuser_set",
-                  "projectmedia_set"]
+                  "projectmedia_set", "language","user_level"]
 
 
 class ProjectMediaSerializer(serializers.ModelSerializer):
@@ -56,7 +64,8 @@ class FullProjectSerializer(serializers.ModelSerializer):
                   "short_description",
                   "experiments_description",
                   "long_description",
-                  "status", "created_date", "last_update", "experiments", "glossary_terms", "glossary_categories"]
+                  "status", "created_date", "last_update", "experiments", "glossary_terms", "glossary_categories",
+                  "language"]
 
 
 class ProjectUserSerializer(serializers.ModelSerializer):
