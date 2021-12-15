@@ -1,4 +1,4 @@
-import { Grid, Box, IconButton, GridSize, Button } from "@material-ui/core";
+import { Grid, Box, IconButton, Button } from "@material-ui/core";
 import { TextShow, ExperimentSetupListShow } from "frontend-components";
 import React, { Fragment } from "react";
 import { ImageShowBackend } from "../../showComponentsBackend/ImageShowBackend";

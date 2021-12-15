@@ -1,7 +1,7 @@
 import React from "react";
 import { LanguageOptions } from "../../..";
 import { translations } from "../../../translations";
-import { Experiment } from "../../../types";
+import { Experiment, Reference } from "../../../types";
 import styles from "./ContentList.module.css";
 
 interface ContentListProps {
@@ -31,7 +31,7 @@ export const ContentList = (props: ContentListProps) => {
           </a>
         </li>
       )}
-      {experiment.steps && (
+      {experiment.steps && experiment.steps.length > 0 && (
         <li>
           <a href="#experimentDiagram">
             {translations[language].experiment_experimentdiagram}
@@ -41,6 +41,11 @@ export const ContentList = (props: ContentListProps) => {
       {experiment.findings && (
         <li>
           <a href="#findings"> {translations[language].experiment_findings}</a>
+        </li>
+      )}
+      {experiment.references && experiment.references.length > 0 && (
+        <li>
+          <a href="#findings"> {translations[language].references_title}</a>
         </li>
       )}
     </ul>

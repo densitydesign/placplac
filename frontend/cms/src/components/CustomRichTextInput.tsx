@@ -9,7 +9,7 @@ import {
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import contentUiCss from "!!raw-loader!frontend-components/dist/index.css";
 
-import { useGetList } from "ra-core";
+import { useGetList, useGetMany, useGetOne } from "ra-core";
 import { Editor } from "@tinymce/tinymce-react";
 import { useMemo, useRef } from "react";
 import {
@@ -42,7 +42,7 @@ export const CustomRichTextInput = (props: CustomRichTextInputProps) => {
     resource,
     variant,
     margin = "dense",
-    project,
+    project: projectId,
     small,
     ...rest
   } = props;
@@ -63,12 +63,8 @@ export const CustomRichTextInput = (props: CustomRichTextInputProps) => {
     },
     { enabled: !!props.project }
   );
-  const classes = useStyles(props);
-
-  const editorRef = useRef<any>(null);
-
   const glossaryItems = useMemo(() => {
-    if (props.project && ids) {
+    if (props.project && data) {
       return ids.map((id) => {
         const record = data[id];
         return {
@@ -80,6 +76,32 @@ export const CustomRichTextInput = (props: CustomRichTextInputProps) => {
     return [];
   }, [data, ids, props.project]);
 
+  const { ids: idsReferences, data: references } = useGetList(
+    "references",
+    { page: 1, perPage: Infinity },
+    { field: "title", order: "ASC" },
+    {
+      project: props.project,
+    },
+    { enabled: !!props.project }
+  );
+
+  const referenceItems = useMemo(() => {
+    if (props.project && references) {
+      return idsReferences.map((id) => {
+        const record = references[id];
+        return {
+          value: id.toString() as any,
+          text: record.title,
+        };
+      });
+    }
+    return [];
+  }, [idsReferences, props.project, references]);
+
+  const classes = useStyles(props);
+
+  const editorRef = useRef<any>(null);
   return (
     <>
       <FormControl
@@ -118,30 +140,85 @@ export const CustomRichTextInput = (props: CustomRichTextInputProps) => {
             menubar: false,
             branding: false,
             placeholder,
-
             plugins: [
               "noneditable emoticons",
               "advlist autolink lists link charmap print preview anchor",
               "searchreplace visualblocks code fullscreen",
               "insertdatetime media table paste help wordcount",
             ],
-
             toolbar:
               "undo redo | formatselect | " +
               "bold italic backcolor forecolor | alignleft aligncenter " +
-              "alignright alignjustify | bullist numlist outdent indent emoticons table image link | " +
+              "alignright alignjustify | bullist numlist outdent indent emoticons table image link example | " +
               "removeformat  | help ",
             content_style: contentUiCss,
             body_class: "main-application",
             setup: (editor) => {
               const getMatchedChars = function (pattern: string) {
+                console.log(pattern);
+                if (pattern === "") return glossaryItems;
                 return glossaryItems.filter(function (char) {
                   return char.text.indexOf(pattern) !== -1;
                 });
               };
+
+              const openDialog = function () {
+                return editor.windowManager.open({
+                  title: "References",
+                  body: {
+                    type: "panel",
+                    items: [
+                      {
+                        type: "selectbox", // component type
+                        name: "reference", // identifier
+                        label: "Select reference",
+                        items: referenceItems,
+                      },
+                    ],
+                  },
+                  buttons: [
+                    {
+                      type: "cancel",
+                      text: "Close",
+                    },
+                    {
+                      type: "submit",
+                      text: "Save",
+                      primary: true,
+                    },
+                  ],
+                  onSubmit: function (api) {
+                    const data = api.getData() as any;
+                    /* Insert content when the window form is submitted */
+                    const text = editor.selection.getContent({
+                      format: "html",
+                    });
+                    const index = referenceItems.findIndex(
+                      (reference) => reference.value === data.reference
+                    );
+                    const html = `${text}<sup class="toReferenceTag mceNonEditable"  data-reference="${
+                      data.reference
+                    }">
+                        [<a href='#reference${data.reference}'>
+                            <span>${index + 1}</span>
+                        </a>]</sup>`;
+                    editor.insertContent(html);
+                    api.close();
+                  },
+                });
+              };
+              /* Add a button that opens a window */
+              editor.ui.registry.addButton("example", {
+                text: "Add reference",
+                onAction: function () {
+                  /* Open window */
+                  openDialog();
+                },
+              });
+
               editor.ui.registry.addAutocompleter("glossary_autocomplete", {
-                ch: "@",
-                minChars: 1,
+                ch: "#",
+                minChars: 0,
                 columns: 1,
                 highlightOn: ["char_name"],
                 onAction: (api, rng, value: any) => {

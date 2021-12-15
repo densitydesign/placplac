@@ -16,12 +16,14 @@ from base.viewsets import CustomModelView
 from cms.filters.glossary_category import GlossaryCategoryFilter
 from cms.filters.glossary_term import GlossaryTermFilter
 from cms.filters.project import ProjectMediaFilter, ProjectUserFilter
+from cms.filters.reference import ReferenceFilter
 from cms.filters.step import StepFilter
-from cms.models import Project, Experiment, ProjectMedia, GlossaryCategory, GlossaryTerm, Step, ProjectUser
+from cms.models import Project, Experiment, ProjectMedia, GlossaryCategory, GlossaryTerm, Step, ProjectUser, Reference
 from cms.serializers.experiment import ExperimentSerializer
 from cms.serializers.glossary import GlossaryCategorySerializer, GlossaryTermSerializer
 from cms.serializers.project import ProjectSerializer, ProjectMediaSerializer, FullProjectSerializer, \
     ProjectUserSerializer
+from cms.serializers.reference import ReferenceSerializer
 from cms.serializers.step import StepSerializer
 
 
@@ -226,3 +228,15 @@ class StepViewSet(CustomModelView):
         if user.is_superuser:
             return Step.objects.all()
         return Step.objects.filter(experiment__project__projectuser__user=user)
+
+class ReferenceViewSet(CustomModelView):
+    queryset = Reference.objects.all()
+    serializer_class = ReferenceSerializer
+    filterset_class = ReferenceFilter
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_superuser:
+            return Reference.objects.all()
+        return Reference.objects.filter(project__projectuser__user=user)
+

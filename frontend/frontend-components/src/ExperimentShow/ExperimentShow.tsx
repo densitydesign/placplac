@@ -12,7 +12,7 @@ import { ImageShow } from "../ImageShow";
 import React, { ComponentType, useEffect, useState } from "react";
 import { GlossarySidebar } from "../GlossarySidebar";
 import { GlossaryTermsList } from "../components/GlossaryTermsList";
-import { GlossaryCategory, LanguageOptions } from "..";
+import { GlossaryCategory, LanguageOptions, Reference } from "..";
 import { Section } from "../components/Section";
 import { Flex, GridSize } from "../components/Flex";
 import { ContentList } from "./components/ContentList/ContentList";
@@ -38,6 +38,7 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
       steps,
       findings,
       glossary_terms,
+      references,
     },
     language,
     basePath,
@@ -190,7 +191,7 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
           {renderSection(experimentSetup, true)}
         </Section>
       )}
-      {steps && (
+      {steps && steps.length > 0 && (
         <Section
           id="experimentDiagram"
           title={translations[language].experiment_experimentdiagram}
@@ -235,6 +236,34 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
           marginFix
         >
           {renderSection(findings, true)}
+        </Section>
+      )}
+      {references && (
+        <Section
+          id="references"
+          title={translations[language].references_title}
+          className={"section"}
+          marginFix
+        >
+          <Row>
+            <div className={"inner-column"}>
+              {references.map((reference, index) => (
+                <p key={reference.id} id={`reference${reference.id}`}>
+                  <span>
+                    {`${index + 1}) ${reference.title} `}
+                    {reference.link && (
+                      <a
+                        style={{ textDecoration: "underline" }}
+                        href={reference.link}
+                      >
+                        {reference.link}
+                      </a>
+                    )}
+                  </span>
+                </p>
+              ))}
+            </div>
+          </Row>
         </Section>
       )}
       <GlossarySidebar
