@@ -30,6 +30,7 @@ export async function getStaticProps({ params }: { params: { id: number } }) {
 
   return {
     props: {
+      language: fileContents.language,
       experiments: fileContents.experiments,
       category,
       terms,
@@ -38,9 +39,14 @@ export async function getStaticProps({ params }: { params: { id: number } }) {
 }
 const Layout = dynamic(() => import("../../components/layout"), { ssr: false });
 
-const GlossaryCategory: NextPage = ({ category, terms, experiments }: any) => {
+const GlossaryCategory: NextPage = ({
+  category,
+  terms,
+  experiments,
+  language,
+}: any) => {
   return (
-    <Layout experiments={experiments}>
+    <Layout experiments={experiments} language={language}>
       <GlossaryCategoryShow glossaryCategory={category} glossaryTerms={terms} />
     </Layout>
   );
