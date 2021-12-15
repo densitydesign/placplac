@@ -28,7 +28,7 @@ export const ReferenceInputImage = (props: ReferenceInputImageProps) => {
           key={version}
           label={label ? label : "Image"}
           source={source}
-          reference="media"
+          reference="project-media"
           filter={{ project, type: "image" }}
           validate={required()}
         >

@@ -1,9 +1,9 @@
-@import url("https://fonts.googleapis.com/css2?family=Domine:wght@700&family=Source+Serif+Pro:wght@200;400&family=Source+Sans+Pro:wght@200;400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Domine:wght@700&family=Source+Serif+Pro:ital,wght@0,200;0,400;1,400&family=Source+Sans+Pro:wght@200;400&display=swap");
 
 :root {
   --gutter-width: 1rem;
   --lateral-spacing: 20px;
-  --vertical-spacing: 30px;
+  --vertical-spacing: 15px;
 }
 
 .main-application .mention {

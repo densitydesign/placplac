@@ -7,6 +7,7 @@ from base.serializer_fields import CustomFileField
 from cms.models import Project, ProjectMedia, ProjectUser, GlossaryCategory
 from cms.serializers.experiment import FullExperimentSerializer
 from cms.serializers.glossary import FullGlossaryTermSerializer, GlossaryCategorySerializer
+from cms.serializers.reference import ReferenceSerializer
 
 User = get_user_model()
 
@@ -16,6 +17,7 @@ class ProjectSerializer(serializers.ModelSerializer):
     glossaryterm_set = serializers.PrimaryKeyRelatedField(read_only=True, many=True)
     projectuser_set = serializers.PrimaryKeyRelatedField(read_only=True, many=True)
     projectmedia_set = serializers.PrimaryKeyRelatedField(read_only=True, many=True)
+    reference_set = serializers.PrimaryKeyRelatedField(read_only=True, many=True)
     user_level = serializers.SerializerMethodField(method_name="get_user_level")
 
     def get_user_level(self, object):
@@ -32,7 +34,7 @@ class ProjectSerializer(serializers.ModelSerializer):
                   "experiments_description",
                   "long_description",
                   "status", "created_date", "last_update", "experiment_set", "glossaryterm_set", "projectuser_set",
-                  "projectmedia_set", "language","user_level"]
+                  "projectmedia_set", "language","user_level","reference_set"]
 
 
 class ProjectMediaSerializer(serializers.ModelSerializer):
@@ -53,6 +55,7 @@ class ProjectMediaSerializer(serializers.ModelSerializer):
 class FullProjectSerializer(serializers.ModelSerializer):
     experiments = FullExperimentSerializer(many=True, source="experiment_set")
     glossary_terms = FullGlossaryTermSerializer(many=True, source="glossaryterm_set")
+    references = ReferenceSerializer(many=True, source="reference_set")
     glossary_categories = serializers.SerializerMethodField('get_categories')
 
     def get_categories(self, value):
@@ -65,7 +68,7 @@ class FullProjectSerializer(serializers.ModelSerializer):
                   "experiments_description",
                   "long_description",
                   "status", "created_date", "last_update", "experiments", "glossary_terms", "glossary_categories",
-                  "language"]
+                  "language","references"]
 
 
 class ProjectUserSerializer(serializers.ModelSerializer):

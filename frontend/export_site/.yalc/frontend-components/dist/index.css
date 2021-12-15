@@ -1,9 +1,9 @@
-@import url("https://fonts.googleapis.com/css2?family=Domine:wght@700&family=Source+Serif+Pro:wght@200;400&family=Source+Sans+Pro:wght@200;400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Domine:wght@700&family=Source+Serif+Pro:ital,wght@0,200;0,400;1,400&family=Source+Sans+Pro:wght@200;400&display=swap");
 
 :root {
   --gutter-width: 1rem;
   --lateral-spacing: 20px;
-  --vertical-spacing: 30px;
+  --vertical-spacing: 15px;
 }
 
 .main-application .mention {
@@ -137,26 +137,26 @@
   /* padding: 1em 2em; */
 }
 
-.ImageShow_container_uaanz_1 {
+.ImageShow_container_2riu7_1 {
   display: flex;
   flex-direction: column;
   width: 100%;
   height: 100%;
 }
-.ImageShow_title_uaanz_7 {
+.ImageShow_title_2riu7_7 {
   text-align: center;
 }
-.ImageShow_subtitle_uaanz_10 {
+.ImageShow_subtitle_2riu7_10 {
   text-align: center;
 }
-.ImageShow_caption_uaanz_13 {
-  padding-bottom: 2em !important;
+.ImageShow_caption_2riu7_13 {
+  padding-bottom: 1em !important;
   font-style: italic;
   font-size: 18px;
   line-height: 24px;
 }
 
-.ImageShow_image_uaanz_20 {
+.ImageShow_image_2riu7_20 {
   max-height: 400px;
   width: auto;
   display: block;
@@ -166,12 +166,12 @@
   height: auto;
   margin-bottom: 1em;
 }
-.ImageShow_wide_uaanz_30 {
+.ImageShow_wide_2riu7_30 {
   max-height: none;
   width: 100%;
 }
 
-.ImageShow_image_container_uaanz_35 {
+.ImageShow_image_container_2riu7_35 {
   display: flex;
   justify-content: center;
   align-items: center;

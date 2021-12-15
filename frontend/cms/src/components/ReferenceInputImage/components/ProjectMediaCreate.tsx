@@ -37,13 +37,13 @@ export const ProjectMediaDialogCreate = ({
       </Button>
       <Dialog open={value}>
         <FormWithRedirect
-          resource="media"
+          resource="project-media"
           defaultValue={{ project, type: "image" }}
           save={(values) => {
             mutate(
               {
                 type: "createMultipart",
-                resource: "media",
+                resource: "project-media",
                 payload: { data: values },
               },
               {

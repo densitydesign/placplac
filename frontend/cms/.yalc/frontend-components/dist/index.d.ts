@@ -49,6 +49,13 @@ declare type GlossaryCategory = {
     description: string;
     color: string;
 };
+declare type Reference = {
+    id: number;
+    title: string;
+    link: string;
+    authors: string;
+    source: string;
+};
 declare type LanguageOptions = "it" | "en";
 declare type Project = {
     title: string;
@@ -71,6 +78,7 @@ declare type Experiment = {
     steps: Step[];
     tags: string[];
     glossary_terms: GlossaryTerm[];
+    references: Reference[];
 };
 
 interface LayoutProps {
@@ -129,4 +137,4 @@ interface RowProps extends ComponentProps<"div"> {
 }
 declare const Row: (props: RowProps) => JSX.Element;
 
-export { Experiment, ExperimentSetupListShow, ExperimentSetupListShowProps, ExperimentShow, ExperimentShowProps, GlossaryCategory, GlossaryCategoryShow, GlossaryShow, GlossaryTerm, ImageShow, LanguageOptions, Layout, Project, ProjectShow, Row, SectionTitle, Step, TextShow, TextShowProps };
+export { Experiment, ExperimentSetupListShow, ExperimentSetupListShowProps, ExperimentShow, ExperimentShowProps, GlossaryCategory, GlossaryCategoryShow, GlossaryShow, GlossaryTerm, ImageShow, LanguageOptions, Layout, Project, ProjectShow, Reference, Row, SectionTitle, Step, TextShow, TextShowProps };

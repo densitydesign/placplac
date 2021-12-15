@@ -12,7 +12,7 @@ interface ImageShowBackendProps {
 }
 export const ImageShowBackend = (props: ImageShowBackendProps) => {
   const { caption, title, subtitle, image, isWide, description } = props;
-  const { data } = useGetOne("media", image);
+  const { data } = useGetOne("project-media", image);
   return data ? (
     <ImageShow
       caption={caption}

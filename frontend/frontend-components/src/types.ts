@@ -20,6 +20,13 @@ export type GlossaryCategory = {
   description: string;
   color: string;
 };
+export type Reference = {
+  id: number;
+  title: string;
+  link: string;
+  authors: string;
+  source: string;
+};
 
 export type LanguageOptions = "it" | "en";
 
@@ -44,4 +51,5 @@ export type Experiment = {
   steps: Step[];
   tags: string[];
   glossary_terms: GlossaryTerm[];
+  references: Reference[];
 };

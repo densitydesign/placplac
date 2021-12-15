@@ -24,3 +24,4 @@ class CustomModelView(viewsets.ModelViewSet):
             self.check_object_permissions(request, obj)
         queryset.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+

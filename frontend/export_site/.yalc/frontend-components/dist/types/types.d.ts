@@ -20,6 +20,13 @@ export declare type GlossaryCategory = {
     description: string;
     color: string;
 };
+export declare type Reference = {
+    id: number;
+    title: string;
+    link: string;
+    authors: string;
+    source: string;
+};
 export declare type LanguageOptions = "it" | "en";
 export declare type Project = {
     title: string;
@@ -42,4 +49,5 @@ export declare type Experiment = {
     steps: Step[];
     tags: string[];
     glossary_terms: GlossaryTerm[];
+    references: Reference[];
 };

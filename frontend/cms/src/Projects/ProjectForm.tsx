@@ -18,6 +18,7 @@ import {
   TextInput,
   Toolbar,
   ToolbarProps,
+  UrlField,
 } from "react-admin";
 import { CustomFileField } from "../components/CustomFileField";
 import { CustomRichTextInput } from "../components/CustomRichTextInput";
@@ -26,6 +27,7 @@ import { AddCollaboratorButton } from "./AddCollaboratorButton";
 import { AddExperimentButton } from "./AddExperimentButton";
 import { AddGlossaryCategoryButton } from "./AddGlossaryCategoryButton";
 import { AddGlossaryTermButton } from "./AddGlossaryTermButton";
+import { AddReferenceButton } from "./AddReferenceButton";
 
 const ProjectFormToolbar = (props: ToolbarProps) => (
   <Toolbar
@@ -87,6 +89,7 @@ export const ProjectForm = (props: Omit<TabbedFormProps, "children">) => {
           helperText={"Describe the project"}
           label="About the project"
           source="long_description"
+          project={props.record?.id}
         />
       </FormTab>
 
@@ -97,6 +100,7 @@ export const ProjectForm = (props: Omit<TabbedFormProps, "children">) => {
             helperText={"Describe what the experiments consist of"}
             placeholder="Describe briefly the experiments"
             small
+            project={props.record?.id}
           />
           <AddExperimentButton />
           <ReferenceArrayField
@@ -165,11 +169,31 @@ export const ProjectForm = (props: Omit<TabbedFormProps, "children">) => {
         </FormTab>
       )}
       {props.record.id && (
+        <FormTab label="References">
+          <AddReferenceButton />
+
+          <ReferenceArrayField
+            label="References"
+            addLabel={false}
+            reference="references"
+            source="reference_set"
+            fullWidth
+          >
+            <Datagrid>
+              <TextField source="title" />
+              <UrlField source="link" />
+              <EditButton />
+              <DeleteButton redirect={false} mutationMode="optimistic" />
+            </Datagrid>
+          </ReferenceArrayField>
+        </FormTab>
+      )}
+      {props.record.id && (
         <FormTab label="Media">
           {/* <AddGlossaryTermButton /> */}
           <ReferenceArrayField
             label=""
-            reference="media"
+            reference="project-media"
             source="projectmedia_set"
             fullWidth
           >
@@ -184,6 +208,7 @@ export const ProjectForm = (props: Omit<TabbedFormProps, "children">) => {
           </ReferenceArrayField>
         </FormTab>
       )}
+
       {props.record.id && props.record.user_level === "1" && (
         <FormTab label="Collaborators">
           <AddCollaboratorButton />
