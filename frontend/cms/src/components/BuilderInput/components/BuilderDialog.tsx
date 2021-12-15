@@ -20,6 +20,7 @@ import { BuilderBlock, DialogForm, PossibleComponent } from "../types";
 import { EditImage } from "./EditImage";
 import { EditListExperimentSetup } from "./EditListExperimentSetup";
 import arrayMutators from "final-form-arrays";
+import { EditIframe } from "./EditIframe";
 interface BuilderDialogProps {
   onClose: () => void;
   open: boolean;
@@ -36,7 +37,7 @@ const ALLCOMPONENTS: PossibleComponent = {
   image: { title: "Image" },
   text: { title: "Simple text" },
   listExperimentSetup: { title: "Experiment setup card" },
-  rawGraph: { title: "Graph" },
+  iframe: { title: "Embed block" },
 };
 export const BuilderDialog = (props: BuilderDialogProps) => {
   const steps = ["Select component", "Configure"];
@@ -51,7 +52,7 @@ export const BuilderDialog = (props: BuilderDialogProps) => {
     project,
     content,
     updateItem,
-    possibleComponents = ["image", "text", "listExperimentSetup", "rawGraph"],
+    possibleComponents = ["image", "text", "listExperimentSetup", "iframe"],
   } = props;
 
   const onSubmit = (values: any) => {
@@ -64,7 +65,11 @@ export const BuilderDialog = (props: BuilderDialogProps) => {
     }
   };
   const getContent = () => {
-    if (dialogForm === "text" || dialogForm === "listExperimentSetup")
+    if (
+      dialogForm === "text" ||
+      dialogForm === "listExperimentSetup" ||
+      "iframe"
+    )
       return content;
     if (dialogForm === "image") {
       const type: string[] = [];
@@ -111,6 +116,9 @@ export const BuilderDialog = (props: BuilderDialogProps) => {
       }
       case "listExperimentSetup": {
         return <EditListExperimentSetup />;
+      }
+      case "iframe": {
+        return <EditIframe />;
       }
       default:
         return null;

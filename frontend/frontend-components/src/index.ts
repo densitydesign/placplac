@@ -9,4 +9,5 @@ export * from "./ProjectShow";
 export * from "./ExperimentShow";
 export * from "./GlossaryShow";
 export * from "./GlossaryCategoryShow";
+export * from "./IFrame";
 export * from "./components/Row";

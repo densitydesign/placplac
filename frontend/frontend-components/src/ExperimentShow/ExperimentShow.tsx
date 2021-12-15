@@ -13,6 +13,7 @@ import React, { ComponentType, useEffect, useState } from "react";
 import { GlossarySidebar } from "../GlossarySidebar";
 import { GlossaryTermsList } from "../components/GlossaryTermsList";
 import { GlossaryCategory, LanguageOptions, Reference } from "..";
+import { IFrame } from "../IFrame";
 import { Section } from "../components/Section";
 import { Flex, GridSize } from "../components/Flex";
 import { ContentList } from "./components/ContentList/ContentList";
@@ -85,6 +86,15 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
             title={item.content.title}
             list={item.content.list}
             subtitle={item.content.subtitle}
+          />
+        );
+      }
+      case "iframe": {
+        return (
+          <IFrame
+            src={item.content.src}
+            width={item.content.width}
+            height={item.content.height}
           />
         );
       }

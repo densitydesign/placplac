@@ -1,5 +1,5 @@
 import { Grid, Box, IconButton, Button } from "@material-ui/core";
-import { TextShow, ExperimentSetupListShow } from "frontend-components";
+import { TextShow, ExperimentSetupListShow, IFrame } from "frontend-components";
 import React, { Fragment } from "react";
 import { ImageShowBackend } from "../../showComponentsBackend/ImageShowBackend";
 import { ColumnContainer } from "./ColumnContainer";
@@ -110,6 +110,13 @@ export const Row = (props: RowProps) => {
                   title={col.content.title}
                   subtitle={col.content.subtitle}
                   isWide={col.content.isWide}
+                />
+              )}
+              {col.type === "iframe" && (
+                <IFrame
+                  src={col.content.src}
+                  width={col.content.width}
+                  height={col.content.height}
                 />
               )}
             </ColumnContainer>

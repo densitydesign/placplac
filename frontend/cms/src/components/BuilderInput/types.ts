@@ -4,7 +4,7 @@ export type BuilderBlock =
   | "text"
   | "image"
   | "listExperimentSetup"
-  | "rawGraph";
+   |"iframe";
 
 export type PossibleComponent = {
   [type in BuilderBlock]: { title: string };

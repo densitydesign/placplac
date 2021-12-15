@@ -131,10 +131,14 @@ interface GlossaryCategoryShowProps {
 }
 declare const GlossaryCategoryShow: (props: GlossaryCategoryShowProps) => JSX.Element;
 
+interface IFrameProps extends React.DetailedHTMLProps<React.IframeHTMLAttributes<HTMLIFrameElement>, HTMLIFrameElement> {
+}
+declare const IFrame: (props: IFrameProps) => JSX.Element;
+
 interface RowProps extends ComponentProps<"div"> {
     spacing?: string;
     children?: ReactNode;
 }
 declare const Row: (props: RowProps) => JSX.Element;
 
-export { Experiment, ExperimentSetupListShow, ExperimentSetupListShowProps, ExperimentShow, ExperimentShowProps, GlossaryCategory, GlossaryCategoryShow, GlossaryShow, GlossaryTerm, ImageShow, LanguageOptions, Layout, Project, ProjectShow, Reference, Row, SectionTitle, Step, TextShow, TextShowProps };
+export { Experiment, ExperimentSetupListShow, ExperimentSetupListShowProps, ExperimentShow, ExperimentShowProps, GlossaryCategory, GlossaryCategoryShow, GlossaryShow, GlossaryTerm, IFrame, ImageShow, LanguageOptions, Layout, Project, ProjectShow, Reference, Row, SectionTitle, Step, TextShow, TextShowProps };

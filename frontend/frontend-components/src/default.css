@@ -100,3 +100,6 @@
   color: inherit;
   text-decoration: unset;
 }
+.main-application iframe {
+  border: none;
+}

@@ -100,6 +100,9 @@
   color: inherit;
   text-decoration: unset;
 }
+.main-application iframe {
+  border: none;
+}
 
 .ExperimentSetupListShow_container_5bdek_1 {
   padding: 1.5em;
