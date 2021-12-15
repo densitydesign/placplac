@@ -15,6 +15,7 @@ import {
   Toolbar,
   ToolbarProps,
   EditButton,
+  RichTextField,
 } from "react-admin";
 import { BuilderInput } from "../../components/BuilderInput/BuilderInput";
 import { CustomRichTextInput } from "../../components/CustomRichTextInput";
@@ -22,6 +23,7 @@ import { AddStepButton } from "./AddStepButton";
 
 import { ReferenceInputImage } from "../../components/ReferenceInputImage";
 import { Tabs } from "../../components/Tabs";
+import { AddReferenceButton } from "../AddReferenceButton";
 
 const ExperimentFormToolbar = (props: ToolbarProps) => (
   <Toolbar
@@ -98,6 +100,7 @@ export const ExperimentForm = (props: Omit<TabbedFormProps, "children">) => {
           <BuilderInput source={"context"} project={project} />
         </FormTab>
       )}
+
       {props.record.id && (
         <FormTab label="experiment setup">
           <BuilderInput
@@ -126,9 +129,29 @@ export const ExperimentForm = (props: Omit<TabbedFormProps, "children">) => {
           </ReferenceArrayField>
         </FormTab>
       )}
+
       {props.record.id && (
         <FormTab label="findings">
           <BuilderInput source={"findings"} project={project} />
+        </FormTab>
+      )}
+      {props.record.id && (
+        <FormTab label="References">
+          <AddReferenceButton refersTo="experiment" />
+
+          <ReferenceArrayField
+            label="References"
+            addLabel={false}
+            reference="references"
+            source="reference_set"
+            fullWidth
+          >
+            <Datagrid>
+              <RichTextField stripTags source="description" />
+              <EditButton />
+              <DeleteButton redirect={false} mutationMode="optimistic" />
+            </Datagrid>
+          </ReferenceArrayField>
         </FormTab>
       )}
     </TabbedForm>

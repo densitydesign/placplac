@@ -148,7 +148,7 @@ export const CustomRichTextInput = (props: CustomRichTextInputProps) => {
             ],
             toolbar:
               "undo redo | formatselect | " +
-              "bold italic backcolor forecolor | alignleft aligncenter " +
+              "bold italic underline backcolor forecolor | alignleft aligncenter " +
               "alignright alignjustify | bullist numlist outdent indent emoticons table image link example | " +
               "removeformat  | help ",
             content_style: contentUiCss,

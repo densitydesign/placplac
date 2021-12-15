@@ -14,12 +14,17 @@ import {
 import IconCancel from "@material-ui/icons/Cancel";
 import IconContentAdd from "@material-ui/icons/Add";
 import { useToggler } from "../useToggler";
+import { CustomRichTextInput } from "../components/CustomRichTextInput";
 
-export const AddReferenceButton = () => {
+interface AddReferenceButtonProps {
+  refersTo: "project" | "experiment";
+}
+export const AddReferenceButton = (props: AddReferenceButtonProps) => {
+  const { refersTo } = props;
   const { value, setTrue, setFalse } = useToggler();
   const [mutate, { loading }] = useMutation();
   const record = useRecordContext();
-  const { id: project } = record;
+  const { id } = record;
   const notify = useNotify();
   const redirect = useRedirect();
   const onSave = (values: Partial<Record>) =>
@@ -49,22 +54,19 @@ export const AddReferenceButton = () => {
       >
         <IconContentAdd />
       </Button>
-      <Dialog maxWidth="sm" fullWidth open={value}>
+      <Dialog maxWidth="sm" fullWidth open={value} disableEnforceFocus>
         <FormWithRedirect
           resource="references"
-          initialValues={{ project }}
+          initialValues={{ [refersTo]: id }}
           save={onSave}
           render={({ handleSubmitWithRedirect, pristine, saving }) => (
             <>
               <DialogContent>
-                <TextInput
-                  multiline
-                  fullWidth
-                  source="title"
-                  validate={[required()]}
+                <CustomRichTextInput
+                  source="description"
+                  label="Description of reference"
+                  small
                 />
-              
-                <TextInput multiline fullWidth source="link" />
               </DialogContent>
               <DialogActions>
                 <Button

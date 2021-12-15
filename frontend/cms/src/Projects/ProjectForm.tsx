@@ -9,6 +9,7 @@ import {
   ReferenceArrayField,
   ReferenceManyField,
   required,
+  RichTextField,
   SaveButton,
   SelectField,
   SelectInput,
@@ -170,7 +171,7 @@ export const ProjectForm = (props: Omit<TabbedFormProps, "children">) => {
       )}
       {props.record.id && (
         <FormTab label="References">
-          <AddReferenceButton />
+          <AddReferenceButton refersTo="project" />
 
           <ReferenceArrayField
             label="References"
@@ -180,8 +181,7 @@ export const ProjectForm = (props: Omit<TabbedFormProps, "children">) => {
             fullWidth
           >
             <Datagrid>
-              <TextField source="title" />
-              <UrlField source="link" />
+              <RichTextField stripTags source="description" />
               <EditButton />
               <DeleteButton redirect={false} mutationMode="optimistic" />
             </Datagrid>

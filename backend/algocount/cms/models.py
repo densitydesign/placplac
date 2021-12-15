@@ -79,6 +79,6 @@ class GlossaryTerm(CustomModel):
     more_info_url = models.TextField(null=True, blank=True)
 
 class Reference(CustomModel):
-    title = models.TextField()
-    link = models.TextField(null=True, blank=True)
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    description = models.TextField()
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True,blank=True)
+    experiment = models.ForeignKey(Experiment, on_delete=models.CASCADE,  null=True,blank=True)

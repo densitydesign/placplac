@@ -194,7 +194,7 @@ class GlossaryCategoryViewSet(CustomModelView):
     def check_object_permissions(self, request, obj):
         if not self.request.user.is_superuser and not GlossaryCategory.objects.filter(
                 project__projectuser__user=self.request.user,
-                ).exists() and request.method not in permissions.SAFE_METHODS:
+        ).exists() and request.method not in permissions.SAFE_METHODS:
             raise exceptions.PermissionDenied()
 
         return super(GlossaryCategoryViewSet, self).check_object_permissions(request, obj)
@@ -229,6 +229,7 @@ class StepViewSet(CustomModelView):
             return Step.objects.all()
         return Step.objects.filter(experiment__project__projectuser__user=user)
 
+
 class ReferenceViewSet(CustomModelView):
     queryset = Reference.objects.all()
     serializer_class = ReferenceSerializer
@@ -238,5 +239,6 @@ class ReferenceViewSet(CustomModelView):
         user = self.request.user
         if user.is_superuser:
             return Reference.objects.all()
-        return Reference.objects.filter(project__projectuser__user=user)
-
+        return Reference.objects.filter(
+            Q(project__projectuser__user=user, experiment__isnull=True) |
+            Q(experiment__project__projectuser__user=user, project__isnull=True)).distinct()
