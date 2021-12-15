@@ -41,7 +41,69 @@ export const BuilderInput = (props: BuilderInputProps) => {
     newRows.splice(rowIndex, 1);
     onChange(newRows);
   };
-
+  const moveCellLeft = (rowIndex: number, cellIndex: number) => {
+    const newRows = [...value];
+    const newIndex = cellIndex - 1;
+    if (newIndex >= 0) {
+      const movingElement = newRows[rowIndex].splice(cellIndex, 1)[0];
+      newRows[rowIndex].splice(newIndex, 0, movingElement);
+      onChange(newRows);
+    }
+  };
+  const moveCellRight = (rowIndex: number, cellIndex: number) => {
+    const newRows = [...value];
+    const newIndex = cellIndex + 1;
+    if (newIndex < value[rowIndex].length) {
+      const movingElement = newRows[rowIndex].splice(cellIndex, 1)[0];
+      newRows[rowIndex].splice(newIndex, 0, movingElement);
+      onChange(newRows);
+    }
+  };
+  const moveCellDown = (rowIndex: number, cellIndex: number) => {
+    const newRows = [...value];
+    const newIndex = rowIndex + 1;
+    if (newIndex < value.length) {
+      const movingElement = newRows[rowIndex].splice(cellIndex, 1, {})[0];
+      const emptyElement = newRows[newIndex].findIndex(
+        (cell: any) => Object.keys(cell).length <= 0
+      );
+      console.log(emptyElement);
+      if (emptyElement === -1)
+        newRows[newIndex].splice(
+          newRows[newIndex].length - 1,
+          0,
+          movingElement
+        );
+      else newRows[newIndex].splice(emptyElement, 1, movingElement);
+      onChange(newRows);
+    }
+  };
+  const moveCellUp = (rowIndex: number, cellIndex: number) => {
+    const newRows = [...value];
+    const newIndex = rowIndex - 1;
+    if (newIndex >= 0) {
+      const movingElement = newRows[rowIndex].splice(cellIndex, 1, {})[0];
+      const emptyElement = newRows[newIndex].findIndex(
+        (cell: any) => Object.keys(cell).length <= 0
+      );
+      if (emptyElement === -1)
+        newRows[newIndex].splice(
+          newRows[newIndex].length - 1,
+          0,
+          movingElement
+        );
+      else newRows[newIndex].splice(emptyElement, 1, movingElement);
+      onChange(newRows);
+    }
+  };
+  const removeCell = (rowIndex: number, cellIndex: number) => {
+    const newRows = [...value];
+    newRows[rowIndex].splice(cellIndex, 1);
+    if (newRows[rowIndex].length <= 0) {
+      newRows.splice(rowIndex, 1);
+    }
+    onChange(newRows);
+  };
   const onColumnClick = (
     type: BuilderBlock,
     rowIndex: number,
@@ -76,6 +138,11 @@ export const BuilderInput = (props: BuilderInputProps) => {
       {value &&
         value.map((row: any, index: number) => (
           <Row
+            deleteCell={removeCell}
+            moveCellLeft={moveCellLeft}
+            moveCellDown={moveCellDown}
+            moveCellUp={moveCellUp}
+            moveCellRight={moveCellRight}
             key={index}
             row={row}
             setActiveItem={setActiveItem}

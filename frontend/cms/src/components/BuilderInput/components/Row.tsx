@@ -1,12 +1,14 @@
-import { Grid, Box, IconButton, GridSize } from "@material-ui/core";
+import { Grid, Box, IconButton, GridSize, Button } from "@material-ui/core";
 import { TextShow, ExperimentSetupListShow } from "frontend-components";
-import React from "react";
+import React, { Fragment } from "react";
 import { ImageShowBackend } from "../../showComponentsBackend/ImageShowBackend";
 import { ColumnContainer } from "./ColumnContainer";
 import { EmptyColumn } from "./EmptyColumn";
 import DeleteIcon from "@material-ui/icons/Delete";
 import AddIcon from "@material-ui/icons/Add";
 import { BuilderBlock } from "../types";
+import Delete from "@material-ui/icons/Delete";
+import { Row as RowGrid } from "frontend-components";
 
 interface RowProps {
   row: any[];
@@ -26,34 +28,36 @@ interface RowProps {
     rowIndex: number,
     colIndex: number
   ) => void;
+  deleteCell: (rowIndex: number, cellIndex: number) => void;
+
+  moveCellLeft: (rowIndex: number, cellIndex: number) => void;
+  moveCellRight: (rowIndex: number, cellIndex: number) => void;
+  moveCellUp: (rowIndex: number, cellIndex: number) => void;
+  moveCellDown: (rowIndex: number, cellIndex: number) => void;
 }
 
 export const Row = (props: RowProps) => {
-  const { row, rowIndex, deleteRow, setActiveItem, onColumnClick } = props;
-  const nCols = row.length;
-  const size = (12 / nCols) as GridSize;
+  const {
+    row,
+    rowIndex,
+    deleteRow,
+    setActiveItem,
+    onColumnClick,
+    moveCellLeft,
+    moveCellRight,
+    moveCellDown,
+    moveCellUp,
+    deleteCell,
+  } = props;
+
   return (
-    <Grid
-      style={{ border: "1px solid black" }}
+    <RowGrid
+      style={{ border: "1px solid black", position: "relative" }}
       className={"main-application"}
       key={rowIndex}
-      container
     >
-      <Box width="100%" position="relative">
-        <Box position="absolute" right={2} top={2}>
-          <IconButton
-            size="small"
-            color="primary"
-            onClick={() => {
-              deleteRow(rowIndex);
-            }}
-          >
-            <DeleteIcon />
-          </IconButton>
-        </Box>
-      </Box>
       {row.map((col, colIndex) => (
-        <Grid key={colIndex} item xs={size} container>
+        <Fragment key={colIndex}>
           {Object.keys(col).length === 0 ? (
             <EmptyColumn>
               <Grid container justify="center" alignItems="center">
@@ -64,10 +68,28 @@ export const Row = (props: RowProps) => {
                 >
                   <AddIcon />
                 </IconButton>
+                <IconButton
+                  size="medium"
+                  color="primary"
+                  onClick={(e) => {
+                    e.stopPropagation();
+
+                    deleteCell(rowIndex, colIndex);
+                  }}
+                >
+                  <Delete />
+                </IconButton>
               </Grid>
             </EmptyColumn>
           ) : (
             <ColumnContainer
+              deleteCell={deleteCell}
+              rowIndex={rowIndex}
+              colIndex={colIndex}
+              moveCellLeft={moveCellLeft}
+              moveCellDown={moveCellDown}
+              moveCellUp={moveCellUp}
+              moveCellRight={moveCellRight}
               onClick={() => {
                 onColumnClick(col.type, rowIndex, colIndex);
               }}
@@ -92,8 +114,20 @@ export const Row = (props: RowProps) => {
               )}
             </ColumnContainer>
           )}
-        </Grid>
+        </Fragment>
       ))}
-    </Grid>
+      <Box position="absolute" right={2} top={2}>
+        <Button
+          size="small"
+          variant="contained"
+          color="primary"
+          onClick={() => {
+            deleteRow(rowIndex);
+          }}
+        >
+          <DeleteIcon />
+        </Button>
+      </Box>
+    </RowGrid>
   );
 };

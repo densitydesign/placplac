@@ -3,8 +3,11 @@ import {
   DeleteButton,
   EditButton,
   FormTab,
+  FunctionField,
   maxLength,
+  Record,
   ReferenceArrayField,
+  ReferenceManyField,
   required,
   SaveButton,
   SelectField,
@@ -21,6 +24,7 @@ import { CustomRichTextInput } from "../components/CustomRichTextInput";
 import { Tabs } from "../components/Tabs";
 import { AddCollaboratorButton } from "./AddCollaboratorButton";
 import { AddExperimentButton } from "./AddExperimentButton";
+import { AddGlossaryCategoryButton } from "./AddGlossaryCategoryButton";
 import { AddGlossaryTermButton } from "./AddGlossaryTermButton";
 
 const ProjectFormToolbar = (props: ToolbarProps) => (
@@ -112,9 +116,41 @@ export const ProjectForm = (props: Omit<TabbedFormProps, "children">) => {
 
       {props.record.id && (
         <FormTab label="Glossary">
+          <AddGlossaryCategoryButton />
+
+          <ReferenceManyField
+            label="Glossary categories"
+            reference="glossary-categories"
+            target="project"
+            fullWidth
+          >
+            <Datagrid>
+              <TextField source="title" />
+              <TextField source="description" />
+              <FunctionField
+                render={(record?: Record) =>
+                  record && record.project ? (
+                    <EditButton record={record} />
+                  ) : null
+                }
+              />
+              <FunctionField
+                render={(record?: Record) =>
+                  record && record.project ? (
+                    <DeleteButton
+                      record={record}
+                      redirect={false}
+                      mutationMode="optimistic"
+                    />
+                  ) : null
+                }
+              />
+            </Datagrid>
+          </ReferenceManyField>
+
           <AddGlossaryTermButton />
           <ReferenceArrayField
-            label=""
+            label="Glossary terms"
             reference="glossary-terms"
             source="glossaryterm_set"
             fullWidth
@@ -139,6 +175,7 @@ export const ProjectForm = (props: Omit<TabbedFormProps, "children">) => {
           >
             <Datagrid>
               <CustomFileField source="file" title="name" />
+              <TextField source="file" label={"url"} />
               <TextField source="type" />
               <TextField source="description" />
               <EditButton />

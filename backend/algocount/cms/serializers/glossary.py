@@ -43,7 +43,7 @@ class GlossaryCategorySerializer(serializers.ModelSerializer):
         model = GlossaryCategory
         fields = ["id", "title",
                   "description",
-                  "color",
+                  "color","project"
                   ]
 
 

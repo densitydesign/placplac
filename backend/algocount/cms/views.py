@@ -5,6 +5,7 @@ import subprocess
 import tempfile
 
 from django.conf import settings
+from django.db.models import Q
 from django.http import Http404, HttpResponse
 from rest_framework import permissions, exceptions
 from rest_framework.decorators import action
@@ -12,6 +13,7 @@ from rest_framework.parsers import MultiPartParser
 from rest_framework.response import Response
 
 from base.viewsets import CustomModelView
+from cms.filters.glossary_category import GlossaryCategoryFilter
 from cms.filters.glossary_term import GlossaryTermFilter
 from cms.filters.project import ProjectMediaFilter, ProjectUserFilter
 from cms.filters.step import StepFilter
@@ -185,6 +187,21 @@ class ExperimentViewSet(CustomModelView):
 class GlossaryCategoryViewSet(CustomModelView):
     queryset = GlossaryCategory.objects.all()
     serializer_class = GlossaryCategorySerializer
+    filterset_class = GlossaryCategoryFilter
+
+    def check_object_permissions(self, request, obj):
+        if not self.request.user.is_superuser and not GlossaryCategory.objects.filter(
+                project__projectuser__user=self.request.user,
+                ).exists() and request.method not in permissions.SAFE_METHODS:
+            raise exceptions.PermissionDenied()
+
+        return super(GlossaryCategoryViewSet, self).check_object_permissions(request, obj)
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_superuser:
+            return GlossaryCategory.objects.all()
+        return GlossaryCategory.objects.filter(Q(project__projectuser__user=user) | Q(project__isnull=True))
 
 
 class GlossaryTermViewSet(CustomModelView):

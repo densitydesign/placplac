@@ -49,13 +49,15 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
     glossary_terms.some((term) => term.category_title === category.title)
   );
   useEffect(() => {
-    const element = document.getElementById("researchQuestionDiv")!;
-    const resizeObserver = new ResizeObserver((event) => {
-      setTopPositionStep(event[0].contentBoxSize[0].blockSize + 55);
-    });
+    const element = document.getElementById("researchQuestionDiv");
+    if (element) {
+      const resizeObserver = new ResizeObserver((event) => {
+        setTopPositionStep(event[0].contentBoxSize[0].blockSize + 55);
+      });
 
-    resizeObserver.observe(element);
-    return () => resizeObserver.unobserve(element);
+      resizeObserver.observe(element);
+      return () => resizeObserver.unobserve(element);
+    }
   });
 
   const renderItem = (item: { type: string } & any) => {

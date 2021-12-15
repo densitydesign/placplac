@@ -8,6 +8,7 @@ import { ProjectEdit } from "./Projects/ProjectEdit";
 import { ProjectCreate } from "./Projects/ProjectCreate";
 import { ExperimentEdit } from "./Projects/Experiments/ExperimentEdit";
 import { GlossaryTermEdit } from "./Projects/GlossaryTerms/GlossaryTermEdit";
+import { GlossaryCategoryEdit } from "./Projects/GlossaryCategories/GlossaryCategoryEdit";
 import { StepEdit } from "./Projects/Experiments/Steps/StepEdit";
 import { ProjectShowBackend } from "./components/showComponentsBackend/ProjectShowBackend";
 import { history } from "./browserHistory";
@@ -55,7 +56,7 @@ function App() {
         <Resource name="media" />,
         <Resource name="glossary-terms" edit={GlossaryTermEdit} />,
         <Resource name="steps" edit={StepEdit} />,
-        <Resource name="glossary-categories" />,
+        <Resource name="glossary-categories" edit={GlossaryCategoryEdit} />,
         <Resource name="project-collaborators" />,
         permissions.includes("authentication.change_user") ? (
           <Resource name="users" edit={UserEdit} list={UserList} />
