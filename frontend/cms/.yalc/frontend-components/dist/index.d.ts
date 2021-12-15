@@ -1,4 +1,4 @@
-import React, { ComponentType } from 'react';
+import React, { ComponentType, ComponentProps, ReactNode } from 'react';
 
 interface ExperimentSetupListShowProps {
     title: string;
@@ -123,4 +123,10 @@ interface GlossaryCategoryShowProps {
 }
 declare const GlossaryCategoryShow: (props: GlossaryCategoryShowProps) => JSX.Element;
 
-export { Experiment, ExperimentSetupListShow, ExperimentSetupListShowProps, ExperimentShow, ExperimentShowProps, GlossaryCategory, GlossaryCategoryShow, GlossaryShow, GlossaryTerm, ImageShow, LanguageOptions, Layout, Project, ProjectShow, SectionTitle, Step, TextShow, TextShowProps };
+interface RowProps extends ComponentProps<"div"> {
+    spacing?: string;
+    children?: ReactNode;
+}
+declare const Row: (props: RowProps) => JSX.Element;
+
+export { Experiment, ExperimentSetupListShow, ExperimentSetupListShowProps, ExperimentShow, ExperimentShowProps, GlossaryCategory, GlossaryCategoryShow, GlossaryShow, GlossaryTerm, ImageShow, LanguageOptions, Layout, Project, ProjectShow, Row, SectionTitle, Step, TextShow, TextShowProps };

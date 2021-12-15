@@ -9,3 +9,4 @@ export * from "./ProjectShow";
 export * from "./ExperimentShow";
 export * from "./GlossaryShow";
 export * from "./GlossaryCategoryShow";
+export * from "./components/Row";
