@@ -11,3 +11,4 @@ router.register(r'glossary-categories', views.GlossaryCategoryViewSet, basename=
 router.register(r'glossary-terms', views.GlossaryTermViewSet, basename='glossary-terms')
 router.register(r'references', views.ReferenceViewSet, basename='references')
 router.register(r'steps', views.StepViewSet, basename='steps')
+router.register(r'step-downloads', views.StepDownloadViewSet, basename='step-downloads')

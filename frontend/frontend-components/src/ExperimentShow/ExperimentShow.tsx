@@ -22,7 +22,7 @@ import classNames from "classnames";
 import { translations } from "../translations";
 import { useReferencesAdjuster } from "../hooks";
 import { ReferenceList } from "../components/ReferenceList";
-
+import downloadIcon from "../assets/download-icon.png";
 export interface ExperimentShowProps {
   experiment: Experiment;
   basePath: string;
@@ -232,7 +232,20 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
                   </h3>
                 </div>
                 <h3>{step.title}</h3>
-                <TextShow text={step.description} />
+                {step.glossary_terms && step.glossary_terms.length > 0 && (
+                  <div style={{ marginBottom: "1em" }}>
+                    <GlossaryTermsList glossaryTerms={step.glossary_terms} />
+                  </div>
+                )}
+                <ul className={styles.download_list}>
+                  {step.downloads.map((download, index) => (
+                    <li key={download.id}>
+                      <a href={download.file} download={download.name}>
+                        {download.title}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
               </div>
               <div
                 className={classnames(styles.grid_auto, styles.sidebar_content)}

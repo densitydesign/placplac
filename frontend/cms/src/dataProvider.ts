@@ -8,6 +8,8 @@ import {
   SortPayload,
   Record,
   GetOneResult,
+  UpdateParams,
+  UpdateResult,
 } from "react-admin";
 import { getAccessToken, getRefreshToken, getUser } from "./authProvider";
 import { url } from "./constants";
@@ -108,6 +110,10 @@ const dataprovider = (
     resource: string,
     params: CreateParams
   ) => Promise<CreateResult<RecordType>>;
+  updateMultipart: <RecordType extends Record = Record>(
+    resource: string,
+    params: UpdateParams<any>
+  ) => Promise<UpdateResult<RecordType>>;
   getFull: <RecordType extends Record = Record>(
     resource: string,
     params: GetOneParams
@@ -222,7 +228,28 @@ const dataprovider = (
         data: { ...data },
       }));
     },
+    updateMultipart: async (resource, params) => {
+      const formData = new FormData();
+      console.log(params);
+      Object.keys(params.data).forEach((key) => {
+        if (key === "file") {
+          if (params.data[key].rawFile instanceof File)
+            formData.append("file", params.data[key].rawFile);
+        } else {
+          formData.append(key, params.data[key]);
+        }
+      });
 
+      return app(`${apiUrl}/${resource}/${params.id}/`, {
+        method: "PATCH",
+        data: formData,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }).then(({ data }: any) => ({
+        data: { ...data },
+      }));
+    },
     delete: (resource, params) =>
       app(`${apiUrl}/${resource}/${params.id}/`, {
         method: "DELETE",

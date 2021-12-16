@@ -17,14 +17,15 @@ from cms.filters.glossary_category import GlossaryCategoryFilter
 from cms.filters.glossary_term import GlossaryTermFilter
 from cms.filters.project import ProjectMediaFilter, ProjectUserFilter
 from cms.filters.reference import ReferenceFilter
-from cms.filters.step import StepFilter
-from cms.models import Project, Experiment, ProjectMedia, GlossaryCategory, GlossaryTerm, Step, ProjectUser, Reference
+from cms.filters.step import StepFilter, StepDownloadFilter
+from cms.models import Project, Experiment, ProjectMedia, GlossaryCategory, GlossaryTerm, Step, ProjectUser, Reference, \
+    StepDownload
 from cms.serializers.experiment import ExperimentSerializer
 from cms.serializers.glossary import GlossaryCategorySerializer, GlossaryTermSerializer
 from cms.serializers.project import ProjectSerializer, ProjectMediaSerializer, FullProjectSerializer, \
     ProjectUserSerializer
 from cms.serializers.reference import ReferenceSerializer
-from cms.serializers.step import StepSerializer
+from cms.serializers.step import StepSerializer, StepDownloadSerializer
 
 
 class ProjectViewSet(CustomModelView):
@@ -142,6 +143,19 @@ class ProjectMediaViewSet(CustomModelView):
         if user.is_superuser:
             return ProjectMedia.objects.all()
         return ProjectMedia.objects.filter(project__projectuser__user=user)
+
+
+class StepDownloadViewSet(CustomModelView):
+    queryset = StepDownload.objects.all()
+    serializer_class = StepDownloadSerializer
+    parser_classes = [MultiPartParser]
+    filterset_class = StepDownloadFilter
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_superuser:
+            return StepDownload.objects.all()
+        return StepDownload.objects.filter(step__experiment__project__projectuser__user=user)
 
 
 class ProjectUserViewSet(CustomModelView):

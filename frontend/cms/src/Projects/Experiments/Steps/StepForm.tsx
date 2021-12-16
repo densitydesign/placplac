@@ -1,18 +1,25 @@
 import {
+  Datagrid,
   DeleteButton,
+  EditButton,
   FormTab,
   maxLength,
   NumberInput,
+  ReferenceArrayField,
   required,
   SaveButton,
   TabbedForm,
   TabbedFormProps,
+  TextField,
   TextInput,
   Toolbar,
   ToolbarProps,
   useGetOne,
 } from "react-admin";
 import { BuilderInput } from "../../../components/BuilderInput";
+import { CustomFileField } from "../../../components/CustomFileField";
+import { AddStepDownloadButton } from "./AddStepDownloadButton";
+import { EditStepDownloadButton } from "./EditStepDownloadButton";
 
 const StepFormToolbar = (props: ToolbarProps) => {
   return (
@@ -59,6 +66,21 @@ export const StepForm = (props: Omit<TabbedFormProps, "children">) => {
           helperText="The title of the step"
           validate={[required(), maxLength(255)]}
         />
+        <AddStepDownloadButton />
+        <ReferenceArrayField
+          label="Downloads"
+          reference="step-downloads"
+          source="stepdownload_set"
+          fullWidth
+        >
+          <Datagrid>
+            <CustomFileField source="file" title="name" />
+            <TextField source="title" label="Download title" />
+            <TextField source="file" label={"url"} />
+            <EditStepDownloadButton />
+            <DeleteButton redirect={false} mutationMode="optimistic" />
+          </Datagrid>
+        </ReferenceArrayField>
       </FormTab>
       <FormTab label="content">
         <BuilderInput

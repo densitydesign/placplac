@@ -62,6 +62,12 @@ class Step(CustomModel):
     experiment = models.ForeignKey(Experiment, on_delete=models.CASCADE)
 
 
+class StepDownload(CustomModel):
+    title = models.TextField()
+    file = models.FileField()
+    step = models.ForeignKey(Step, on_delete=models.CASCADE)
+
+
 class GlossaryCategory(CustomModel):
     title = models.CharField(max_length=50, unique=True)
     description = models.TextField()

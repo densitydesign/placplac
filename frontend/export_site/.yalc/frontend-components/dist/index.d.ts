@@ -32,6 +32,13 @@ declare type Step = {
     description: string;
     step_number: number;
     content: any;
+    glossary_terms: GlossaryTerm[];
+    downloads: {
+        id: string;
+        file: string;
+        title: string;
+        name: string;
+    }[];
 };
 declare type GlossaryTerm = {
     id: string;
