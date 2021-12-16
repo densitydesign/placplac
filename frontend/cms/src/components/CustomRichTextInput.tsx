@@ -3,38 +3,80 @@ import {
   FormHelperText,
   InputLabel,
   makeStyles,
+  PropTypes,
   Theme,
 } from "@material-ui/core";
-// import "./mention.css";
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import contentUiCss from "!!raw-loader!frontend-components/dist/index.css";
 
-import { useGetList, useGetMany, useGetOne } from "ra-core";
+import { InputProps, useGetMany } from "ra-core";
 import { Editor } from "@tinymce/tinymce-react";
-import { useMemo, useRef } from "react";
-import {
-  FieldTitle,
-  InputHelperText,
-  TextInputProps,
-  useInput,
-} from "react-admin";
+import { ComponentProps, useMemo, useRef } from "react";
+import { FieldTitle, InputHelperText, useInput } from "react-admin";
 
 const useStyles = makeStyles<Theme, CustomRichTextInputProps>((theme) => ({
   label: { position: "relative" },
 }));
 
-interface CustomRichTextInputProps extends TextInputProps {
-  project?: number;
+interface CustomRichTextInputProps extends InputProps {
+  label?: string | false;
+  source: string;
+
+  fullWidth?: boolean;
+  helperText?: ComponentProps<typeof InputHelperText>["helperText"];
+  record?: Record<any, any>;
+  resource?: string;
+  placeholder?: string;
+  variant?: string;
+  margin?: PropTypes.Margin;
   small?: boolean;
+  glossaryTermsIds?: number[];
+  referencesIds?: number[];
+}
+
+function useReferences(referencesIds: number[]) {
+  const { data, loading } = useGetMany("references", referencesIds, {
+    enabled: referencesIds.length > 0,
+  });
+  const actualData = useMemo(() => {
+    if (data && data.length > 0) {
+      return data
+        .filter((record) => !!record)
+        .map((record) => {
+          return {
+            value: record.id.toString() as any,
+            text: record.description,
+          };
+        });
+    }
+    return [];
+  }, [data]);
+  return { data: actualData, loading };
+}
+
+function useGlossaryTerms(glossaryTermsIds: number[]) {
+  const { data, loading } = useGetMany("glossary-terms", glossaryTermsIds, {
+    enabled: glossaryTermsIds.length > 0,
+  });
+  const actualData = useMemo(() => {
+    if (data && data.length > 0) {
+      return data
+        .filter((record) => !!record)
+        .map((record) => {
+          return {
+            value: record,
+            text: record.title,
+          };
+        });
+    }
+    return [];
+  }, [data]);
+  return { data: actualData, loading };
 }
 
 export const CustomRichTextInput = (props: CustomRichTextInputProps) => {
   const {
-    options,
-    toolbar,
     fullWidth = true,
-    classes: classesOverride,
-    configureQuill,
     helperText,
     placeholder,
     label,
@@ -42,8 +84,9 @@ export const CustomRichTextInput = (props: CustomRichTextInputProps) => {
     resource,
     variant,
     margin = "dense",
-    project: projectId,
     small,
+    referencesIds = [],
+    glossaryTermsIds = [],
     ...rest
   } = props;
 
@@ -54,55 +97,16 @@ export const CustomRichTextInput = (props: CustomRichTextInputProps) => {
     meta: { touched, error },
   } = useInput({ source, ...rest });
 
-  const { ids, data } = useGetList(
-    "glossary-terms",
-    { page: 1, perPage: Infinity },
-    { field: "title", order: "ASC" },
-    {
-      project: props.project,
-    },
-    { enabled: !!props.project }
-  );
-  const glossaryItems = useMemo(() => {
-    if (props.project && data) {
-      return ids.map((id) => {
-        const record = data[id];
-        return {
-          value: record,
-          text: record.title,
-        };
-      });
-    }
-    return [];
-  }, [data, ids, props.project]);
+  const { data: glossaryItems, loading: loadingG } =
+    useGlossaryTerms(glossaryTermsIds);
 
-  const { ids: idsReferences, data: references } = useGetList(
-    "references",
-    { page: 1, perPage: Infinity },
-    { field: "title", order: "ASC" },
-    {
-      project: props.project,
-    },
-    { enabled: !!props.project }
-  );
-
-  const referenceItems = useMemo(() => {
-    if (props.project && references) {
-      return idsReferences.map((id) => {
-        const record = references[id];
-        return {
-          value: id.toString() as any,
-          text: record.title,
-        };
-      });
-    }
-    return [];
-  }, [idsReferences, props.project, references]);
+  const { data: referenceItems, loading: loadirngR } =
+    useReferences(referencesIds);
 
   const classes = useStyles(props);
 
   const editorRef = useRef<any>(null);
-  return (
+  return !loadingG && !loadirngR ? (
     <>
       <FormControl
         error={!!(touched && error)}
@@ -153,6 +157,17 @@ export const CustomRichTextInput = (props: CustomRichTextInputProps) => {
               "removeformat  | help ",
             content_style: contentUiCss,
             body_class: "main-application",
+            init_instance_callback: (editor) => {
+              //set reference numbers
+              referenceItems.forEach((reference, index) => {
+                const references = editor.contentDocument.querySelectorAll(
+                  `[data-reference="${reference.value}"]`
+                );
+                references.forEach((reference) => {
+                  reference.innerHTML = `${index + 1}`;
+                });
+              });
+            },
             setup: (editor) => {
               const getMatchedChars = function (pattern: string) {
                 console.log(pattern);
@@ -196,11 +211,11 @@ export const CustomRichTextInput = (props: CustomRichTextInputProps) => {
                     const index = referenceItems.findIndex(
                       (reference) => reference.value === data.reference
                     );
-                    const html = `${text}<sup class="toReferenceTag mceNonEditable"  data-reference="${
-                      data.reference
-                    }">
-                        [<a href='#reference${data.reference}'>
-                            <span>${index + 1}</span>
+                    const html = `${text}<sup class="toReferenceTag mceNonEditable">
+                        [<a data-reference="${
+                          data.reference
+                        }" href='#reference${data.reference}'>
+                          ${index + 1}
                         </a>]</sup>`;
                     editor.insertContent(html);
                     api.close();
@@ -268,5 +283,5 @@ export const CustomRichTextInput = (props: CustomRichTextInputProps) => {
         />
       </FormControl>
     </>
-  );
+  ) : null;
 };

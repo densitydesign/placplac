@@ -10,6 +10,7 @@ import {
   TextInput,
   Toolbar,
   ToolbarProps,
+  useGetOne,
 } from "react-admin";
 import { BuilderInput } from "../../../components/BuilderInput";
 
@@ -33,7 +34,16 @@ export const StepForm = (props: Omit<TabbedFormProps, "children">) => {
       ? props.initialValues.project
       : props.record.project;
 
-  return (
+  const { data, loaded } = useGetOne("projects", project);
+  const experiment =
+    props.initialValues && "experiment" in props.initialValues
+      ? props.initialValues.experiment
+      : props.record.experiment;
+  const { data: experimentData, loaded: loadedExp } = useGetOne(
+    "experiments",
+    experiment
+  );
+  return loaded && data && experimentData && loadedExp ? (
     <TabbedForm {...props} redirect="edit" toolbar={<StepFormToolbar />}>
       <FormTab label="summary">
         <NumberInput
@@ -49,16 +59,15 @@ export const StepForm = (props: Omit<TabbedFormProps, "children">) => {
           helperText="The title of the step"
           validate={[required(), maxLength(255)]}
         />
-
-        {/* <CustomRichTextInput
-          project={project}
-          source="description"
-          addLabel={false}
-        /> */}
       </FormTab>
       <FormTab label="content">
-        <BuilderInput source={"content"} project={project} />
+        <BuilderInput
+          glossaryTermsIds={data.glossaryterm_set}
+          referencesIds={experimentData.reference_set}
+          source={"content"}
+          project={project}
+        />
       </FormTab>
     </TabbedForm>
-  );
+  ) : null;
 };

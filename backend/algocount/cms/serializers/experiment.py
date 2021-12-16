@@ -54,7 +54,7 @@ class FullExperimentSerializer(serializers.ModelSerializer):
         return FullGlossaryTermSerializer(found_glossary_terms, many=True).data
 
     def get_references(self, object):
-        references = object.reference_set.all().order_by("title")
+        references = object.reference_set.all().order_by("description")
         return ReferenceSerializer(references, many=True).data
 
     class Meta:

@@ -22,10 +22,7 @@ export declare type GlossaryCategory = {
 };
 export declare type Reference = {
     id: number;
-    title: string;
-    link: string;
-    authors: string;
-    source: string;
+    description: string;
 };
 export declare type LanguageOptions = "it" | "en";
 export declare type Project = {
@@ -36,6 +33,7 @@ export declare type Project = {
     experiments: Experiment[];
     glossary_terms: GlossaryTerm[];
     language: LanguageOptions;
+    references: Reference[];
 };
 export declare type Experiment = {
     id: number;

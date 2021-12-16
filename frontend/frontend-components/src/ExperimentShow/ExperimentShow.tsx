@@ -20,6 +20,8 @@ import { ContentList } from "./components/ContentList/ContentList";
 import { Row } from "../components/Row";
 import classNames from "classnames";
 import { translations } from "../translations";
+import { useReferencesAdjuster } from "../hooks";
+import { ReferenceList } from "../components/ReferenceList";
 
 export interface ExperimentShowProps {
   experiment: Experiment;
@@ -61,6 +63,8 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
       return () => resizeObserver.unobserve(element);
     }
   });
+
+  useReferencesAdjuster();
 
   const renderItem = (item: { type: string } & any) => {
     switch (item.type) {
@@ -242,36 +246,19 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
         <Section
           id="findings"
           title={translations[language].experiment_findings}
-          className={"section"}
           marginFix
         >
           {renderSection(findings, true)}
         </Section>
       )}
-      {references && (
+      {references && references.length > 0 && (
         <Section
           id="references"
           title={translations[language].references_title}
-          className={"section"}
-          marginFix
         >
           <Row>
             <div className={"inner-column"}>
-              {references.map((reference, index) => (
-                <p key={reference.id} id={`reference${reference.id}`}>
-                  <span>
-                    {`${index + 1}) ${reference.title} `}
-                    {reference.link && (
-                      <a
-                        style={{ textDecoration: "underline" }}
-                        href={reference.link}
-                      >
-                        {reference.link}
-                      </a>
-                    )}
-                  </span>
-                </p>
-              ))}
+              <ReferenceList references={references} />
             </div>
           </Row>
         </Section>

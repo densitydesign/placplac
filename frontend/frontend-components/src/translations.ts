@@ -12,6 +12,7 @@ export const translations = {
     experiment_findings: "Findings",
     experiment_researchquestion: "Research question",
     references_title: "References & materials",
+    only_references_title: "References",
     glossary_menu: "Glossary",
     glossary_title: "Glossary",
     glossary_description:
@@ -35,6 +36,7 @@ export const translations = {
     experiment_findings: "Risultati",
     experiment_researchquestion: "Domanda di ricerca",
     references_title: "Riferimenti & materiale",
+    only_references_title: "Riferimenti",
 
     experiment_tableofcontents: "TABELLA DEI CONTENUTI",
     glossary_menu: "Glossario",

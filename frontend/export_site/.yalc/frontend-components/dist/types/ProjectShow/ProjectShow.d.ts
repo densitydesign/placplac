@@ -1,6 +1,6 @@
 import { GlossaryTerm, Project } from "../types";
 import { ComponentType } from "react";
-import { GlossaryCategory } from "..";
+import { GlossaryCategory } from "../types";
 interface ProjectProps {
     project: Project;
     basePath: string;

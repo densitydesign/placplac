@@ -151,7 +151,9 @@ const dataprovider = (
 
     getMany: (resource, params) => {
       return Promise.all(params.ids.map((id) => getOneJson(resource, id)))
-        .then((data) => ({ data }))
+        .then((data) => {
+          return { data };
+        })
         .catch(() => ({ data: [] }));
     },
 

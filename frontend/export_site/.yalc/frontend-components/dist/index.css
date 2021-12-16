@@ -513,6 +513,12 @@
 }
 
 
+.Row_main_1qq39_1 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(0px, 1fr));
+  grid-auto-rows: 1fr;
+}
+
 .SectionOuter_main_1cbm1_1 {
     border-bottom: 1px solid black;
     width: 100%;
@@ -943,12 +949,6 @@
 .ContentList_content_list_o5fl3_1 li:hover {
   webkit-filter: blur(2px); /* Chrome, Safari, Opera */
   filter: blur(2px);
-}
-
-.Row_main_1qq39_1 {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(0px, 1fr));
-  grid-auto-rows: 1fr;
 }
 
 .GlossaryShow_container_1ka72_1 {

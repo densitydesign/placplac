@@ -8,14 +8,22 @@ import { Row } from "./components/Row";
 
 interface BuilderInputProps {
   source: string;
-  project: number;
   possibleColumns?: PossibleColumns;
   possibleComponents?: BuilderBlock[];
-  gap?: number | string;
+  glossaryTermsIds: number[];
+  referencesIds: number[];
+  project: number;
 }
 
 export const BuilderInput = (props: BuilderInputProps) => {
-  const { source, project, possibleColumns, possibleComponents } = props;
+  const {
+    source,
+    possibleColumns,
+    possibleComponents,
+    glossaryTermsIds,
+    referencesIds,
+    project,
+  } = props;
   const [activeStep, setActiveStep] = React.useState(0);
 
   const {
@@ -153,13 +161,15 @@ export const BuilderInput = (props: BuilderInputProps) => {
         ))}
       {activeItem && (
         <BuilderDialog
+          project={project}
           onClose={onCloseModal}
           open={isOpenUpdateModal}
           dialogForm={dialogStatus}
           activeStep={activeStep}
           handleStep={setActiveStep}
           setDialogForm={setDialogStatus}
-          project={project}
+          glossaryTermsIds={glossaryTermsIds}
+          referencesIds={referencesIds}
           content={value[activeItem.rowIndex][activeItem.colIndex].content}
           updateItem={updateItem}
           possibleComponents={possibleComponents}

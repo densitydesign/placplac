@@ -25,23 +25,32 @@ const ReferenceFormToolbar = (props: ToolbarProps) => (
 );
 
 export const ReferenceForm = (props: Omit<SimpleFormProps, "children">) => {
-  const project =
-    props.initialValues && "project" in props.initialValues
-      ? props.initialValues.project
-      : props.record.project;
-  const redirect = `/projects/${project}/3`;
-
   const redirectLink = useMemo(() => {
     if (props.initialValues) {
-      if ("project" in props.initialValues) {
+      if ("project" in props.initialValues && props.initialValues.project) {
+        return `/projects/${props.initialValues.project}/3`;
+      }
+      if (
+        "experiment" in props.initialValues &&
+        props.initialValues.experiment
+      ) {
+        return `/experiments/${props.initialValues.experiment}/5`;
       }
     }
-  }, []);
+    if (props.record) {
+      if ("project" in props.record && props.record.project) {
+        return `/projects/${props.record.project}/3`;
+      }
+      if ("experiment" in props.record && props.record.experiment) {
+        return `/experiments/${props.record.experiment}/5`;
+      }
+    }
+  }, [props.initialValues, props.record]);
 
   return (
     <SimpleForm
       {...props}
-      redirect={redirect}
+      redirect={redirectLink}
       toolbar={<ReferenceFormToolbar />}
     >
       <CustomRichTextInput

@@ -16,6 +16,7 @@ import {
   ToolbarProps,
   EditButton,
   RichTextField,
+  useGetOne,
 } from "react-admin";
 import { BuilderInput } from "../../components/BuilderInput/BuilderInput";
 import { CustomRichTextInput } from "../../components/CustomRichTextInput";
@@ -41,8 +42,8 @@ export const ExperimentForm = (props: Omit<TabbedFormProps, "children">) => {
     props.initialValues && "project" in props.initialValues
       ? props.initialValues.project
       : props.record.project;
-
-  return (
+  const { data, loaded } = useGetOne("projects", project);
+  return loaded && data ? (
     <TabbedForm
       {...props}
       tabs={<Tabs />}
@@ -70,7 +71,8 @@ export const ExperimentForm = (props: Omit<TabbedFormProps, "children">) => {
           validate={[maxLength(255)]}
         />
         <CustomRichTextInput
-          project={project}
+          glossaryTermsIds={data.glossaryterm_set}
+          referencesIds={props.record.reference_set}
           source="description"
           label="Description (400)"
           placeholder="What question are you trying to answer through this experiment"
@@ -97,18 +99,24 @@ export const ExperimentForm = (props: Omit<TabbedFormProps, "children">) => {
 
       {props.record.id && (
         <FormTab label="context">
-          <BuilderInput source={"context"} project={project} />
+          <BuilderInput
+            glossaryTermsIds={data.glossaryterm_set}
+            referencesIds={props.record?.reference_set}
+            source={"context"}
+            project={project}
+          />
         </FormTab>
       )}
 
       {props.record.id && (
         <FormTab label="experiment setup">
           <BuilderInput
+            glossaryTermsIds={data.glossaryterm_set}
+            referencesIds={props.record.reference_set}
             possibleColumns={[2, 3, 4]}
             possibleComponents={["image", "listExperimentSetup"]}
             source={"experiment_setup"}
             project={project}
-            gap="30px"
           />
         </FormTab>
       )}
@@ -132,7 +140,12 @@ export const ExperimentForm = (props: Omit<TabbedFormProps, "children">) => {
 
       {props.record.id && (
         <FormTab label="findings">
-          <BuilderInput source={"findings"} project={project} />
+          <BuilderInput
+            glossaryTermsIds={data.glossaryterm_set}
+            referencesIds={props.record?.reference_set}
+            source={"findings"}
+            project={project}
+          />
         </FormTab>
       )}
       {props.record.id && (
@@ -155,5 +168,5 @@ export const ExperimentForm = (props: Omit<TabbedFormProps, "children">) => {
         </FormTab>
       )}
     </TabbedForm>
-  );
+  ) : null;
 };

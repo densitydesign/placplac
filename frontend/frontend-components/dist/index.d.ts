@@ -51,10 +51,7 @@ declare type GlossaryCategory = {
 };
 declare type Reference = {
     id: number;
-    title: string;
-    link: string;
-    authors: string;
-    source: string;
+    description: string;
 };
 declare type LanguageOptions = "it" | "en";
 declare type Project = {
@@ -65,6 +62,7 @@ declare type Project = {
     experiments: Experiment[];
     glossary_terms: GlossaryTerm[];
     language: LanguageOptions;
+    references: Reference[];
 };
 declare type Experiment = {
     id: number;
