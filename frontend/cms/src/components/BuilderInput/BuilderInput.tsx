@@ -67,40 +67,21 @@ export const BuilderInput = (props: BuilderInputProps) => {
       onChange(newRows);
     }
   };
-  const moveCellDown = (rowIndex: number, cellIndex: number) => {
+  const moveRowDown = (rowIndex: number) => {
     const newRows = [...value];
     const newIndex = rowIndex + 1;
     if (newIndex < value.length) {
-      const movingElement = newRows[rowIndex].splice(cellIndex, 1, {})[0];
-      const emptyElement = newRows[newIndex].findIndex(
-        (cell: any) => Object.keys(cell).length <= 0
-      );
-      console.log(emptyElement);
-      if (emptyElement === -1)
-        newRows[newIndex].splice(
-          newRows[newIndex].length - 1,
-          0,
-          movingElement
-        );
-      else newRows[newIndex].splice(emptyElement, 1, movingElement);
+      const movingElement = newRows.splice(rowIndex, 1)[0];
+      newRows.splice(newIndex, 0, movingElement);
       onChange(newRows);
     }
   };
-  const moveCellUp = (rowIndex: number, cellIndex: number) => {
+  const moveRowUp = (rowIndex: number) => {
     const newRows = [...value];
     const newIndex = rowIndex - 1;
     if (newIndex >= 0) {
-      const movingElement = newRows[rowIndex].splice(cellIndex, 1, {})[0];
-      const emptyElement = newRows[newIndex].findIndex(
-        (cell: any) => Object.keys(cell).length <= 0
-      );
-      if (emptyElement === -1)
-        newRows[newIndex].splice(
-          newRows[newIndex].length - 1,
-          0,
-          movingElement
-        );
-      else newRows[newIndex].splice(emptyElement, 1, movingElement);
+      const movingElement = newRows.splice(rowIndex, 1)[0];
+      newRows.splice(newIndex, 0, movingElement);
       onChange(newRows);
     }
   };
@@ -148,8 +129,8 @@ export const BuilderInput = (props: BuilderInputProps) => {
           <Row
             deleteCell={removeCell}
             moveCellLeft={moveCellLeft}
-            moveCellDown={moveCellDown}
-            moveCellUp={moveCellUp}
+            moveRowDown={moveRowDown}
+            moveRowUp={moveRowUp}
             moveCellRight={moveCellRight}
             key={index}
             row={row}
