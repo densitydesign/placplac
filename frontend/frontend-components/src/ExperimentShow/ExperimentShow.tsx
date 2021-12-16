@@ -23,6 +23,9 @@ import { translations } from "../translations";
 import { useReferencesAdjuster } from "../hooks";
 import { ReferenceList } from "../components/ReferenceList";
 import downloadIcon from "../assets/download-icon.png";
+import SimpleReactLightbox from "simple-react-lightbox";
+import { SRLWrapper } from "simple-react-lightbox";
+
 export interface ExperimentShowProps {
   experiment: Experiment;
   basePath: string;
@@ -73,14 +76,16 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
       }
       case "image": {
         return (
-          <ImageShow
-            description={item.content.description}
-            image={item.content.image}
-            caption={item.content.caption}
-            title={item.content.title}
-            subtitle={item.content.subtitle}
-            isWide={item.content.isWide}
-          />
+          <SRLWrapper options={{ thumbnails: { showThumbnails: false } }}>
+            <ImageShow
+              description={item.content.description}
+              image={item.content.image}
+              caption={item.content.caption}
+              title={item.content.title}
+              subtitle={item.content.subtitle}
+              isWide={item.content.isWide}
+            />
+          </SRLWrapper>
         );
       }
 
@@ -143,7 +148,7 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
   };
 
   return (
-    <>
+    <SimpleReactLightbox>
       <Flex container>
         <Flex container size={12} borderBottom>
           <Flex size={8} borderRight innerPadding>
@@ -181,7 +186,6 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
           </Flex>
         </Flex>
       </Flex>
-
       {context && (
         <Section
           title={translations[language].experiment_context}
@@ -282,6 +286,6 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
         basePath={basePath}
         glossaryTerms={glossary_terms}
       />
-    </>
+    </SimpleReactLightbox>
   );
 };
