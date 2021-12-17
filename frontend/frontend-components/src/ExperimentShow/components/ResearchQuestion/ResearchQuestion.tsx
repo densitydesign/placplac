@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
+import { TextShow } from "../../..";
 import { Section } from "../../../components/Section";
 import styles from "./ResearchQuestion.module.css";
-export const ResearchQuestion = (props: { researchQuestion?: string }) => {
+export const ResearchQuestion = (props: { researchQuestion: string }) => {
   const ref = useRef<HTMLDivElement>(null);
   const refContainer = useRef<HTMLDivElement>(null);
   const [classNameSection, setClassNameSection] = useState<string>();
@@ -30,7 +31,7 @@ export const ResearchQuestion = (props: { researchQuestion?: string }) => {
     if (refContainer.current) {
       if (
         window.document.body.scrollHeight -
-        refContainer.current.getBoundingClientRect().bottom >
+          refContainer.current.getBoundingClientRect().bottom >
         window.innerHeight
       ) {
         window.addEventListener("scroll", onScroll);
@@ -61,7 +62,9 @@ export const ResearchQuestion = (props: { researchQuestion?: string }) => {
             <span className={styles.slashes}>{"//"}</span>
           </div>
           <div className={styles.research_question_content_big}>
-            <h2>{props.researchQuestion}</h2>
+            <h2>
+              <TextShow text={props.researchQuestion} />
+            </h2>
           </div>
         </div>
       </Section>

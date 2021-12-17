@@ -61,14 +61,15 @@ export const ExperimentForm = (props: Omit<TabbedFormProps, "children">) => {
           helperText="The title of the experiment"
           validate={[required(), maxLength(255)]}
         />
-        <TextInput
+        <CustomRichTextInput
           multiline
           fullWidth
           source="research_question"
           label="Research question (150)"
           placeholder="What question are you trying to answer through this experiment"
           helperText="The research question of the experiment"
-          validate={[maxLength(255)]}
+          small
+          onlyStyle
         />
         <CustomRichTextInput
           glossaryTermsIds={data.glossaryterm_set}

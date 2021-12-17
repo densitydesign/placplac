@@ -12,8 +12,15 @@ interface ImageShowProps {
   description?: string;
 }
 export const ImageShow = (props: ImageShowProps) => {
-  const { description, caption, title, subtitle, image, isWide, imageTitle } =
-    props;
+  const {
+    description,
+    caption,
+    title,
+    subtitle,
+    image,
+    isWide,
+    imageTitle,
+  } = props;
   return (
     <div className={styles.container}>
       {title && (
@@ -41,7 +48,7 @@ export const ImageShow = (props: ImageShowProps) => {
       </div>
       {caption && (
         <div className={classnames(styles.container_child, styles.caption)}>
-          <span>{caption}</span>
+          <TextShow text={caption} />
         </div>
       )}
       {description && (

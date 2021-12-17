@@ -1,3 +1,3 @@
 export declare const ResearchQuestion: (props: {
-    researchQuestion?: string;
+    researchQuestion: string;
 }) => JSX.Element;

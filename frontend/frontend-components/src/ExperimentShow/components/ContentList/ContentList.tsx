@@ -45,7 +45,7 @@ export const ContentList = (props: ContentListProps) => {
       )}
       {experiment.references && experiment.references.length > 0 && (
         <li>
-          <a href="#findings"> {translations[language].references_title}</a>
+          <a href="#references"> {translations[language].references_title}</a>
         </li>
       )}
     </ul>

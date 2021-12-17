@@ -72,7 +72,7 @@ export const BuilderDialog = (props: BuilderDialogProps) => {
     if (
       dialogForm === "text" ||
       dialogForm === "listExperimentSetup" ||
-      "iframe"
+      dialogForm === "iframe"
     )
       return content;
     if (dialogForm === "image") {

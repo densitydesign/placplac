@@ -38,7 +38,8 @@ export const EditImage = ({ project }: Props) => {
               !value.includes("title") && change("title", undefined);
               !value.includes("subtitle") && change("subtitle", undefined);
               !value.includes("caption") && change("caption", undefined);
-              !value.includes("description") && change("caption", undefined);
+              !value.includes("description") &&
+                change("description", undefined);
             }}
           </OnChange>
         </Grid>
@@ -80,10 +81,9 @@ export const EditImage = ({ project }: Props) => {
             {({ formData, ...rest }) =>
               formData.type &&
               formData.type.includes("caption") && (
-                <TextInput
+                <CustomRichTextInput
+                  small
                   helperText={false}
-                  multiline
-                  fullWidth
                   source="caption"
                   {...rest}
                 />

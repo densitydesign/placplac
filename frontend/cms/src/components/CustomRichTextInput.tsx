@@ -32,6 +32,7 @@ interface CustomRichTextInputProps extends InputProps {
   small?: boolean;
   glossaryTermsIds?: number[];
   referencesIds?: number[];
+  onlyStyle?: boolean;
 }
 
 function useReferences(referencesIds: number[]) {
@@ -87,6 +88,8 @@ export const CustomRichTextInput = (props: CustomRichTextInputProps) => {
     small,
     referencesIds = [],
     glossaryTermsIds = [],
+    onlyStyle = false,
+    
     ...rest
   } = props;
 
@@ -144,17 +147,19 @@ export const CustomRichTextInput = (props: CustomRichTextInputProps) => {
             menubar: false,
             branding: false,
             placeholder,
+
             plugins: [
               "noneditable emoticons",
               "advlist autolink lists link charmap print preview anchor",
               "searchreplace visualblocks code fullscreen",
               "insertdatetime media table paste help wordcount",
             ],
-            toolbar:
-              "undo redo | formatselect | " +
-              "bold italic underline backcolor forecolor | alignleft aligncenter " +
-              "alignright alignjustify | bullist numlist outdent indent emoticons table image link example | " +
-              "removeformat  | help ",
+            toolbar: onlyStyle
+              ? "undo redo | bold italic underline | "
+              : "undo redo | formatselect | " +
+                "bold italic underline backcolor forecolor | alignleft aligncenter " +
+                "alignright alignjustify | bullist numlist outdent indent emoticons table image link example | " +
+                "removeformat  | help ",
             content_style: contentUiCss,
             body_class: "main-application",
             init_instance_callback: (editor) => {
