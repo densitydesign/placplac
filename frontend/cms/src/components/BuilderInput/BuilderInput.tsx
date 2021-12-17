@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { useDialoglUpdate } from "../../useDialogUpdate";
-import { required, useInput } from "react-admin";
+import { required, useInput, SelectInput, TextInput } from "react-admin";
 import { BuilderDialog } from "./components/BuilderDialog";
 import { AddRowButton } from "./components/AddRowButton";
 import { BuilderBlocks, PossibleColumns } from "./types";
@@ -8,9 +8,15 @@ import { Row } from "./components/Row";
 import { CustomRichTextInput } from "../CustomRichTextInput";
 import { EditImage } from "./components/EditImage";
 import { ImageShowBackend } from "../showComponentsBackend/ImageShowBackend";
-import { ExperimentSetupListShow, IFrame, TextShow } from "frontend-components";
+import {
+  Disclaimer,
+  ExperimentSetupListShow,
+  IFrame,
+  TextShow,
+} from "frontend-components";
 import { EditListExperimentSetup } from "./components/EditListExperimentSetup";
 import { EditIframe } from "./components/EditIframe";
+import { Grid } from "@material-ui/core";
 
 interface BuilderInputProps {
   source: string;
@@ -167,6 +173,42 @@ export const BuilderInput = (props: BuilderInputProps) => {
           },
         },
         render: (content: any) => <TextShow text={content.text} />,
+      },
+      disclaimer: {
+        description: "Disclaimer",
+        form: {
+          component: (
+            <Grid container direction="column">
+              <Grid item>
+                <SelectInput
+                  choices={[
+                    { id: "alert", name: "Alert" },
+                    { id: "info", name: "Info" },
+                    { id: "notes", name: "Notes" },
+                  ]}
+                  validate={required()}
+                  helperText={false}
+                  fullWidth
+                  source={"type"}
+                />
+              </Grid>
+              <Grid item>
+                <TextInput
+                  validate={required()}
+                  helperText={false}
+                  fullWidth
+                  source={"description"}
+                />
+              </Grid>
+            </Grid>
+          ),
+        },
+        render: (content: any) => (
+          <Disclaimer
+            description={content.description}
+            disclaimerType={content.type}
+          />
+        ),
       },
       listExperimentSetup: {
         description: "Experiment setup card",

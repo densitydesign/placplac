@@ -1080,3 +1080,17 @@ ul.ExperimentShow_download_list_1s7gi_63 > li {
   text-align: center;
   width: 100%;
 }
+
+.Disclaimer_disclaimer_12blk_1 {
+  padding: 20px 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  border-radius: 80px;
+  flex-direction: column;
+  margin-bottom: 60px;
+}
+.Disclaimer_disclaimer_12blk_1 h3 {
+  margin-top: 0;
+}

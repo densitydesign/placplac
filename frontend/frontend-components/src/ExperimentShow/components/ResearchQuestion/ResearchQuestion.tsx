@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { TextShow } from "../../..";
+import { TextShow } from "../../../TextShow";
 import { Section } from "../../../components/Section";
 import styles from "./ResearchQuestion.module.css";
 export const ResearchQuestion = (props: { researchQuestion: string }) => {
