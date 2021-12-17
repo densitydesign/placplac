@@ -68,10 +68,11 @@ class ProjectViewSet(CustomModelView):
         downloads = StepDownload.objects.filter(step__experiment__project=instance)
         with tempfile.TemporaryDirectory() as tmpdirname:
             shutil.copytree(settings.PROJECT_FRONTEND_EXPORT, tmpdirname, dirs_exist_ok=True, symlinks=True)
-            downloads_path = os.path.join(tmpdirname, "public","media")
-            os.makedirs(os.path.dirname(downloads_path), exist_ok=True)
+            downloads_path = os.path.join(tmpdirname, "public", "media")
+            if not os.path.isdir(downloads_path):
+                os.mkdir(downloads_path)
             for download in downloads:
-                shutil.copy(downloads_path, download.file.path)
+                shutil.copy(download.file.path, downloads_path)
             file = os.path.join(tmpdirname, "data.json")
             with open(file, 'w') as f:
                 json.dump(serializer.data, f)

@@ -2,6 +2,7 @@ const path = require("path");
 
 module.exports = {
   reactStrictMode: true,
+  trailingSlash: true,
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
     const newConfig = { ...config };
     newConfig.resolve = {
