@@ -65,8 +65,13 @@ class ProjectViewSet(CustomModelView):
     def export(self, request, pk):
         instance = self.get_object()
         serializer = FullProjectSerializer(instance)
+        downloads = StepDownload.objects.filter(step__experiment__project=instance)
         with tempfile.TemporaryDirectory() as tmpdirname:
             shutil.copytree(settings.PROJECT_FRONTEND_EXPORT, tmpdirname, dirs_exist_ok=True, symlinks=True)
+            downloads_path = os.path.join(tmpdirname, "public","media")
+            os.makedirs(os.path.dirname(downloads_path), exist_ok=True)
+            for download in downloads:
+                shutil.copy(downloads_path, download.file.path)
             file = os.path.join(tmpdirname, "data.json")
             with open(file, 'w') as f:
                 json.dump(serializer.data, f)
