@@ -15,7 +15,6 @@ import {
 import IconCancel from "@material-ui/icons/Cancel";
 import IconContentAdd from "@material-ui/icons/Add";
 import { useToggler } from "../useToggler";
-import { CustomRichTextInput } from "../components/CustomRichTextInput";
 
 export const AddGlossaryCategoryButton = () => {
   const { value, setTrue, setFalse } = useToggler();

@@ -12,38 +12,29 @@ import {
   DialogActions,
 } from "@material-ui/core";
 import IconCancel from "@material-ui/icons/Cancel";
-import { Button, required } from "react-admin";
+import { Button } from "react-admin";
 import { Form } from "react-final-form";
 import { FormSaveButton } from "../../FormSaveButton";
-import { CustomRichTextInput } from "../../CustomRichTextInput";
-import { BuilderBlock, DialogForm, PossibleComponent } from "../types";
-import { EditImage } from "./EditImage";
-import { EditListExperimentSetup } from "./EditListExperimentSetup";
+import { BuilderBlocks } from "../types";
 import arrayMutators from "final-form-arrays";
-import { EditIframe } from "./EditIframe";
+import React from "react";
+
 interface BuilderDialogProps {
   onClose: () => void;
   open: boolean;
-  dialogForm: DialogForm;
+  dialogForm: string | undefined;
   activeStep: number;
   handleStep: (index: number) => void;
-  setDialogForm: (item: DialogForm) => void;
+  setDialogForm: (item: string | undefined) => void;
   content?: any;
   updateItem: (content: any) => void;
-  possibleComponents?: BuilderBlock[];
-  glossaryTermsIds: number[];
-  referencesIds: number[];
-  project: number;
+ 
+
+  builderBlocks: BuilderBlocks;
 }
-const ALLCOMPONENTS: PossibleComponent = {
-  image: { title: "Image" },
-  text: { title: "Simple text" },
-  listExperimentSetup: { title: "Experiment setup card" },
-  iframe: { title: "Embed block" },
-};
+
 export const BuilderDialog = (props: BuilderDialogProps) => {
   const steps = ["Select component", "Configure"];
-
   const {
     open,
     onClose,
@@ -53,82 +44,48 @@ export const BuilderDialog = (props: BuilderDialogProps) => {
     setDialogForm,
     content,
     updateItem,
-    glossaryTermsIds,
-    referencesIds,
-    project,
-    possibleComponents = ["image", "text", "listExperimentSetup", "iframe"],
+    builderBlocks,
   } = props;
 
   const onSubmit = (values: any) => {
-    if (dialogForm === "text") updateItem({ text: values.text });
-    else if (dialogForm === "image") {
-      const { title, subtitle, caption, image, isWide, description } = values;
-      updateItem({ title, subtitle, caption, image, isWide, description });
-    } else {
-      updateItem(values);
+    let newValues = values;
+    if (typeof builderBlocks[dialogForm!].form.getSaveContent !== "undefined") {
+      newValues = builderBlocks[dialogForm!].form.getSaveContent!(values);
     }
+    updateItem(newValues);
   };
+
   const getContent = () => {
     if (
-      dialogForm === "text" ||
-      dialogForm === "listExperimentSetup" ||
-      dialogForm === "iframe"
-    )
-      return content;
-    if (dialogForm === "image") {
-      const type: string[] = [];
-      if (content?.title) type.push("title");
-      if (content?.subtitle) type.push("subtitle");
-      if (content?.caption) type.push("caption");
-      if (content?.description) type.push("description");
-      return { ...content, type };
+      typeof builderBlocks[dialogForm!].form.getInitialContent !== "undefined"
+    ) {
+      return builderBlocks[dialogForm!].form.getInitialContent!(content);
     }
+    return content;
   };
+
   const renderPossibleComponents = () => {
-    return possibleComponents.map((component) => (
-      <Grid
-        key={component}
-        item
-        onClick={() => {
-          setDialogForm(component);
-          handleStep(1);
-        }}
-      >
-        <Card>
-          <CardContent>
-            <Typography>{ALLCOMPONENTS[component].title}</Typography>
-          </CardContent>
-        </Card>
-      </Grid>
-    ));
+    return Object.keys(builderBlocks).map((blocKey) => {
+      const builderBlock = builderBlocks[blocKey];
+      return (
+        <Grid
+          key={blocKey}
+          item
+          onClick={() => {
+            setDialogForm(blocKey);
+            handleStep(1);
+          }}
+        >
+          <Card>
+            <CardContent>
+              <Typography>{builderBlock.description}</Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+      );
+    });
   };
 
-  const renderForm = () => {
-    switch (dialogForm) {
-      case "text": {
-        return (
-          <CustomRichTextInput
-            referencesIds={referencesIds}
-            glossaryTermsIds={glossaryTermsIds}
-            validate={[required()]}
-            source="text"
-          />
-        );
-      }
-
-      case "image": {
-        return <EditImage project={project} />;
-      }
-      case "listExperimentSetup": {
-        return <EditListExperimentSetup />;
-      }
-      case "iframe": {
-        return <EditIframe />;
-      }
-      default:
-        return null;
-    }
-  };
   return (
     <Dialog onClose={onClose} open={open} fullWidth maxWidth="xl">
       <DialogTitle>
@@ -166,7 +123,11 @@ export const BuilderDialog = (props: BuilderDialogProps) => {
           onSubmit={onSubmit}
           render={({ handleSubmit, pristine, submitting }) => (
             <>
-              <DialogContent>{renderForm()}</DialogContent>
+              <DialogContent>
+                {React.cloneElement(builderBlocks[dialogForm!].form.component, {
+                  ...builderBlocks[dialogForm!].form.component.props,
+                })}
+              </DialogContent>
               <DialogActions>
                 <FormSaveButton
                   submitting={submitting}

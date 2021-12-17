@@ -1,11 +1,9 @@
 import { Grid, Box, IconButton, Button } from "@material-ui/core";
-import { TextShow, ExperimentSetupListShow, IFrame } from "frontend-components";
 import React, { Fragment } from "react";
-import { ImageShowBackend } from "../../showComponentsBackend/ImageShowBackend";
 import { ColumnContainer } from "./ColumnContainer";
 import { EmptyColumn } from "./EmptyColumn";
 import AddIcon from "@material-ui/icons/Add";
-import { BuilderBlock } from "../types";
+import { BuilderBlock, BuilderBlocks } from "../types";
 import Delete from "@material-ui/icons/Delete";
 import { Row as RowGrid } from "frontend-components";
 import KeyboardArrowTopIcon from "@material-ui/icons/KeyboardArrowUp";
@@ -35,6 +33,7 @@ interface RowProps {
   moveCellRight: (rowIndex: number, cellIndex: number) => void;
   moveRowUp: (rowIndex: number) => void;
   moveRowDown: (rowIndex: number) => void;
+  builderBlocks: BuilderBlocks;
 }
 
 export const Row = (props: RowProps) => {
@@ -49,6 +48,7 @@ export const Row = (props: RowProps) => {
     moveRowDown,
     moveRowUp,
     deleteCell,
+    builderBlocks,
   } = props;
 
   return (
@@ -93,31 +93,7 @@ export const Row = (props: RowProps) => {
                 onColumnClick(col.type, rowIndex, colIndex);
               }}
             >
-              {col.type === "text" && <TextShow text={col.content.text} />}
-              {col.type === "listExperimentSetup" && (
-                <ExperimentSetupListShow
-                  title={col.content.title}
-                  subtitle={col.content.subtitle}
-                  list={col.content.list}
-                />
-              )}
-              {col.type === "image" && (
-                <ImageShowBackend
-                  description={col.content.description}
-                  image={col.content.image}
-                  caption={col.content.caption}
-                  title={col.content.title}
-                  subtitle={col.content.subtitle}
-                  isWide={col.content.isWide}
-                />
-              )}
-              {col.type === "iframe" && (
-                <IFrame
-                  src={col.content.src}
-                  width={col.content.width}
-                  height={col.content.height}
-                />
-              )}
+              {builderBlocks[col.type].render(col.content)}
             </ColumnContainer>
           )}
         </Fragment>

@@ -1,15 +1,21 @@
 import React, { useMemo, useState } from "react";
 import { useDialoglUpdate } from "../../useDialogUpdate";
-import { useInput } from "react-admin";
+import { required, useInput } from "react-admin";
 import { BuilderDialog } from "./components/BuilderDialog";
 import { AddRowButton } from "./components/AddRowButton";
-import { BuilderBlock, DialogForm, PossibleColumns } from "./types";
+import { BuilderBlocks, PossibleColumns } from "./types";
 import { Row } from "./components/Row";
+import { CustomRichTextInput } from "../CustomRichTextInput";
+import { EditImage } from "./components/EditImage";
+import { ImageShowBackend } from "../showComponentsBackend/ImageShowBackend";
+import { ExperimentSetupListShow, IFrame, TextShow } from "frontend-components";
+import { EditListExperimentSetup } from "./components/EditListExperimentSetup";
+import { EditIframe } from "./components/EditIframe";
 
 interface BuilderInputProps {
   source: string;
   possibleColumns?: PossibleColumns;
-  possibleComponents?: BuilderBlock[];
+  possibleComponents?: string[];
   glossaryTermsIds: number[];
   referencesIds: number[];
   project: number;
@@ -36,7 +42,7 @@ export const BuilderInput = (props: BuilderInputProps) => {
   const { setActiveItem, isOpenUpdateModal, closeModalUpdate, activeItem } =
     useDialoglUpdate<{ rowIndex: number; colIndex: number }>();
 
-  const [dialogStatus, setDialogStatus] = useState<DialogForm>(undefined);
+  const [dialogStatus, setDialogStatus] = useState<string>();
 
   const onCloseModal = () => {
     closeModalUpdate();
@@ -93,11 +99,7 @@ export const BuilderInput = (props: BuilderInputProps) => {
     }
     onChange(newRows);
   };
-  const onColumnClick = (
-    type: BuilderBlock,
-    rowIndex: number,
-    colIndex: number
-  ) => {
+  const onColumnClick = (type: any, rowIndex: number, colIndex: number) => {
     setActiveStep(1);
     setDialogStatus(type);
     setActiveItem({ rowIndex, colIndex });
@@ -114,6 +116,94 @@ export const BuilderInput = (props: BuilderInputProps) => {
       onCloseModal();
     }
   };
+
+  const builderBlocks = useMemo(() => {
+    const builderBlocks: BuilderBlocks = {
+      image: {
+        description: "Image",
+        form: {
+          component: <EditImage project={project} />,
+
+          getInitialContent: (content: any) => {
+            const type: string[] = [];
+            if (content?.title) type.push("title");
+            if (content?.subtitle) type.push("subtitle");
+            if (content?.caption) type.push("caption");
+            if (content?.description) type.push("description");
+            return { ...content, type };
+          },
+          getSaveContent: (values: any) => {
+            const { title, subtitle, caption, image, isWide, description } =
+              values;
+            return { title, subtitle, caption, image, isWide, description };
+          },
+        },
+        render: (content: any) => (
+          <ImageShowBackend
+            description={content.description}
+            image={content.image}
+            caption={content.caption}
+            title={content.title}
+            subtitle={content.subtitle}
+            isWide={content.isWide}
+          />
+        ),
+      },
+      text: {
+        description: "Text editor",
+
+        form: {
+          component: (
+            <CustomRichTextInput
+              referencesIds={referencesIds}
+              glossaryTermsIds={glossaryTermsIds}
+              validate={[required()]}
+              source="text"
+            />
+          ),
+
+          getSaveContent: (values: any) => {
+            return { text: values.text };
+          },
+        },
+        render: (content: any) => <TextShow text={content.text} />,
+      },
+      listExperimentSetup: {
+        description: "Experiment setup card",
+        form: {
+          component: <EditListExperimentSetup />,
+        },
+        render: (content: any) => (
+          <ExperimentSetupListShow
+            title={content.title}
+            subtitle={content.subtitle}
+            list={content.list}
+          />
+        ),
+      },
+      iframe: {
+        description: "Embed block",
+        form: {
+          component: <EditIframe />,
+        },
+        render: (content: any) => (
+          <IFrame
+            src={content.src}
+            width={content.width}
+            height={content.height}
+          />
+        ),
+      },
+    };
+    return possibleComponents
+      ? possibleComponents.reduce((filtered, possibleComponent) => {
+          if (possibleComponent in builderBlocks) {
+            filtered[possibleComponent] = builderBlocks[possibleComponent];
+          }
+          return filtered;
+        }, {} as BuilderBlocks)
+      : builderBlocks;
+  }, [glossaryTermsIds, possibleComponents, project, referencesIds]);
 
   return (
     <div>
@@ -138,22 +228,20 @@ export const BuilderInput = (props: BuilderInputProps) => {
             onColumnClick={onColumnClick}
             rowIndex={index}
             deleteRow={deleteRow}
+            builderBlocks={builderBlocks}
           />
         ))}
       {activeItem && (
         <BuilderDialog
-          project={project}
           onClose={onCloseModal}
           open={isOpenUpdateModal}
           dialogForm={dialogStatus}
           activeStep={activeStep}
           handleStep={setActiveStep}
           setDialogForm={setDialogStatus}
-          glossaryTermsIds={glossaryTermsIds}
-          referencesIds={referencesIds}
           content={value[activeItem.rowIndex][activeItem.colIndex].content}
           updateItem={updateItem}
-          possibleComponents={possibleComponents}
+          builderBlocks={builderBlocks}
         />
       )}
     </div>

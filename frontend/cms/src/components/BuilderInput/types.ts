@@ -1,13 +1,14 @@
+import { ReactElement } from "react";
+
 export type PossibleColumns = Array<1 | 2 | 3 | 4>;
 
-export type BuilderBlock =
-  | "text"
-  | "image"
-  | "listExperimentSetup"
-   |"iframe";
-
-export type PossibleComponent = {
-  [type in BuilderBlock]: { title: string };
+export type BuilderBlock = {
+  description: string;
+  form: {
+    component: ReactElement<any>;
+    getInitialContent?: (content: any) => any;
+    getSaveContent?: (content: any) => any;
+  };
+  render: (content: any) => React.ReactElement;
 };
-
-export type DialogForm = undefined | BuilderBlock;
+export type BuilderBlocks = { [k: string]: BuilderBlock };
