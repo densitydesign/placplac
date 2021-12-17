@@ -12,6 +12,7 @@ export declare const translations: {
         experiment_findings: string;
         experiment_researchquestion: string;
         references_title: string;
+        only_references_title: string;
         glossary_menu: string;
         glossary_title: string;
         glossary_description: string;
@@ -31,6 +32,7 @@ export declare const translations: {
         experiment_findings: string;
         experiment_researchquestion: string;
         references_title: string;
+        only_references_title: string;
         experiment_tableofcontents: string;
         glossary_menu: string;
         glossary_title: string;

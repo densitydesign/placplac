@@ -3,6 +3,8 @@ export type Step = {
   description: string;
   step_number: number;
   content: any;
+  glossary_terms: GlossaryTerm[];
+  downloads: { id: string; file: string; title: string; name: string }[];
 };
 export type GlossaryTerm = {
   id: string;
@@ -22,10 +24,7 @@ export type GlossaryCategory = {
 };
 export type Reference = {
   id: number;
-  title: string;
-  link: string;
-  authors: string;
-  source: string;
+  description: string;
 };
 
 export type LanguageOptions = "it" | "en";
@@ -38,6 +37,7 @@ export type Project = {
   experiments: Experiment[];
   glossary_terms: GlossaryTerm[];
   language: LanguageOptions;
+  references: Reference[];
 };
 export type Experiment = {
   id: number;

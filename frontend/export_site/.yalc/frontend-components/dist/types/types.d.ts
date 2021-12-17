@@ -3,6 +3,13 @@ export declare type Step = {
     description: string;
     step_number: number;
     content: any;
+    glossary_terms: GlossaryTerm[];
+    downloads: {
+        id: string;
+        file: string;
+        title: string;
+        name: string;
+    }[];
 };
 export declare type GlossaryTerm = {
     id: string;
@@ -22,10 +29,7 @@ export declare type GlossaryCategory = {
 };
 export declare type Reference = {
     id: number;
-    title: string;
-    link: string;
-    authors: string;
-    source: string;
+    description: string;
 };
 export declare type LanguageOptions = "it" | "en";
 export declare type Project = {
@@ -36,6 +40,7 @@ export declare type Project = {
     experiments: Experiment[];
     glossary_terms: GlossaryTerm[];
     language: LanguageOptions;
+    references: Reference[];
 };
 export declare type Experiment = {
     id: number;

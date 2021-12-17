@@ -8,36 +8,33 @@ import {
   useNotify,
   useRecordContext,
   Record,
-  useRedirect,
   required,
+  maxLength,
+  useListContext,
 } from "react-admin";
 import IconCancel from "@material-ui/icons/Cancel";
-import IconContentAdd from "@material-ui/icons/Add";
-import { useToggler } from "../useToggler";
-import { CustomRichTextInput } from "../components/CustomRichTextInput";
+import IconContentAdd from "@material-ui/icons/Edit";
+import { useToggler } from "../../../useToggler";
 
-interface AddReferenceButtonProps {
-  refersTo: "project" | "experiment";
-}
-export const AddReferenceButton = (props: AddReferenceButtonProps) => {
-  const { refersTo } = props;
+export const EditStepDownloadButton = () => {
   const { value, setTrue, setFalse } = useToggler();
   const [mutate, { loading }] = useMutation();
   const record = useRecordContext();
-  const { id } = record;
+
   const notify = useNotify();
-  const redirect = useRedirect();
+  const { refetch } = useListContext();
   const onSave = (values: Partial<Record>) =>
     mutate(
       {
-        type: "create",
-        resource: "references",
-        payload: { data: values },
+        type: "updateMultipart",
+        resource: "step-downloads",
+        payload: { data: values, id: record.id },
       },
       {
         onSuccess: ({ data }) => {
           setFalse();
-          redirect("edit", "/references", data.id);
+          notify("ra.notification.updated", "success", { smart_count: 1 });
+          refetch();
         },
         onFailure: (error) => {
           notify("ra.page.error", "error");
@@ -47,25 +44,25 @@ export const AddReferenceButton = (props: AddReferenceButtonProps) => {
 
   return (
     <>
-      <Button
-        style={{ marginBottom: "10px" }}
-        onClick={setTrue}
-        label="Add reference"
-      >
+      <Button onClick={setTrue} label="Edit">
         <IconContentAdd />
       </Button>
-      <Dialog maxWidth="sm" fullWidth open={value} disableEnforceFocus>
+      <Dialog maxWidth="sm" fullWidth open={value}>
         <FormWithRedirect
-          resource="references"
-          initialValues={{ [refersTo]: id }}
+          resource="steps"
+          initialValues={record}
           save={onSave}
           render={({ handleSubmitWithRedirect, pristine, saving }) => (
             <>
               <DialogContent>
-                <CustomRichTextInput
-                  source="description"
-                  label="Description of reference"
-                  small
+                <TextInput
+                  multiline
+                  fullWidth
+                  source="title"
+                  label="Title"
+                  placeholder="Type the download title, for example 'Download dataset'"
+                  helperText="The download title"
+                  validate={[required(), maxLength(150)]}
                 />
               </DialogContent>
               <DialogActions>

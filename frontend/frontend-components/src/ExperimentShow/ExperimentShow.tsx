@@ -20,6 +20,11 @@ import { ContentList } from "./components/ContentList/ContentList";
 import { Row } from "../components/Row";
 import classNames from "classnames";
 import { translations } from "../translations";
+import { useReferencesAdjuster } from "../hooks";
+import { ReferenceList } from "../components/ReferenceList";
+import downloadIcon from "../assets/download-icon.png";
+import SimpleReactLightbox from "simple-react-lightbox";
+import { SRLWrapper } from "simple-react-lightbox";
 
 export interface ExperimentShowProps {
   experiment: Experiment;
@@ -62,6 +67,8 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
     }
   });
 
+  useReferencesAdjuster();
+
   const renderItem = (item: { type: string } & any) => {
     switch (item.type) {
       case "text": {
@@ -69,14 +76,16 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
       }
       case "image": {
         return (
-          <ImageShow
-            description={item.content.description}
-            image={item.content.image}
-            caption={item.content.caption}
-            title={item.content.title}
-            subtitle={item.content.subtitle}
-            isWide={item.content.isWide}
-          />
+          <SRLWrapper options={{ thumbnails: { showThumbnails: false } }}>
+            <ImageShow
+              description={item.content.description}
+              image={item.content.image}
+              caption={item.content.caption}
+              title={item.content.title}
+              subtitle={item.content.subtitle}
+              isWide={item.content.isWide}
+            />
+          </SRLWrapper>
         );
       }
 
@@ -139,7 +148,7 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
   };
 
   return (
-    <>
+    <SimpleReactLightbox>
       <Flex container>
         <Flex container size={12} borderBottom>
           <Flex size={8} borderRight innerPadding>
@@ -177,7 +186,6 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
           </Flex>
         </Flex>
       </Flex>
-
       {context && (
         <Section
           title={translations[language].experiment_context}
@@ -228,7 +236,20 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
                   </h3>
                 </div>
                 <h3>{step.title}</h3>
-                <TextShow text={step.description} />
+                {step.glossary_terms && step.glossary_terms.length > 0 && (
+                  <div style={{ marginBottom: "1em" }}>
+                    <GlossaryTermsList glossaryTerms={step.glossary_terms} />
+                  </div>
+                )}
+                <ul className={styles.download_list}>
+                  {step.downloads.map((download, index) => (
+                    <li key={download.id}>
+                      <a href={download.file} download={download.name}>
+                        {download.title}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
               </div>
               <div
                 className={classnames(styles.grid_auto, styles.sidebar_content)}
@@ -242,36 +263,19 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
         <Section
           id="findings"
           title={translations[language].experiment_findings}
-          className={"section"}
           marginFix
         >
           {renderSection(findings, true)}
         </Section>
       )}
-      {references && (
+      {references && references.length > 0 && (
         <Section
           id="references"
           title={translations[language].references_title}
-          className={"section"}
-          marginFix
         >
           <Row>
             <div className={"inner-column"}>
-              {references.map((reference, index) => (
-                <p key={reference.id} id={`reference${reference.id}`}>
-                  <span>
-                    {`${index + 1}) ${reference.title} `}
-                    {reference.link && (
-                      <a
-                        style={{ textDecoration: "underline" }}
-                        href={reference.link}
-                      >
-                        {reference.link}
-                      </a>
-                    )}
-                  </span>
-                </p>
-              ))}
+              <ReferenceList references={references} />
             </div>
           </Row>
         </Section>
@@ -282,6 +286,6 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
         basePath={basePath}
         glossaryTerms={glossary_terms}
       />
-    </>
+    </SimpleReactLightbox>
   );
 };

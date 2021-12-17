@@ -1,13 +1,17 @@
+import { ReferenceList } from "../components/ReferenceList";
+
 import { TextShow } from "../TextShow";
 import { GlossaryTerm, Project } from "../types";
 import styles from "./ProjectShow.module.css";
 import { ExperimentSection } from "./components/ExperimentSection";
 import React, { ComponentType } from "react";
 import { GlossarySidebar } from "../GlossarySidebar";
-import { GlossaryCategory } from "..";
-import classNames from "classnames";
+import { GlossaryCategory } from "../types";
+import { Row } from "../components/Row";
 import { Section } from "../components/Section";
 import { translations } from "../translations";
+import { useReferencesAdjuster } from "../hooks";
+
 interface ProjectProps {
   project: Project;
   basePath: string;
@@ -23,6 +27,7 @@ export const ProjectShow = (props: ProjectProps) => {
     glossaryTerms,
     glossaryCategories,
   } = props;
+  useReferencesAdjuster();
   return (
     <>
       <div className={styles.hero_section}>
@@ -61,7 +66,18 @@ export const ProjectShow = (props: ProjectProps) => {
           <TextShow text={project.long_description} />
         </Section>
       )}
-
+      {project.references && (
+        <Section
+          id="references"
+          title={translations[project.language].only_references_title}
+        >
+          <Row>
+            <div className={"inner-column"}>
+              <ReferenceList references={project.references} />
+            </div>
+          </Row>
+        </Section>
+      )}
       <GlossarySidebar
         glossaryCategories={glossaryCategories}
         linkComponent={linkComponent}

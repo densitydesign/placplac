@@ -4,11 +4,12 @@ import React, { Fragment } from "react";
 import { ImageShowBackend } from "../../showComponentsBackend/ImageShowBackend";
 import { ColumnContainer } from "./ColumnContainer";
 import { EmptyColumn } from "./EmptyColumn";
-import DeleteIcon from "@material-ui/icons/Delete";
 import AddIcon from "@material-ui/icons/Add";
 import { BuilderBlock } from "../types";
 import Delete from "@material-ui/icons/Delete";
 import { Row as RowGrid } from "frontend-components";
+import KeyboardArrowTopIcon from "@material-ui/icons/KeyboardArrowUp";
+import KeyboardArrowBottomIcon from "@material-ui/icons/KeyboardArrowDown";
 
 interface RowProps {
   row: any[];
@@ -32,8 +33,8 @@ interface RowProps {
 
   moveCellLeft: (rowIndex: number, cellIndex: number) => void;
   moveCellRight: (rowIndex: number, cellIndex: number) => void;
-  moveCellUp: (rowIndex: number, cellIndex: number) => void;
-  moveCellDown: (rowIndex: number, cellIndex: number) => void;
+  moveRowUp: (rowIndex: number) => void;
+  moveRowDown: (rowIndex: number) => void;
 }
 
 export const Row = (props: RowProps) => {
@@ -45,8 +46,8 @@ export const Row = (props: RowProps) => {
     onColumnClick,
     moveCellLeft,
     moveCellRight,
-    moveCellDown,
-    moveCellUp,
+    moveRowDown,
+    moveRowUp,
     deleteCell,
   } = props;
 
@@ -87,8 +88,6 @@ export const Row = (props: RowProps) => {
               rowIndex={rowIndex}
               colIndex={colIndex}
               moveCellLeft={moveCellLeft}
-              moveCellDown={moveCellDown}
-              moveCellUp={moveCellUp}
               moveCellRight={moveCellRight}
               onClick={() => {
                 onColumnClick(col.type, rowIndex, colIndex);
@@ -123,7 +122,23 @@ export const Row = (props: RowProps) => {
           )}
         </Fragment>
       ))}
-      <Box position="absolute" right={2} top={2}>
+      <Box
+        position="absolute"
+        right={2}
+        top={2}
+        display={"flex"}
+        gridGap={"5px"}
+      >
+        <Button
+          size="small"
+          variant="contained"
+          color="primary"
+          onClick={() => {
+            moveRowUp(rowIndex);
+          }}
+        >
+          <KeyboardArrowTopIcon />
+        </Button>
         <Button
           size="small"
           variant="contained"
@@ -132,7 +147,17 @@ export const Row = (props: RowProps) => {
             deleteRow(rowIndex);
           }}
         >
-          <DeleteIcon />
+          <Delete />
+        </Button>
+        <Button
+          size="small"
+          variant="contained"
+          color="primary"
+          onClick={() => {
+            moveRowDown(rowIndex);
+          }}
+        >
+          <KeyboardArrowBottomIcon />
         </Button>
       </Box>
     </RowGrid>

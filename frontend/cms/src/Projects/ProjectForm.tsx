@@ -9,6 +9,7 @@ import {
   ReferenceArrayField,
   ReferenceManyField,
   required,
+  RichTextField,
   SaveButton,
   SelectField,
   SelectInput,
@@ -18,7 +19,6 @@ import {
   TextInput,
   Toolbar,
   ToolbarProps,
-  UrlField,
 } from "react-admin";
 import { CustomFileField } from "../components/CustomFileField";
 import { CustomRichTextInput } from "../components/CustomRichTextInput";
@@ -89,7 +89,8 @@ export const ProjectForm = (props: Omit<TabbedFormProps, "children">) => {
           helperText={"Describe the project"}
           label="About the project"
           source="long_description"
-          project={props.record?.id}
+          glossaryTermsIds={props.record?.glossaryterm_set}
+          referencesIds={props.record?.reference_set}
         />
       </FormTab>
 
@@ -100,7 +101,8 @@ export const ProjectForm = (props: Omit<TabbedFormProps, "children">) => {
             helperText={"Describe what the experiments consist of"}
             placeholder="Describe briefly the experiments"
             small
-            project={props.record?.id}
+            glossaryTermsIds={props.record?.glossaryterm_set}
+            referencesIds={props.record?.reference_set}
           />
           <AddExperimentButton />
           <ReferenceArrayField
@@ -170,7 +172,7 @@ export const ProjectForm = (props: Omit<TabbedFormProps, "children">) => {
       )}
       {props.record.id && (
         <FormTab label="References">
-          <AddReferenceButton />
+          <AddReferenceButton refersTo="project" />
 
           <ReferenceArrayField
             label="References"
@@ -180,8 +182,7 @@ export const ProjectForm = (props: Omit<TabbedFormProps, "children">) => {
             fullWidth
           >
             <Datagrid>
-              <TextField source="title" />
-              <UrlField source="link" />
+              <RichTextField stripTags source="description" />
               <EditButton />
               <DeleteButton redirect={false} mutationMode="optimistic" />
             </Datagrid>

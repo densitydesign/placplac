@@ -62,6 +62,12 @@ class Step(CustomModel):
     experiment = models.ForeignKey(Experiment, on_delete=models.CASCADE)
 
 
+class StepDownload(CustomModel):
+    title = models.TextField()
+    file = models.FileField()
+    step = models.ForeignKey(Step, on_delete=models.CASCADE)
+
+
 class GlossaryCategory(CustomModel):
     title = models.CharField(max_length=50, unique=True)
     description = models.TextField()
@@ -78,7 +84,11 @@ class GlossaryTerm(CustomModel):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     more_info_url = models.TextField(null=True, blank=True)
 
+
 class Reference(CustomModel):
-    title = models.TextField()
-    link = models.TextField(null=True, blank=True)
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    description = models.TextField()
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True, blank=True)
+    experiment = models.ForeignKey(Experiment, on_delete=models.CASCADE, null=True, blank=True)
+
+    class Meta:
+        ordering = ['description']

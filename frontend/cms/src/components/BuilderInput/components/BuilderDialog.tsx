@@ -28,10 +28,12 @@ interface BuilderDialogProps {
   activeStep: number;
   handleStep: (index: number) => void;
   setDialogForm: (item: DialogForm) => void;
-  project: number;
   content?: any;
   updateItem: (content: any) => void;
   possibleComponents?: BuilderBlock[];
+  glossaryTermsIds: number[];
+  referencesIds: number[];
+  project: number;
 }
 const ALLCOMPONENTS: PossibleComponent = {
   image: { title: "Image" },
@@ -49,9 +51,11 @@ export const BuilderDialog = (props: BuilderDialogProps) => {
     activeStep,
     handleStep,
     setDialogForm,
-    project,
     content,
     updateItem,
+    glossaryTermsIds,
+    referencesIds,
+    project,
     possibleComponents = ["image", "text", "listExperimentSetup", "iframe"],
   } = props;
 
@@ -104,8 +108,9 @@ export const BuilderDialog = (props: BuilderDialogProps) => {
       case "text": {
         return (
           <CustomRichTextInput
-            project={project}
-            validate={required()}
+            referencesIds={referencesIds}
+            glossaryTermsIds={glossaryTermsIds}
+            validate={[required()]}
             source="text"
           />
         );

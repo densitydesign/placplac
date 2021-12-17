@@ -1,13 +1,13 @@
+import { useMemo } from "react";
 import {
   DeleteButton,
-  required,
   SaveButton,
   SimpleForm,
   SimpleFormProps,
-  TextInput,
   Toolbar,
   ToolbarProps,
 } from "react-admin";
+import { CustomRichTextInput } from "../../components/CustomRichTextInput";
 
 const ReferenceFormToolbar = (props: ToolbarProps) => (
   <Toolbar
@@ -15,27 +15,49 @@ const ReferenceFormToolbar = (props: ToolbarProps) => (
     {...props}
   >
     <SaveButton />
-    {props.record && props.record.id && (
+    {props.record && props.record.id && props.record.project && (
       <DeleteButton redirect={`/projects/${props.record.project}/3`} />
+    )}
+    {props.record && props.record.id && props.record.experiment && (
+      <DeleteButton redirect={`/experiments/${props.record.experiment}/5`} />
     )}
   </Toolbar>
 );
 
 export const ReferenceForm = (props: Omit<SimpleFormProps, "children">) => {
-  const project =
-    props.initialValues && "project" in props.initialValues
-      ? props.initialValues.project
-      : props.record.project;
-  const redirect = `/projects/${project}/3`;
+  const redirectLink = useMemo(() => {
+    if (props.initialValues) {
+      if ("project" in props.initialValues && props.initialValues.project) {
+        return `/projects/${props.initialValues.project}/3`;
+      }
+      if (
+        "experiment" in props.initialValues &&
+        props.initialValues.experiment
+      ) {
+        return `/experiments/${props.initialValues.experiment}/5`;
+      }
+    }
+    if (props.record) {
+      if ("project" in props.record && props.record.project) {
+        return `/projects/${props.record.project}/3`;
+      }
+      if ("experiment" in props.record && props.record.experiment) {
+        return `/experiments/${props.record.experiment}/5`;
+      }
+    }
+  }, [props.initialValues, props.record]);
 
   return (
     <SimpleForm
       {...props}
-      redirect={redirect}
+      redirect={redirectLink}
       toolbar={<ReferenceFormToolbar />}
     >
-      <TextInput multiline fullWidth source="title" validate={[required()]} />
-      <TextInput multiline fullWidth source="link" />
+      <CustomRichTextInput
+        source="description"
+        label="Description of reference"
+        small
+      />
     </SimpleForm>
   );
 };

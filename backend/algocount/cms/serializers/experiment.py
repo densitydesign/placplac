@@ -11,6 +11,7 @@ from cms.serializers.step import FullStepSerializer
 
 class ExperimentSerializer(serializers.ModelSerializer):
     step_set = serializers.PrimaryKeyRelatedField(required=False, read_only=True, many=True)
+    reference_set = serializers.PrimaryKeyRelatedField(read_only=True, many=True)
 
     class Meta:
         model = Experiment
@@ -21,7 +22,7 @@ class ExperimentSerializer(serializers.ModelSerializer):
                   "experiment_setup",
                   "findings",
                   "project",
-                  "step_set", "cover"]
+                  "step_set", "cover", "reference_set"]
 
 
 class FullExperimentSerializer(serializers.ModelSerializer):
@@ -51,20 +52,9 @@ class FullExperimentSerializer(serializers.ModelSerializer):
                 continue
 
         return FullGlossaryTermSerializer(found_glossary_terms, many=True).data
-    def get_references(self, object):
-        references = object.project.reference_set.all().order_by("title")
-        # found_references = []
-        # steps_content = "".join(
-        #     ["{}{}".format(json.dumps(step.content), step.description) for step in object.step_set.all()])
-        # content_str = "{}{}{}{}{}".format(json.dumps(object.context), json.dumps(object.findings), json.dumps(
-        #     object.experiment_setup), object.description, steps_content)
-        #
-        # for term in references:
-        #     check_link = "reference{}".format(term.id)
-        #     if check_link in content_str:
-        #         found_references.append(term)
-        #         continue
 
+    def get_references(self, object):
+        references = object.reference_set.all().order_by("description")
         return ReferenceSerializer(references, many=True).data
 
     class Meta:
@@ -77,4 +67,4 @@ class FullExperimentSerializer(serializers.ModelSerializer):
                   "experiment_setup",
                   "findings",
                   "project",
-                  "steps", "cover", "glossary_terms","references"]
+                  "steps", "cover", "glossary_terms", "references"]

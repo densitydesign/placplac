@@ -8,36 +8,34 @@ import {
   useNotify,
   useRecordContext,
   Record,
-  useRedirect,
   required,
+  maxLength,
+  FileInput,
+  FileField,
+  useEditContext,
 } from "react-admin";
 import IconCancel from "@material-ui/icons/Cancel";
 import IconContentAdd from "@material-ui/icons/Add";
-import { useToggler } from "../useToggler";
-import { CustomRichTextInput } from "../components/CustomRichTextInput";
+import { useToggler } from "../../../useToggler";
 
-interface AddReferenceButtonProps {
-  refersTo: "project" | "experiment";
-}
-export const AddReferenceButton = (props: AddReferenceButtonProps) => {
-  const { refersTo } = props;
+export const AddStepDownloadButton = () => {
   const { value, setTrue, setFalse } = useToggler();
   const [mutate, { loading }] = useMutation();
   const record = useRecordContext();
-  const { id } = record;
+  const { id: step } = record;
   const notify = useNotify();
-  const redirect = useRedirect();
+  const { refetch } = useEditContext();
   const onSave = (values: Partial<Record>) =>
     mutate(
       {
-        type: "create",
-        resource: "references",
+        type: "createMultipart",
+        resource: "step-downloads",
         payload: { data: values },
       },
       {
         onSuccess: ({ data }) => {
           setFalse();
-          redirect("edit", "/references", data.id);
+          refetch && refetch();
         },
         onFailure: (error) => {
           notify("ra.page.error", "error");
@@ -50,23 +48,30 @@ export const AddReferenceButton = (props: AddReferenceButtonProps) => {
       <Button
         style={{ marginBottom: "10px" }}
         onClick={setTrue}
-        label="Add reference"
+        label="Add download"
       >
         <IconContentAdd />
       </Button>
-      <Dialog maxWidth="sm" fullWidth open={value} disableEnforceFocus>
+      <Dialog maxWidth="sm" fullWidth open={value}>
         <FormWithRedirect
-          resource="references"
-          initialValues={{ [refersTo]: id }}
+          resource="steps"
+          initialValues={{ step }}
           save={onSave}
           render={({ handleSubmitWithRedirect, pristine, saving }) => (
             <>
               <DialogContent>
-                <CustomRichTextInput
-                  source="description"
-                  label="Description of reference"
-                  small
+                <TextInput
+                  multiline
+                  fullWidth
+                  source="title"
+                  label="Title"
+                  placeholder="Type the download title, for example 'Download dataset'"
+                  helperText="The download title"
+                  validate={[required(), maxLength(150)]}
                 />
+                <FileInput source="file" validate={[required()]}>
+                  <FileField source="src" title="title" />
+                </FileInput>
               </DialogContent>
               <DialogActions>
                 <Button
