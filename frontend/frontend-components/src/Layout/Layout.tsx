@@ -4,6 +4,7 @@ import { Header } from "./components/Header";
 import styles from "./Layout.module.css";
 import { Experiment, LanguageOptions, Project } from "..";
 import { Footer } from "./components/Footer";
+import { BackToTopButton } from "../components/BackToTopButton";
 
 interface LayoutProps {
   basePath: string;
@@ -25,6 +26,7 @@ export const Layout = (props: LayoutProps) => {
       />
       <div className={styles.content_wrapper}>{children}</div>
       <Footer language={language} />
+      <BackToTopButton />
     </div>
   );
 };

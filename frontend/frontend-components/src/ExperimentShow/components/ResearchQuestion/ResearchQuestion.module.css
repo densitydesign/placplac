@@ -65,15 +65,21 @@
 }
 
 .research_question_container_to_small {
+  grid-template-columns: 1fr 9fr;
   grid-template-rows: 1fr;
-  grid-template-columns: auto auto;
   gap: 30px;
+}
+
+.research_question_container_to_small .research_question_content_big {
+  margin-left: 0;
+  margi-right: 0;
 }
 .research_question_outer {
   background: transparent;
   transition: 0.3s;
   top: 55px;
   z-index: 1;
+  position: sticky;
 }
 
 .research_question_outer_to_small {
@@ -81,7 +87,6 @@
   color: white;
   font-size: 0.6rem;
   line-height: 1rem;
-  position: sticky;
 }
 .section_no_margin {
   margin-top: 10px;

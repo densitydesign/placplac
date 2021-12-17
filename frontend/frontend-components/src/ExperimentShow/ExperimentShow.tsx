@@ -3,26 +3,23 @@ import { TextShow } from "../TextShow";
 import styles from "./ExperimentShow.module.css";
 
 import { ExperimentSetupListShow } from "../ExperimentSetupListShow";
-import { SectionTitle } from "../components/SectionTitle";
 import { ResearchQuestion } from "./components/ResearchQuestion";
-import { Experiment, GlossaryTerm } from "../types";
+import { Experiment } from "../types";
 import { ExperimentDiagram } from "./components/ExperimentDiagram";
-import { Disclaimer } from "./components/Disclaimer";
 import { ImageShow } from "../ImageShow";
 import React, { ComponentType, useEffect, useState } from "react";
 import { GlossarySidebar } from "../GlossarySidebar";
 import { GlossaryTermsList } from "../components/GlossaryTermsList";
-import { GlossaryCategory, LanguageOptions, Reference } from "..";
+import { GlossaryCategory, LanguageOptions } from "..";
 import { IFrame } from "../IFrame";
 import { Section } from "../components/Section";
-import { Flex, GridSize } from "../components/Flex";
+import { Flex } from "../components/Flex";
 import { ContentList } from "./components/ContentList/ContentList";
 import { Row } from "../components/Row";
 import classNames from "classnames";
 import { translations } from "../translations";
 import { useReferencesAdjuster } from "../hooks";
 import { ReferenceList } from "../components/ReferenceList";
-import downloadIcon from "../assets/download-icon.png";
 import SimpleReactLightbox from "simple-react-lightbox";
 import { SRLWrapper } from "simple-react-lightbox";
 
@@ -76,7 +73,18 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
       }
       case "image": {
         return (
-          <SRLWrapper options={{ thumbnails: { showThumbnails: false } }}>
+          <SRLWrapper
+            options={{
+              thumbnails: { showThumbnails: false },
+              buttons: {
+                showNextButton: false,
+                showPrevButton: false,
+                showAutoplayButton: false,
+                showFullscreenButton: false,
+                showDownloadButton: false,
+              },
+            }}
+          >
             <ImageShow
               description={item.content.description}
               image={item.content.image}
@@ -235,9 +243,9 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
                     {translations[language].experiment_step} {step.step_number}
                   </h3>
                 </div>
-                <h3>{step.title}</h3>
+                <h3 style={{ marginBottom: "3em" }}>{step.title}</h3>
                 {step.glossary_terms && step.glossary_terms.length > 0 && (
-                  <div style={{ marginBottom: "1em" }}>
+                  <div style={{ marginBottom: "1.5em" }}>
                     <GlossaryTermsList glossaryTerms={step.glossary_terms} />
                   </div>
                 )}

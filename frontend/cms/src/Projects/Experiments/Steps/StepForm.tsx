@@ -1,7 +1,6 @@
 import {
   Datagrid,
   DeleteButton,
-  EditButton,
   FormTab,
   maxLength,
   NumberInput,

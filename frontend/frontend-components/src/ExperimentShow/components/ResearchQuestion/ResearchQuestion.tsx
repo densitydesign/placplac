@@ -18,7 +18,7 @@ export const ResearchQuestion = (props: { researchQuestion?: string }) => {
             styles.research_question_outer_to_small
           );
           setClassNameSection(styles.section_no_margin);
-        } else {
+        } else if (refContainer.current.getBoundingClientRect().top >= 56) {
           ref.current.classList.remove(
             styles.research_question_container_to_small
           );

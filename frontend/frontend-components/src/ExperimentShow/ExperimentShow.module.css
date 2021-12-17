@@ -69,9 +69,12 @@ ul.download_list > li:before {
   content: url("../assets/download-icon.png");
   display: inline-block;
   vertical-align: middle;
+  margin-right: 0.5em;
+}
 
-  /* If you want some space between icon and text: */
-  margin-right: 1em;
+ul.download_list > li {
+  line-height: 20px;
+  margin-bottom: 20px;
 }
 
 .download_list a {

@@ -3,13 +3,11 @@ import {
   Button,
   FormWithRedirect,
   SaveButton,
-  TextInput,
   useMutation,
   useNotify,
   useRecordContext,
   Record,
   useRedirect,
-  required,
 } from "react-admin";
 import IconCancel from "@material-ui/icons/Cancel";
 import IconContentAdd from "@material-ui/icons/Add";
