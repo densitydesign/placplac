@@ -12,3 +12,4 @@ export * from "./GlossaryCategoryShow";
 export * from "./IFrame";
 export * from "./components/Row";
 export * from "./Disclaimer";
+export * from "./SigmaShow"

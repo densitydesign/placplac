@@ -26,8 +26,11 @@
         "/dist"
     ],
     "dependencies": {
+        "@types/react-modal": "^3.13.1",
         "postcss-url": "^10.1.3",
-        "react-lines-ellipsis": "^0.15.0"
+        "react-lines-ellipsis": "^0.15.0",
+        "react-modal": "^3.14.4",
+        "react-sigma": "^1.2.35"
     },
-    "yalcSig": "fca38163bfa0c44c591808787b73b46b"
+    "yalcSig": "fb0b9f7ea1a053efc77e4fa2fa3982d4"
 }

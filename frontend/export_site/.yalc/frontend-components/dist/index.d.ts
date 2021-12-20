@@ -152,4 +152,10 @@ interface DisclaimerProps {
 }
 declare const Disclaimer: (props: DisclaimerProps) => JSX.Element;
 
-export { Disclaimer, Experiment, ExperimentSetupListShow, ExperimentSetupListShowProps, ExperimentShow, ExperimentShowProps, GlossaryCategory, GlossaryCategoryShow, GlossaryShow, GlossaryTerm, IFrame, ImageShow, LanguageOptions, Layout, Project, ProjectShow, Reference, Row, SectionTitle, Step, TextShow, TextShowProps };
+interface SigmaShowProps {
+    gexfPath: string;
+    height?: string;
+}
+declare const SigmaShow: (props: SigmaShowProps) => JSX.Element;
+
+export { Disclaimer, Experiment, ExperimentSetupListShow, ExperimentSetupListShowProps, ExperimentShow, ExperimentShowProps, GlossaryCategory, GlossaryCategoryShow, GlossaryShow, GlossaryTerm, IFrame, ImageShow, LanguageOptions, Layout, Project, ProjectShow, Reference, Row, SectionTitle, SigmaShow, Step, TextShow, TextShowProps };

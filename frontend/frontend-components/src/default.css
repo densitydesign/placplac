@@ -95,11 +95,15 @@
   font-size: 20px;
   padding: 5px 10px;
   line-height: 36px;
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
 }
 .main-application .mention a {
   color: inherit;
   text-decoration: unset;
 }
-.main-application iframe {
+iframe {
   border: none;
 }

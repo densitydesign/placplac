@@ -104,6 +104,7 @@ export const Row = (props: RowProps) => {
         top={2}
         display={"flex"}
         gridGap={"5px"}
+        zIndex={"100"}
       >
         <Button
           size="small"

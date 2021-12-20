@@ -1,0 +1,11 @@
+.close_button {
+  position: absolute;
+  right: 20px;
+  background: black;
+  border: none;
+  border-radius: 0.5em;
+  padding: 0.5em 1em;
+  color: white;
+  z-index: 1;
+  cursor: pointer;
+}

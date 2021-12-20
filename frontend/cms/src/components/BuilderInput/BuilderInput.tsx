@@ -7,16 +7,18 @@ import { BuilderBlocks, PossibleColumns } from "./types";
 import { Row } from "./components/Row";
 import { CustomRichTextInput } from "../CustomRichTextInput";
 import { EditImage } from "./components/EditImage";
-import { ImageShowBackend } from "../showComponentsBackend/ImageShowBackend";
 import {
   Disclaimer,
   ExperimentSetupListShow,
   IFrame,
+  ImageShow,
+  SigmaShow,
   TextShow,
 } from "frontend-components";
 import { EditListExperimentSetup } from "./components/EditListExperimentSetup";
 import { EditIframe } from "./components/EditIframe";
 import { Grid } from "@material-ui/core";
+import { SelectFile } from "../SelectFile";
 
 interface BuilderInputProps {
   source: string;
@@ -145,7 +147,7 @@ export const BuilderInput = (props: BuilderInputProps) => {
           },
         },
         render: (content: any) => (
-          <ImageShowBackend
+          <ImageShow
             description={content.description}
             image={content.image}
             caption={content.caption}
@@ -186,7 +188,7 @@ export const BuilderInput = (props: BuilderInputProps) => {
                     { id: "info", name: "Info" },
                     { id: "notes", name: "Notes" },
                   ]}
-                  validate={required()}
+                  validate={[required()]}
                   helperText={false}
                   fullWidth
                   source={"type"}
@@ -194,7 +196,7 @@ export const BuilderInput = (props: BuilderInputProps) => {
               </Grid>
               <Grid item>
                 <TextInput
-                  validate={required()}
+                  validate={[required()]}
                   helperText={false}
                   fullWidth
                   source={"description"}
@@ -229,11 +231,32 @@ export const BuilderInput = (props: BuilderInputProps) => {
           component: <EditIframe />,
         },
         render: (content: any) => (
-          <IFrame
-            src={content.src}
-            width={content.width}
-            height={content.height}
-          />
+          <IFrame src={content.src} height={content.height} />
+        ),
+      },
+      sigma: {
+        description: "Sigma gexf file",
+        form: {
+          component: (
+            <Grid container direction="column">
+              <Grid item>
+                <SelectFile
+                  type="file"
+                  label={"Gexf file"}
+                  source={"gexfFile"}
+                  project={project}
+                  fullWidth
+                  validate={[required()]}
+                />
+              </Grid>
+              <Grid item>
+                <TextInput helperText={false} fullWidth source={"height"} />
+              </Grid>
+            </Grid>
+          ),
+        },
+        render: (content: any) => (
+          <SigmaShow height={content.height} gexfPath={content.gexfFile} />
         ),
       },
     };

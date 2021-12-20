@@ -16,12 +16,6 @@ export const EditIframe = () => {
             validate={required()}
             helperText={false}
             fullWidth
-            source={"width"}
-          />
-          <TextInput
-            validate={required()}
-            helperText={false}
-            fullWidth
             source={"height"}
           />
         </Grid>

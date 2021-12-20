@@ -50,6 +50,7 @@ export const ColumnContainer = (props: ColumnContainerProps) => {
         height={"100%"}
         display={"flex"}
         className={classes.container}
+        zIndex={"10"}
       >
         <Box
           display={"flex"}

@@ -18,17 +18,7 @@ class FormattedJSONField(serializers.Field):
     def to_representation(self, value):
         if not value or value == "":
             return None
-
-        context = value.copy()
-        for row in context:
-            for col in row:
-                if "type" in col and col["type"] == "image":
-                    try:
-                        image = ProjectMedia.objects.get(id=col["content"]["image"])
-                        col["content"]["image"] = file_to_base64(image.file.path) if image.file else None
-                    except ProjectMedia.DoesNotExist:
-                        col["content"]["image"] = None
-        return context
+        return value
 
 
 class CustomFileField(serializers.FileField):

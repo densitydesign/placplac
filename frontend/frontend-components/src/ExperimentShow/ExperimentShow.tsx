@@ -22,7 +22,7 @@ import { useReferencesAdjuster } from "../hooks";
 import { ReferenceList } from "../components/ReferenceList";
 import SimpleReactLightbox from "simple-react-lightbox";
 import { SRLWrapper } from "simple-react-lightbox";
-
+import { SigmaShow } from "../SigmaShow";
 export interface ExperimentShowProps {
   experiment: Experiment;
   basePath: string;
@@ -111,6 +111,14 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
           <IFrame
             src={item.content.src}
             width={item.content.width}
+            height={item.content.height}
+          />
+        );
+      }
+      case "sigma": {
+        return (
+          <SigmaShow
+            gexfPath={item.content.gexfFile}
             height={item.content.height}
           />
         );
