@@ -1,5 +1,4 @@
 import type { NextPage } from "next";
-import { ExperimentShow } from "frontend-components";
 import path from "path";
 import { promises as fs } from "fs";
 import Link from "../../components/link";
@@ -36,6 +35,10 @@ export async function getStaticProps({ params }: { params: { id: number } }) {
   };
 }
 const Layout = dynamic(() => import("../../components/layout"), { ssr: false });
+const ExperimentShow = dynamic(
+  () => import("../../components/experimentShow"),
+  { ssr: false }
+);
 
 const Experiment: NextPage = ({
   experiment,

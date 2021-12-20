@@ -1,6 +1,4 @@
 import type { NextPage } from "next";
-import { ProjectShow } from "frontend-components";
-import path from "path";
 import { promises as fs } from "fs";
 import Link from "../components/link";
 import dynamic from "next/dynamic";
@@ -21,6 +19,9 @@ export async function getStaticProps() {
   };
 }
 const Layout = dynamic(() => import("../components/layout"), { ssr: false });
+const ProjectShow = dynamic(() => import("../components/projectShow"), {
+  ssr: false,
+});
 
 const Home: NextPage = ({
   project,

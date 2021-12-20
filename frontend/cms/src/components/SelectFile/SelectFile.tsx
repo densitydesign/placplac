@@ -114,6 +114,9 @@ export const SelectFile = ({
   if (!type) {
     throw new Error(`Specify media type`);
   }
+  if (!project) {
+    throw new Error(`Specify project`);
+  }
   const [mutate] = useMutation();
   const notify = useNotify();
   const [version, setVersion] = useState(0);
@@ -237,7 +240,7 @@ export const SelectFile = ({
               syncWithLocation={false}
               basePath="/project-media"
               perPage={10}
-              filterDefaultValues={{ type }}
+              filterDefaultValues={{ type, project }}
             >
               <MediaDatagrid
                 type={type}
