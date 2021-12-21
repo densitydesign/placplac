@@ -64,7 +64,7 @@ export const Row = (props: RowProps) => {
 
   return (
     <RowGrid
-      style={{ border: "1px solid black", position: "relative" }}
+      style={{ position: "relative" }}
       className={"main-application"}
       divided={canDivided && row.divided}
       key={rowIndex}

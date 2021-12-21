@@ -1,11 +1,6 @@
 import React from "react";
 import styles from "./Footer.module.css";
-import cariplo from "../../../assets/fondazione-cariplo-white 1.png";
-import uni from "../../../assets/uni-milano.png";
-import poli from "../../../assets/poli.png";
-import density from "../../../assets/logo-density-bianco 1.png";
 import facebook from "../../../assets/facebook-logo-white.png";
-import point from "../../../assets/point.png";
 import twitter from "../../../assets/twitter-icon-18-256.png";
 import email from "../../../assets/email.png";
 import { Footer as FooterType, LanguageOptions } from "../../..";

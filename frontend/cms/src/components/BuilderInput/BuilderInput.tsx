@@ -290,25 +290,28 @@ export const BuilderInput = (props: BuilderInputProps) => {
           onChange(newRows);
         }}
       />
-      {value &&
-        value.map((row: any, index: number) => (
-          <Row
-            canDivided={canDivided}
-            switchDivided={switchDivided}
-            deleteCell={removeCell}
-            moveCellLeft={moveCellLeft}
-            moveRowDown={moveRowDown}
-            moveRowUp={moveRowUp}
-            moveCellRight={moveCellRight}
-            key={index}
-            row={row}
-            setActiveItem={setActiveItem}
-            onColumnClick={onColumnClick}
-            rowIndex={index}
-            deleteRow={deleteRow}
-            builderBlocks={builderBlocks}
-          />
-        ))}
+      <div style={{ border: "1px solid black" }}>
+        {value &&
+          value.map((row: any, index: number) => (
+            <Row
+              canDivided={canDivided}
+              switchDivided={switchDivided}
+              deleteCell={removeCell}
+              moveCellLeft={moveCellLeft}
+              moveRowDown={moveRowDown}
+              moveRowUp={moveRowUp}
+              moveCellRight={moveCellRight}
+              key={index}
+              row={row}
+              setActiveItem={setActiveItem}
+              onColumnClick={onColumnClick}
+              rowIndex={index}
+              deleteRow={deleteRow}
+              builderBlocks={builderBlocks}
+            />
+          ))}
+      </div>
+
       {activeItem && (
         <BuilderDialog
           onClose={onCloseModal}
