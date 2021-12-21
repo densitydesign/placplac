@@ -31,6 +31,7 @@ export async function getStaticProps({ params }: { params: { id: number } }) {
       glossaryCategories: fileContents.glossary_categories,
       experiments: fileContents.experiments,
       language: fileContents.language,
+      footer: fileContents.footer,
     },
   };
 }
@@ -45,9 +46,10 @@ const Experiment: NextPage = ({
   glossaryCategories,
   experiments,
   language,
+  footer,
 }: any) => {
   return (
-    <Layout language={language} experiments={experiments}>
+    <Layout footer={footer} language={language} experiments={experiments}>
       <ExperimentShow
         language={language}
         glossaryCategories={glossaryCategories}

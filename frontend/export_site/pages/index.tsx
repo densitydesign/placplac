@@ -15,6 +15,7 @@ export async function getStaticProps() {
       glossaryTerms: fileContents.glossary_terms,
       glossaryCategories: fileContents.glossary_categories,
       language: fileContents.language,
+      footer: fileContents.footer,
     },
   };
 }
@@ -29,9 +30,10 @@ const Home: NextPage = ({
   glossaryCategories,
   experiments,
   language,
+  footer,
 }: any) => {
   return (
-    <Layout language={language} experiments={experiments}>
+    <Layout footer={footer} language={language} experiments={experiments}>
       <ProjectShow
         glossaryCategories={glossaryCategories}
         glossaryTerms={glossaryTerms}

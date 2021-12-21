@@ -30,22 +30,28 @@ export async function getStaticProps({ params }: { params: { id: number } }) {
     props: {
       language: fileContents.language,
       experiments: fileContents.experiments,
+      footer: fileContents.footer,
+
       category,
       terms,
     },
   };
 }
 const Layout = dynamic(() => import("../../components/layout"), { ssr: false });
-const GlossaryCategoryShow = dynamic(() => import("../../components/glossaryCategoryShow"), { ssr: false });
+const GlossaryCategoryShow = dynamic(
+  () => import("../../components/glossaryCategoryShow"),
+  { ssr: false }
+);
 
 const GlossaryCategory: NextPage = ({
   category,
   terms,
   experiments,
   language,
+  footer,
 }: any) => {
   return (
-    <Layout experiments={experiments} language={language}>
+    <Layout footer={footer} experiments={experiments} language={language}>
       <GlossaryCategoryShow glossaryCategory={category} glossaryTerms={terms} />
     </Layout>
   );
