@@ -39,6 +39,7 @@ export const ProjectShowBackend = () => {
         experiments={project.experiments}
         linkComponent={Link}
         basePath={basePath}
+        footer={project.footer}
       >
         <ScrollToTop />
         <Switch>

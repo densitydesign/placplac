@@ -16,6 +16,7 @@ class Project(CustomModel):
     long_description = models.TextField(null=True)
     status = models.CharField(default="2", choices=STATUS_CHOICES, max_length=1)
     language = models.CharField(default="en", choices=LANGUAGE_CHOICES, max_length=2)
+    footer = models.JSONField(null=True, blank=True)
 
 
 class ProjectUser(CustomModel):

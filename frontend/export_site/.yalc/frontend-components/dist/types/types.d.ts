@@ -56,3 +56,18 @@ export declare type Experiment = {
     glossary_terms: GlossaryTerm[];
     references: Reference[];
 };
+export declare type Footer = {
+    partners?: {
+        link: string;
+        image: string;
+    }[];
+    founded_by?: {
+        link: string;
+        image: string;
+    }[];
+    socials?: {
+        facebook?: string;
+        twitter?: string;
+        mail?: string;
+    };
+};

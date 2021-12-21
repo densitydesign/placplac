@@ -34,7 +34,7 @@ class ProjectSerializer(serializers.ModelSerializer):
                   "experiments_description",
                   "long_description",
                   "status", "created_date", "last_update", "experiment_set", "glossaryterm_set", "projectuser_set",
-                  "projectmedia_set", "language","user_level","reference_set"]
+                  "projectmedia_set", "language","user_level","reference_set","footer"]
 
 
 class ProjectMediaSerializer(serializers.ModelSerializer):
@@ -68,7 +68,7 @@ class FullProjectSerializer(serializers.ModelSerializer):
                   "experiments_description",
                   "long_description",
                   "status", "created_date", "last_update", "experiments", "glossary_terms", "glossary_categories",
-                  "language","references"]
+                  "language","references","footer"]
 
 
 class ProjectUserSerializer(serializers.ModelSerializer):

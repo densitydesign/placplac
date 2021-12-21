@@ -85,6 +85,21 @@ declare type Experiment = {
     glossary_terms: GlossaryTerm[];
     references: Reference[];
 };
+declare type Footer = {
+    partners?: {
+        link: string;
+        image: string;
+    }[];
+    founded_by?: {
+        link: string;
+        image: string;
+    }[];
+    socials?: {
+        facebook?: string;
+        twitter?: string;
+        mail?: string;
+    };
+};
 
 interface LayoutProps {
     basePath: string;
@@ -94,6 +109,7 @@ interface LayoutProps {
     children: React.ReactNode;
     experiments: Experiment[];
     language: LanguageOptions;
+    footer?: Footer;
 }
 declare const Layout: (props: LayoutProps) => JSX.Element;
 
@@ -158,4 +174,4 @@ interface SigmaShowProps {
 }
 declare const SigmaShow: (props: SigmaShowProps) => JSX.Element;
 
-export { Disclaimer, Experiment, ExperimentSetupListShow, ExperimentSetupListShowProps, ExperimentShow, ExperimentShowProps, GlossaryCategory, GlossaryCategoryShow, GlossaryShow, GlossaryTerm, IFrame, ImageShow, LanguageOptions, Layout, Project, ProjectShow, Reference, Row, SectionTitle, SigmaShow, Step, TextShow, TextShowProps };
+export { Disclaimer, Experiment, ExperimentSetupListShow, ExperimentSetupListShowProps, ExperimentShow, ExperimentShowProps, Footer, GlossaryCategory, GlossaryCategoryShow, GlossaryShow, GlossaryTerm, IFrame, ImageShow, LanguageOptions, Layout, Project, ProjectShow, Reference, Row, SectionTitle, SigmaShow, Step, TextShow, TextShowProps };

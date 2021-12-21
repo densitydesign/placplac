@@ -1,7 +1,10 @@
+import { Typography } from "@material-ui/core";
 import {
+  ArrayInput,
   Datagrid,
   DeleteButton,
   EditButton,
+  FormDataConsumer,
   FormTab,
   FunctionField,
   maxLength,
@@ -13,6 +16,7 @@ import {
   SaveButton,
   SelectField,
   SelectInput,
+  SimpleFormIterator,
   TabbedForm,
   TabbedFormProps,
   TextField,
@@ -22,6 +26,7 @@ import {
 } from "react-admin";
 import { CustomFileField } from "../components/CustomFileField";
 import { CustomRichTextInput } from "../components/CustomRichTextInput";
+import { ReferenceInputImage } from "../components/ReferenceInputImage";
 import { Tabs } from "../components/Tabs";
 import { AddCollaboratorButton } from "./AddCollaboratorButton";
 import { AddExperimentButton } from "./AddExperimentButton";
@@ -187,6 +192,62 @@ export const ProjectForm = (props: Omit<TabbedFormProps, "children">) => {
               <DeleteButton redirect={false} mutationMode="optimistic" />
             </Datagrid>
           </ReferenceArrayField>
+        </FormTab>
+      )}
+      {props.record.id && (
+        <FormTab label="Footer">
+          <ArrayInput label="Founded by:" source="footer.founded_by">
+            <SimpleFormIterator>
+              <TextInput
+                fullWidth
+                source="link"
+                label="Link"
+                validate={[required()]}
+              />
+              <ReferenceInputImage
+                source="image"
+                project={props.record.id}
+                label="Image"
+                fullWidth
+                validate={[required()]}
+              />
+            </SimpleFormIterator>
+          </ArrayInput>
+          <ArrayInput label="Partners:" source="footer.partners">
+            <SimpleFormIterator>
+              <TextInput
+                fullWidth
+                source="link"
+                label="Link"
+                validate={[required()]}
+              />
+              <ReferenceInputImage
+                source="image"
+                project={props.record.id}
+                label="Image"
+                fullWidth
+                validate={[required()]}
+              />
+            </SimpleFormIterator>
+          </ArrayInput>
+          <FormDataConsumer>
+            {() => (
+              <Typography variant="body2">
+                <b>Contacts:</b>
+              </Typography>
+            )}
+          </FormDataConsumer>
+          <TextInput
+            fullWidth
+            source="footer.socials.facebook"
+            label="Facebook"
+          />
+          <TextInput
+            fullWidth
+            source="footer.socials.twitter"
+            label="Twitter"
+          />
+          <TextInput fullWidth source="footer.socials.mail" label="Mail" />
         </FormTab>
       )}
       {props.record.id && (

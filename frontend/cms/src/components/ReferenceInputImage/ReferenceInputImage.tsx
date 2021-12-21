@@ -4,9 +4,11 @@ interface ReferenceInputImageProps {
   source: string;
   project: number;
   label?: string;
+  validate?: any;
+  fullWidth?: boolean;
 }
 export const ReferenceInputImage = (props: ReferenceInputImageProps) => {
-  const { source, project, label } = props;
+  const { source, project, label, validate, fullWidth } = props;
 
   return (
     <SelectFile
@@ -14,7 +16,8 @@ export const ReferenceInputImage = (props: ReferenceInputImageProps) => {
       label={label ? label : "Image"}
       source={source}
       project={project}
-      fullWidth
+      fullWidth={fullWidth}
+      validate={validate}
     />
   );
 };
