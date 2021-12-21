@@ -7,6 +7,6 @@
 .divided > div {
   border-right: 1px solid black;
 }
-.divided > div:last-child {
+.divided > div:last-of-type {
   border-right: none;
 }

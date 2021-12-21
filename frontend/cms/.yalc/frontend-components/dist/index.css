@@ -570,16 +570,16 @@ iframe {
 }
 
 
-.Row_main_78n58_1 {
+.Row_main_1i81q_1 {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(0px, 1fr));
   grid-auto-rows: 1fr;
 }
 
-.Row_divided_78n58_7 > div {
+.Row_divided_1i81q_7 > div {
   border-right: 1px solid black;
 }
-.Row_divided_78n58_7 > div:last-child {
+.Row_divided_1i81q_7 > div:last-of-type {
   border-right: none;
 }
 

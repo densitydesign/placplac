@@ -114,6 +114,7 @@ export const Row = (props: RowProps) => {
         </Fragment>
       ))}
       <Box
+        component={"span"}
         position="absolute"
         right={2}
         top={2}
