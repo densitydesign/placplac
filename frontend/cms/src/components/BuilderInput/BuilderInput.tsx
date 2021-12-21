@@ -254,6 +254,7 @@ export const BuilderInput = (props: BuilderInputProps) => {
                   project={project}
                   fullWidth
                   validate={[required()]}
+                  helperText="Click the right button to choose a file from the library"
                 />
               </Grid>
               <Grid item>

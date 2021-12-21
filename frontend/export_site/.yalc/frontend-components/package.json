@@ -6,9 +6,7 @@
     "module": "dist/index.js",
     "types": "dist/index.d.ts",
     "scripts": {
-        "build": "rollup -c && yalc push",
-        "storybook": "start-storybook -p 6006",
-        "build-storybook": "build-storybook"
+        "build": "rollup -c && yalc push"
     },
     "keywords": [],
     "author": "",
@@ -32,5 +30,5 @@
         "react-modal": "^3.14.4",
         "react-sigma": "^1.2.35"
     },
-    "yalcSig": "dc2d8a077c13da91a0faecf8c142dd76"
+    "yalcSig": "5cb713ecaab9b0f8c55f99198ff0dab1"
 }
