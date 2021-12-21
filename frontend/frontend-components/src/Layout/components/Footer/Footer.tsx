@@ -35,8 +35,8 @@ export const Footer = (props: FooterProps) => {
           <div className={styles.founded_by}>
             {footer &&
               footer.founded_by &&
-              footer.founded_by.map((founder) => (
-                <a href={founder.link}>
+              footer.founded_by.map((founder, index) => (
+                <a key={index} href={founder.link}>
                   <img src={founder.image} />
                 </a>
               ))}
@@ -48,8 +48,8 @@ export const Footer = (props: FooterProps) => {
           <div className={styles.partners}>
             {footer &&
               footer.partners &&
-              footer.partners.map((founder) => (
-                <a href={founder.link}>
+              footer.partners.map((founder, index) => (
+                <a key={index} href={founder.link}>
                   <img src={founder.image} />
                 </a>
               ))}

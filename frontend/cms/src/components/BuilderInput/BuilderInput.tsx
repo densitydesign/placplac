@@ -3,7 +3,7 @@ import { useDialoglUpdate } from "../../useDialogUpdate";
 import { required, useInput, SelectInput, TextInput } from "react-admin";
 import { BuilderDialog } from "./components/BuilderDialog";
 import { AddRowButton } from "./components/AddRowButton";
-import { BuilderBlocks, PossibleColumns } from "./types";
+import { BuilderBlocks, PossibleColumns, Row as RowType } from "./types";
 import { Row } from "./components/Row";
 import { CustomRichTextInput } from "../CustomRichTextInput";
 import { EditImage } from "./components/EditImage";
@@ -27,6 +27,7 @@ interface BuilderInputProps {
   glossaryTermsIds: number[];
   referencesIds: number[];
   project: number;
+  canDivided: boolean;
 }
 
 export const BuilderInput = (props: BuilderInputProps) => {
@@ -37,16 +38,17 @@ export const BuilderInput = (props: BuilderInputProps) => {
     glossaryTermsIds,
     referencesIds,
     project,
+    canDivided,
   } = props;
   const [activeStep, setActiveStep] = React.useState(0);
 
   const {
-    input: { onChange, value },
+    input: { onChange, value: noTypeValue },
   } = useInput({
     source,
     defaultValue: useMemo(() => [], []),
   });
-
+  const value = noTypeValue as RowType[];
   const { setActiveItem, isOpenUpdateModal, closeModalUpdate, activeItem } =
     useDialoglUpdate<{ rowIndex: number; colIndex: number }>();
 
@@ -63,21 +65,26 @@ export const BuilderInput = (props: BuilderInputProps) => {
     newRows.splice(rowIndex, 1);
     onChange(newRows);
   };
+  const switchDivided = (rowIndex: number) => {
+    const newRows = [...value];
+    newRows[rowIndex].divided = !newRows[rowIndex].divided;
+    onChange(newRows);
+  };
   const moveCellLeft = (rowIndex: number, cellIndex: number) => {
     const newRows = [...value];
     const newIndex = cellIndex - 1;
     if (newIndex >= 0) {
-      const movingElement = newRows[rowIndex].splice(cellIndex, 1)[0];
-      newRows[rowIndex].splice(newIndex, 0, movingElement);
+      const movingElement = newRows[rowIndex].cols.splice(cellIndex, 1)[0];
+      newRows[rowIndex].cols.splice(newIndex, 0, movingElement);
       onChange(newRows);
     }
   };
   const moveCellRight = (rowIndex: number, cellIndex: number) => {
     const newRows = [...value];
     const newIndex = cellIndex + 1;
-    if (newIndex < value[rowIndex].length) {
-      const movingElement = newRows[rowIndex].splice(cellIndex, 1)[0];
-      newRows[rowIndex].splice(newIndex, 0, movingElement);
+    if (newIndex < value[rowIndex].cols.length) {
+      const movingElement = newRows[rowIndex].cols.splice(cellIndex, 1)[0];
+      newRows[rowIndex].cols.splice(newIndex, 0, movingElement);
       onChange(newRows);
     }
   };
@@ -101,8 +108,8 @@ export const BuilderInput = (props: BuilderInputProps) => {
   };
   const removeCell = (rowIndex: number, cellIndex: number) => {
     const newRows = [...value];
-    newRows[rowIndex].splice(cellIndex, 1);
-    if (newRows[rowIndex].length <= 0) {
+    newRows[rowIndex].cols.splice(cellIndex, 1);
+    if (newRows[rowIndex].cols.length <= 0) {
       newRows.splice(rowIndex, 1);
     }
     onChange(newRows);
@@ -116,7 +123,7 @@ export const BuilderInput = (props: BuilderInputProps) => {
   const updateItem = (content: any) => {
     if (activeItem) {
       const newRows = [...value];
-      newRows[activeItem.rowIndex][activeItem.colIndex] = {
+      newRows[activeItem.rowIndex].cols[activeItem.colIndex] = {
         type: dialogStatus,
         content: content,
       };
@@ -273,15 +280,21 @@ export const BuilderInput = (props: BuilderInputProps) => {
   return (
     <div>
       <AddRowButton
+        canDivided={canDivided}
         possibleColumns={possibleColumns}
         onSubmit={(values) => {
-          const newRows = [...value, new Array(values.cols).fill({})];
+          const newRows = [
+            ...value,
+            { cols: new Array(values.cols).fill({}), divided: values.divided },
+          ];
           onChange(newRows);
         }}
       />
       {value &&
         value.map((row: any, index: number) => (
           <Row
+            canDivided={canDivided}
+            switchDivided={switchDivided}
             deleteCell={removeCell}
             moveCellLeft={moveCellLeft}
             moveRowDown={moveRowDown}
@@ -304,7 +317,7 @@ export const BuilderInput = (props: BuilderInputProps) => {
           activeStep={activeStep}
           handleStep={setActiveStep}
           setDialogForm={setDialogStatus}
-          content={value[activeItem.rowIndex][activeItem.colIndex].content}
+          content={value[activeItem.rowIndex].cols[activeItem.colIndex].content}
           updateItem={updateItem}
           builderBlocks={builderBlocks}
         />

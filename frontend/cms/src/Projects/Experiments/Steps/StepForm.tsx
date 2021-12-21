@@ -83,6 +83,7 @@ export const StepForm = (props: Omit<TabbedFormProps, "children">) => {
       </FormTab>
       <FormTab label="content">
         <BuilderInput
+          canDivided={true}
           glossaryTermsIds={data.glossaryterm_set}
           referencesIds={experimentData.reference_set}
           source={"content"}

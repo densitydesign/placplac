@@ -1,10 +1,11 @@
 import { Grid } from "@material-ui/core";
-import { SelectInput, required, Button } from "react-admin";
+import { SelectInput, required, Button, BooleanInput } from "react-admin";
 import { Form } from "react-final-form";
 import { PossibleColumns } from "../types";
 interface AddRowButtonProps {
   onSubmit: (items: any) => void;
   possibleColumns?: PossibleColumns;
+  canDivided: boolean;
 }
 export const AddRowButton = (props: AddRowButtonProps) => {
   const defualtChoices = [
@@ -20,12 +21,12 @@ export const AddRowButton = (props: AddRowButtonProps) => {
     : defualtChoices;
   return (
     <Form
-      initialValues={{ cols: choices[0].id }}
+      initialValues={{ cols: choices[0].id, divided: props.canDivided }}
       onSubmit={(values) => {
         props.onSubmit(values);
       }}
       render={({ handleSubmit }) => (
-        <Grid container alignItems="center">
+        <Grid container alignItems="center" spacing={3}>
           <Grid item>
             <SelectInput
               variant="outlined"
@@ -36,6 +37,19 @@ export const AddRowButton = (props: AddRowButtonProps) => {
               choices={choices}
             />
           </Grid>
+          {props.canDivided && (
+            <Grid item>
+              <BooleanInput
+                variant="outlined"
+                helperText={false}
+                validate={required()}
+                source="divided"
+                defaultValue={false}
+                label="Splitted row"
+                choices={choices}
+              />
+            </Grid>
+          )}
           <Grid item>
             <Button onClick={handleSubmit} label="Add row" />
           </Grid>

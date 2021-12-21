@@ -101,6 +101,7 @@ export const ExperimentForm = (props: Omit<TabbedFormProps, "children">) => {
       {props.record.id && (
         <FormTab label="context">
           <BuilderInput
+            canDivided={false}
             glossaryTermsIds={data.glossaryterm_set}
             referencesIds={props.record?.reference_set}
             source={"context"}
@@ -112,6 +113,7 @@ export const ExperimentForm = (props: Omit<TabbedFormProps, "children">) => {
       {props.record.id && (
         <FormTab label="experiment setup">
           <BuilderInput
+            canDivided={false}
             glossaryTermsIds={data.glossaryterm_set}
             referencesIds={props.record.reference_set}
             possibleColumns={[2, 3, 4]}
@@ -142,6 +144,7 @@ export const ExperimentForm = (props: Omit<TabbedFormProps, "children">) => {
       {props.record.id && (
         <FormTab label="findings">
           <BuilderInput
+            canDivided={false}
             glossaryTermsIds={data.glossaryterm_set}
             referencesIds={props.record?.reference_set}
             source={"findings"}

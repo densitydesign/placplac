@@ -27,11 +27,15 @@ interface TextShowProps {
 }
 declare const TextShow: ({ text }: TextShowProps) => JSX.Element;
 
+declare type RowType = {
+    divided: boolean;
+    cols: any[];
+};
 declare type Step = {
     title: string;
     description: string;
     step_number: number;
-    content: any;
+    content: RowType[];
     glossary_terms: GlossaryTerm[];
     downloads: {
         id: string;
@@ -76,10 +80,10 @@ declare type Experiment = {
     cover: string;
     title: string;
     description: string;
-    context?: any[];
+    context?: RowType[];
     research_question?: string;
-    experiment_setup?: any[];
-    findings?: any[];
+    experiment_setup?: RowType[];
+    findings?: RowType[];
     steps: Step[];
     tags: string[];
     glossary_terms: GlossaryTerm[];
@@ -159,6 +163,7 @@ declare const IFrame: (props: IFrameProps) => JSX.Element;
 interface RowProps extends ComponentProps<"div"> {
     spacing?: string;
     children?: ReactNode;
+    divided?: boolean;
 }
 declare const Row: (props: RowProps) => JSX.Element;
 
@@ -174,4 +179,4 @@ interface SigmaShowProps {
 }
 declare const SigmaShow: (props: SigmaShowProps) => JSX.Element;
 
-export { Disclaimer, Experiment, ExperimentSetupListShow, ExperimentSetupListShowProps, ExperimentShow, ExperimentShowProps, Footer, GlossaryCategory, GlossaryCategoryShow, GlossaryShow, GlossaryTerm, IFrame, ImageShow, LanguageOptions, Layout, Project, ProjectShow, Reference, Row, SectionTitle, SigmaShow, Step, TextShow, TextShowProps };
+export { Disclaimer, Experiment, ExperimentSetupListShow, ExperimentSetupListShowProps, ExperimentShow, ExperimentShowProps, Footer, GlossaryCategory, GlossaryCategoryShow, GlossaryShow, GlossaryTerm, IFrame, ImageShow, LanguageOptions, Layout, Project, ProjectShow, Reference, Row, RowType, SectionTitle, SigmaShow, Step, TextShow, TextShowProps };

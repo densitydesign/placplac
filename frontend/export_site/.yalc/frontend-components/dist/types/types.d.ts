@@ -1,8 +1,12 @@
+export declare type RowType = {
+    divided: boolean;
+    cols: any[];
+};
 export declare type Step = {
     title: string;
     description: string;
     step_number: number;
-    content: any;
+    content: RowType[];
     glossary_terms: GlossaryTerm[];
     downloads: {
         id: string;
@@ -47,10 +51,10 @@ export declare type Experiment = {
     cover: string;
     title: string;
     description: string;
-    context?: any[];
+    context?: RowType[];
     research_question?: string;
-    experiment_setup?: any[];
-    findings?: any[];
+    experiment_setup?: RowType[];
+    findings?: RowType[];
     steps: Step[];
     tags: string[];
     glossary_terms: GlossaryTerm[];

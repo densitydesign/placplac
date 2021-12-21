@@ -12,3 +12,4 @@ export type BuilderBlock = {
   render: (content: any) => React.ReactElement;
 };
 export type BuilderBlocks = { [k: string]: BuilderBlock };
+export type Row = { divided: boolean; cols: any[] };

@@ -35,12 +35,12 @@
   flex: 1 auto;
 }
 
-.sidebar_content > div > div {
+/* .sidebar_content > div > div {
   border-right: 1px solid black;
 }
 .sidebar_content > div > div:last-child {
   border-right: none;
-}
+} */
 
 .step_number {
   background-image: url("../assets/ellipse.png");

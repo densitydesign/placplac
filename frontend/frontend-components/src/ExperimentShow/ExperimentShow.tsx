@@ -10,7 +10,7 @@ import { ImageShow } from "../ImageShow";
 import React, { ComponentType, useEffect, useState } from "react";
 import { GlossarySidebar } from "../GlossarySidebar";
 import { GlossaryTermsList } from "../components/GlossaryTermsList";
-import { GlossaryCategory, LanguageOptions } from "..";
+import { GlossaryCategory, LanguageOptions, RowType } from "..";
 import { IFrame } from "../IFrame";
 import { Section } from "../components/Section";
 import { Flex } from "../components/Flex";
@@ -127,13 +127,13 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
   };
 
   const renderRow = (
-    row: any[],
+    row: RowType,
     rowIndex: number,
     firstChildNoToppadding: boolean = false
   ) => {
     return (
-      <Row key={rowIndex}>
-        {row.map((col, colIndex) => (
+      <Row divided={row.divided} key={rowIndex}>
+        {row.cols.map((col, colIndex) => (
           <div
             className={classNames({
               "inner-column": !firstChildNoToppadding,
@@ -149,7 +149,7 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
   };
 
   const renderSection = (
-    section: any[],
+    section: RowType[],
     firstChildNoToppadding: boolean = false
   ) => {
     return section

@@ -1,18 +1,26 @@
-import { Grid, Box, IconButton, Button } from "@material-ui/core";
+import {
+  Grid,
+  Box,
+  IconButton,
+  Button,
+  FormControlLabel,
+  Switch,
+} from "@material-ui/core";
 import React, { Fragment } from "react";
 import { ColumnContainer } from "./ColumnContainer";
 import { EmptyColumn } from "./EmptyColumn";
 import AddIcon from "@material-ui/icons/Add";
-import { BuilderBlock, BuilderBlocks } from "../types";
+import { BuilderBlock, BuilderBlocks, Row as RowType } from "../types";
 import Delete from "@material-ui/icons/Delete";
 import { Row as RowGrid } from "frontend-components";
 import KeyboardArrowTopIcon from "@material-ui/icons/KeyboardArrowUp";
 import KeyboardArrowBottomIcon from "@material-ui/icons/KeyboardArrowDown";
 
 interface RowProps {
-  row: any[];
+  row: RowType;
   rowIndex: number;
   deleteRow: (rowIndex: number) => void;
+  switchDivided: (rowIndex: number) => void;
   setActiveItem: React.Dispatch<
     React.SetStateAction<
       | {
@@ -34,6 +42,7 @@ interface RowProps {
   moveRowUp: (rowIndex: number) => void;
   moveRowDown: (rowIndex: number) => void;
   builderBlocks: BuilderBlocks;
+  canDivided: boolean;
 }
 
 export const Row = (props: RowProps) => {
@@ -48,20 +57,23 @@ export const Row = (props: RowProps) => {
     moveRowDown,
     moveRowUp,
     deleteCell,
+    switchDivided,
     builderBlocks,
+    canDivided,
   } = props;
 
   return (
     <RowGrid
       style={{ border: "1px solid black", position: "relative" }}
       className={"main-application"}
+      divided={canDivided && row.divided}
       key={rowIndex}
     >
-      {row.map((col, colIndex) => (
+      {row.cols.map((col, colIndex) => (
         <Fragment key={colIndex}>
           {Object.keys(col).length === 0 ? (
             <EmptyColumn>
-              <Grid container justify="center" alignItems="center">
+              <Grid container justifyContent="center" alignItems="center">
                 <IconButton
                   size="medium"
                   color="primary"
@@ -136,6 +148,24 @@ export const Row = (props: RowProps) => {
         >
           <KeyboardArrowBottomIcon />
         </Button>
+        {canDivided && (
+          <FormControlLabel
+            style={{
+              backgroundColor: "white",
+              borderRadius: "10px",
+              padding: " 5px 5px 5px 0px",
+              marginLeft: "5px",
+            }}
+            label={"Divided"}
+            control={
+              <Switch
+                color="primary"
+                onChange={() => switchDivided(rowIndex)}
+                checked={row.divided}
+              />
+            }
+          />
+        )}
       </Box>
     </RowGrid>
   );

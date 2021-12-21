@@ -3,3 +3,10 @@
   grid-template-columns: repeat(auto-fit, minmax(0px, 1fr));
   grid-auto-rows: 1fr;
 }
+
+.divided > div {
+  border-right: 1px solid black;
+}
+.divided > div:last-child {
+  border-right: none;
+}
