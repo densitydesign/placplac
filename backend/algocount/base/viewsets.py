@@ -1,14 +1,6 @@
-from rest_framework import exceptions, mixins, viewsets, status
+from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
-
-
-class AutocompleteViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
-
-    def check_permissions(self, request):
-        if not request.user.is_authenticated:
-            raise exceptions.NotAuthenticated()
-        return True
 
 
 class CustomModelView(viewsets.ModelViewSet):
@@ -24,4 +16,3 @@ class CustomModelView(viewsets.ModelViewSet):
             self.check_object_permissions(request, obj)
         queryset.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-

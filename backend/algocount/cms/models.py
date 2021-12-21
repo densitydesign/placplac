@@ -42,7 +42,7 @@ class ProjectMedia(CustomModel):
 
 class Experiment(CustomModel):
     tags = ArrayField(base_field=models.TextField(), null=True, blank=True)
-    cover = models.ForeignKey(ProjectMedia, on_delete=models.SET_NULL, null=True)
+    cover = models.TextField(blank=True, null=True)
     title = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True)
     context = models.JSONField(null=True, blank=True)
@@ -77,7 +77,7 @@ class GlossaryCategory(CustomModel):
 
 class GlossaryTerm(CustomModel):
     title = models.CharField(max_length=100)
-    image = models.ForeignKey(ProjectMedia, on_delete=models.SET_NULL, null=True)
+    image = models.TextField(blank=True, null=True)
     description = models.TextField()
     related = models.ManyToManyField("self", blank=True)
     glossary_category = models.ForeignKey(GlossaryCategory, on_delete=models.CASCADE)
