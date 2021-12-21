@@ -1,8 +1,6 @@
 import classNames from "classnames";
 import React, { ComponentType } from "react";
-import { TextShow } from "../../../TextShow";
 import { Experiment } from "../../../types";
-import { renderUrlImage } from "../../../utils";
 import { TagsSliding } from "./components/TagsSliding";
 import styles from "./ExperimentSection.module.css";
 import hand from "../../../assets/hand-pointing.png";

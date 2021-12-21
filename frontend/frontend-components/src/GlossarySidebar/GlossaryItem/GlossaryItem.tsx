@@ -1,7 +1,6 @@
 import React, { ComponentType } from "react";
 import { TextShow } from "../../TextShow";
 import { GlossaryTerm } from "../../types";
-import { renderUrlImage } from "../../utils";
 import styles from "./GlossaryItem.module.css";
 import seeMoreImage from "../../assets/see more.png";
 
