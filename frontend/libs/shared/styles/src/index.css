@@ -6,20 +6,6 @@
   --vertical-spacing: 15px;
 }
 
-.main-application .mention {
-  height: 24px;
-  width: 65px;
-  border-radius: 6px;
-  background-color: #d3e1eb;
-  padding: 3px 0;
-  margin-right: 2px;
-  user-select: all;
-}
-
-.main-application .mention > span {
-  margin: 0 3px;
-}
-
 .main-application {
   font-size: 20px;
   font-family: Source Serif Pro, sans-serif;
@@ -93,12 +79,17 @@
   font-family: Source Sans Pro;
   font-weight: 400;
   font-size: 20px;
-  padding: 5px 10px;
+  padding: 0px 10px;
   line-height: 36px;
   -webkit-user-select: none; /* Safari */
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* IE10+/Edge */
   user-select: none; /* Standard */
+  margin-right: 2px;
+  display: inline-block;
+  width: auto;
+  margin-top: 2px;
+  margin-bottom: 2px;
 }
 .main-application .mention a {
   color: inherit;
