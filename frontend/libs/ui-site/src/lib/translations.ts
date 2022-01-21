@@ -20,7 +20,7 @@ export const translations = {
           replicating the experiments. We provide brief descriptions and links\
           to various terms that are referenced throughout\
           the project.",
-    foundedby_footer: "Founded by",
+    foundedby_footer: "Funded by",
     partners_footer: "Partners",
     contacts_footer: "Contacts",
   },

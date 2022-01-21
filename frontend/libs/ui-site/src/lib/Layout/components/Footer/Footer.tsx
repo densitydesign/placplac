@@ -22,48 +22,57 @@ export const Footer = (props: FooterProps) => {
         Dipartment of Politecnico di Milano, funded by Fondazione Cariplo.
         License CC-by 2021.
       </div>
-      <div className={styles.divider} />
 
-      <div className={styles.column}>
-        <span>{translations[language].foundedby_footer}:</span>
-        <div className={styles.founded_by}>
-          {footer &&
-            footer.founded_by &&
-            footer.founded_by.map((founder, index) => (
-              <a key={index} href={founder.link}>
-                <img src={founder.image} />
-              </a>
-            ))}
-        </div>
-      </div>
-      <div className={styles.divider} />
-      <div className={styles.column}>
-        <span>{translations[language].partners_footer}:</span>
-        <div className={styles.partners}>
-          {footer &&
-            footer.partners &&
-            footer.partners.map((founder, index) => (
-              <a key={index} href={founder.link}>
-                <img src={founder.image} />
-              </a>
-            ))}
-        </div>
-      </div>
-      <div className={styles.divider} />
-      <div className={styles.column}>
-        <span>{translations[language].contacts_footer}:</span>
-        <div className={styles.contacts}>
-          {footer && footer.socials && footer.socials.facebook && (
-            <img src={fb} />
-          )}
-          {footer && footer.socials && footer.socials.twitter && (
-            <img src={tw} />
-          )}
-          {footer && footer.socials && footer.socials.mail && (
-            <img src={email} />
-          )}
-        </div>
-      </div>
+      {footer && footer.founded_by && footer.founded_by.length > 0 && (
+        <>
+          <div className={styles.divider} />
+          <div className={styles.column}>
+            <span>{translations[language].foundedby_footer}:</span>
+            <div className={styles.founded_by}>
+              {footer.founded_by.map((founder, index) => (
+                <a key={index} href={founder.link}>
+                  <img src={founder.image} />
+                </a>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
+      {footer && footer.partners && footer.partners.length > 0 && (
+        <>
+          <div className={styles.divider} />
+
+          <div className={styles.column}>
+            <span>{translations[language].partners_footer}:</span>
+            <div className={styles.partners}>
+              {footer.partners.map((founder, index) => (
+                <a key={index} href={founder.link}>
+                  <img src={founder.image} />
+                </a>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
+      {footer && footer.socials && (
+        <>
+          <div className={styles.divider} />
+          <div className={styles.column}>
+            <span>{translations[language].contacts_footer}:</span>
+            <div className={styles.contacts}>
+              {footer && footer.socials && footer.socials.facebook && (
+                <img src={fb} />
+              )}
+              {footer && footer.socials && footer.socials.twitter && (
+                <img src={tw} />
+              )}
+              {footer && footer.socials && footer.socials.mail && (
+                <img src={email} />
+              )}
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };
