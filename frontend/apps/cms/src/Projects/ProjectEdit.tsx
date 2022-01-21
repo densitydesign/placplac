@@ -1,24 +1,24 @@
-import { Breadcrumbs, Typography } from "@material-ui/core";
-import { Edit, EditProps, Record, Link } from "react-admin";
-import { TopToolbarWithTitle } from "../components/TopToolbarWithTitle";
-import { DownloadButton } from "./DownloadButton";
-import { PreviewButton } from "./PreviewButton";
+import { Breadcrumbs, Typography } from '@material-ui/core';
+import { Edit, EditProps, Record, Link } from 'react-admin';
+import { TopToolbarWithTitle } from '../components/TopToolbarWithTitle';
+import { DownloadButton } from './DownloadButton';
+import { PreviewButton } from './PreviewButton';
 
-import { ProjectForm } from "./ProjectForm";
+import { ProjectForm } from './ProjectForm';
 
 const PostEditActions = ({ data }: { data?: Record }) => {
   return (
     <TopToolbarWithTitle
       title={
         <>
-          <Typography variant="h5">Project</Typography>
+          <Typography variant="h3">Project</Typography>
           {data && (
             <Breadcrumbs
               aria-label="breadcrumb"
-              separator={<Typography variant="h6">{`>`}</Typography>}
+              separator={<Typography variant="h4">{`>`}</Typography>}
             >
               <Link to={`/projects/${data.id}`}>
-                <Typography variant="subtitle1">{data.title}</Typography>
+                <Typography variant="h4">{data.title}</Typography>
               </Link>
             </Breadcrumbs>
           )}
@@ -26,11 +26,7 @@ const PostEditActions = ({ data }: { data?: Record }) => {
       }
     >
       {data && <PreviewButton project={data.id} />}
-      {data && data.status === "1" && (
-        <>
-          <DownloadButton project={data} />
-        </>
-      )}
+      {data && data.status === '1' && <DownloadButton project={data} />}
     </TopToolbarWithTitle>
   );
 };

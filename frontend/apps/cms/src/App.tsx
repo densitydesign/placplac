@@ -16,6 +16,8 @@ import { history } from './browserHistory';
 import { UserEdit } from './Users/UserEdit';
 import { UserList } from './Users/UserList';
 import SignUp from './SignUp/SignUp';
+import GroupIcon from '@material-ui/icons/Group';
+import CollectionsBookmarkIcon from '@material-ui/icons/CollectionsBookmark';
 import { LoginPage } from './LoginPage';
 function App() {
   const authProvider = jwtTokenAuthProvider({
@@ -52,6 +54,7 @@ function App() {
           list={ProjectList}
           edit={ProjectEdit}
           create={ProjectCreate}
+          icon={CollectionsBookmarkIcon}
         />,
         <Resource name="experiments" edit={ExperimentEdit} />,
         <Resource name="project-media" />,
@@ -62,7 +65,12 @@ function App() {
         <Resource name="project-collaborators" />,
         <Resource name="references" edit={ReferenceEdit} />,
         permissions.includes('authentication.change_user') ? (
-          <Resource name="users" edit={UserEdit} list={UserList} />
+          <Resource
+            icon={GroupIcon}
+            name="users"
+            edit={UserEdit}
+            list={UserList}
+          />
         ) : null,
       ]}
     </Admin>
