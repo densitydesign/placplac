@@ -15,7 +15,7 @@ export const Footer = (props: FooterProps) => {
     <div className={styles.main}>
       <div className={styles.platform}>
         <b>
-          <u>Plaplac</u>
+          <u>PlaPlac</u>
         </b>
         - a dissemination platform designed within the Algocount project by the
         Università degli Studi di Milano and DensityDesign Lab from Design
