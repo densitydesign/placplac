@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
+from django.db.models import Func, F, Value
 
 from base.models import CustomModel
 
@@ -85,11 +86,21 @@ class GlossaryTerm(CustomModel):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     more_info_url = models.TextField(null=True, blank=True)
 
+class ReferenceManager(models.Manager):
+    def get_queryset(self):
+        qs = super().get_queryset()
+
+        return qs.annotate(desc=Func(
+        F('description'),
+        Value(r'<[^>]+>'), Value(""), Value("gi"),
+        function='REGEXP_REPLACE',
+        output_field=models.TextField(),
+    )).order_by('desc')
+
 
 class Reference(CustomModel):
+    objects=ReferenceManager()
     description = models.TextField()
     project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True, blank=True)
     experiment = models.ForeignKey(Experiment, on_delete=models.CASCADE, null=True, blank=True)
 
-    class Meta:
-        ordering = ['description']
