@@ -87,6 +87,7 @@ export const BuilderDialog = (props: BuilderDialogProps) => {
 
   return (
     <Dialog
+      disableEnforceFocus={true}
       onClose={onClose}
       open={open}
       fullWidth
