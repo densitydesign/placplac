@@ -48,27 +48,20 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
     linkComponent,
     glossaryCategories,
   } = props;
-  const [topPositionStep, setTopPositionStep] = useState(123);
+  const [topPositionStep, setTopPositionStep] = useState(55);
   const glossaryCategoriesInText = glossaryCategories.filter((category) =>
     glossary_terms.some((term) => term.category_title === category.title)
   );
   useEffect(() => {
     const element = document.getElementById('researchQuestionDiv');
     if (element) {
-      const resizeObserver = new ResizeObserver((event) => {
-        setTopPositionStep(event[0].contentBoxSize[0].blockSize + 55);
-      });
-
-      resizeObserver.observe(element);
-      return () => resizeObserver.unobserve(element);
+      setTopPositionStep(element.getBoundingClientRect().height + 55);
+    } else {
+      setTopPositionStep(0);
     }
   });
 
   useReferencesAdjuster();
-
-  const renderItem = (item: { type: string } & any) => {
-    return SHOW_COMPONENTS_BUILDER[item.type].render(item.content);
-  };
 
   const renderRow = (
     row: RowType,

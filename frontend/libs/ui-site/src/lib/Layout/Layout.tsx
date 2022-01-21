@@ -24,7 +24,10 @@ export const Layout = (props: LayoutProps) => {
   const { basePath, linkComponent, children, experiments, language, footer } =
     props;
   return (
-    <div className={classnames(styles.main, 'main-application')}>
+    <div
+      id="main-application"
+      className={classnames(styles.main, 'main-application')}
+    >
       <Header
         language={language}
         experiments={experiments}

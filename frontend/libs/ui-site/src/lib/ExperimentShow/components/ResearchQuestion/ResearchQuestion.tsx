@@ -1,73 +1,79 @@
-import React, { useEffect, useRef, useState } from "react";
-import { TextShow } from "../../../TextShow";
-import { Section } from "../../../components/Section";
-import styles from "./ResearchQuestion.module.css";
+import React, { useEffect, useRef, useState } from 'react';
+import { TextShow } from '../../../TextShow';
+import { Section } from '../../../components/Section';
+import styles from './ResearchQuestion.module.css';
+import { Portal } from 'react-portal';
+
 export const ResearchQuestion = (props: { researchQuestion: string }) => {
-  const ref = useRef<HTMLDivElement>(null);
   const refContainer = useRef<HTMLDivElement>(null);
-  const [classNameSection, setClassNameSection] = useState<string>();
+  const [showSmall, setShowSmall] = useState(false);
   useEffect(() => {
     const onScroll = () => {
-      if (ref.current && refContainer.current) {
-        if (refContainer.current.getBoundingClientRect().top < 56) {
-          ref.current.classList.add(
-            styles.research_question_container_to_small
-          );
-          refContainer.current.classList.add(
-            styles.research_question_outer_to_small
-          );
-          setClassNameSection(styles.section_no_margin);
-        } else if (refContainer.current.getBoundingClientRect().top >= 56) {
-          ref.current.classList.remove(
-            styles.research_question_container_to_small
-          );
-          refContainer.current.classList.remove(
-            styles.research_question_outer_to_small
-          );
-          setClassNameSection(undefined);
+      if (refContainer.current) {
+        console.log(refContainer.current.getBoundingClientRect());
+        if (refContainer.current.getBoundingClientRect().bottom < 56) {
+          setShowSmall(true);
+        } else if (refContainer.current.getBoundingClientRect().bottom >= 56) {
+          setShowSmall(false);
         }
       }
     };
     if (refContainer.current) {
-      if (
-        window.document.body.scrollHeight -
-          refContainer.current.getBoundingClientRect().bottom >
-        window.innerHeight
-      ) {
-        window.addEventListener("scroll", onScroll);
-        return () => {
-          window.removeEventListener("scroll", onScroll);
-        };
-      } else {
-        refContainer.current.style.position = "unset";
-        refContainer.current.style.top = "unset";
-        refContainer.current.style.zIndex = "unset";
-      }
+      window.addEventListener('scroll', onScroll);
+      return () => {
+        window.removeEventListener('scroll', onScroll);
+      };
     }
   }, []);
+
   return (
-    <div
-      id="researchQuestionDiv"
-      ref={refContainer}
-      className={styles.research_question_outer}
-    >
-      <Section className={classNameSection} id="researchQuestion">
-        <div ref={ref} className={styles.research_question_container}>
-          <div className={styles.research_question_title_big}>
-            <span>
-              RESEARCH
-              <br />
-              QUESTION
-            </span>
-            <span className={styles.slashes}>{"//"}</span>
+    <>
+      <div ref={refContainer} className={styles.research_question_outer}>
+        <Section id="researchQuestion">
+          <div className={styles.research_question_container}>
+            <div className={styles.research_question_title_big}>
+              <span>
+                RESEARCH
+                <br />
+                QUESTION
+              </span>
+              <span className={styles.slashes}>{'//'}</span>
+            </div>
+            <div className={styles.research_question_content_big}>
+              <h2>
+                <TextShow text={props.researchQuestion} />
+              </h2>
+            </div>
           </div>
-          <div className={styles.research_question_content_big}>
-            <h2>
-              <TextShow text={props.researchQuestion} />
-            </h2>
-          </div>
+        </Section>
+      </div>
+      <Portal node={document && document.getElementById('main-application')}>
+        <div
+          id="researchQuestionDiv"
+          className={styles.research_question_outer_small}
+          style={{
+            ...(showSmall ? {} : { opacity: 0, visibility: 'hidden' }),
+          }}
+        >
+          <Section className={styles.section_no_margin}>
+            <div className={styles.research_question_container_small}>
+              <div className={styles.research_question_title_big}>
+                <span>
+                  RESEARCH
+                  <br />
+                  QUESTION
+                </span>
+                <span className={styles.slashes}>{'//'}</span>
+              </div>
+              <div className={styles.research_question_content_big}>
+                <h2>
+                  <TextShow text={props.researchQuestion} />
+                </h2>
+              </div>
+            </div>
+          </Section>
         </div>
-      </Section>
-    </div>
+      </Portal>
+    </>
   );
 };

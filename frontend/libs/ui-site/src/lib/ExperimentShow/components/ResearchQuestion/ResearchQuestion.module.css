@@ -1,53 +1,19 @@
-.container {
-  background: black;
-  color: white;
-  padding-left: 120px;
-  padding-right: 120px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  display: flex;
-  flex-direction: row;
-  column-gap: 30px;
-  font-family: "Domine";
-  font-weight: bold;
-  letter-spacing: 0.03em;
-  line-height: 24px;
-  position: sticky;
-  top: 55px;
-  z-index: 1;
-}
-
-.research_question_title {
-  font-size: 14px;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  font-weight: normal;
-  font-family: "Source Sans Pro";
-  line-height: 18px;
-  letter-spacing: 0.1em;
-}
-.research_question_title .slashes {
-  font-size: 40px;
-  font-weight: 200;
-  margin-left: 20px;
-}
-
 .research_question_title_big {
   font-size: 1.5em;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  font-family: "Source Sans Pro";
+  font-family: 'Source Sans Pro';
   align-self: center;
 }
+
 .research_question_title_big .slashes {
   font-size: 2.3em;
   font-weight: 200;
   margin-left: 20px;
 }
+
 .research_question_content_big {
   max-width: 1000px;
   display: block;
@@ -55,16 +21,20 @@
   margin-right: auto;
   align-self: center;
 }
+
 .research_question_content_big h2 {
   margin: 0;
 }
+
 .research_question_container {
   display: grid;
   grid-template-rows: 1fr 5fr;
   transition: 0.3s;
 }
 
-.research_question_container_to_small {
+.research_question_container_small {
+  display: grid;
+  transition: 0.3s;
   grid-template-columns: 1fr 9fr;
   grid-template-rows: 1fr;
   gap: 30px;
@@ -74,20 +44,24 @@
   margin-left: 0;
   margi-right: 0;
 }
+
 .research_question_outer {
+  background: transparent;
+}
+
+.research_question_outer_small {
   background: transparent;
   transition: 0.3s;
   top: 55px;
   z-index: 1;
-  position: sticky;
-}
-
-.research_question_outer_to_small {
+  position: fixed;
   background: black;
   color: white;
   font-size: 0.6rem;
   line-height: 1rem;
+  width: 100%;
 }
+
 .section_no_margin {
   margin-top: 10px;
   margin-bottom: 10px;
