@@ -1,3 +1,5 @@
+import { ReactElement } from 'react';
+
 export type RowType = { divided: boolean; cols: any[] };
 
 export type Step = {
@@ -61,3 +63,21 @@ export type Footer = {
   founded_by?: { link: string; image: string }[];
   socials?: { facebook?: string; twitter?: string; mail?: string };
 };
+
+export type PossibleColumns = Array<1 | 2 | 3 | 4>;
+
+export type BuilderShowBlock = {
+  description: string;
+  render: (content: any) => React.ReactElement;
+};
+export type BuilderBlock = {
+  form: {
+    component: ReactElement<any>;
+    getInitialContent?: (content: any) => any;
+    getSaveContent?: (content: any) => any;
+  };
+} & BuilderShowBlock;
+
+export type BuilderShowBlocks = { [k: string]: BuilderShowBlock };
+export type BuilderBlocks = { [k: string]: BuilderBlock };
+export type Row = { divided: boolean; cols: any[] };

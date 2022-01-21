@@ -1,7 +1,7 @@
-import { Grid } from "@material-ui/core";
-import { SelectInput, required, Button, BooleanInput } from "react-admin";
-import { Form } from "react-final-form";
-import { PossibleColumns } from "../types";
+import { PossibleColumns } from '@algocount/shared/types';
+import { Grid } from '@material-ui/core';
+import { SelectInput, required, Button, BooleanInput } from 'react-admin';
+import { Form } from 'react-final-form';
 interface AddRowButtonProps {
   onSubmit: (items: any) => void;
   possibleColumns?: PossibleColumns;
@@ -9,10 +9,10 @@ interface AddRowButtonProps {
 }
 export const AddRowButton = (props: AddRowButtonProps) => {
   const defualtChoices = [
-    { id: 1, name: "One column" },
-    { id: 2, name: "Two columns" },
-    { id: 3, name: "Three columns" },
-    { id: 4, name: "4 columns" },
+    { id: 1, name: 'One column' },
+    { id: 2, name: 'Two columns' },
+    { id: 3, name: 'Three columns' },
+    { id: 4, name: '4 columns' },
   ];
   const choices = props.possibleColumns
     ? props.possibleColumns.map(

@@ -10,11 +10,11 @@ import React, { Fragment } from 'react';
 import { ColumnContainer } from './ColumnContainer';
 import { EmptyColumn } from './EmptyColumn';
 import AddIcon from '@material-ui/icons/Add';
-import { BuilderBlock, BuilderBlocks, Row as RowType } from '../types';
 import Delete from '@material-ui/icons/Delete';
 import { Row as RowGrid } from '@algocount/ui-site';
 import KeyboardArrowTopIcon from '@material-ui/icons/KeyboardArrowUp';
 import KeyboardArrowBottomIcon from '@material-ui/icons/KeyboardArrowDown';
+import { RowType, BuilderBlock, BuilderBlocks } from '@algocount/shared/types';
 
 interface RowProps {
   row: RowType;
@@ -108,7 +108,8 @@ export const Row = (props: RowProps) => {
                 onColumnClick(col.type, rowIndex, colIndex);
               }}
             >
-              {builderBlocks[col.type].render(col.content)}
+              {col?.type in builderBlocks &&
+                builderBlocks[col.type].render(col.content)}
             </ColumnContainer>
           )}
         </Fragment>

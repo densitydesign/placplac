@@ -3,7 +3,7 @@ import { useDialoglUpdate } from '../../useDialogUpdate';
 import { required, useInput, SelectInput, TextInput } from 'react-admin';
 import { BuilderDialog } from './components/BuilderDialog';
 import { AddRowButton } from './components/AddRowButton';
-import { BuilderBlocks, PossibleColumns, Row as RowType } from './types';
+
 import { Row } from './components/Row';
 import { CustomRichTextInput } from '../CustomRichTextInput';
 import { EditImage } from './components/EditImage';
@@ -12,6 +12,7 @@ import {
   ExperimentSetupListShow,
   IFrame,
   ImageShow,
+  SHOW_COMPONENTS_BUILDER,
   SigmaShow,
   TextShow,
 } from '@algocount/ui-site';
@@ -19,6 +20,7 @@ import { EditListExperimentSetup } from './components/EditListExperimentSetup';
 import { EditIframe } from './components/EditIframe';
 import { Grid } from '@material-ui/core';
 import { SelectFile } from '../SelectFile';
+import { BuilderBlocks, PossibleColumns, RowType } from '@algocount/shared/types';
 
 interface BuilderInputProps {
   source: string;
@@ -135,7 +137,7 @@ export const BuilderInput = (props: BuilderInputProps) => {
   const builderBlocks = useMemo(() => {
     const builderBlocks: BuilderBlocks = {
       image: {
-        description: 'Image',
+        ...SHOW_COMPONENTS_BUILDER.image,
         form: {
           component: <EditImage project={project} />,
 
@@ -153,20 +155,9 @@ export const BuilderInput = (props: BuilderInputProps) => {
             return { title, subtitle, caption, image, isWide, description };
           },
         },
-        render: (content: any) => (
-          <ImageShow
-            description={content.description}
-            image={content.image}
-            caption={content.caption}
-            title={content.title}
-            subtitle={content.subtitle}
-            isWide={content.isWide}
-          />
-        ),
       },
       text: {
-        description: 'Text editor',
-
+        ...SHOW_COMPONENTS_BUILDER.text,
         form: {
           component: (
             <CustomRichTextInput
@@ -181,10 +172,9 @@ export const BuilderInput = (props: BuilderInputProps) => {
             return { text: values.text };
           },
         },
-        render: (content: any) => <TextShow text={content.text} />,
       },
       disclaimer: {
-        description: 'Disclaimer',
+        ...SHOW_COMPONENTS_BUILDER.disclaimer,
         form: {
           component: (
             <Grid container direction="column">
@@ -212,37 +202,21 @@ export const BuilderInput = (props: BuilderInputProps) => {
             </Grid>
           ),
         },
-        render: (content: any) => (
-          <Disclaimer
-            description={content.description}
-            disclaimerType={content.type}
-          />
-        ),
       },
       listExperimentSetup: {
-        description: 'Experiment setup card',
+        ...SHOW_COMPONENTS_BUILDER.listExperimentSetup,
         form: {
           component: <EditListExperimentSetup />,
         },
-        render: (content: any) => (
-          <ExperimentSetupListShow
-            title={content.title}
-            subtitle={content.subtitle}
-            list={content.list}
-          />
-        ),
       },
       iframe: {
-        description: 'Embed block',
+        ...SHOW_COMPONENTS_BUILDER.iframe,
         form: {
           component: <EditIframe />,
         },
-        render: (content: any) => (
-          <IFrame src={content.src} height={content.height} />
-        ),
       },
       sigma: {
-        description: 'Sigma gexf file',
+        ...SHOW_COMPONENTS_BUILDER.sigma,
         form: {
           component: (
             <Grid container direction="column">
@@ -263,9 +237,6 @@ export const BuilderInput = (props: BuilderInputProps) => {
             </Grid>
           ),
         },
-        render: (content: any) => (
-          <SigmaShow height={content.height} gexfPath={content.gexfFile} />
-        ),
       },
     };
     return possibleComponents

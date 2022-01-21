@@ -2,7 +2,6 @@ import classnames from 'classnames';
 import { TextShow } from '../TextShow';
 import styles from './ExperimentShow.module.css';
 
-import { ExperimentSetupListShow } from '../ExperimentSetupListShow';
 import { ResearchQuestion } from './components/ResearchQuestion';
 import {
   Experiment,
@@ -11,11 +10,9 @@ import {
   RowType,
 } from '@algocount/shared/types';
 import { ExperimentDiagram } from './components/ExperimentDiagram';
-import { ImageShow } from '../ImageShow';
-import React, { ComponentType, useEffect, useState } from 'react';
+import { ComponentType, useEffect, useState } from 'react';
 import { GlossarySidebar } from '../GlossarySidebar';
 import { GlossaryTermsList } from '../components/GlossaryTermsList';
-import { IFrame } from '../IFrame';
 import { Section } from '../components/Section';
 import { Flex } from '../components/Flex';
 import { ContentList } from './components/ContentList/ContentList';
@@ -25,8 +22,7 @@ import { translations } from '../translations';
 import { useReferencesAdjuster } from '../hooks';
 import { ReferenceList } from '../components/ReferenceList';
 import SimpleReactLightbox from 'simple-react-lightbox';
-import { SRLWrapper } from 'simple-react-lightbox';
-import { SigmaShow } from '../SigmaShow';
+import { SHOW_COMPONENTS_BUILDER } from '../builderBlocks';
 export interface ExperimentShowProps {
   experiment: Experiment;
   basePath: string;
@@ -71,63 +67,7 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
   useReferencesAdjuster();
 
   const renderItem = (item: { type: string } & any) => {
-    switch (item.type) {
-      case 'text': {
-        return <TextShow text={item.content.text} />;
-      }
-      case 'image': {
-        return (
-          <SRLWrapper
-            options={{
-              thumbnails: { showThumbnails: false },
-              buttons: {
-                showNextButton: false,
-                showPrevButton: false,
-                showAutoplayButton: false,
-                showFullscreenButton: false,
-                showDownloadButton: false,
-              },
-            }}
-          >
-            <ImageShow
-              description={item.content.description}
-              image={item.content.image}
-              caption={item.content.caption}
-              title={item.content.title}
-              subtitle={item.content.subtitle}
-              isWide={item.content.isWide}
-            />
-          </SRLWrapper>
-        );
-      }
-
-      case 'listExperimentSetup': {
-        return (
-          <ExperimentSetupListShow
-            title={item.content.title}
-            list={item.content.list}
-            subtitle={item.content.subtitle}
-          />
-        );
-      }
-      case 'iframe': {
-        return (
-          <IFrame
-            src={item.content.src}
-            width={item.content.width}
-            height={item.content.height}
-          />
-        );
-      }
-      case 'sigma': {
-        return (
-          <SigmaShow
-            gexfPath={item.content.gexfFile}
-            height={item.content.height}
-          />
-        );
-      }
-    }
+    return SHOW_COMPONENTS_BUILDER[item.type].render(item.content);
   };
 
   const renderRow = (
@@ -145,7 +85,8 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
             })}
             key={colIndex}
           >
-            {renderItem(col)}
+            {col?.type in SHOW_COMPONENTS_BUILDER &&
+              SHOW_COMPONENTS_BUILDER[col.type].render(col.content)}
           </div>
         ))}
       </Row>

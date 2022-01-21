@@ -15,9 +15,9 @@ import IconCancel from '@material-ui/icons/Cancel';
 import { Button } from 'react-admin';
 import { Form } from 'react-final-form';
 import { FormSaveButton } from '../../FormSaveButton';
-import { BuilderBlocks } from '../types';
 import arrayMutators from 'final-form-arrays';
 import React from 'react';
+import { BuilderBlocks } from '@algocount/shared/types';
 
 interface BuilderDialogProps {
   onClose: () => void;

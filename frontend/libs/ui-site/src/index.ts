@@ -11,3 +11,4 @@ export * from './lib/IFrame';
 export * from './lib/components/Row';
 export * from './lib/Disclaimer';
 export * from './lib/SigmaShow';
+export * from './lib/builderBlocks';
