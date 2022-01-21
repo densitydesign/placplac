@@ -10,7 +10,6 @@ export const ResearchQuestion = (props: { researchQuestion: string }) => {
   useEffect(() => {
     const onScroll = () => {
       if (refContainer.current) {
-        console.log(refContainer.current.getBoundingClientRect());
         if (refContainer.current.getBoundingClientRect().bottom < 56) {
           setShowSmall(true);
         } else if (refContainer.current.getBoundingClientRect().bottom >= 56) {
