@@ -1,0 +1,38 @@
+.glossary {
+  position: fixed;
+  background: white;
+  width: 500px;
+  height: 100%;
+  top: 0;
+  right: 0;
+  box-sizing: border-box;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  z-index: 10;
+}
+.header {
+  height: 55px;
+  border-bottom: 1px solid black;
+  border-top: 1px solid black;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+}
+.header a {
+  color: inherit;
+  text-decoration: none;
+  padding: 0 14px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 55px);
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.close_button {
+  cursor: pointer;
+}

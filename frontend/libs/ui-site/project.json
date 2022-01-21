@@ -1,0 +1,15 @@
+{
+  "root": "libs/ui-site",
+  "sourceRoot": "libs/ui-site/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/ui-site/**/*.{ts,tsx,js,jsx}"]
+      }
+    }
+  }
+}
