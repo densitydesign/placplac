@@ -2,7 +2,6 @@ from django.contrib.auth import get_user_model
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.db.models import Func, F, Value
-
 from base.models import CustomModel
 
 User = get_user_model()
@@ -52,7 +51,6 @@ class Experiment(CustomModel):
     experiment_setup = models.JSONField(null=True, blank=True)
     findings = models.JSONField(null=True, blank=True)
     order = models.SmallIntegerField(default=0)
-
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
 
 
@@ -71,10 +69,13 @@ class StepDownload(CustomModel):
 
 
 class GlossaryCategory(CustomModel):
-    title = models.CharField(max_length=50, unique=True)
+    title = models.CharField(max_length=50)
     description = models.TextField()
     color = models.CharField(max_length=10)
     project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True)
+
+    class Meta:
+        unique_together = ('title', 'project',)
 
 
 class GlossaryTerm(CustomModel):
