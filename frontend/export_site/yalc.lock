@@ -1,9 +1,0 @@
-{
-  "version": "v1",
-  "packages": {
-    "frontend-components": {
-      "signature": "8b3040cb53bf34a275cc95f3601527ac",
-      "file": true
-    }
-  }
-}

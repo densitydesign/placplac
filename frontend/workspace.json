@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "projects": {
+    "-shared-styles": "libs/shared/styles",
+    "cms": "apps/cms",
+    "export-site": "apps/export-site",
+    "shared-types": "libs/shared/types",
+    "ui-site": "libs/ui-site"
+  }
+}

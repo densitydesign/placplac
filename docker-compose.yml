@@ -1,19 +1,19 @@
 version: "3.3"
+
 services:
   nginx:
+    container_name: cms
     build:
-      context: ./
-      dockerfile: nginx/Dockerfile
-
-    container_name: timon_nginx
+      context: ./frontend/
+      dockerfile: ./apps/cms/Dockerfile
     volumes:
-      - media:/home/pn/app/backend/algocount/media/
+      - ../media:/app/backend/algocount/media/
     ports:
       - 3001:80
-
     depends_on:
-      - web
+      - api
     restart: "on-failure"
+
   db:
     image: postgres
     volumes:
@@ -22,16 +22,17 @@ services:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-  web:
+
+  api:
     build: .
     volumes:
-      - media:/home/pn/app/backend/algocount/media/
+      - ../media:/app/backend/algocount/media/
+    entrypoint: ["/bin/sh", "-c"]
     command:
-      bash -c  "python manage.py migrate --settings=algocount.settings.production &&
-      gunicorn  --workers=2 --threads=4 --access-logfile '/var/log/gunicorn/access.log' --error-logfile '/var/log/gunicorn/error.log' algocount.wsgi:application --bind 0.0.0.0:8000 "
+      - |
+        python3 manage.py migrate --settings=algocount.settings.production
+        gunicorn --workers=2 --threads=4  algocount.wsgi:application --bind 0.0.0.0:8000
     expose:
       - 8000
     depends_on:
       - db
-volumes:
-  media:

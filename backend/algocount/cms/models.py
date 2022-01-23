@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
-
+from django.db.models import Func, F, Value
 from base.models import CustomModel
 
 User = get_user_model()
@@ -51,7 +51,6 @@ class Experiment(CustomModel):
     experiment_setup = models.JSONField(null=True, blank=True)
     findings = models.JSONField(null=True, blank=True)
     order = models.SmallIntegerField(default=0)
-
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
 
 
@@ -70,10 +69,13 @@ class StepDownload(CustomModel):
 
 
 class GlossaryCategory(CustomModel):
-    title = models.CharField(max_length=50, unique=True)
+    title = models.CharField(max_length=50)
     description = models.TextField()
     color = models.CharField(max_length=10)
     project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True)
+
+    class Meta:
+        unique_together = ('title', 'project',)
 
 
 class GlossaryTerm(CustomModel):
@@ -85,11 +87,21 @@ class GlossaryTerm(CustomModel):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     more_info_url = models.TextField(null=True, blank=True)
 
+class ReferenceManager(models.Manager):
+    def get_queryset(self):
+        qs = super().get_queryset()
+
+        return qs.annotate(desc=Func(
+        F('description'),
+        Value(r'<[^>]+>'), Value(""), Value("gi"),
+        function='REGEXP_REPLACE',
+        output_field=models.TextField(),
+    )).order_by('desc')
+
 
 class Reference(CustomModel):
+    objects=ReferenceManager()
     description = models.TextField()
     project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True, blank=True)
     experiment = models.ForeignKey(Experiment, on_delete=models.CASCADE, null=True, blank=True)
 
-    class Meta:
-        ordering = ['description']

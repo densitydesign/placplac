@@ -1,21 +1,20 @@
-FROM nikolaik/python-nodejs:python3.8-nodejs14
-ENV PATH="$PATH:/home/pn/.local/bin/"
-RUN mkdir -p /var/log/gunicorn
-RUN chown pn /var/log/gunicorn
-RUN mkdir -p /home/pn/app/backend/algocount/media
-RUN chown pn /home/pn/app/backend/algocount/media
-USER pn
-WORKDIR /home/pn/app
-RUN  mkdir /home/pn/LOG/
-RUN mkdir /home/pn/export/
-COPY backend/requirements.txt /home/pn/app
-RUN pip install -r requirements.txt
-RUN pip install -q gunicorn
-COPY --chown=pn:pn . /home/pn/app
-WORKDIR /home/pn/app/frontend/export_site
-RUN  npm install --silent
-WORKDIR /home/pn/app/backend/algocount/
+FROM node:16
+RUN apt-get update || : && apt-get install python3 -y
+RUN apt-get install python3-pip -y
+WORKDIR /app
+RUN  mkdir /LOG/
+RUN mkdir /export/
 
-# CMD [ "python", "manage.py", "runserver", "0.0.0.0:8000" ]
+
+COPY backend/requirements.txt /app
+RUN pip3 install -r requirements.txt
+RUN pip3 install -q gunicorn
+
+COPY . /app
+RUN mkdir -p /app/backend/algocount/media
+WORKDIR /app/frontend
+RUN npm i
+RUN npm i -g cross-env
+WORKDIR /app/backend/algocount/
 
 
