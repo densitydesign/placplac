@@ -4,7 +4,6 @@ import { Experiment } from '@algocount/shared/types';
 import { TagsSliding } from './components/TagsSliding';
 import styles from './ExperimentSection.module.css';
 import LinesEllipsis from 'react-lines-ellipsis/lib/html';
-import hand from '../../../../assets/hand-pointing.png';
 interface ExperimentSectionProps {
   experiment: Experiment;
   basePath: string;
@@ -40,7 +39,7 @@ export const ExperimentSection = ({
         </div>
       </Link>
       <div className={styles.pointing_hand}>
-        <img width="20px" height="auto" src={hand} />
+        <img width="20px" height="auto" src={'/assets/hand-pointing.png'} />
       </div>
     </>
   );

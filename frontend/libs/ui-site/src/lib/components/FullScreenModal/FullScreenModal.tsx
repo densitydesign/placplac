@@ -1,6 +1,6 @@
-import React, { ReactNode } from "react";
-import Modal from "react-modal";
-import styles from "./FullScreenModal.module.css";
+import React, { ReactNode } from 'react';
+import Modal from 'react-modal';
+import styles from './FullScreenModal.module.css';
 interface FullScreenModalProps {
   onClose: () => void;
   isOpen: boolean;
@@ -12,7 +12,7 @@ export const FullScreenModal = (props: FullScreenModalProps) => {
     <Modal
       shouldCloseOnEsc
       isOpen={isOpen}
-      style={{ overlay: { zIndex: 1 } }}
+      style={{ overlay: { zIndex: 10 } }}
       onRequestClose={onClose}
     >
       <button className={styles.close_button} onClick={onClose}>

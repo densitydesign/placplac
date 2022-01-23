@@ -68,23 +68,29 @@ class ProjectViewSet(CustomModelView):
         downloads = StepDownload.objects.filter(step__experiment__project=instance)
         project_media = ProjectMedia.objects.filter(project=instance)
         with tempfile.TemporaryDirectory() as tmpdirname:
-            shutil.copytree(settings.PROJECT_FRONTEND_EXPORT, tmpdirname, dirs_exist_ok=True, symlinks=True)
-            downloads_path = os.path.join(tmpdirname, "public", "media")
+            tmpdirname = tmpdirname+"/exit"
+            shutil.copytree(settings.PROJECT_FRONTEND_EXPORT, tmpdirname, symlinks=True)
+
+            dir_export_site = os.path.join(tmpdirname,"apps","export-site")
+            downloads_path = os.path.join(dir_export_site, "public", "media")
             if not os.path.isdir(downloads_path):
                 os.mkdir(downloads_path)
             for download in downloads:
                 shutil.copy(download.file.path, downloads_path)
             for media in project_media:
                 shutil.copy(media.file.path, downloads_path)
-            file = os.path.join(tmpdirname, "data.json")
+            file = os.path.join(dir_export_site, "data.json")
             with open(file, 'w') as f:
                 json.dump(serializer.data, f)
-            subprocess.check_call('npx cross-env-shell FILE_PATH="{}" next build && npx next export'.format(file),
+            subprocess.check_call('npx cross-env-shell NX_FILE_PATH="{}" nx run export-site:export '.format(file),
                                   shell=True,
                                   cwd=tmpdirname, close_fds=True)
 
             zip_name = os.path.join(tmpdirname, "site")
-            out_directory = os.path.join(tmpdirname, "out")
+            out_directory = os.path.join(tmpdirname, "dist","apps", "export-site","exported")
+            exported_assets_out_directory = os.path.join(out_directory,"assets")
+            assets = os.path.join(tmpdirname, "dist","apps", "export-site","public","assets")
+            shutil.copytree(assets, exported_assets_out_directory,  symlinks=True)
             zip_file = open(shutil.make_archive(zip_name, 'zip', out_directory), 'rb')
             response = HttpResponse(zip_file, content_type='application/zip')
             response['Content-Disposition'] = 'attachment; filename=site.zip'

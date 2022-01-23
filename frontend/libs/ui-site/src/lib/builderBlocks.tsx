@@ -1,4 +1,5 @@
 import { BuilderShowBlocks } from '@algocount/shared/types';
+import { SRLWrapper } from 'simple-react-lightbox';
 import { Disclaimer } from './Disclaimer';
 import { ExperimentSetupListShow } from './ExperimentSetupListShow';
 import { IFrame } from './IFrame';
@@ -11,14 +12,27 @@ export const SHOW_COMPONENTS_BUILDER: BuilderShowBlocks = {
     description: 'Image',
 
     render: (content: any) => (
-      <ImageShow
-        description={content.description}
-        image={content.image}
-        caption={content.caption}
-        title={content.title}
-        subtitle={content.subtitle}
-        isWide={content.isWide}
-      />
+      <SRLWrapper
+        options={{
+          thumbnails: { showThumbnails: false },
+          buttons: {
+            showNextButton: false,
+            showPrevButton: false,
+            showAutoplayButton: false,
+            showFullscreenButton: false,
+            showDownloadButton: false,
+          },
+        }}
+      >
+        <ImageShow
+          description={content.description}
+          image={content.image}
+          caption={content.caption}
+          title={content.title}
+          subtitle={content.subtitle}
+          isWide={content.isWide}
+        />
+      </SRLWrapper>
     ),
   },
   text: {

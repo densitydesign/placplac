@@ -7,7 +7,6 @@ import { ComponentType, useEffect, useState } from 'react';
 import React from 'react';
 import { useReactHash } from '../useReactPath';
 import { GlossaryCategory } from '@algocount/shared/types';
-import close from '../../assets/close.png';
 interface GlossarySidebarProps {
   glossaryTerms: GlossaryTerm[];
   basePath: string;
@@ -48,7 +47,7 @@ export const GlossarySidebar = (props: GlossarySidebarProps) => {
             window.history.replaceState(null, '', '#');
             window.dispatchEvent(new HashChangeEvent('hashchange'));
           }}
-          src={close}
+          src={'/assets/close.png'}
           width={'auto'}
           height={'55px'}
           alt="close"

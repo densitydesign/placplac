@@ -2,7 +2,6 @@ import { GlossaryTerm } from '@algocount/shared/types';
 import React, { ComponentType } from 'react';
 import { TextShow } from '../../TextShow';
 import styles from './GlossaryItem.module.css';
-import seeMore from '../../../assets/see more.png';
 interface GlossaryItemProps {
   glossaryTerm: GlossaryTerm;
   linkComponent: ComponentType<{ href: string }>;
@@ -34,7 +33,7 @@ export const GlossaryItem = (props: GlossaryItemProps) => {
       >
         <img
           className={styles.see_more_button}
-          src={seeMore}
+          src={'/assets/see more.png'}
           width="28px"
           height="28px"
           alt="see more"

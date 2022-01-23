@@ -1,74 +1,81 @@
 {
-  "root": "apps/cms",
-  "sourceRoot": "apps/cms/src",
-  "projectType": "application",
-  "targets": {
-    "build": {
-      "executor": "@nrwl/web:webpack",
-      "outputs": ["{options.outputPath}"],
-      "defaultConfiguration": "production",
-      "options": {
-        "compiler": "babel",
-        "outputPath": "dist/apps/cms",
-        "index": "apps/cms/src/index.html",
-        "deployUrl": "/",
-        "main": "apps/cms/src/main.tsx",
-        "polyfills": "apps/cms/src/polyfills.ts",
-        "tsConfig": "apps/cms/tsconfig.app.json",
-        "assets": [
-          "apps/cms/src/favicon.ico",
-          "apps/cms/src/assets",
-          {
-            "input": "libs/ui-site/src/assets",
-            "glob": "**/*",
-            "output": "assets/"
-          }
-        ],
-        "styles": [
-          "apps/cms/src/styles.css",
-          "libs/shared/styles/src/index.css"
-        ],
-        "scripts": [],
-        "webpackConfig": "@nrwl/react/plugins/webpack"
-      },
-      "configurations": {
-        "production": {
-          "fileReplacements": [
-            {
-              "replace": "apps/cms/src/environments/environment.ts",
-              "with": "apps/cms/src/environments/environment.prod.ts"
+    "root": "apps/cms",
+    "sourceRoot": "apps/cms/src",
+    "projectType": "application",
+    "targets": {
+        "build": {
+            "executor": "@nrwl/web:webpack",
+            "outputs": [
+                "{options.outputPath}"
+            ],
+            "defaultConfiguration": "production",
+            "options": {
+                "compiler": "babel",
+                "outputPath": "dist/apps/cms",
+                "index": "apps/cms/src/index.html",
+                "deployUrl": "/",
+                "main": "apps/cms/src/main.tsx",
+                "polyfills": "apps/cms/src/polyfills.ts",
+                "tsConfig": "apps/cms/tsconfig.app.json",
+                "assets": [
+                    "apps/cms/src/favicon.ico",
+                    "apps/cms/src/assets",
+                    {
+                        "input": "libs/ui-site/src/assets",
+                        "glob": "**/*",
+                        "output": "assets/"
+                    }
+                ],
+                "styles": [
+                    "apps/cms/src/styles.css",
+                    "libs/shared/styles/src/index.css"
+                ],
+                "scripts": [],
+                "webpackConfig": "@nrwl/react/plugins/webpack"
+            },
+            "configurations": {
+                "production": {
+                    "fileReplacements": [
+                        {
+                            "replace": "apps/cms/src/environments/environment.ts",
+                            "with": "apps/cms/src/environments/environment.prod.ts"
+                        }
+                    ],
+                    "optimization": true,
+                    "outputHashing": "all",
+                    "sourceMap": false,
+                    "namedChunks": false,
+                    "extractLicenses": true,
+                    "vendorChunk": false
+                }
             }
-          ],
-          "optimization": true,
-          "outputHashing": "all",
-          "sourceMap": false,
-          "namedChunks": false,
-          "extractLicenses": true,
-          "vendorChunk": false
+        },
+        "serve": {
+            "executor": "@nrwl/web:dev-server",
+            "options": {
+                "buildTarget": "cms:build",
+                "hmr": true,
+                "proxyConfig": "apps/cms/proxy.conf.json",
+                "port": 4201
+            },
+            "configurations": {
+                "production": {
+                    "buildTarget": "cms:build:production",
+                    "hmr": false
+                }
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": [
+                "{options.outputFile}"
+            ],
+            "options": {
+                "lintFilePatterns": [
+                    "apps/cms/**/*.{ts,tsx,js,jsx}"
+                ]
+            }
         }
-      }
     },
-    "serve": {
-      "executor": "@nrwl/web:dev-server",
-      "options": {
-        "buildTarget": "cms:build",
-        "hmr": true,
-        "proxyConfig": "apps/cms/proxy.conf.json"
-      },
-      "configurations": {
-        "production": {
-          "buildTarget": "cms:build:production",
-          "hmr": false
-        }
-      }
-    },
-    "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["apps/cms/**/*.{ts,tsx,js,jsx}"]
-      }
-    }
-  },
-  "tags": []
+    "tags": []
 }

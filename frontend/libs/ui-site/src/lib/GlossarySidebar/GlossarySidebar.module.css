@@ -1,7 +1,7 @@
 .glossary {
   position: fixed;
   background: white;
-  width: 500px;
+  min-width: 500px;
   height: 100%;
   top: 0;
   right: 0;

@@ -3,7 +3,6 @@ import styles from './GlossaryCategoryShow.module.css';
 import { TextShow } from '../TextShow';
 import { GlossaryCategory, GlossaryTerm } from '@algocount/shared/types';
 import { GlossaryTermsList } from '../components/GlossaryTermsList';
-import arrowleftdown from '../../assets/arrowleftdown.png';
 interface GlossaryCategoryShowProps {
   glossaryCategory: GlossaryCategory;
   glossaryTerms: GlossaryTerm[];
@@ -29,7 +28,7 @@ export const GlossaryCategoryShow = (props: GlossaryCategoryShowProps) => {
               className={styles.title}
             >
               {term.title}
-              <img className={styles.arrow} src={arrowleftdown} />
+              <img className={styles.arrow} src={'/assets/arrowleftdown.png'} />
             </div>
             <div className={styles.description}>
               {term.image && (

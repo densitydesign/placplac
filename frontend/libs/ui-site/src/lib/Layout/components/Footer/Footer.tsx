@@ -2,9 +2,7 @@ import React from 'react';
 import styles from './Footer.module.css';
 import { Footer as FooterType, LanguageOptions } from '@algocount/shared/types';
 import { translations } from '../../../translations';
-import fb from '../../../../assets/facebook-logo-white.png';
-import tw from '../../../../assets/twitter-icon-18-256.png';
-import email from '../../../../assets/email.png';
+
 interface FooterProps {
   language: LanguageOptions;
   footer?: FooterType;
@@ -61,13 +59,13 @@ export const Footer = (props: FooterProps) => {
             <span>{translations[language].contacts_footer}:</span>
             <div className={styles.contacts}>
               {footer && footer.socials && footer.socials.facebook && (
-                <img src={fb} />
+                <img src={'/assets/facebook-logo-white.png'} />
               )}
               {footer && footer.socials && footer.socials.twitter && (
-                <img src={tw} />
+                <img src={'/assets/twitter-icon-18-256.png'} />
               )}
               {footer && footer.socials && footer.socials.mail && (
-                <img src={email} />
+                <img src={'/assets/email.png'} />
               )}
             </div>
           </div>

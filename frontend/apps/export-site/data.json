@@ -1,0 +1,233 @@
+{
+    "id": 4,
+    "title": "wewe",
+    "short_description": null,
+    "experiments_description": null,
+    "long_description": "<p>wewewewewewe</p>",
+    "status": "2",
+    "created_date": "2022-01-21T15:27:37.300983+01:00",
+    "last_update": "2022-01-21T15:28:55.724890+01:00",
+    "experiments": [
+        {
+            "id": 2,
+            "title": "wewwewee",
+            "tags": null,
+            "description": null,
+            "context": [
+                {
+                    "cols": [
+                        {
+                            "type": "text",
+                            "content": {
+                                "text": "<table style=\"border-collapse: collapse; width: 100%;\" border=\"1\">\n<tbody>\n<tr>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n</tr>\n<tr>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n</tr>\n<tr>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n</tr>\n<tr>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n</tr>\n<tr>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n</tr>\n<tr>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n</tr>\n<tr>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n</tr>\n<tr>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n</tr>\n<tr>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n</tr>\n<tr>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">iuygg</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n</tr>\n<tr>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n</tr>\n<tr>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n</tr>\n<tr>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n</tr>\n<tr>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n</tr>\n<tr>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n</tr>\n<tr>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n</tr>\n<tr>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n</tr>\n<tr>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n</tr>\n<tr>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n</tr>\n</tbody>\n</table>"
+                            }
+                        }
+                    ],
+                    "divided": false
+                },
+                {
+                    "cols": [
+                        {
+                            "type": "listExperimentSetup",
+                            "content": {
+                                "list": [
+                                    "yfyfv"
+                                ],
+                                "title": "wewwewee",
+                                "subtitle": "ygygv"
+                            }
+                        }
+                    ],
+                    "divided": false
+                },
+                {
+                    "cols": [
+                        {
+                            "type": "listExperimentSetup",
+                            "content": {
+                                "list": [
+                                    "ygv"
+                                ],
+                                "title": "wewwewee",
+                                "subtitle": "uhu"
+                            }
+                        },
+                        {
+                            "type": "listExperimentSetup",
+                            "content": {
+                                "list": [
+                                    "yg"
+                                ],
+                                "title": "wewwewee",
+                                "subtitle": "7g"
+                            }
+                        }
+                    ],
+                    "divided": false
+                },
+                {
+                    "cols": [
+                        {
+                            "type": "text",
+                            "content": {
+                                "text": "<p><a href=\"qwewqe\">ewrewrewr</a></p>",
+                                "type": null,
+                                "description": null
+                            }
+                        }
+                    ],
+                    "divided": false
+                }
+            ],
+            "research_question": "<p>Ciao questa &egrave; la reearch question, ciao ciao ciao ciao ciao ciao ciao aciooa coaopm c</p>",
+            "experiment_setup": null,
+            "findings": null,
+            "project": 4,
+            "steps": [
+                {
+                    "id": 2,
+                    "title": "wewwewee",
+                    "description": null,
+                    "content": [
+                        {
+                            "cols": [
+                                {
+                                    "type": "text",
+                                    "content": {
+                                        "text": "<p>yv</p>"
+                                    }
+                                }
+                            ],
+                            "divided": true
+                        },
+                        {
+                            "cols": [
+                                {
+                                    "type": "image",
+                                    "content": {
+                                        "image": "/media/logo.png",
+                                        "title": "wewwewee",
+                                        "isWide": false,
+                                        "subtitle": "wdw"
+                                    }
+                                },
+                                {}
+                            ],
+                            "divided": true
+                        },
+                        {
+                            "cols": [
+                                {
+                                    "type": "text",
+                                    "content": {
+                                        "text": "<p><span class=\"mceNonEditable mention\" style=\"background-color: #000000;\"> <a href=\"#glossary/1\"> wewe </a> </span> <span class=\"mceNonEditable mention\" style=\"background-color: #ff6b6b;\"> <a href=\"#glossary/2\"> prova ciao ciao </a> </span> <span class=\"mceNonEditable mention\" style=\"background-color: #000000;\"> <a href=\"#glossary/1\"> wewe </a> </span> <span class=\"mceNonEditable mention\" style=\"background-color: #ff6b6b;\"> <a href=\"#glossary/3\"> cross platform analysis </a> </span></p>"
+                                    }
+                                }
+                            ],
+                            "divided": true
+                        }
+                    ],
+                    "step_number": 1,
+                    "experiment": 2,
+                    "downloads": [],
+                    "glossary_terms": []
+                }
+            ],
+            "cover": null,
+            "glossary_terms": [],
+            "references": []
+        }
+    ],
+    "glossary_terms": [
+        {
+            "id": 4,
+            "title": "wewe",
+            "image": null,
+            "description": "<p>dsdsd</p>",
+            "related": [],
+            "glossary_category": 2,
+            "color": "#000000",
+            "more_info_url": null,
+            "project": 4,
+            "category_title": "Tools"
+        },
+        {
+            "id": 5,
+            "title": "prova ciao ciao",
+            "image": null,
+            "description": "<p>sdsdsd</p>",
+            "related": [],
+            "glossary_category": 1,
+            "color": "#FF6B6B",
+            "more_info_url": null,
+            "project": 4,
+            "category_title": "Techniques"
+        },
+        {
+            "id": 6,
+            "title": "cross platform analysis",
+            "image": null,
+            "description": "<p>s</p>",
+            "related": [],
+            "glossary_category": 1,
+            "color": "#FF6B6B",
+            "more_info_url": null,
+            "project": 4,
+            "category_title": "Techniques"
+        }
+    ],
+    "glossary_categories": [
+        {
+            "id": 1,
+            "title": "Techniques",
+            "description": "A list of basic methods for making and replicating the procedures present throughout the experiments.",
+            "color": "#FF6B6B",
+            "project": null
+        },
+        {
+            "id": 2,
+            "title": "Tools",
+            "description": "We careful try to choose online, free and open tools and web apps.",
+            "color": "#000000",
+            "project": null
+        },
+        {
+            "id": 3,
+            "title": "wewewdwdwd",
+            "description": "dwdwd",
+            "color": "#db0000",
+            "project": 1
+        },
+        {
+            "id": 6,
+            "title": "Techniques",
+            "description": "A list of basic methods for making and replicating the procedures present throughout the experiments.",
+            "color": "#FF6B6B",
+            "project": 4
+        },
+        {
+            "id": 7,
+            "title": "Tools",
+            "description": "We careful try to choose online, free and open tools and web apps.",
+            "color": "#000000",
+            "project": 4
+        }
+    ],
+    "language": "en",
+    "references": [],
+    "footer": {
+        "socials": null,
+        "partners": [
+            {
+                "link": "sdsd",
+                "image": "/media/logo.png"
+            }
+        ],
+        "founded_by": [
+            {
+                "link": "dsds",
+                "image": "/media/logo.png"
+            }
+        ]
+    }
+}
