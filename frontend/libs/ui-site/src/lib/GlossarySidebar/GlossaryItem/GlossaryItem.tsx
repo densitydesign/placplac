@@ -17,6 +17,7 @@ export const GlossaryItem = (props: GlossaryItemProps) => {
             width="100%"
             height="auto"
             src={glossaryTerm.image}
+            style={{ maxWidth: '500px' }}
             alt={glossaryTerm.category_title}
           />
           <div
