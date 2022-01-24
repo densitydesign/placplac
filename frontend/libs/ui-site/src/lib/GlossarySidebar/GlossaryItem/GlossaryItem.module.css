@@ -2,6 +2,8 @@
   padding: 25px 45px;
   border-bottom: 1px solid black;
   flex: 1 auto;
+  max-width: 500px;
+  box-sizing: border-box;
 }
 .image {
   width: auto;
