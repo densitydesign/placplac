@@ -1,4 +1,4 @@
-import { Dialog, DialogActions, DialogContent } from "@material-ui/core";
+import { Dialog, DialogActions, DialogContent } from '@material-ui/core';
 import {
   Button,
   FormWithRedirect,
@@ -8,14 +8,14 @@ import {
   useRecordContext,
   Record,
   useRedirect,
-} from "react-admin";
-import IconCancel from "@material-ui/icons/Cancel";
-import IconContentAdd from "@material-ui/icons/Add";
-import { useToggler } from "../useToggler";
-import { CustomRichTextInput } from "../components/CustomRichTextInput";
+} from 'react-admin';
+import IconCancel from '@material-ui/icons/Cancel';
+import IconContentAdd from '@material-ui/icons/Add';
+import { useToggler } from '../useToggler';
+import { CustomRichTextInput } from '../components/CustomRichTextInput';
 
 interface AddReferenceButtonProps {
-  refersTo: "project" | "experiment";
+  refersTo: 'project' | 'experiment';
 }
 export const AddReferenceButton = (props: AddReferenceButtonProps) => {
   const { refersTo } = props;
@@ -25,20 +25,20 @@ export const AddReferenceButton = (props: AddReferenceButtonProps) => {
   const { id } = record;
   const notify = useNotify();
   const redirect = useRedirect();
-  const onSave = (values: Partial<Record>) =>
+  const onSave = ({ description_ref, ...values }: Partial<Record>) =>
     mutate(
       {
-        type: "create",
-        resource: "references",
-        payload: { data: values },
+        type: 'create',
+        resource: 'references',
+        payload: { data: { description: description_ref, ...values } },
       },
       {
         onSuccess: ({ data }) => {
           setFalse();
-          redirect("edit", "/references", data.id);
+          redirect('edit', '/references', data.id);
         },
         onFailure: (error) => {
-          notify("ra.page.error", "error");
+          notify('ra.page.error', 'error');
         },
       }
     );
@@ -46,7 +46,7 @@ export const AddReferenceButton = (props: AddReferenceButtonProps) => {
   return (
     <>
       <Button
-        style={{ marginBottom: "10px" }}
+        style={{ marginBottom: '10px' }}
         onClick={setTrue}
         label="Add reference"
       >
@@ -61,7 +61,7 @@ export const AddReferenceButton = (props: AddReferenceButtonProps) => {
             <>
               <DialogContent>
                 <CustomRichTextInput
-                  source="description"
+                  source="description_ref"
                   label="Description of reference"
                   small
                 />

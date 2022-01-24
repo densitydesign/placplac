@@ -16,9 +16,11 @@ export type GlossaryTerm = {
   color: string;
   glossary_category: string;
   category_title: string;
-  more_info_url: string;
+  more_info_url: { title: string; url: string }[];
   image: string | null;
   description: string;
+  used_in: { id: number | string; title: string }[];
+  related: Partial<GlossaryTerm>[];
 };
 export type GlossaryCategory = {
   id: number;

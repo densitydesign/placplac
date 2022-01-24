@@ -1,4 +1,5 @@
 import {
+  ArrayInput,
   DeleteButton,
   maxLength,
   ReferenceArrayInput,
@@ -8,17 +9,18 @@ import {
   SelectArrayInput,
   SelectInput,
   SimpleForm,
+  SimpleFormIterator,
   SimpleFormProps,
   TextInput,
   Toolbar,
   ToolbarProps,
-} from "react-admin";
-import { CustomRichTextInput } from "../../components/CustomRichTextInput";
-import { ReferenceInputImage } from "../../components/ReferenceInputImage";
+} from 'react-admin';
+import { CustomRichTextInput } from '../../components/CustomRichTextInput';
+import { ReferenceInputImage } from '../../components/ReferenceInputImage';
 
 const GlossaryTermFormToolbar = (props: ToolbarProps) => (
   <Toolbar
-    style={{ display: "flex", justifyContent: "space-between" }}
+    style={{ display: 'flex', justifyContent: 'space-between' }}
     {...props}
   >
     <SaveButton />
@@ -28,9 +30,9 @@ const GlossaryTermFormToolbar = (props: ToolbarProps) => (
   </Toolbar>
 );
 
-export const GlossaryTermForm = (props: Omit<SimpleFormProps, "children">) => {
+export const GlossaryTermForm = (props: Omit<SimpleFormProps, 'children'>) => {
   const project =
-    props.initialValues && "project" in props.initialValues
+    props.initialValues && 'project' in props.initialValues
       ? props.initialValues.project
       : props.record.project;
   const redirect = `/projects/${project}/2`;
@@ -61,7 +63,22 @@ export const GlossaryTermForm = (props: Omit<SimpleFormProps, "children">) => {
         source="description"
         addLabel={false}
       />
-      <TextInput validate={[required()]} fullWidth source="more_info_url" />
+      <ArrayInput label="Other material" source="more_info_url">
+        <SimpleFormIterator getItemLabel={(index) => `${index + 1}. link`}>
+          <TextInput
+            validate={[required()]}
+            fullWidth
+            source="title"
+            label="Title"
+          />
+          <TextInput
+            validate={[required()]}
+            fullWidth
+            source="url"
+            label={'Url'}
+          />
+        </SimpleFormIterator>
+      </ArrayInput>
       <ReferenceArrayInput
         label="Related terms"
         source="related"

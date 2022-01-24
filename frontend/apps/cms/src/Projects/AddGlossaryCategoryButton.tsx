@@ -1,4 +1,4 @@
-import { Dialog, DialogActions, DialogContent } from "@material-ui/core";
+import { Dialog, DialogActions, DialogContent } from '@material-ui/core';
 import {
   Button,
   FormWithRedirect,
@@ -11,10 +11,10 @@ import {
   useRedirect,
   required,
   maxLength,
-} from "react-admin";
-import IconCancel from "@material-ui/icons/Cancel";
-import IconContentAdd from "@material-ui/icons/Add";
-import { useToggler } from "../useToggler";
+} from 'react-admin';
+import IconCancel from '@material-ui/icons/Cancel';
+import IconContentAdd from '@material-ui/icons/Add';
+import { useToggler } from '../useToggler';
 
 export const AddGlossaryCategoryButton = () => {
   const { value, setTrue, setFalse } = useToggler();
@@ -23,20 +23,20 @@ export const AddGlossaryCategoryButton = () => {
   const { id: project } = record;
   const notify = useNotify();
   const redirect = useRedirect();
-  const onSave = (values: Partial<Record>) =>
+  const onSave = ({ title_cat, ...values }: Partial<Record>) =>
     mutate(
       {
-        type: "create",
-        resource: "glossary-categories",
-        payload: { data: values },
+        type: 'create',
+        resource: 'glossary-categories',
+        payload: { data: { ...values, title: title_cat } },
       },
       {
         onSuccess: ({ data }) => {
           setFalse();
-          redirect("edit", "/glossary-categories", data.id);
+          redirect('edit', '/glossary-categories', data.id);
         },
         onFailure: (error) => {
-          notify("ra.page.error", "error");
+          notify('ra.page.error', 'error');
         },
       }
     );
@@ -44,7 +44,7 @@ export const AddGlossaryCategoryButton = () => {
   return (
     <>
       <Button
-        style={{ marginBottom: "10px" }}
+        style={{ marginBottom: '10px' }}
         onClick={setTrue}
         label="Add glossary category"
       >
@@ -61,7 +61,8 @@ export const AddGlossaryCategoryButton = () => {
                 <TextInput
                   multiline
                   fullWidth
-                  source="title"
+                  label="Title"
+                  source="title_cat"
                   validate={[required(), maxLength(100)]}
                 />
                 <TextInput

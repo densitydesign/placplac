@@ -6,9 +6,10 @@ import { GlossaryTermsList } from '../components/GlossaryTermsList';
 interface GlossaryCategoryShowProps {
   glossaryCategory: GlossaryCategory;
   glossaryTerms: GlossaryTerm[];
+  basePath: string;
 }
 export const GlossaryCategoryShow = (props: GlossaryCategoryShowProps) => {
-  const { glossaryCategory, glossaryTerms } = props;
+  const { glossaryCategory, glossaryTerms, basePath } = props;
   return (
     <div className={styles.main}>
       <div className={styles.sidebar}>
@@ -37,13 +38,65 @@ export const GlossaryCategoryShow = (props: GlossaryCategoryShowProps) => {
                   src={term.image}
                   width={'100%'}
                   height="auto"
+                  style={{ maxWidth: '500px' }}
                 />
               )}
               <TextShow text={term.description} />
             </div>
-            <div className={styles.more_info_url}>
-              <a href={term.more_info_url}>{term.more_info_url}</a>
-            </div>
+            <table>
+              <tbody>
+                {term.used_in && term.used_in.length > 0 && (
+                  <tr>
+                    <td>Used in:</td>
+                    <td>
+                      {term.used_in.map((exp) => (
+                        <a key={exp.id}>{exp.title}</a>
+                      ))}
+                    </td>
+                  </tr>
+                )}
+                {term.related && term.related.length > 0 && (
+                  <tr>
+                    <td>Related:</td>
+                    <td>
+                      {term.related.map((term: any) => (
+                        <span
+                          key={term.id}
+                          className="mention"
+                          style={{ backgroundColor: term.color }}
+                        >
+                          <a
+                            href={`${basePath}glossary/${term.category}#glossary/${term.id}`}
+                          >
+                            <span>{term.title}</span>
+                          </a>
+                        </span>
+                      ))}
+                    </td>
+                  </tr>
+                )}
+                {term.more_info_url && term.more_info_url.length > 0 && (
+                  <tr>
+                    <td>Other material:</td>
+                    <td>
+                      <ul>
+                        {term.more_info_url.map((exp) => (
+                          <li key={exp.url}>
+                            <a
+                              target={'_blank'}
+                              href={exp.url}
+                              rel="noreferrer"
+                            >
+                              {exp.title}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
           </div>
         ))}
       </div>

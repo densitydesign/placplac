@@ -1,4 +1,4 @@
-import { Dialog, DialogActions, DialogContent } from "@material-ui/core";
+import { Dialog, DialogActions, DialogContent } from '@material-ui/core';
 import {
   Button,
   FormWithRedirect,
@@ -10,10 +10,10 @@ import {
   Record,
   useRedirect,
   required,
-} from "react-admin";
-import IconCancel from "@material-ui/icons/Cancel";
-import IconContentAdd from "@material-ui/icons/Add";
-import { useToggler } from "../useToggler";
+} from 'react-admin';
+import IconCancel from '@material-ui/icons/Cancel';
+import IconContentAdd from '@material-ui/icons/Add';
+import { useToggler } from '../useToggler';
 
 export const AddExperimentButton = () => {
   const { value, setTrue, setFalse } = useToggler();
@@ -25,25 +25,27 @@ export const AddExperimentButton = () => {
   const onSave = (values: Partial<Record>) =>
     mutate(
       {
-        type: "create",
-        resource: "experiments",
-        payload: { data: values },
+        type: 'create',
+        resource: 'experiments',
+        payload: {
+          data: { title: values.titleProject, project: values.project },
+        },
       },
       {
         onSuccess: ({ data }) => {
           setFalse();
-          redirect("edit", "/experiments", data.id);
+          redirect('edit', '/experiments', data.id);
         },
         onFailure: (error) => {
-          notify("ra.page.error", "error");
+          notify('ra.page.error', 'error');
         },
       }
     );
-
+  console.log(project);
   return (
     <>
       <Button
-        style={{ marginBottom: "10px" }}
+        style={{ marginBottom: '10px' }}
         onClick={setTrue}
         label="Add experiment"
       >
@@ -61,7 +63,7 @@ export const AddExperimentButton = () => {
                   fullWidth
                   multiline
                   validate={[required()]}
-                  source="title"
+                  source="titleProject"
                   label="Title (70)"
                   placeholder="a short title representative of the experiment"
                   helperText="The title of the experiment"

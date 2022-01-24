@@ -8,6 +8,7 @@ import {
   LanguageOptions,
 } from '@algocount/shared/types';
 import styles from './GlossaryShow.module.css';
+import { TextShow } from '../TextShow';
 
 interface GlossaryShowProps {
   glossaryCategories: GlossaryCategory[];
@@ -15,6 +16,7 @@ interface GlossaryShowProps {
   linkComponent: ComponentType<{ href: string }>;
   basePath: string;
   language: LanguageOptions;
+  description?: string;
 }
 export const GlossaryShow = (props: GlossaryShowProps) => {
   const {
@@ -23,12 +25,15 @@ export const GlossaryShow = (props: GlossaryShowProps) => {
     linkComponent: Link,
     basePath,
     language,
+    description,
   } = props;
   return (
     <div className={styles.container}>
       <div className={classnames(styles.glossary_row, styles.main)}>
         <h1>{translations[language].glossary_title}</h1>
-        <p>{translations[language].glossary_description}</p>
+        <div style={{ marginTop: '1.5em' }}>
+          {description && <TextShow text={description} />}
+        </div>
       </div>
       {glossaryCategories.map((category) =>
         glossaryTerms.some((term) => term.category_title === category.title) ? (
