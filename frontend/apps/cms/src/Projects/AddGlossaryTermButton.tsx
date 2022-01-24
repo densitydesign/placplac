@@ -1,4 +1,4 @@
-import { Dialog, DialogActions, DialogContent } from "@material-ui/core";
+import { Dialog, DialogActions, DialogContent } from '@material-ui/core';
 import {
   Button,
   FormWithRedirect,
@@ -13,11 +13,11 @@ import {
   maxLength,
   SelectInput,
   ReferenceInput,
-} from "react-admin";
-import IconCancel from "@material-ui/icons/Cancel";
-import IconContentAdd from "@material-ui/icons/Add";
-import { useToggler } from "../useToggler";
-import { CustomRichTextInput } from "../components/CustomRichTextInput";
+} from 'react-admin';
+import IconCancel from '@material-ui/icons/Cancel';
+import IconContentAdd from '@material-ui/icons/Add';
+import { useToggler } from '../useToggler';
+import { CustomRichTextInput } from '../components/CustomRichTextInput';
 
 export const AddGlossaryTermButton = () => {
   const { value, setTrue, setFalse } = useToggler();
@@ -26,20 +26,20 @@ export const AddGlossaryTermButton = () => {
   const { id: project } = record;
   const notify = useNotify();
   const redirect = useRedirect();
-  const onSave = (values: Partial<Record>) =>
+  const onSave = ({ title_term, ...values }: Partial<Record>) =>
     mutate(
       {
-        type: "create",
-        resource: "glossary-terms",
-        payload: { data: values },
+        type: 'create',
+        resource: 'glossary-terms',
+        payload: { data: { ...values, title: title_term } },
       },
       {
         onSuccess: ({ data }) => {
           setFalse();
-          redirect("edit", "/glossary-terms", data.id);
+          redirect('edit', '/glossary-terms', data.id);
         },
         onFailure: (error) => {
-          notify("ra.page.error", "error");
+          notify('ra.page.error', 'error');
         },
       }
     );
@@ -47,7 +47,7 @@ export const AddGlossaryTermButton = () => {
   return (
     <>
       <Button
-        style={{ marginBottom: "10px" }}
+        style={{ marginBottom: '10px' }}
         onClick={setTrue}
         label="Add glossary term"
       >
@@ -73,7 +73,8 @@ export const AddGlossaryTermButton = () => {
                 <TextInput
                   multiline
                   fullWidth
-                  source="title"
+                  source="title_term"
+                  label="Title"
                   validate={[required(), maxLength(100)]}
                 />
                 <CustomRichTextInput

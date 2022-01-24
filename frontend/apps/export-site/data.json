@@ -12,7 +12,7 @@
             "id": 2,
             "title": "wewwewee",
             "tags": null,
-            "description": null,
+            "description": "<p><span class=\"mceNonEditable mention\" style=\"background-color: #000000;\"> <a href=\"#glossary/4\"> wewe </a> </span></p>",
             "context": [
                 {
                     "cols": [
@@ -134,70 +134,138 @@
                 }
             ],
             "cover": null,
-            "glossary_terms": [],
+            "glossary_terms": [
+                {
+                    "id": 4,
+                    "title": "wewe",
+                    "image": "/media/logo.png",
+                    "description": "<p>Prova cuiaio</p>",
+                    "related": [
+                        {
+                            "id": 6,
+                            "title": "cross platform analysis",
+                            "color": "#FF6B6B",
+                            "category": 1
+                        },
+                        {
+                            "id": 5,
+                            "title": "prova ciao ciao",
+                            "color": "#FF6B6B",
+                            "category": 6
+                        },
+                        {
+                            "id": 4,
+                            "title": "wewe",
+                            "color": "#000000",
+                            "category": 7
+                        }
+                    ],
+                    "glossary_category": 7,
+                    "color": "#000000",
+                    "more_info_url": [
+                        {
+                            "url": "https://google.it",
+                            "title": "ciao prova cia"
+                        }
+                    ],
+                    "project": 4,
+                    "category_title": "Tools",
+                    "used_in": [
+                        {
+                            "id": 2,
+                            "title": "wewwewee"
+                        }
+                    ]
+                }
+            ],
             "references": []
         }
     ],
     "glossary_terms": [
         {
-            "id": 4,
-            "title": "wewe",
+            "id": 6,
+            "title": "cross platform analysis",
             "image": null,
-            "description": "<p>dsdsd</p>",
-            "related": [],
-            "glossary_category": 2,
-            "color": "#000000",
+            "description": "<p>s</p>",
+            "related": [
+                {
+                    "id": 4,
+                    "title": "wewe",
+                    "color": "#000000",
+                    "category": 7
+                }
+            ],
+            "glossary_category": 1,
+            "color": "#FF6B6B",
             "more_info_url": null,
             "project": 4,
-            "category_title": "Tools"
+            "category_title": "Techniques",
+            "used_in": []
         },
         {
             "id": 5,
             "title": "prova ciao ciao",
             "image": null,
             "description": "<p>sdsdsd</p>",
-            "related": [],
-            "glossary_category": 1,
+            "related": [
+                {
+                    "id": 4,
+                    "title": "wewe",
+                    "color": "#000000",
+                    "category": 7
+                }
+            ],
+            "glossary_category": 6,
             "color": "#FF6B6B",
             "more_info_url": null,
             "project": 4,
-            "category_title": "Techniques"
+            "category_title": "Techniques",
+            "used_in": []
         },
         {
-            "id": 6,
-            "title": "cross platform analysis",
-            "image": null,
-            "description": "<p>s</p>",
-            "related": [],
-            "glossary_category": 1,
-            "color": "#FF6B6B",
-            "more_info_url": null,
+            "id": 4,
+            "title": "wewe",
+            "image": "/media/logo.png",
+            "description": "<p>Prova cuiaio</p>",
+            "related": [
+                {
+                    "id": 6,
+                    "title": "cross platform analysis",
+                    "color": "#FF6B6B",
+                    "category": 1
+                },
+                {
+                    "id": 5,
+                    "title": "prova ciao ciao",
+                    "color": "#FF6B6B",
+                    "category": 6
+                },
+                {
+                    "id": 4,
+                    "title": "wewe",
+                    "color": "#000000",
+                    "category": 7
+                }
+            ],
+            "glossary_category": 7,
+            "color": "#000000",
+            "more_info_url": [
+                {
+                    "url": "https://google.it",
+                    "title": "ciao prova cia"
+                }
+            ],
             "project": 4,
-            "category_title": "Techniques"
+            "category_title": "Tools",
+            "used_in": [
+                {
+                    "id": 2,
+                    "title": "wewwewee"
+                }
+            ]
         }
     ],
     "glossary_categories": [
-        {
-            "id": 1,
-            "title": "Techniques",
-            "description": "A list of basic methods for making and replicating the procedures present throughout the experiments.",
-            "color": "#FF6B6B",
-            "project": null
-        },
-        {
-            "id": 2,
-            "title": "Tools",
-            "description": "We careful try to choose online, free and open tools and web apps.",
-            "color": "#000000",
-            "project": null
-        },
-        {
-            "id": 3,
-            "title": "wewewdwdwd",
-            "description": "dwdwd",
-            "color": "#db0000",
-            "project": 1
-        },
         {
             "id": 6,
             "title": "Techniques",
@@ -229,5 +297,6 @@
                 "image": "/media/logo.png"
             }
         ]
-    }
+    },
+    "glossary_description": null
 }

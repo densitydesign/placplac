@@ -76,6 +76,7 @@ export const ProjectShowBackend = () => {
           render={() => (
             <GlossaryShow
               language={project.language}
+              description={project.glossary_description}
               basePath={basePath}
               linkComponent={Link}
               glossaryCategories={project.glossary_categories}
@@ -90,6 +91,7 @@ export const ProjectShowBackend = () => {
             path={`${basePath}glossary/${category.id}/`}
             render={() => (
               <GlossaryCategoryShow
+                basePath={basePath}
                 glossaryCategory={category}
                 glossaryTerms={project.glossary_terms.filter(
                   (term: any) => term.category_title === category.title

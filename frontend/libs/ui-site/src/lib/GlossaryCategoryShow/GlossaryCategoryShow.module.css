@@ -20,7 +20,34 @@
   flex-direction: column;
   width: 100%;
 }
-.title {
+
+.content a {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.content ul {
+  list-style-image: url('../../assets/right-arrow.png');
+}
+.content ul a {
+  text-decoration: none;
+}
+
+.content table {
+  border: 1px solid black;
+  border-collapse: collapse;
+  margin: 0em 2em 1em 2em;
+}
+.content table tbody > tr {
+  border-bottom: 1px solid black;
+}
+.content table tbody tr:last-child {
+  border-bottom: none;
+}
+.content table tbody tr td {
+  padding: 0.5em 1.5em;
+}
+.content .title {
   display: flex;
   align-items: center;
   line-height: 50px;
@@ -40,14 +67,13 @@
   box-sizing: border-box;
 }
 .description {
-  padding: 60px 120px;
+  padding: 3em 5em;
+}
+.description img {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
 }
 .term_image {
   margin-bottom: 60px;
-}
-
-.more_info_url {
-  border-top: 1px solid black;
-  text-align: center;
-  width: 100%;
 }

@@ -21,24 +21,26 @@ export const ReferenceActions = () => {
     <TopToolbarWithTitle
       title={
         <>
-          <Typography variant="h3">References</Typography>
+          <h2 className="breadcumb">{'References >'}</h2>
           {record && (
             <Breadcrumbs
               aria-label="breadcrumb"
-              separator={<Typography variant="h4">{`>`}</Typography>}
+              separator={
+                <Typography color="textPrimary" variant="h4">{`>`}</Typography>
+              }
             >
               {project && (
                 <Link to={`/projects/${project.id}/3`}>
-                  <Typography variant="h4">{project.title}</Typography>
+                  <Typography variant="h3">{project.title}</Typography>
                 </Link>
               )}
               {experiment && (
                 <Link to={`/experiments/${experiment.id}/5`}>
-                  <Typography variant="h4">{experiment.title}</Typography>
+                  <Typography variant="h3">{experiment.title}</Typography>
                 </Link>
               )}
               <Link to={`/references/${record.id}`}>
-                <Typography variant="subtitle1">
+                <Typography variant="h3">
                   <RichTextField
                     variant="inherit"
                     stripTags
@@ -54,5 +56,5 @@ export const ReferenceActions = () => {
         </>
       }
     ></TopToolbarWithTitle>
-  );
+  ); 
 };

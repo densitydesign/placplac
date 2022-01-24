@@ -17,18 +17,18 @@ import {
   EditButton,
   RichTextField,
   useGetOne,
-} from "react-admin";
-import { BuilderInput } from "../../components/BuilderInput/BuilderInput";
-import { CustomRichTextInput } from "../../components/CustomRichTextInput";
-import { AddStepButton } from "./AddStepButton";
+} from 'react-admin';
+import { BuilderInput } from '../../components/BuilderInput/BuilderInput';
+import { CustomRichTextInput } from '../../components/CustomRichTextInput';
+import { AddStepButton } from './AddStepButton';
 
-import { ReferenceInputImage } from "../../components/ReferenceInputImage";
-import { Tabs } from "../../components/Tabs";
-import { AddReferenceButton } from "../AddReferenceButton";
+import { ReferenceInputImage } from '../../components/ReferenceInputImage';
+import { Tabs } from '../../components/Tabs';
+import { AddReferenceButton } from '../AddReferenceButton';
 
 const ExperimentFormToolbar = (props: ToolbarProps) => (
   <Toolbar
-    style={{ display: "flex", justifyContent: "space-between" }}
+    style={{ display: 'flex', justifyContent: 'space-between' }}
     {...props}
   >
     <SaveButton />
@@ -37,12 +37,12 @@ const ExperimentFormToolbar = (props: ToolbarProps) => (
     )}
   </Toolbar>
 );
-export const ExperimentForm = (props: Omit<TabbedFormProps, "children">) => {
+export const ExperimentForm = (props: Omit<TabbedFormProps, 'children'>) => {
   const project =
-    props.initialValues && "project" in props.initialValues
+    props.initialValues && 'project' in props.initialValues
       ? props.initialValues.project
       : props.record.project;
-  const { data, loaded } = useGetOne("projects", project);
+  const { data, loaded } = useGetOne('projects', project);
   return loaded && data ? (
     <TabbedForm
       {...props}
@@ -104,7 +104,7 @@ export const ExperimentForm = (props: Omit<TabbedFormProps, "children">) => {
             canDivided={false}
             glossaryTermsIds={data.glossaryterm_set}
             referencesIds={props.record?.reference_set}
-            source={"context"}
+            source={'context'}
             project={project}
           />
         </FormTab>
@@ -117,8 +117,8 @@ export const ExperimentForm = (props: Omit<TabbedFormProps, "children">) => {
             glossaryTermsIds={data.glossaryterm_set}
             referencesIds={props.record.reference_set}
             possibleColumns={[2, 3, 4]}
-            possibleComponents={["image", "listExperimentSetup"]}
-            source={"experiment_setup"}
+            possibleComponents={['image', 'listExperimentSetup']}
+            source={'experiment_setup'}
             project={project}
           />
         </FormTab>
@@ -131,9 +131,11 @@ export const ExperimentForm = (props: Omit<TabbedFormProps, "children">) => {
             reference="steps"
             source="step_set"
             fullWidth
+            sort={{ field: 'step_number', order: 'ASC' }}
           >
             <Datagrid>
               <TextField source="title" />
+              <TextField source="step_number" />
               <EditButton />
               <DeleteButton redirect={false} mutationMode="optimistic" />
             </Datagrid>
@@ -147,7 +149,7 @@ export const ExperimentForm = (props: Omit<TabbedFormProps, "children">) => {
             canDivided={false}
             glossaryTermsIds={data.glossaryterm_set}
             referencesIds={props.record?.reference_set}
-            source={"findings"}
+            source={'findings'}
             project={project}
           />
         </FormTab>

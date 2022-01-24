@@ -52,7 +52,11 @@ const GlossaryCategory: NextPage = ({
 }: any) => {
   return (
     <Layout footer={footer} experiments={experiments} language={language}>
-      <GlossaryCategoryShow glossaryCategory={category} glossaryTerms={terms} />
+      <GlossaryCategoryShow
+        basePath="/"
+        glossaryCategory={category}
+        glossaryTerms={terms}
+      />
     </Layout>
   );
 };

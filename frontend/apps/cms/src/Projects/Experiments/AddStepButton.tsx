@@ -1,4 +1,4 @@
-import { Dialog, DialogActions, DialogContent } from "@material-ui/core";
+import { Dialog, DialogActions, DialogContent } from '@material-ui/core';
 import {
   Button,
   FormWithRedirect,
@@ -12,10 +12,10 @@ import {
   required,
   NumberInput,
   maxLength,
-} from "react-admin";
-import IconCancel from "@material-ui/icons/Cancel";
-import IconContentAdd from "@material-ui/icons/Add";
-import { useToggler } from "../../useToggler";
+} from 'react-admin';
+import IconCancel from '@material-ui/icons/Cancel';
+import IconContentAdd from '@material-ui/icons/Add';
+import { useToggler } from '../../useToggler';
 
 export const AddStepButton = () => {
   const { value, setTrue, setFalse } = useToggler();
@@ -24,20 +24,20 @@ export const AddStepButton = () => {
   const { id: experiment } = record;
   const notify = useNotify();
   const redirect = useRedirect();
-  const onSave = (values: Partial<Record>) =>
+  const onSave = ({ title_step, ...values }: Partial<Record>) =>
     mutate(
       {
-        type: "create",
-        resource: "steps",
-        payload: { data: values },
+        type: 'create',
+        resource: 'steps',
+        payload: { data: { ...values, title: title_step } },
       },
       {
         onSuccess: ({ data }) => {
           setFalse();
-          redirect("edit", "/steps", data.id);
+          redirect('edit', '/steps', data.id);
         },
         onFailure: (error) => {
-          notify("ra.page.error", "error");
+          notify('ra.page.error', 'error');
         },
       }
     );
@@ -45,7 +45,7 @@ export const AddStepButton = () => {
   return (
     <>
       <Button
-        style={{ marginBottom: "10px" }}
+        style={{ marginBottom: '10px' }}
         onClick={setTrue}
         label="Add step"
       >
@@ -67,7 +67,7 @@ export const AddStepButton = () => {
                 <TextInput
                   multiline
                   fullWidth
-                  source="title"
+                  source="title_step"
                   label="Title"
                   helperText="The title of the step"
                   validate={[required(), maxLength(255)]}

@@ -17,6 +17,7 @@ class Project(CustomModel):
     status = models.CharField(default="2", choices=STATUS_CHOICES, max_length=1)
     language = models.CharField(default="en", choices=LANGUAGE_CHOICES, max_length=2)
     footer = models.JSONField(null=True, blank=True)
+    glossary_description = models.TextField(null=True)
 
 
 class ProjectUser(CustomModel):
@@ -61,6 +62,8 @@ class Step(CustomModel):
     step_number = models.SmallIntegerField()
     experiment = models.ForeignKey(Experiment, on_delete=models.CASCADE)
 
+    class Meta:
+        unique_together = (('experiment', 'step_number'))
 
 class StepDownload(CustomModel):
     title = models.TextField()
@@ -85,12 +88,11 @@ class GlossaryTerm(CustomModel):
     related = models.ManyToManyField("self", blank=True)
     glossary_category = models.ForeignKey(GlossaryCategory, on_delete=models.CASCADE)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    more_info_url = models.TextField(null=True, blank=True)
+    more_info_url = ArrayField(base_field=models.JSONField(), null=True, blank=True)
 
 class ReferenceManager(models.Manager):
     def get_queryset(self):
         qs = super().get_queryset()
-
         return qs.annotate(desc=Func(
         F('description'),
         Value(r'<[^>]+>'), Value(""), Value("gi"),

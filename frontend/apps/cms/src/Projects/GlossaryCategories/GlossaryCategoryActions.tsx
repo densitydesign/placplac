@@ -18,17 +18,19 @@ export const GlossaryCategoryActions = (
     <TopToolbarWithTitle
       title={
         <>
-          <Typography variant="h3">Glossary</Typography>
+          <h2 className="breadcumb">{'Glossary >'}</h2>
           {record && data && (
             <Breadcrumbs
               aria-label="breadcrumb"
-              separator={<Typography variant="h4">{`>`}</Typography>}
+              separator={
+                <Typography color="textPrimary" variant="h4">{`>`}</Typography>
+              }
             >
               <Link to={`/projects/${data.id}/2`}>
-                <Typography variant="h4">{data.title}</Typography>
+                <Typography variant="h3">{data.title}</Typography>
               </Link>
               <Link to={`/glossary-categories/${record.id}`}>
-                <Typography variant="h4">{record.title}</Typography>
+                <Typography variant="h3">{record.title}</Typography>
               </Link>
             </Breadcrumbs>
           )}
