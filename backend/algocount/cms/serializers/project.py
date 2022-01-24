@@ -59,7 +59,7 @@ class FullProjectSerializer(serializers.ModelSerializer):
     glossary_categories = serializers.SerializerMethodField('get_categories')
 
     def get_categories(self, value):
-        return GlossaryCategorySerializer(GlossaryCategory.objects.all(), many=True).data
+        return GlossaryCategorySerializer(GlossaryCategory.objects.filter(project=value.id), many=True).data
 
     class Meta:
         model = Project
