@@ -32,6 +32,14 @@ export const GlossarySidebar = (props: GlossarySidebarProps) => {
     }
   }, [hash]);
 
+  useEffect(() => {
+    if (open && hash && hash.includes('glossary')) {
+      const element = document.getElementById(hash.replace('#', ''));
+      if (element) {
+        element.scrollIntoView();
+      }
+    }
+  }, [open]);
   return (
     <div style={open ? {} : { display: 'none' }} className={styles.glossary}>
       <div className={styles.header}>
@@ -53,7 +61,7 @@ export const GlossarySidebar = (props: GlossarySidebarProps) => {
           alt="close"
         />
       </div>
-      <div className={styles.content}>
+      <div className={styles.content} id="glossarySidebarContent">
         {glossaryTerms.map((term) => (
           <GlossaryItem
             basePath={basePath}
