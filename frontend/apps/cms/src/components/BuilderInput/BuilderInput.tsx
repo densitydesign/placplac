@@ -1,6 +1,12 @@
 import React, { useMemo, useState } from 'react';
 import { useDialoglUpdate } from '../../useDialogUpdate';
-import { required, useInput, SelectInput, TextInput } from 'react-admin';
+import {
+  required,
+  useInput,
+  SelectInput,
+  TextInput,
+  BooleanInput,
+} from 'react-admin';
 import { BuilderDialog } from './components/BuilderDialog';
 import { AddRowButton } from './components/AddRowButton';
 
@@ -20,7 +26,11 @@ import { EditListExperimentSetup } from './components/EditListExperimentSetup';
 import { EditIframe } from './components/EditIframe';
 import { Grid } from '@material-ui/core';
 import { SelectFile } from '../SelectFile';
-import { BuilderBlocks, PossibleColumns, RowType } from '@algocount/shared/types';
+import {
+  BuilderBlocks,
+  PossibleColumns,
+  RowType,
+} from '@algocount/shared/types';
 
 interface BuilderInputProps {
   source: string;
@@ -30,6 +40,7 @@ interface BuilderInputProps {
   referencesIds: number[];
   project: number;
   canDivided: boolean;
+  isStep?: boolean;
 }
 
 export const BuilderInput = (props: BuilderInputProps) => {
@@ -41,6 +52,7 @@ export const BuilderInput = (props: BuilderInputProps) => {
     referencesIds,
     project,
     canDivided,
+    isStep = false,
   } = props;
   const [activeStep, setActiveStep] = React.useState(0);
 
@@ -136,8 +148,67 @@ export const BuilderInput = (props: BuilderInputProps) => {
 
   const builderBlocks = useMemo(() => {
     const builderBlocks: BuilderBlocks = {
+      video: {
+        ...SHOW_COMPONENTS_BUILDER.video,
+        form: {
+          component: (
+            <Grid container direction="column">
+              <Grid item>
+                <SelectFile
+                  type="file"
+                  label={'Video file'}
+                  source={'src'}
+                  project={project}
+                  fullWidth
+                  validate={[required()]}
+                  helperText="Click the right button to choose a video file from the library"
+                />
+              </Grid>
+              <Grid item>
+                <TextInput
+                  validate={required()}
+                  helperText={false}
+                  fullWidth
+                  source={'height'}
+                />
+              </Grid>
+              <Grid item container direction="row">
+                <Grid item>
+                  <BooleanInput
+                    defaultValue={false}
+                    validate={required()}
+                    helperText={false}
+                    fullWidth
+                    source={'autoplay'}
+                  />
+                </Grid>
+                <Grid item>
+                  <BooleanInput
+                    defaultValue={true}
+                    validate={required()}
+                    helperText={false}
+                    fullWidth
+                    source={'muted'}
+                  />
+                </Grid>
+                <Grid item>
+                  <BooleanInput
+                    defaultValue={true}
+                    validate={required()}
+                    helperText={false}
+                    fullWidth
+                    source={'controls'}
+                  />
+                </Grid>
+              </Grid>
+            </Grid>
+          ),
+        },
+      },
       image: {
-        ...SHOW_COMPONENTS_BUILDER.image,
+        ...(isStep
+          ? SHOW_COMPONENTS_BUILDER.image_step
+          : SHOW_COMPONENTS_BUILDER.image),
         form: {
           component: <EditImage project={project} />,
 

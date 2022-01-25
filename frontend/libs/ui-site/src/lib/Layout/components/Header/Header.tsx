@@ -41,7 +41,7 @@ export const Header = (props: HeaderProps) => {
     <div className={styles.header} id="header">
       <div ref={ref} className={classnames(styles.header_menu, styles.left)}>
         <div className={styles.item}>
-          <Link href={basePath}>Home</Link>
+          <Link href={`${basePath}#`}>Home</Link>
         </div>
         <div className={styles.item}>
           <span onClick={() => setSubmenuVisible((old) => !old)}>

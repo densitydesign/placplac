@@ -29,7 +29,13 @@ export const AddStepButton = () => {
       {
         type: 'create',
         resource: 'steps',
-        payload: { data: { ...values, title: title_step } },
+        payload: {
+          data: {
+            step_number: values.step_number,
+            experiment: values.experiment,
+            title: title_step,
+          },
+        },
       },
       {
         onSuccess: ({ data }) => {

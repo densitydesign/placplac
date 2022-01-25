@@ -4,8 +4,10 @@ import { Disclaimer } from './Disclaimer';
 import { ExperimentSetupListShow } from './ExperimentSetupListShow';
 import { IFrame } from './IFrame';
 import { ImageShow } from './ImageShow';
+import { ImageShowStep } from './ImageShowStep';
 import { SigmaShow } from './SigmaShow';
 import { TextShow } from './TextShow';
+import { VideoPlayer } from './VideoPlayer';
 
 export const SHOW_COMPONENTS_BUILDER: BuilderShowBlocks = {
   image: {
@@ -33,6 +35,44 @@ export const SHOW_COMPONENTS_BUILDER: BuilderShowBlocks = {
           isWide={content.isWide}
         />
       </SRLWrapper>
+    ),
+  },
+  image_step: {
+    description: 'Image',
+
+    render: (content: any) => (
+      <SRLWrapper
+        options={{
+          thumbnails: { showThumbnails: false },
+          buttons: {
+            showNextButton: false,
+            showPrevButton: false,
+            showAutoplayButton: false,
+            showFullscreenButton: false,
+            showDownloadButton: false,
+          },
+        }}
+      >
+        <ImageShowStep
+          description={content.description}
+          image={content.image}
+          caption={content.caption}
+          title={content.title}
+          subtitle={content.subtitle}
+          isWide={content.isWide}
+        />
+      </SRLWrapper>
+    ),
+  },
+  video: {
+    description: 'Video player',
+    render: (content: any) => (
+      <VideoPlayer
+        src={content.src}
+        autoplay={content.autoplay}
+        height={content.height}
+        muted={content.muted}
+      />
     ),
   },
   text: {

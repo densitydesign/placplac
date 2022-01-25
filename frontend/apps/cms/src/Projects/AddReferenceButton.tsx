@@ -25,12 +25,13 @@ export const AddReferenceButton = (props: AddReferenceButtonProps) => {
   const { id } = record;
   const notify = useNotify();
   const redirect = useRedirect();
-  const onSave = ({ description_ref, ...values }: Partial<Record>) =>
-    mutate(
+  const onSave = ({ description_ref }: Partial<Record>) => {
+    console.log({ description: description_ref, [refersTo]: id });
+    return mutate(
       {
         type: 'create',
         resource: 'references',
-        payload: { data: { description: description_ref, ...values } },
+        payload: { data: { description: description_ref, [refersTo]: id } },
       },
       {
         onSuccess: ({ data }) => {
@@ -42,6 +43,7 @@ export const AddReferenceButton = (props: AddReferenceButtonProps) => {
         },
       }
     );
+  };
 
   return (
     <>

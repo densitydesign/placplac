@@ -67,7 +67,8 @@
   box-sizing: border-box;
 }
 .description {
-  padding: 3em 5em;
+  padding: 0em 5em;
+  padding-bottom: 1.5em;
 }
 .description img {
   margin-left: auto;
@@ -76,4 +77,8 @@
 }
 .term_image {
   margin-bottom: 60px;
+}
+
+.term_title {
+  margin: 1em 2em 1em 2em;
 }

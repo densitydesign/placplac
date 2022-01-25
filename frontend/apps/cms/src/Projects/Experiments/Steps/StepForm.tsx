@@ -14,16 +14,16 @@ import {
   Toolbar,
   ToolbarProps,
   useGetOne,
-} from "react-admin";
-import { BuilderInput } from "../../../components/BuilderInput";
-import { CustomFileField } from "../../../components/CustomFileField";
-import { AddStepDownloadButton } from "./AddStepDownloadButton";
-import { EditStepDownloadButton } from "./EditStepDownloadButton";
+} from 'react-admin';
+import { BuilderInput } from '../../../components/BuilderInput';
+import { CustomFileField } from '../../../components/CustomFileField';
+import { AddStepDownloadButton } from './AddStepDownloadButton';
+import { EditStepDownloadButton } from './EditStepDownloadButton';
 
 const StepFormToolbar = (props: ToolbarProps) => {
   return (
     <Toolbar
-      style={{ display: "flex", justifyContent: "space-between" }}
+      style={{ display: 'flex', justifyContent: 'space-between' }}
       {...props}
     >
       <SaveButton />
@@ -34,19 +34,19 @@ const StepFormToolbar = (props: ToolbarProps) => {
   );
 };
 
-export const StepForm = (props: Omit<TabbedFormProps, "children">) => {
+export const StepForm = (props: Omit<TabbedFormProps, 'children'>) => {
   const project =
-    props.initialValues && "project" in props.initialValues
+    props.initialValues && 'project' in props.initialValues
       ? props.initialValues.project
       : props.record.project;
 
-  const { data, loaded } = useGetOne("projects", project);
+  const { data, loaded } = useGetOne('projects', project);
   const experiment =
-    props.initialValues && "experiment" in props.initialValues
+    props.initialValues && 'experiment' in props.initialValues
       ? props.initialValues.experiment
       : props.record.experiment;
   const { data: experimentData, loaded: loadedExp } = useGetOne(
-    "experiments",
+    'experiments',
     experiment
   );
   return loaded && data && experimentData && loadedExp ? (
@@ -75,7 +75,7 @@ export const StepForm = (props: Omit<TabbedFormProps, "children">) => {
           <Datagrid>
             <CustomFileField source="file" title="name" />
             <TextField source="title" label="Download title" />
-            <TextField source="file" label={"url"} />
+            <TextField source="file" label={'url'} />
             <EditStepDownloadButton />
             <DeleteButton redirect={false} mutationMode="optimistic" />
           </Datagrid>
@@ -83,10 +83,11 @@ export const StepForm = (props: Omit<TabbedFormProps, "children">) => {
       </FormTab>
       <FormTab label="content">
         <BuilderInput
+          isStep
           canDivided={true}
           glossaryTermsIds={data.glossaryterm_set}
           referencesIds={experimentData.reference_set}
-          source={"content"}
+          source={'content'}
           project={project}
         />
       </FormTab>

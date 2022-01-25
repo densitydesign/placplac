@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap');
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: calc(100% + var(--lateral-spacing) + var(--lateral-spacing));
+  margin-left: calc(var(--lateral-spacing) * -1);
+  margin-top: calc(var(--vertical-spacing) * -1);
+  margin-bottom: calc(var(--vertical-spacing) * -1);
+  margin-right: calc(var(--lateral-spacing) * -1);
+  height: 100%;
+}
+.title {
+  text-align: center;
+  border-bottom: 1px solid black;
+  font-family: Source Sans Pro;
+  font-style: italic;
+  font-weight: normal;
+  font-size: 24px;
+}
+.subtitle {
+  text-align: center;
+  border-bottom: 1px solid black;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.image {
+  max-height: 400px;
+  width: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 100%;
+  height: auto;
+  padding-top: var(--vertical-spacing);
+  padding-bottom: var(--vertical-spacing);
+}
+
+.wide {
+  max-height: none;
+  width: 100%;
+}
+
+.image_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.description {
+  padding-bottom: var(--vertical-spacing);
+  padding-left: var(--lateral-spacing);
+  padding-right: var(--lateral-spacing);
+}
+
+.caption {
+  padding-bottom: var(--vertical-spacing);
+  padding-left: var(--lateral-spacing);
+  padding-right: var(--lateral-spacing);
+  font-style: italic;
+  font-size: 18px;
+  line-height: 24px;
+}

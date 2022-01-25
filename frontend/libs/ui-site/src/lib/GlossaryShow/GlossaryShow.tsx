@@ -43,6 +43,7 @@ export const GlossaryShow = (props: GlossaryShowProps) => {
             </Link>
             <p>{category.description}</p>
             <GlossaryTermsList
+              linkComponent={Link}
               linkTo={`${basePath}glossary/${category.id}`}
               glossaryTerms={glossaryTerms.filter(
                 (term) => term.category_title === category.title
