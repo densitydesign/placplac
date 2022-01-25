@@ -6,6 +6,7 @@ import { IFrame } from './IFrame';
 import { ImageShow } from './ImageShow';
 import { SigmaShow } from './SigmaShow';
 import { TextShow } from './TextShow';
+import { VideoPlayer } from './VideoPlayer';
 
 export const SHOW_COMPONENTS_BUILDER: BuilderShowBlocks = {
   image: {
@@ -33,6 +34,17 @@ export const SHOW_COMPONENTS_BUILDER: BuilderShowBlocks = {
           isWide={content.isWide}
         />
       </SRLWrapper>
+    ),
+  },
+  video: {
+    description: 'Video player',
+    render: (content: any) => (
+      <VideoPlayer
+        src={content.src}
+        autoplay={content.autoplay}
+        height={content.height}
+        muted={content.muted}
+      />
     ),
   },
   text: {

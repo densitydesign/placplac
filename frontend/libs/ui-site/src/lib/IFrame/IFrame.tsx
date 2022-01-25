@@ -1,12 +1,11 @@
-import React from "react";
-import Modal from "react-modal";
-import { DoubleClickContainer } from "../components/DoubleClickContainer";
-import { FullScreenModal } from "../components/FullScreenModal";
-interface IFrameProps
-  extends React.DetailedHTMLProps<
-    React.IframeHTMLAttributes<HTMLIFrameElement>,
-    HTMLIFrameElement
-  > {}
+import React from 'react';
+import Modal from 'react-modal';
+import { DoubleClickContainer } from '../components/DoubleClickContainer';
+import { FullScreenModal } from '../components/FullScreenModal';
+type IFrameProps = React.DetailedHTMLProps<
+  React.IframeHTMLAttributes<HTMLIFrameElement>,
+  HTMLIFrameElement
+>;
 export const IFrame = (props: IFrameProps) => {
   const [modalIsOpen, setIsOpen] = React.useState(false);
 
@@ -23,11 +22,11 @@ export const IFrame = (props: IFrameProps) => {
         height={props.height as string}
         onDoubleClick={openModal}
       >
-        <iframe {...props} width={"100%"} />
+        <iframe {...props} width={'100%'} />
       </DoubleClickContainer>
 
       <FullScreenModal isOpen={modalIsOpen} onClose={closeModal}>
-        <iframe {...props} height={"100%"} width={"100%"} />
+        <iframe {...props} height={'100%'} width={'100%'} />
       </FullScreenModal>
     </>
   );
