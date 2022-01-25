@@ -1,14 +1,19 @@
 import { GlossaryTerm } from '@algocount/shared/types';
-import React from 'react';
+import React, { ComponentType } from 'react';
 import styles from './GlossaryTermsList.module.css';
 
 interface GlossaryTermsListProps {
   glossaryTerms: GlossaryTerm[];
   linkTo?: string;
+  linkComponent?: ComponentType<{ href: string }>;
 }
 
 export const GlossaryTermsList = (props: GlossaryTermsListProps) => {
-  const { glossaryTerms, linkTo = '' } = props;
+  if (props.linkTo && !props.linkComponent) {
+    throw new Error('You must pass linkto and linkcomponent together');
+  }
+  const { glossaryTerms, linkTo = '', linkComponent: Link } = props;
+
   return (
     <div className={styles.glossary_terms_list}>
       {glossaryTerms.map((term) => {
@@ -18,9 +23,15 @@ export const GlossaryTermsList = (props: GlossaryTermsListProps) => {
             className="mention"
             style={{ backgroundColor: term.color }}
           >
-            <a href={`${linkTo}#glossary/${term.id}`}>
-              <span>{term.title}</span>
-            </a>
+            {Link ? (
+              <Link href={`${linkTo}#glossary/${term.id}`}>
+                <span>{term.title}</span>
+              </Link>
+            ) : (
+              <a href={`${linkTo}#glossary/${term.id}`}>
+                <span>{term.title}</span>
+              </a>
+            )}
           </span>
         );
       })}

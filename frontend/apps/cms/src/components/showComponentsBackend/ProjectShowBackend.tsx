@@ -8,7 +8,8 @@ import {
   GlossaryShow,
   GlossaryCategoryShow,
 } from '@algocount/ui-site';
-import { Link as LinkRR, LinkProps as LinkRRProps } from 'react-router-dom';
+import { HashLink as LinkRR } from 'react-router-hash-link';
+import { LinkProps as LinkRRProps } from 'react-router-dom';
 import { ScrollToTop } from './ScrollToTop';
 
 interface LinkProps extends Omit<LinkRRProps, 'to'> {
