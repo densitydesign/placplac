@@ -31,6 +31,7 @@ import {
   PossibleColumns,
   RowType,
 } from '@algocount/shared/types';
+import SimpleReactLightbox from 'simple-react-lightbox';
 
 interface BuilderInputProps {
   source: string;
@@ -321,53 +322,60 @@ export const BuilderInput = (props: BuilderInputProps) => {
   }, [glossaryTermsIds, possibleComponents, project, referencesIds]);
 
   return (
-    <div>
-      <AddRowButton
-        canDivided={canDivided}
-        possibleColumns={possibleColumns}
-        onSubmit={(values) => {
-          const newRows = [
-            ...value,
-            { cols: new Array(values.cols).fill({}), divided: values.divided },
-          ];
-          onChange(newRows);
-        }}
-      />
-      <div style={{ border: '1px solid black' }}>
-        {value &&
-          value.map((row: any, index: number) => (
-            <Row
-              canDivided={canDivided}
-              switchDivided={switchDivided}
-              deleteCell={removeCell}
-              moveCellLeft={moveCellLeft}
-              moveRowDown={moveRowDown}
-              moveRowUp={moveRowUp}
-              moveCellRight={moveCellRight}
-              key={index}
-              row={row}
-              setActiveItem={setActiveItem}
-              onColumnClick={onColumnClick}
-              rowIndex={index}
-              deleteRow={deleteRow}
-              builderBlocks={builderBlocks}
-            />
-          ))}
-      </div>
-
-      {activeItem && (
-        <BuilderDialog
-          onClose={onCloseModal}
-          open={isOpenUpdateModal}
-          dialogForm={dialogStatus}
-          activeStep={activeStep}
-          handleStep={setActiveStep}
-          setDialogForm={setDialogStatus}
-          content={value[activeItem.rowIndex].cols[activeItem.colIndex].content}
-          updateItem={updateItem}
-          builderBlocks={builderBlocks}
+    <SimpleReactLightbox>
+      <div>
+        <AddRowButton
+          canDivided={canDivided}
+          possibleColumns={possibleColumns}
+          onSubmit={(values) => {
+            const newRows = [
+              ...value,
+              {
+                cols: new Array(values.cols).fill({}),
+                divided: values.divided,
+              },
+            ];
+            onChange(newRows);
+          }}
         />
-      )}
-    </div>
+        <div style={{ border: '1px solid black' }}>
+          {value &&
+            value.map((row: any, index: number) => (
+              <Row
+                canDivided={canDivided}
+                switchDivided={switchDivided}
+                deleteCell={removeCell}
+                moveCellLeft={moveCellLeft}
+                moveRowDown={moveRowDown}
+                moveRowUp={moveRowUp}
+                moveCellRight={moveCellRight}
+                key={index}
+                row={row}
+                setActiveItem={setActiveItem}
+                onColumnClick={onColumnClick}
+                rowIndex={index}
+                deleteRow={deleteRow}
+                builderBlocks={builderBlocks}
+              />
+            ))}
+        </div>
+
+        {activeItem && (
+          <BuilderDialog
+            onClose={onCloseModal}
+            open={isOpenUpdateModal}
+            dialogForm={dialogStatus}
+            activeStep={activeStep}
+            handleStep={setActiveStep}
+            setDialogForm={setDialogStatus}
+            content={
+              value[activeItem.rowIndex].cols[activeItem.colIndex].content
+            }
+            updateItem={updateItem}
+            builderBlocks={builderBlocks}
+          />
+        )}
+      </div>
+    </SimpleReactLightbox>
   );
 };
