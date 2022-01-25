@@ -190,11 +190,11 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
       )}
       <div id="steps">
         {steps &&
-          steps.map((step) => (
+          steps.map((step, index) => (
             <div
               style={{ minHeight: `calc(100vh - ${topPositionStep}px)` }}
               id={`step${step.step_number}`}
-              key={step.title}
+              key={index}
               className={styles.step}
             >
               <div

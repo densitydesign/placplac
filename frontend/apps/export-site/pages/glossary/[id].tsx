@@ -2,6 +2,7 @@ import type { NextPage } from 'next';
 import path from 'path';
 import { promises as fs } from 'fs';
 import dynamic from 'next/dynamic';
+import Link from '../../components/link';
 
 export async function getStaticPaths() {
   const filePath = process.env.NX_FILE_PATH!;
@@ -56,6 +57,7 @@ const GlossaryCategory: NextPage = ({
         basePath="/"
         glossaryCategory={category}
         glossaryTerms={terms}
+        linkComponent={Link}
       />
     </Layout>
   );

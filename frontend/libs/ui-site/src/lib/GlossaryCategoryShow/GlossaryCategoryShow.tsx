@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ComponentType } from 'react';
 import styles from './GlossaryCategoryShow.module.css';
 import { TextShow } from '../TextShow';
 import { GlossaryCategory, GlossaryTerm } from '@algocount/shared/types';
@@ -7,9 +7,15 @@ interface GlossaryCategoryShowProps {
   glossaryCategory: GlossaryCategory;
   glossaryTerms: GlossaryTerm[];
   basePath: string;
+  linkComponent: ComponentType<{ href: string }>;
 }
 export const GlossaryCategoryShow = (props: GlossaryCategoryShowProps) => {
-  const { glossaryCategory, glossaryTerms, basePath } = props;
+  const {
+    glossaryCategory,
+    glossaryTerms,
+    basePath,
+    linkComponent: Link,
+  } = props;
   return (
     <div className={styles.main}>
       <div className={styles.sidebar}>
@@ -24,12 +30,14 @@ export const GlossaryCategoryShow = (props: GlossaryCategoryShowProps) => {
             id={`glossary/${term.id}`}
             className={styles.glossary_term_item}
           >
-            <div
-              style={{ backgroundColor: term.color }}
-              className={styles.title}
-            >
-              {term.title}
-              <img className={styles.arrow} src={'/assets/arrowleftdown.png'} />
+            <div className={styles.term_title}>
+              <span
+                key={term.id}
+                className="mention"
+                style={{ backgroundColor: term.color }}
+              >
+                <span>{term.title}</span>
+              </span>
             </div>
             <div className={styles.description}>
               {term.image && (
@@ -50,7 +58,12 @@ export const GlossaryCategoryShow = (props: GlossaryCategoryShowProps) => {
                     <td>Used in:</td>
                     <td>
                       {term.used_in.map((exp) => (
-                        <a key={exp.id}>{exp.title}</a>
+                        <Link
+                          href={`${basePath}experiments/${exp.id}`}
+                          key={exp.id}
+                        >
+                          {exp.title}
+                        </Link>
                       ))}
                     </td>
                   </tr>
@@ -65,11 +78,11 @@ export const GlossaryCategoryShow = (props: GlossaryCategoryShowProps) => {
                           className="mention"
                           style={{ backgroundColor: term.color }}
                         >
-                          <a
+                          <Link
                             href={`${basePath}glossary/${term.category}#glossary/${term.id}`}
                           >
                             <span>{term.title}</span>
-                          </a>
+                          </Link>
                         </span>
                       ))}
                     </td>
