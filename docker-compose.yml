@@ -7,9 +7,9 @@ services:
       context: ./frontend/
       dockerfile: ./apps/cms/Dockerfile
     volumes:
-      - ../media:/app/backend/algocount/media/
+      - ${MEDIA_FOLDER}:/app/backend/algocount/media/
     ports:
-      - 3001:80
+      - ${PORT_OUT}:80
     depends_on:
       - api
     restart: "on-failure"
@@ -17,7 +17,7 @@ services:
   db:
     image: postgres
     volumes:
-      - ../data/db:/var/lib/postgresql/data
+      - ${DB_FOLDER}:/var/lib/postgresql/data
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
@@ -26,7 +26,7 @@ services:
   api:
     build: .
     volumes:
-      - ../media:/app/backend/algocount/media/
+      - ${MEDIA_FOLDER}:/app/backend/algocount/media/
     entrypoint: ["/bin/sh", "-c"]
     command:
       - |
