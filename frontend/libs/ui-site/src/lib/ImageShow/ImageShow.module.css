@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap');
+
 .container {
   display: flex;
   flex-direction: column;
@@ -6,9 +8,17 @@
 }
 .title {
   text-align: center;
+  font-family: Source Sans Pro;
+  font-style: italic;
+  font-weight: normal;
+  font-size: 24px;
 }
 .subtitle {
   text-align: center;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
 }
 .caption {
   padding-bottom: 1em !important;
@@ -31,6 +41,13 @@
   max-height: none;
   width: 100%;
 }
+/* .wide {
+    max-height: none;
+    width: calc(100% + var(--lateral-spacing) + var(--lateral-spacing));
+    max-width: calc(100% + var(--lateral-spacing) + var(--lateral-spacing));
+    margin-left: calc(var(--lateral-spacing) * -1);
+    margin-right: calc(var(--lateral-spacing) * -1);
+  } */
 
 .image_container {
   display: flex;

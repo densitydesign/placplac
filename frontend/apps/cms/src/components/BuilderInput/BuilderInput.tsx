@@ -40,6 +40,7 @@ interface BuilderInputProps {
   referencesIds: number[];
   project: number;
   canDivided: boolean;
+  isStep?: boolean;
 }
 
 export const BuilderInput = (props: BuilderInputProps) => {
@@ -51,6 +52,7 @@ export const BuilderInput = (props: BuilderInputProps) => {
     referencesIds,
     project,
     canDivided,
+    isStep = false,
   } = props;
   const [activeStep, setActiveStep] = React.useState(0);
 
@@ -204,7 +206,9 @@ export const BuilderInput = (props: BuilderInputProps) => {
         },
       },
       image: {
-        ...SHOW_COMPONENTS_BUILDER.image,
+        ...(isStep
+          ? SHOW_COMPONENTS_BUILDER.image_step
+          : SHOW_COMPONENTS_BUILDER.image),
         form: {
           component: <EditImage project={project} />,
 

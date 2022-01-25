@@ -101,6 +101,23 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
       : null;
   };
 
+  const renderStep = (section: RowType[]) => {
+    return section
+      ? section.map((row, index) => (
+          <Row divided={row.divided} key={index}>
+            {row.cols.map((col, colIndex) => (
+              <div className={'inner-column'} key={colIndex}>
+                {col?.type in SHOW_COMPONENTS_BUILDER &&
+                  SHOW_COMPONENTS_BUILDER[
+                    col.type === 'image' ? 'image_step' : col.type
+                  ].render(col.content)}
+              </div>
+            ))}
+          </Row>
+        ))
+      : null;
+  };
+
   return (
     <SimpleReactLightbox>
       <Flex container>
@@ -208,7 +225,7 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
               <div
                 className={classnames(styles.grid_auto, styles.sidebar_content)}
               >
-                {renderSection(step.content)}
+                {renderStep(step.content)}
               </div>
             </div>
           ))}
