@@ -31,7 +31,14 @@ export const AddGlossaryTermButton = () => {
       {
         type: 'create',
         resource: 'glossary-terms',
-        payload: { data: { ...values, title: title_term } },
+        payload: {
+          data: {
+            glossary_category: values.glossary_category,
+            title: title_term,
+            description: values.description,
+            project,
+          },
+        },
       },
       {
         onSuccess: ({ data }) => {

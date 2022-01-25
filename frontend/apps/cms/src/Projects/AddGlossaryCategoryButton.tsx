@@ -28,7 +28,14 @@ export const AddGlossaryCategoryButton = () => {
       {
         type: 'create',
         resource: 'glossary-categories',
-        payload: { data: { ...values, title: title_cat } },
+        payload: {
+          data: {
+            title: title_cat,
+            color: values.color,
+            description: values.description,
+            project,
+          },
+        },
       },
       {
         onSuccess: ({ data }) => {

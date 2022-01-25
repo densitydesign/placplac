@@ -1,4 +1,4 @@
-import { Dialog, DialogActions, DialogContent } from "@material-ui/core";
+import { Dialog, DialogActions, DialogContent } from '@material-ui/core';
 import {
   AutocompleteInput,
   Button,
@@ -10,10 +10,10 @@ import {
   useRecordContext,
   SelectInput,
   useRefresh,
-} from "react-admin";
-import IconCancel from "@material-ui/icons/Cancel";
-import IconContentAdd from "@material-ui/icons/Add";
-import { useToggler } from "../useToggler";
+} from 'react-admin';
+import IconCancel from '@material-ui/icons/Cancel';
+import IconContentAdd from '@material-ui/icons/Add';
+import { useToggler } from '../useToggler';
 
 export const AddCollaboratorButton = () => {
   const { value, setTrue, setFalse } = useToggler();
@@ -25,7 +25,7 @@ export const AddCollaboratorButton = () => {
   return (
     <>
       <Button
-        style={{ marginBottom: "10px" }}
+        style={{ marginBottom: '10px' }}
         onClick={setTrue}
         label="Add collaborator"
       >
@@ -38,8 +38,8 @@ export const AddCollaboratorButton = () => {
           save={(values) => {
             mutate(
               {
-                type: "create",
-                resource: "project-collaborators",
+                type: 'create',
+                resource: 'project-collaborators',
                 payload: { data: values },
               },
               {
@@ -49,7 +49,7 @@ export const AddCollaboratorButton = () => {
                 },
                 onFailure: (error) => {
                   console.log(error);
-                  notify("ra.page.error", "error");
+                  notify('ra.page.error', 'error');
                 },
               }
             );
@@ -64,8 +64,8 @@ export const AddCollaboratorButton = () => {
                   defaultValue="2"
                   fullWidth
                   choices={[
-                    { name: "Author", id: "1" },
-                    { name: "Collaborator", id: "2" },
+                    { name: 'Author', id: '1' },
+                    { name: 'Collaborator', id: '2' },
                   ]}
                   source="level"
                 />

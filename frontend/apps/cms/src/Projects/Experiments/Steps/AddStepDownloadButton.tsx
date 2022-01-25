@@ -1,4 +1,4 @@
-import { Dialog, DialogActions, DialogContent } from "@material-ui/core";
+import { Dialog, DialogActions, DialogContent } from '@material-ui/core';
 import {
   Button,
   FormWithRedirect,
@@ -13,10 +13,10 @@ import {
   FileInput,
   FileField,
   useEditContext,
-} from "react-admin";
-import IconCancel from "@material-ui/icons/Cancel";
-import IconContentAdd from "@material-ui/icons/Add";
-import { useToggler } from "../../../useToggler";
+} from 'react-admin';
+import IconCancel from '@material-ui/icons/Cancel';
+import IconContentAdd from '@material-ui/icons/Add';
+import { useToggler } from '../../../useToggler';
 
 export const AddStepDownloadButton = () => {
   const { value, setTrue, setFalse } = useToggler();
@@ -28,9 +28,11 @@ export const AddStepDownloadButton = () => {
   const onSave = (values: Partial<Record>) =>
     mutate(
       {
-        type: "createMultipart",
-        resource: "step-downloads",
-        payload: { data: values },
+        type: 'createMultipart',
+        resource: 'step-downloads',
+        payload: {
+          data: { step, title: values.titleDownload, file: values.file },
+        },
       },
       {
         onSuccess: ({ data }) => {
@@ -38,7 +40,7 @@ export const AddStepDownloadButton = () => {
           refetch && refetch();
         },
         onFailure: (error) => {
-          notify("ra.page.error", "error");
+          notify('ra.page.error', 'error');
         },
       }
     );
@@ -46,7 +48,7 @@ export const AddStepDownloadButton = () => {
   return (
     <>
       <Button
-        style={{ marginBottom: "10px" }}
+        style={{ marginBottom: '10px' }}
         onClick={setTrue}
         label="Add download"
       >
@@ -63,7 +65,7 @@ export const AddStepDownloadButton = () => {
                 <TextInput
                   multiline
                   fullWidth
-                  source="title"
+                  source="titleDownload"
                   label="Title"
                   placeholder="Type the download title, for example 'Download dataset'"
                   helperText="The download title"
