@@ -76,7 +76,7 @@
   display: block;
 }
 .term_image {
-  margin-bottom: 60px;
+  margin-bottom: var(--vertical-spacing);
 }
 
 .term_title {

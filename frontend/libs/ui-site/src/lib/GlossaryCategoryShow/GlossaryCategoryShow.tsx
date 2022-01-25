@@ -42,7 +42,7 @@ export const GlossaryCategoryShow = (props: GlossaryCategoryShowProps) => {
             <div className={styles.description}>
               {term.image && (
                 <img
-                  className={styles.term_mage}
+                  className={styles.term_image}
                   src={term.image}
                   width={'100%'}
                   height="auto"
