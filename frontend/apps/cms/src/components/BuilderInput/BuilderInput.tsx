@@ -219,12 +219,31 @@ export const BuilderInput = (props: BuilderInputProps) => {
             if (content?.subtitle) type.push('subtitle');
             if (content?.caption) type.push('caption');
             if (content?.description) type.push('description');
-            return { ...content, type };
+            return {
+              title_bi: content?.title,
+              caption_bi: content?.caption,
+              description_bi: content?.description,
+              subtitle_bi: content?.subtitle,
+              type,
+            };
           },
           getSaveContent: (values: any) => {
-            const { title, subtitle, caption, image, isWide, description } =
-              values;
-            return { title, subtitle, caption, image, isWide, description };
+            const {
+              title_bi,
+              subtitle_bi,
+              caption_bi,
+              image,
+              isWide,
+              description_bi,
+            } = values;
+            return {
+              title: title_bi,
+              subtitle: subtitle_bi,
+              caption: caption_bi,
+              image,
+              isWide,
+              description: description_bi,
+            };
           },
         },
       },
@@ -260,7 +279,8 @@ export const BuilderInput = (props: BuilderInputProps) => {
                   validate={[required()]}
                   helperText={false}
                   fullWidth
-                  source={'type'}
+                  source={'type_bi'}
+                  label="Type"
                 />
               </Grid>
               <Grid item>
@@ -268,17 +288,46 @@ export const BuilderInput = (props: BuilderInputProps) => {
                   validate={[required()]}
                   helperText={false}
                   fullWidth
-                  source={'description'}
+                  source={'description_bi'}
+                  label="Description"
                 />
               </Grid>
             </Grid>
           ),
+          getInitialContent: (content: any) => {
+            return {
+              description_bi: content?.description,
+              type_bi: content?.type,
+            };
+          },
+          getSaveContent: (values: any) => {
+            const { type_bi, description_bi } = values;
+            return {
+              type: type_bi,
+              description: description_bi,
+            };
+          },
         },
       },
       listExperimentSetup: {
         ...SHOW_COMPONENTS_BUILDER.listExperimentSetup,
         form: {
           component: <EditListExperimentSetup />,
+          getInitialContent: (content: any) => {
+            return {
+              title_bi: content?.title,
+              subtitle_bi: content?.subtitle,
+              list_bi: content?.list,
+            };
+          },
+          getSaveContent: (values: any) => {
+            const { title_bi, subtitle_bi, list_bi } = values;
+            return {
+              title: title_bi,
+              subtitle: subtitle_bi,
+              list: list_bi,
+            };
+          },
         },
       },
       iframe: {
