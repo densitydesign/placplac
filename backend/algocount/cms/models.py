@@ -12,6 +12,7 @@ class Project(CustomModel):
     LANGUAGE_CHOICES = (("it", "Italian"), ("en", "English"))
     title = models.CharField(max_length=255)
     short_description = models.TextField(null=True)
+    project_explanation = models.TextField(null=True)
     experiments_description = models.TextField(null=True)
     long_description = models.TextField(null=True)
     status = models.CharField(default="2", choices=STATUS_CHOICES, max_length=1)

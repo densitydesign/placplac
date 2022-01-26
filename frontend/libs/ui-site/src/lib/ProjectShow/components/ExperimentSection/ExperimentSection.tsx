@@ -15,7 +15,7 @@ export const ExperimentSection = ({
   linkComponent: Link,
 }: ExperimentSectionProps) => {
   return (
-    <>
+    <div className={styles.container}>
       <Link href={`${basePath}experiments/${experiment.id}`}>
         <div className={styles.main}>
           {experiment.tags && <TagsSliding strings={experiment.tags} />}
@@ -41,6 +41,6 @@ export const ExperimentSection = ({
       <div className={styles.pointing_hand}>
         <img width="20px" height="auto" src={'/assets/hand-pointing.png'} />
       </div>
-    </>
+    </div>
   );
 };

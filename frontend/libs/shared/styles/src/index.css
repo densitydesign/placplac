@@ -98,3 +98,10 @@
 iframe {
   border: none;
 }
+.main-application pre {
+  white-space: normal;
+}
+
+.main-application a {
+  text-decoration: underline;
+}

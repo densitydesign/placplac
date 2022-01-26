@@ -4,13 +4,14 @@ import { TextShow } from '../TextShow';
 import { GlossaryTerm, Project } from '@algocount/shared/types';
 import styles from './ProjectShow.module.css';
 import { ExperimentSection } from './components/ExperimentSection';
-import React, { ComponentType } from 'react';
+import { ComponentType, useRef } from 'react';
 import { GlossarySidebar } from '../GlossarySidebar';
 import { GlossaryCategory } from '@algocount/shared/types';
 import { Row } from '../components/Row';
 import { Section } from '../components/Section';
 import { translations } from '../translations';
 import { useReferencesAdjuster } from '../hooks';
+import { ImagesAnimated } from './components/ExperimentSection/ImagesAnimated';
 
 interface ProjectProps {
   project: Project;
@@ -19,6 +20,7 @@ interface ProjectProps {
   glossaryTerms: GlossaryTerm[];
   glossaryCategories: GlossaryCategory[];
 }
+
 export const ProjectShow = (props: ProjectProps) => {
   const {
     project,
@@ -28,14 +30,37 @@ export const ProjectShow = (props: ProjectProps) => {
     glossaryCategories,
   } = props;
   useReferencesAdjuster();
+
+  const container = useRef<HTMLDivElement>(null);
+
   return (
     <>
-      <div className={styles.hero_section}>
-        <div className={styles.hero_section_content}>
-          <h1>{project.title}</h1>
-          {project.short_description && (
-            <div className="text-only">{project.short_description}</div>
-          )}
+      <div ref={container} className={styles.hero_section}>
+        {container.current && (
+          <div className={styles.background}>
+            <ImagesAnimated
+              width={container.current!.clientWidth}
+              height={container.current!.clientHeight}
+              imagesUrls={project.experiments?.map(
+                (experiment) => experiment.cover
+              )}
+            />
+          </div>
+        )}
+        <div style={{ height: '100vh', overflow: 'auto' }}>
+          <div className={styles.description}>
+            <div className={styles.hero_section_content}>
+              <h1>{project.title}</h1>
+              {project.short_description && (
+                <div className="text-only">{project.short_description}</div>
+              )}
+            </div>
+            {project.project_explanation && (
+              <div className={styles.hero_section_content}>
+                <div className="text-only">{project.project_explanation}</div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
       {project.experiments_description && (

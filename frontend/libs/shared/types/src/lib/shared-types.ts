@@ -44,6 +44,7 @@ export type Project = {
   glossary_terms: GlossaryTerm[];
   language: LanguageOptions;
   references: Reference[];
+  project_explanation?: string;
 };
 export type Experiment = {
   id: number;

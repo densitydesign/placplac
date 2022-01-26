@@ -89,6 +89,14 @@ export const ProjectForm = (props: Omit<TabbedFormProps, 'children'>) => {
           multiline
           helperText={'A small summary description'}
         />
+        <TextInput
+          fullWidth
+          placeholder="Explain the project in few lines"
+          label="Small project explanation (255)"
+          source="project_explanation"
+          multiline
+          helperText={'An explanation of the project objective'}
+        />
         <CustomRichTextInput
           placeholder="A good idea is to fill this area with the main concept of the project."
           helperText={'Describe the project'}
