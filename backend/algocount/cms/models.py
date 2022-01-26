@@ -54,6 +54,12 @@ class Experiment(CustomModel):
     findings = models.JSONField(null=True, blank=True)
     order = models.SmallIntegerField(default=0)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    pdf_report = models.TextField(blank=True, null=True)
+
+
+class ExperimentAdditionalMaterial(CustomModel):
+    file = models.FileField()
+    experiment = models.ForeignKey(Experiment, on_delete=models.CASCADE)
 
 
 class Step(CustomModel):

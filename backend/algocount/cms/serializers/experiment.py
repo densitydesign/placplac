@@ -1,9 +1,10 @@
 import json
+import os
 
 from rest_framework import serializers
 
-from base.serializer_fields import  FormattedJSONField
-from cms.models import Experiment
+from base.serializer_fields import FormattedJSONField, CustomFileField
+from cms.models import Experiment, ExperimentAdditionalMaterial
 from cms.serializers.glossary import FullGlossaryTermSerializer
 from cms.serializers.reference import ReferenceSerializer
 from cms.serializers.step import FullStepSerializer
@@ -12,6 +13,7 @@ from cms.serializers.step import FullStepSerializer
 class ExperimentSerializer(serializers.ModelSerializer):
     step_set = serializers.PrimaryKeyRelatedField(required=False, read_only=True, many=True)
     reference_set = serializers.PrimaryKeyRelatedField(read_only=True, many=True)
+    experimentadditionalmaterial_set = serializers.PrimaryKeyRelatedField(read_only=True, many=True)
 
     class Meta:
         model = Experiment
@@ -22,8 +24,21 @@ class ExperimentSerializer(serializers.ModelSerializer):
                   "experiment_setup",
                   "findings",
                   "project",
-                  "step_set", "cover", "reference_set"]
+                  "step_set", "cover", "reference_set","pdf_report","experimentadditionalmaterial_set"]
 
+class ExperimentAdditionalMaterialSerializer(serializers.ModelSerializer):
+    name = serializers.SerializerMethodField('get_filename')
+    file = CustomFileField()
+
+    def get_filename(self, object):
+        return os.path.basename(object.file.path) if object.file else None
+
+    class Meta:
+        model = ExperimentAdditionalMaterial
+        fields = ["id", "experiment",
+                  "file",
+                  "name"
+                  ]
 
 class FullExperimentSerializer(serializers.ModelSerializer):
     context = FormattedJSONField()
@@ -32,6 +47,8 @@ class FullExperimentSerializer(serializers.ModelSerializer):
     steps = serializers.SerializerMethodField('get_steps')
     glossary_terms = serializers.SerializerMethodField('get_glossary_terms')
     references = serializers.SerializerMethodField('get_references')
+    additional_material = ExperimentAdditionalMaterialSerializer(many=True, source="experimentadditionalmaterial_set")
+
 
     def get_steps(self, object):
         return FullStepSerializer(object.step_set.all().order_by("step_number"), many=True, source="step_set").data
@@ -66,4 +83,4 @@ class FullExperimentSerializer(serializers.ModelSerializer):
                   "experiment_setup",
                   "findings",
                   "project",
-                  "steps", "cover", "glossary_terms", "references"]
+                  "steps", "cover", "glossary_terms", "references","pdf_report","additional_material"]

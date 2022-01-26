@@ -73,3 +73,11 @@ ul.download_list > li {
 .download_list a {
   text-decoration: underline;
 }
+
+.references_downloads {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+

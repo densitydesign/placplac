@@ -12,3 +12,4 @@ router.register(r'glossary-terms', views.GlossaryTermViewSet, basename='glossary
 router.register(r'references', views.ReferenceViewSet, basename='references')
 router.register(r'steps', views.StepViewSet, basename='steps')
 router.register(r'step-downloads', views.StepDownloadViewSet, basename='step-downloads')
+router.register(r'experiment-additional-material', views.ExperimentAdditionalMaterialViewSet, basename='experiment-additional-material')

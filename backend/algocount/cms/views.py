@@ -13,14 +13,15 @@ from rest_framework.parsers import MultiPartParser
 from rest_framework.response import Response
 
 from base.viewsets import CustomModelView
+from cms.filters.experiment import ExperimentAdditionalMaterialFilter
 from cms.filters.glossary_category import GlossaryCategoryFilter
 from cms.filters.glossary_term import GlossaryTermFilter
 from cms.filters.project import ProjectMediaFilter, ProjectUserFilter
 from cms.filters.reference import ReferenceFilter
 from cms.filters.step import StepFilter, StepDownloadFilter
 from cms.models import Project, Experiment, ProjectMedia, GlossaryCategory, GlossaryTerm, Step, ProjectUser, Reference, \
-    StepDownload
-from cms.serializers.experiment import ExperimentSerializer
+    StepDownload, ExperimentAdditionalMaterial
+from cms.serializers.experiment import ExperimentSerializer, ExperimentAdditionalMaterialSerializer
 from cms.serializers.glossary import GlossaryCategorySerializer, GlossaryTermSerializer
 from cms.serializers.project import ProjectSerializer, ProjectMediaSerializer, FullProjectSerializer, \
     ProjectUserSerializer
@@ -66,6 +67,7 @@ class ProjectViewSet(CustomModelView):
         instance = self.get_object()
         serializer = FullProjectSerializer(instance)
         downloads = StepDownload.objects.filter(step__experiment__project=instance)
+        additional_material = ExperimentAdditionalMaterial.objects.filter(experiment__project=instance)
         project_media = ProjectMedia.objects.filter(project=instance)
         with tempfile.TemporaryDirectory() as tmpdirname:
             tmpdirname = tmpdirname+"/exit"
@@ -76,6 +78,8 @@ class ProjectViewSet(CustomModelView):
             if not os.path.isdir(downloads_path):
                 os.mkdir(downloads_path)
             for download in downloads:
+                shutil.copy(download.file.path, downloads_path)
+            for download in additional_material:
                 shutil.copy(download.file.path, downloads_path)
             for media in project_media:
                 shutil.copy(media.file.path, downloads_path)
@@ -171,6 +175,20 @@ class StepDownloadViewSet(CustomModelView):
         if user.is_superuser:
             return StepDownload.objects.all()
         return StepDownload.objects.filter(step__experiment__project__projectuser__user=user)
+
+class ExperimentAdditionalMaterialViewSet(CustomModelView):
+    queryset = ExperimentAdditionalMaterial.objects.all()
+    serializer_class = ExperimentAdditionalMaterialSerializer
+    parser_classes = [MultiPartParser]
+    filterset_class = ExperimentAdditionalMaterialFilter
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_superuser:
+            return ExperimentAdditionalMaterial.objects.all()
+        return ExperimentAdditionalMaterial.objects.filter(experiment__project__projectuser__user=user)
+
+
 
 
 class ProjectUserViewSet(CustomModelView):

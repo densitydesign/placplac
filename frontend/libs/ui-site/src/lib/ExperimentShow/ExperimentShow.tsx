@@ -23,6 +23,9 @@ import { useReferencesAdjuster } from '../hooks';
 import { ReferenceList } from '../components/ReferenceList';
 import SimpleReactLightbox from 'simple-react-lightbox';
 import { SHOW_COMPONENTS_BUILDER } from '../builderBlocks';
+import { DownloadExperimentMaterialsButton } from './components/DownloadExperimentMaterialsButton';
+import { DownloadButton } from './components/DownloadButton/DownloadButton';
+import { DownloadAdditionalMaterialsButton } from './components/DownloadAdditionalMaterialsButton';
 export interface ExperimentShowProps {
   experiment: Experiment;
   basePath: string;
@@ -31,23 +34,20 @@ export interface ExperimentShowProps {
   language: LanguageOptions;
 }
 export const ExperimentShow = (props: ExperimentShowProps) => {
+  const { experiment, language, basePath, linkComponent, glossaryCategories } =
+    props;
   const {
-    experiment: {
-      title,
-      description,
-      context,
-      research_question: researchQuestion,
-      experiment_setup: experimentSetup,
-      steps,
-      findings,
-      glossary_terms,
-      references,
-    },
-    language,
-    basePath,
-    linkComponent,
-    glossaryCategories,
-  } = props;
+    title,
+    description,
+    context,
+    research_question: researchQuestion,
+    experiment_setup: experimentSetup,
+    steps,
+    findings,
+    glossary_terms,
+    references,
+  } = experiment;
+
   const [topPositionStep, setTopPositionStep] = useState(55);
   const glossaryCategoriesInText = glossaryCategories.filter((category) =>
     glossary_terms.some((term) => term.category_title === category.title)
@@ -249,6 +249,40 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
               <ReferenceList references={references} />
             </div>
           </Row>
+          <div
+            style={{
+              marginTop: '3em',
+              display: 'flex',
+              justifyContent: 'space-between',
+              columnGap: '10px',
+            }}
+          >
+            {experiment.steps.some((step) => step.downloads.length > 0) && (
+              <div className={styles.references_downloads}>
+                <DownloadExperimentMaterialsButton experiment={experiment} />
+              </div>
+            )}
+            {experiment.pdf_report && (
+              <div className={styles.references_downloads}>
+                <DownloadButton
+                  label="PDF report"
+                  onClick={() => {
+                    const a = document.createElement('a');
+                    a.href = experiment.pdf_report!;
+                    a.download = experiment.pdf_report!.split('/').pop()!;
+                    document.body.append(a);
+                    a.click();
+                    a.remove();
+                  }}
+                />
+              </div>
+            )}
+            {experiment.additional_material && (
+              <div className={styles.references_downloads}>
+                <DownloadAdditionalMaterialsButton experiment={experiment} />
+              </div>
+            )}
+          </div>
         </Section>
       )}
       <GlossarySidebar

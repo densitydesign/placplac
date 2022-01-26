@@ -23,8 +23,8 @@ export const DownloadButton = (props: DownloadButtonProps) => {
       responseType: "blob",
     })
       .then((response) => {
-        var a = document.createElement("a");
-        var url = window.URL.createObjectURL(response.data);
+        const a = document.createElement("a");
+        const url = window.URL.createObjectURL(response.data);
         a.href = url;
         a.download = `${props.project?.title}.zip`;
         document.body.append(a);
