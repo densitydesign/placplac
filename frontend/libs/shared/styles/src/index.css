@@ -101,3 +101,7 @@ iframe {
 .main-application pre {
   white-space: normal;
 }
+
+.main-application a {
+  text-decoration: underline;
+}
