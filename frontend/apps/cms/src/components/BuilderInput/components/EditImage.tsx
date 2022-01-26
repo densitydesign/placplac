@@ -8,8 +8,14 @@ import { CustomRichTextInput } from '../../CustomRichTextInput';
 import { ReferenceInputImage } from '../../ReferenceInputImage';
 interface Props {
   project: number;
+  glossaryTermsIds: number[];
+  referencesIds: number[];
 }
-export const EditImage = ({ project }: Props) => {
+export const EditImage = ({
+  project,
+  referencesIds,
+  glossaryTermsIds,
+}: Props) => {
   const { change } = useForm();
   return (
     <Grid container direction="column">
@@ -85,6 +91,8 @@ export const EditImage = ({ project }: Props) => {
               <CustomRichTextInput
                 small
                 helperText={false}
+                referencesIds={referencesIds}
+                glossaryTermsIds={glossaryTermsIds}
                 source="caption_bi"
                 label="Caption"
                 {...rest}
@@ -100,6 +108,8 @@ export const EditImage = ({ project }: Props) => {
             formData.type.includes('description') && (
               <CustomRichTextInput
                 helperText={false}
+                referencesIds={referencesIds}
+                glossaryTermsIds={glossaryTermsIds}
                 multiline
                 fullWidth
                 source="description_bi"
