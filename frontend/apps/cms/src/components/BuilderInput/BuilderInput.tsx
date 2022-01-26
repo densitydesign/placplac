@@ -211,7 +211,13 @@ export const BuilderInput = (props: BuilderInputProps) => {
           ? SHOW_COMPONENTS_BUILDER.image_step
           : SHOW_COMPONENTS_BUILDER.image),
         form: {
-          component: <EditImage project={project} />,
+          component: (
+            <EditImage
+              referencesIds={referencesIds}
+              glossaryTermsIds={glossaryTermsIds}
+              project={project}
+            />
+          ),
 
           getInitialContent: (content: any) => {
             const type: string[] = [];
@@ -225,6 +231,7 @@ export const BuilderInput = (props: BuilderInputProps) => {
               description_bi: content?.description,
               subtitle_bi: content?.subtitle,
               type,
+              image: content.image,
             };
           },
           getSaveContent: (values: any) => {
