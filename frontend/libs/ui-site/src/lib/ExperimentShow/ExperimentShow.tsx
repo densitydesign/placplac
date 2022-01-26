@@ -239,7 +239,11 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
           {renderSection(findings, true)}
         </Section>
       )}
-      {references && references.length > 0 && (
+      {((references && references.length > 0) ||
+        experiment.steps.some((step) => step.downloads.length > 0) ||
+        experiment.pdf_report ||
+        (experiment.additional_material &&
+          experiment.additional_material.length > 0)) && (
         <Section
           id="references"
           title={translations[language].references_title}
@@ -277,11 +281,12 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
                 />
               </div>
             )}
-            {experiment.additional_material && (
-              <div className={styles.references_downloads}>
-                <DownloadAdditionalMaterialsButton experiment={experiment} />
-              </div>
-            )}
+            {experiment.additional_material &&
+              experiment.additional_material.length > 0 && (
+                <div className={styles.references_downloads}>
+                  <DownloadAdditionalMaterialsButton experiment={experiment} />
+                </div>
+              )}
           </div>
         </Section>
       )}
