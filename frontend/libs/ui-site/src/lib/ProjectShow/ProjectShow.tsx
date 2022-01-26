@@ -91,7 +91,7 @@ export const ProjectShow = (props: ProjectProps) => {
           <TextShow text={project.long_description} />
         </Section>
       )}
-      {project.references && (
+      {project.references && project.references.length > 0 && (
         <Section
           id="references"
           title={translations[project.language].only_references_title}
