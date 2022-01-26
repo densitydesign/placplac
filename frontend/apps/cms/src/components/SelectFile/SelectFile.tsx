@@ -5,7 +5,7 @@ import {
   Grid,
   InputAdornment,
   Typography,
-} from "@material-ui/core";
+} from '@material-ui/core';
 import {
   FieldTitle,
   InputHelperText,
@@ -27,10 +27,10 @@ import {
   FileInput,
   FileField,
   Button,
-} from "react-admin";
-import ListIcon from "@material-ui/icons/AttachFile";
-import { useCallback, useState } from "react";
-import { MediaDatagrid } from "./components/MediaDatagrid";
+} from 'react-admin';
+import ListIcon from '@material-ui/icons/AttachFile';
+import { useCallback, useState } from 'react';
+import { MediaDatagrid } from './components/MediaDatagrid';
 
 export interface SelectFileProps extends SelectInputProps {
   source?: string;
@@ -40,7 +40,7 @@ export interface SelectFileProps extends SelectInputProps {
   record?: Record;
   project: number;
   handleChange: () => void;
-  type: "image" | "file";
+  type: 'image' | 'file';
 }
 
 export const SelectFile = ({
@@ -69,7 +69,7 @@ export const SelectFile = ({
   label,
   loaded,
   loading,
-  margin = "dense",
+  margin = 'dense',
   onBlur,
   onChange,
   onCreate,
@@ -131,7 +131,7 @@ export const SelectFile = ({
         id={id}
         {...input}
         label={
-          label !== "" &&
+          label !== '' &&
           label !== false && (
             <FieldTitle
               label={label}
@@ -150,7 +150,7 @@ export const SelectFile = ({
                 aria-label="Select media"
                 title="Select media"
                 onClick={() => setOpen(true)}
-                style={{ marginRight: "15px" }}
+                style={{ marginRight: '15px' }}
               >
                 <ListIcon />
               </Button>
@@ -179,19 +179,21 @@ export const SelectFile = ({
           <FormWithRedirect
             resource="project-media"
             initialValues={{ project, type }}
-            save={(values) => {
+            save={({ description_file, ...values }) => {
               mutate(
                 {
-                  type: "createMultipart",
-                  resource: "project-media",
-                  payload: { data: values },
+                  type: 'createMultipart',
+                  resource: 'project-media',
+                  payload: {
+                    data: { ...values, description: description_file },
+                  },
                 },
                 {
                   onSuccess: (data) => {
                     handleChangedBackend();
                   },
                   onFailure: ({ error }) => {
-                    notify(error.message, "error");
+                    notify(error.message, 'error');
                   },
                 }
               );
@@ -199,12 +201,12 @@ export const SelectFile = ({
             render={({ handleSubmitWithRedirect, pristine, saving }) => (
               <>
                 <Typography variant="h5">Add new file</Typography>
-                {type === "image" ? (
+                {type === 'image' ? (
                   <ImageInput
                     helperText={false}
                     validate={required()}
                     source="file"
-                    label={""}
+                    label={''}
                     accept="image/*"
                   >
                     <ImageField source="src" title="title" />
@@ -214,12 +216,12 @@ export const SelectFile = ({
                     helperText={false}
                     validate={required()}
                     source="file"
-                    label={""}
+                    label={''}
                   >
                     <FileField source="src" title="title" />
                   </FileInput>
                 )}
-                <TextInput fullWidth source="description" />
+                <TextInput fullWidth source="description_file" />
                 <Grid container justifyContent="flex-end">
                   <Grid item>
                     <SaveButton
@@ -233,7 +235,7 @@ export const SelectFile = ({
             )}
           />
           <Typography variant="h5">Or choose a file</Typography>
-          <Box mt={"8px"}>
+          <Box mt={'8px'}>
             <ListBase
               key={version}
               resource="project-media"

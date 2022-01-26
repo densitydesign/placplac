@@ -1,22 +1,32 @@
 {
-  "extends": "./tsconfig.json",
-  "compilerOptions": {
-    "outDir": "../../dist/out-tsc",
-    "types": ["node"]
-  },
-  "files": [
-    "../../node_modules/@nrwl/react/typings/cssmodule.d.ts",
-    "../../node_modules/@nrwl/react/typings/image.d.ts"
-  ],
-  "exclude": [
-    "**/*.spec.ts",
-    "**/*.test.ts",
-    "**/*.spec.tsx",
-    "**/*.test.tsx",
-    "**/*.spec.js",
-    "**/*.test.js",
-    "**/*.spec.jsx",
-    "**/*.test.jsx"
-  ],
-  "include": ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx", "../shared/types/src/lib/react-sigma.d.ts"]
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "outDir": "../../dist/out-tsc",
+        "types": [
+            "node"
+        ]
+    },
+    "files": [
+        "../../node_modules/@nrwl/react/typings/cssmodule.d.ts",
+        "../../node_modules/@nrwl/react/typings/image.d.ts",
+        "../shared/types/src/lib/jslibutils.d.ts"
+    ],
+    "exclude": [
+        "**/*.spec.ts",
+        "**/*.test.ts",
+        "**/*.spec.tsx",
+        "**/*.test.tsx",
+        "**/*.spec.js",
+        "**/*.test.js",
+        "**/*.spec.jsx",
+        "**/*.test.jsx"
+    ],
+    "include": [
+        "**/*.js",
+        "**/*.jsx",
+        "**/*.ts",
+        "**/*.tsx",
+        "../shared/types/src/lib/react-sigma.d.ts",
+        "../shared/types/src/lib/jslibutils.d.ts"
+    ]
 }

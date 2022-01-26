@@ -59,6 +59,8 @@ export type Experiment = {
   tags: string[];
   glossary_terms: GlossaryTerm[];
   references: Reference[];
+  pdf_report?: string;
+  additional_material?: { id: string; file: string; name: string }[];
 };
 
 export type Footer = {

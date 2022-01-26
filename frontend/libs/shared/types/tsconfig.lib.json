@@ -7,7 +7,7 @@
     },
     "include": [
         "**/*.ts"
-    ],
+, "src/lib/jslibutils.d.ts"    ],
     "exclude": [
         "**/*.spec.ts"
     ]

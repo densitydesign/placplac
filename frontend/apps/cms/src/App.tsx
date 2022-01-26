@@ -61,6 +61,7 @@ function App() {
         <Resource name="glossary-terms" edit={GlossaryTermEdit} />,
         <Resource name="steps" edit={StepEdit} />,
         <Resource name="step-downloads" />,
+        <Resource name="experiment-additional-material" />,
         <Resource name="glossary-categories" edit={GlossaryCategoryEdit} />,
         <Resource name="project-collaborators" />,
         <Resource name="references" edit={ReferenceEdit} />,
