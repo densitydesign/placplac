@@ -98,3 +98,6 @@
 iframe {
   border: none;
 }
+.main-application pre {
+  white-space: normal;
+}
