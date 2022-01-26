@@ -20,9 +20,6 @@
   box-sizing: border-box;
 }
 
-.hero_section_content h1 {
-  font-size: 7em;
-}
 .description {
   position: relative;
   width: 100%;
