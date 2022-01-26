@@ -41,9 +41,9 @@ export const ProjectShow = (props: ProjectProps) => {
             <ImagesAnimated
               width={container.current!.clientWidth}
               height={container.current!.clientHeight}
-              imagesUrls={project.experiments?.map(
-                (experiment) => experiment.cover
-              )}
+              imagesUrls={project.experiments
+                ?.map((experiment) => experiment.cover)
+                .filter((cover) => !!cover)}
             />
           </div>
         )}
