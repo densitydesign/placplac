@@ -3,6 +3,9 @@
   flex-direction: column;
   width: 100%;
 }
+.container a {
+  text-decoration: none;
+}
 .glossary_row {
   flex-grow: 0;
   max-width: 100%;
