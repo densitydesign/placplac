@@ -65,14 +65,14 @@ function useGlossaryTerms(glossaryTermsIds: number[]) {
         .filter((record) => !!record)
         .map((record) => {
           return {
-            value: record,
+            value: record.id.toString(),
             text: record.title,
           };
         });
     }
     return [];
   }, [data]);
-  return { data: actualData, loading };
+  return { data: actualData, loading, unformattedGlossaryItems: data };
 }
 
 export const CustomRichTextInput = (props: CustomRichTextInputProps) => {
@@ -100,8 +100,11 @@ export const CustomRichTextInput = (props: CustomRichTextInputProps) => {
     meta: { touched, error },
   } = useInput({ source, ...rest });
 
-  const { data: glossaryItems, loading: loadingG } =
-    useGlossaryTerms(glossaryTermsIds);
+  const {
+    data: glossaryItems,
+    loading: loadingG,
+    unformattedGlossaryItems,
+  } = useGlossaryTerms(glossaryTermsIds);
 
   const { data: referenceItems, loading: loadirngR } =
     useReferences(referencesIds);
@@ -155,7 +158,7 @@ export const CustomRichTextInput = (props: CustomRichTextInputProps) => {
             ? 'undo redo | bold italic underline | '
             : 'undo redo | formatselect | ' +
               'bold italic underline backcolor forecolor | alignleft aligncenter ' +
-              'alignright alignjustify | bullist numlist outdent indent emoticons table image link example | ' +
+              'alignright alignjustify | bullist numlist outdent indent emoticons table image link example glossary | ' +
               'removeformat  | help ',
           content_style: contentUiCss,
           body_class: 'main-application',
@@ -224,6 +227,51 @@ export const CustomRichTextInput = (props: CustomRichTextInputProps) => {
                 },
               });
             };
+            const openDialogGlossary = function () {
+              return editor.windowManager.open({
+                title: 'Glossary ',
+                body: {
+                  type: 'panel',
+                  items: [
+                    {
+                      type: 'selectbox', // component type
+                      name: 'glossaryterm', // identifier
+                      label: 'Select glossary term',
+                      items: glossaryItems,
+                    },
+                  ],
+                },
+                buttons: [
+                  {
+                    type: 'cancel',
+                    text: 'Close',
+                  },
+                  {
+                    type: 'submit',
+                    text: 'Save',
+                    primary: true,
+                  },
+                ],
+                onSubmit: function (api) {
+                  const data = api.getData() as any;
+                  const term = unformattedGlossaryItems.find(
+                    (glossaryTerm) =>
+                      glossaryTerm.id.toString() ===
+                      data.glossaryterm.toString()
+                  );
+                  if (term) {
+                    const html = `
+                    <span class="mceNonEditable mention" style="background-color:${term.color}"> 
+                        <a href='#glossary/${term.id}'>
+                            <span>${term.title}</span>
+                        </a>
+                    </span>`;
+                    editor.insertContent(html);
+                  }
+                  api.close();
+                },
+              });
+            };
             /* Add a button that opens a window */
             editor.ui.registry.addButton('example', {
               text: 'Add reference',
@@ -232,52 +280,11 @@ export const CustomRichTextInput = (props: CustomRichTextInputProps) => {
                 openDialog();
               },
             });
-
-            editor.ui.registry.addAutocompleter('glossary_autocomplete', {
-              ch: '#',
-              minChars: 0,
-              columns: 1,
-              highlightOn: ['char_name'],
-              onAction: (api, rng, value: any) => {
-                const html = `
-                    <span class="mceNonEditable mention" style="background-color:${value.color}"> 
-                        <a href='#glossary/${value.id}'>
-                            <span>${value.title}</span>
-                        </a>
-                    </span>`;
-
-                editor.selection.setRng(rng);
-                editor.insertContent(html);
-                api.hide();
-              },
-              fetch: function (pattern) {
-                return new Promise(function (resolve) {
-                  const results = getMatchedChars(pattern).map(function (char) {
-                    return {
-                      type: 'cardmenuitem',
-                      value: char.value,
-                      label: char.text,
-                      items: [
-                        {
-                          type: 'cardcontainer',
-                          direction: 'vertical',
-                          items: [
-                            {
-                              type: 'cardtext',
-                              text: char.text,
-                              name: 'char_name',
-                            },
-                            {
-                              type: 'cardtext',
-                              text: char.value.category_title,
-                            },
-                          ],
-                        },
-                      ],
-                    };
-                  }) as any;
-                  resolve(results);
-                });
+            editor.ui.registry.addButton('glossary', {
+              text: 'Add glossary term',
+              onAction: function () {
+                /* Open window */
+                openDialogGlossary();
               },
             });
           },
