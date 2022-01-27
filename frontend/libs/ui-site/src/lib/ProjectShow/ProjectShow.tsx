@@ -4,7 +4,7 @@ import { TextShow } from '../TextShow';
 import { GlossaryTerm, Project } from '@algocount/shared/types';
 import styles from './ProjectShow.module.css';
 import { ExperimentSection } from './components/ExperimentSection';
-import { ComponentType, useRef } from 'react';
+import { ComponentType, useEffect, useRef, useState } from 'react';
 import { GlossarySidebar } from '../GlossarySidebar';
 import { GlossaryCategory } from '@algocount/shared/types';
 import { Row } from '../components/Row';
@@ -30,13 +30,18 @@ export const ProjectShow = (props: ProjectProps) => {
     glossaryCategories,
   } = props;
   useReferencesAdjuster();
-
+  const [version, setVersion] = useState(0);
   const container = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    console.log('ciao');
+    setVersion(1);
+    return () => setVersion(0);
+  }, []);
 
   return (
     <>
       <div ref={container} className={styles.hero_section}>
-        {container.current && (
+        {container.current && version === 1 && (
           <div className={styles.background}>
             <ImagesAnimated
               width={container.current!.clientWidth}
