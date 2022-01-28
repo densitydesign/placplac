@@ -1,3 +1,5 @@
+import os
+
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 from django.core.mail import send_mail
@@ -29,7 +31,7 @@ class UserSerializer(serializers.ModelSerializer):
             send_mail(
                 'Account activated',
                 'Your account is active',
-                'from@example.com',
+                os.getenv("EMAIL_HOST_USER"),
                 [instance.email],
                 fail_silently=False,
             )
@@ -63,9 +65,9 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         users = User.objects.filter(is_superuser=True)
         send_mail(
             'New user',
-            'New user {} {} registered to Algocount with username {}'.format(user.first_name, user.last_name,
+            'New user {} {} registered to {} with username {}'.format(user.first_name, user.last_name,os.getenv("PLATFORM_NAME"),
                                                                              user.email),
-            'from@example.com',
+            os.getenv("EMAIL_HOST_USER"),
             [user.email for user in users],
             fail_silently=False,
         )
