@@ -1,3 +1,5 @@
+import os
+
 def populate_models(sender, **kwargs):
     from django.contrib.auth import get_user_model
     from django.contrib.auth.models import Group, Permission
@@ -10,8 +12,8 @@ def populate_models(sender, **kwargs):
             group.permissions.add(permission)
 
     User = get_user_model()
-    if not User.objects.filter(email="admin@admin.it").exists():
-        User.objects.create_superuser('admin@admin.it', 'admin1234')
+    if not User.objects.filter(email=os.getenv("ADMIN_EMAIL")).exists():
+        User.objects.create_superuser(os.getenv("ADMIN_EMAIL"), os.getenv("ADMIN_PASSWORD"))
 
     group, result = Group.objects.get_or_create(name="editor")
     add_permissions(group, Project)

@@ -15,19 +15,17 @@ export const ExperimentActions = (props: ExperimentActionsProps) => {
     <TopToolbarWithTitle
       title={
         <>
-          <h2 className="breadcumb">{'Experiment >'}</h2>
+          <span className="breadcumb">{'Experiment >'}</span>
           {record && data && (
             <Breadcrumbs
               aria-label="breadcrumb"
-              separator={
-                <Typography color="textPrimary" variant="h4">{`>`}</Typography>
-              }
+              separator={<span className="breadcumb-item">{`>`}</span>}
             >
               <Link to={`/projects/${data.id}/1`}>
-                <Typography variant="h3">{data.title}</Typography>
+                <span className="breadcumb-item">{data.title}</span>
               </Link>
               <Link to={`/experiments/${record.id}`}>
-                <Typography variant="h3">{record.title}</Typography>
+                <span className="breadcumb-item">{record.title}</span>
               </Link>
             </Breadcrumbs>
           )}

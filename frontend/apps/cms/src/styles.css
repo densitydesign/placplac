@@ -30,3 +30,11 @@ html {
   text-transform: uppercase;
   margin: 0;
 }
+
+span.breadcumb {
+  font-size: 21px;
+}
+.breadcumb-item {
+  font-size: 28px;
+  color: black;
+}
