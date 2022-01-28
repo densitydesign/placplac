@@ -11,6 +11,7 @@ import {
   CreateButton,
   ListActionsProps,
   TopToolbar,
+  EditButton,
 } from 'react-admin';
 import { CustomList } from '../components/CustomList';
 import { CloneButton } from './CloneButton';
@@ -58,6 +59,7 @@ export const ProjectList = (props: ListProps) => {
           label=""
           render={(record?: Record) => (
             <>
+              {record && <EditButton record={record} />}
               {record && <PreviewButton project={record.id} />}
               {record && <CloneButton project={record.id} />}
               {record && record.status === '1' && (
