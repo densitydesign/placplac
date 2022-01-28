@@ -3,6 +3,7 @@ import { useRecordContext } from 'ra-core';
 import { Typography, Breadcrumbs } from '@material-ui/core';
 import { useGetOne } from 'react-admin';
 import { TopToolbarWithTitle } from '../../components/TopToolbarWithTitle';
+import { PreviewButton } from '../PreviewButton';
 
 interface GlossaryCategoryActionsProps {
   project?: number | string;
@@ -34,6 +35,8 @@ export const GlossaryCategoryActions = (
           )}
         </>
       }
-    ></TopToolbarWithTitle>
+    >
+      {data && <PreviewButton project={data.id} />}
+    </TopToolbarWithTitle>
   );
 };

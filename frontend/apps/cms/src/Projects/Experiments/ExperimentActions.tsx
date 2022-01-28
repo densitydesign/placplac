@@ -2,6 +2,7 @@ import { Link } from 'ra-ui-materialui';
 import { useGetOne, useRecordContext } from 'ra-core';
 import { Typography, Breadcrumbs } from '@material-ui/core';
 import { TopToolbarWithTitle } from '../../components/TopToolbarWithTitle';
+import { PreviewButton } from '../PreviewButton';
 
 interface ExperimentActionsProps {
   project?: number | string;
@@ -31,6 +32,8 @@ export const ExperimentActions = (props: ExperimentActionsProps) => {
           )}
         </>
       }
-    ></TopToolbarWithTitle>
+    >
+      {data && <PreviewButton project={data.id} />}
+    </TopToolbarWithTitle>
   );
 };
