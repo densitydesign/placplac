@@ -27,6 +27,9 @@ import {
   FileInput,
   FileField,
   Button,
+  ListToolbar,
+  FilterButton,
+  TopToolbar,
 } from 'react-admin';
 import ListIcon from '@material-ui/icons/AttachFile';
 import { useCallback, useState } from 'react';
@@ -244,6 +247,22 @@ export const SelectFile = ({
               perPage={10}
               filterDefaultValues={{ type, project }}
             >
+              <ListToolbar
+                filters={[
+                  <TextInput
+                    source="file"
+                    label="File name"
+                    placeholder="Search for file name"
+                    alwaysOn
+                    fullWidth
+                  />,
+                ]}
+                actions={
+                  <TopToolbar>
+                    <FilterButton />
+                  </TopToolbar>
+                }
+              />
               <MediaDatagrid
                 type={type}
                 key={version}

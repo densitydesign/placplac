@@ -221,6 +221,7 @@ export const BuilderInput = (props: BuilderInputProps) => {
 
           getInitialContent: (content: any) => {
             const type: string[] = [];
+            console.log(content);
             if (content?.title) type.push('title');
             if (content?.subtitle) type.push('subtitle');
             if (content?.caption) type.push('caption');
@@ -231,7 +232,7 @@ export const BuilderInput = (props: BuilderInputProps) => {
               description_bi: content?.description,
               subtitle_bi: content?.subtitle,
               type,
-              image: content.image,
+              image: content?.image,
             };
           },
           getSaveContent: (values: any) => {
