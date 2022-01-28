@@ -21,26 +21,24 @@ export const ReferenceActions = () => {
     <TopToolbarWithTitle
       title={
         <>
-          <h2 className="breadcumb">{'References >'}</h2>
+          <span className="breadcumb">{'References >'}</span>
           {record && (
             <Breadcrumbs
               aria-label="breadcrumb"
-              separator={
-                <Typography color="textPrimary" variant="h4">{`>`}</Typography>
-              }
+              separator={<span className="breadcumb-item">{`>`}</span>}
             >
               {project && (
                 <Link to={`/projects/${project.id}/3`}>
-                  <Typography variant="h3">{project.title}</Typography>
+                  <span className="breadcumb-item">{project.title}</span>
                 </Link>
               )}
               {experiment && (
                 <Link to={`/experiments/${experiment.id}/5`}>
-                  <Typography variant="h3">{experiment.title}</Typography>
+                  <span className="breadcumb-item">{experiment.title}</span>
                 </Link>
               )}
               <Link to={`/references/${record.id}`}>
-                <Typography variant="h3">
+                <span className="breadcumb-item">
                   <RichTextField
                     variant="inherit"
                     stripTags
@@ -49,12 +47,12 @@ export const ReferenceActions = () => {
                       id: record.description.substring(0, 20).trimEnd() + '...',
                     }}
                   />
-                </Typography>
+                </span>
               </Link>
             </Breadcrumbs>
           )}
         </>
       }
     ></TopToolbarWithTitle>
-  ); 
+  );
 };

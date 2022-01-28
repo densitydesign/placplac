@@ -20,22 +20,20 @@ export const StepActions = (props: StepActionsProps) => {
     <TopToolbarWithTitle
       title={
         <>
-          <h2 className="breadcumb">{'Step >'}</h2>
+          <span className="breadcumb">{'Step >'}</span>
           {record && data && dataExp && (
             <Breadcrumbs
               aria-label="breadcrumb"
-              separator={
-                <Typography color="textPrimary" variant="h4">{`>`}</Typography>
-              }
+              separator={<span className="breadcumb-item">{`>`}</span>}
             >
               <Link to={`/projects/${data.id}`}>
-                <Typography variant="h3">{data.title}</Typography>
+                <span className="breadcumb-item">{data.title}</span>
               </Link>
               <Link to={`/experiments/${dataExp.id}/3`}>
-                <Typography variant="h3">{dataExp.title}</Typography>
+                <span className="breadcumb-item">{dataExp.title}</span>
               </Link>
               <Link to={`/steps/${record.id}`}>
-                <Typography variant="h3">{record.title}</Typography>
+                <span className="breadcumb-item">{record.title}</span>
               </Link>
             </Breadcrumbs>
           )}

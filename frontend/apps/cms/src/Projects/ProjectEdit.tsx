@@ -11,16 +11,14 @@ const PostEditActions = ({ data }: { data?: Record }) => {
     <TopToolbarWithTitle
       title={
         <>
-          <h2 className="breadcumb">{'Project >'}</h2>
+          <span className="breadcumb">{'Project >'}</span>
           {data && (
             <Breadcrumbs
               aria-label="breadcrumb"
-              separator={
-                <Typography color="textPrimary" variant="h4">{`>`}</Typography>
-              }
+              separator={<span className="breadcumb-item">{`>`}</span>}
             >
               <Link to={`/projects/${data.id}`}>
-                <Typography variant="h3">{data.title}</Typography>
+                <span className="breadcumb-item">{data.title}</span>
               </Link>
             </Breadcrumbs>
           )}
