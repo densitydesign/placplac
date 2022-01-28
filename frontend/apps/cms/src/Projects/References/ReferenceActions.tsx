@@ -3,6 +3,7 @@ import { useRecordContext } from 'ra-core';
 import { Typography, Breadcrumbs } from '@material-ui/core';
 import { RichTextField, useGetOne } from 'react-admin';
 import { TopToolbarWithTitle } from '../../components/TopToolbarWithTitle';
+import { PreviewButton } from '../PreviewButton';
 
 export const ReferenceActions = () => {
   const record = useRecordContext();
@@ -53,6 +54,8 @@ export const ReferenceActions = () => {
           )}
         </>
       }
-    ></TopToolbarWithTitle>
+    >
+      {project && <PreviewButton project={project.id} />}
+    </TopToolbarWithTitle>
   );
 };

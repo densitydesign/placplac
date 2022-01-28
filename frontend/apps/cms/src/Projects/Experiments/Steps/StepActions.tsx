@@ -4,6 +4,7 @@ import { useRecordContext } from 'ra-core';
 import { Typography, Breadcrumbs } from '@material-ui/core';
 import { TopToolbarWithTitle } from '../../../components/TopToolbarWithTitle';
 import { useGetOne } from 'react-admin';
+import { PreviewButton } from '../../PreviewButton';
 
 interface StepActionsProps {
   experiment?: number | string;
@@ -39,6 +40,8 @@ export const StepActions = (props: StepActionsProps) => {
           )}
         </>
       }
-    ></TopToolbarWithTitle>
+    >
+      {data && <PreviewButton project={data.id} />}
+    </TopToolbarWithTitle>
   );
 };
