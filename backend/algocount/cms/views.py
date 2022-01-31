@@ -37,7 +37,7 @@ class ProjectViewSet(CustomModelView):
         if not self.request.user.is_superuser and not ProjectUser.objects.filter(project=instance,
                                                                                  user=self.request.user,
                                                                                  level="1").exists() \
-                and request.method not in permissions.SAFE_METHODS:
+                and request.method not in [*permissions.SAFE_METHODS, "PATCH"]:
             raise exceptions.PermissionDenied()
 
         return super(ProjectViewSet, self).check_object_permissions(request, instance)
@@ -239,9 +239,9 @@ class GlossaryCategoryViewSet(CustomModelView):
     filterset_class = GlossaryCategoryFilter
 
     def check_object_permissions(self, request, obj):
-        if not self.request.user.is_superuser and not GlossaryCategory.objects.filter(
-                project__projectuser__user=self.request.user,
-        ).exists() and request.method not in permissions.SAFE_METHODS:
+        if not self.request.user.is_superuser\
+                and not ProjectUser.objects.filter(project=obj.project, user=self.request.user, level="1").exists()\
+                and request.method not in permissions.SAFE_METHODS:
             raise exceptions.PermissionDenied()
 
         return super(GlossaryCategoryViewSet, self).check_object_permissions(request, obj)
