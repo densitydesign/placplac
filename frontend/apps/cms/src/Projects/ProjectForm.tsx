@@ -142,39 +142,40 @@ export const ProjectForm = (props: Omit<TabbedFormProps, 'children'>) => {
             small
             glossaryTermsIds={props.record?.glossaryterm_set}
           />
-
-          <AddGlossaryCategoryButton />
-
-          <ReferenceManyField
-            label="Glossary categories"
-            reference="glossary-categories"
-            target="project"
-            fullWidth
-          >
-            <Datagrid>
-              <TextField source="title" />
-              <TextField source="description" />
-              <FunctionField
-                render={(record?: Record) =>
-                  record && record.project ? (
-                    <EditButton record={record} />
-                  ) : null
-                }
-              />
-              <FunctionField
-                render={(record?: Record) =>
-                  record && record.project ? (
-                    <DeleteButton
-                      record={record}
-                      redirect={false}
-                      mutationMode="optimistic"
-                    />
-                  ) : null
-                }
-              />
-            </Datagrid>
-          </ReferenceManyField>
-
+          {props.record.id && props.record.user_level === '1' && (
+            <>
+              <AddGlossaryCategoryButton />
+              <ReferenceManyField
+                label="Glossary categories"
+                reference="glossary-categories"
+                target="project"
+                fullWidth
+              >
+                <Datagrid>
+                  <TextField source="title" />
+                  <TextField source="description" />
+                  <FunctionField
+                    render={(record?: Record) =>
+                      record && record.project ? (
+                        <EditButton record={record} />
+                      ) : null
+                    }
+                  />
+                  <FunctionField
+                    render={(record?: Record) =>
+                      record && record.project ? (
+                        <DeleteButton
+                          record={record}
+                          redirect={false}
+                          mutationMode="optimistic"
+                        />
+                      ) : null
+                    }
+                  />
+                </Datagrid>
+              </ReferenceManyField>
+            </>
+          )}
           <AddGlossaryTermButton />
           <ReferenceArrayField
             label="Glossary terms"
