@@ -19,7 +19,21 @@
   padding: 4rem 8rem;
   box-sizing: border-box;
 }
+.description_container {
+  height: 100vh;
+  overflow: auto;
+}
 
+/* Hide scrollbar for Chrome, Safari and Opera */
+.description_container::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.description_container {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
 .description {
   position: relative;
   width: 100%;

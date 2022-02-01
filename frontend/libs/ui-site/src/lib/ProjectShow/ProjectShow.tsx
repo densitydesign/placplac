@@ -52,7 +52,7 @@ export const ProjectShow = (props: ProjectProps) => {
             />
           </div>
         )}
-        <div style={{ height: '100vh', overflow: 'auto' }}>
+        <div className={styles.description_container}>
           <div className={styles.description}>
             <div className={styles.hero_section_content}>
               <h1>{project.title}</h1>
