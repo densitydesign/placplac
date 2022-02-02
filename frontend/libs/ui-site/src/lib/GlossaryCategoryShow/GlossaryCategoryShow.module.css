@@ -1,24 +1,27 @@
 .main {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: 480px auto;
   width: 100%;
-  height: 100%;
-  flex: 1;
+  border-bottom: 1px solid black;
+  min-height: calc(100vh - 55px);
 }
 .main .sidebar {
-  width: 480px;
   height: auto;
   background: white;
   padding: 40px 50px;
   box-sizing: border-box;
-  border-right: 1px solid black;
-  min-width: 480px;
+  align-self: flex-start;
+  overflow: hidden;
+  position: sticky;
+  top: 55px;
 }
 
 .content {
   display: flex;
   flex-direction: column;
   width: 100%;
+  border-left: 1px solid black;
+  box-sizing: border-box;
 }
 
 .content a {
@@ -65,6 +68,8 @@
   flex-direction: column;
   border-bottom: 1px solid black;
   box-sizing: border-box;
+  margin-top: -55px;
+  padding-top: 55px;
 }
 .description {
   padding: 0em 5em;
