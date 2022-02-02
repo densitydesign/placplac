@@ -46,7 +46,7 @@ export const GlossarySidebar = (props: GlossarySidebarProps) => {
       style={
         open
           ? { right: 0 }
-          : { right: `-${ref.current ? ref.current.offsetWidth : 0}px` }
+          : { right: `-${ref.current ? ref.current.offsetWidth : 500}px` }
       }
       className={styles.glossary}
       ref={ref}
