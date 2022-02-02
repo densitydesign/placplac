@@ -13,8 +13,7 @@ RUN pip3 install -q gunicorn
 COPY . /app
 RUN mkdir -p /app/backend/algocount/media
 WORKDIR /app/frontend
-RUN npm i
-RUN npm i -g cross-env
+RUN npm ci
 WORKDIR /app/backend/algocount/
 
 
