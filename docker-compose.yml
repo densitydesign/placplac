@@ -39,3 +39,4 @@ services:
       - db
     environment:
       - WAIT_HOSTS = db:5432
+      - WAIT_AFTER = 30
