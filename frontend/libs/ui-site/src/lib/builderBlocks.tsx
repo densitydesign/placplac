@@ -7,6 +7,7 @@ import { ImageShow } from './ImageShow';
 import { ImageShowStep } from './ImageShowStep';
 import { SigmaShow } from './SigmaShow';
 import { TextShow } from './TextShow';
+import { getRealPath } from './utils';
 import { VideoPlayer } from './VideoPlayer';
 
 export const SHOW_COMPONENTS_BUILDER: BuilderShowBlocks = {
@@ -28,7 +29,7 @@ export const SHOW_COMPONENTS_BUILDER: BuilderShowBlocks = {
       >
         <ImageShow
           description={content.description}
-          image={content.image}
+          image={getRealPath(content.image)}
           caption={content.caption}
           title={content.title}
           subtitle={content.subtitle}
@@ -55,7 +56,7 @@ export const SHOW_COMPONENTS_BUILDER: BuilderShowBlocks = {
       >
         <ImageShowStep
           description={content.description}
-          image={content.image}
+          image={getRealPath(content.image)}
           caption={content.caption}
           title={content.title}
           subtitle={content.subtitle}
@@ -68,7 +69,7 @@ export const SHOW_COMPONENTS_BUILDER: BuilderShowBlocks = {
     description: 'Video player',
     render: (content: any) => (
       <VideoPlayer
-        src={content.src}
+        src={getRealPath(content.src)}
         autoplay={content.autoplay}
         height={content.height}
         muted={content.muted}
@@ -102,13 +103,16 @@ export const SHOW_COMPONENTS_BUILDER: BuilderShowBlocks = {
   iframe: {
     description: 'Embed block',
     render: (content: any) => (
-      <IFrame src={content.src} height={content.height} />
+      <IFrame src={getRealPath(content.src)} height={content.height} />
     ),
   },
   sigma: {
     description: 'Sigma gexf file',
     render: (content: any) => (
-      <SigmaShow height={content.height} gexfPath={content.gexfFile} />
+      <SigmaShow
+        height={content.height}
+        gexfPath={getRealPath(content.gexfFile)}
+      />
     ),
   },
 };

@@ -2,7 +2,7 @@ import { Experiment } from '@algocount/shared/types';
 import React from 'react';
 import { DownloadButton } from './DownloadButton/DownloadButton';
 import JSZip from 'jszip';
-import { urlToPromise } from '../../utils';
+import { getRealPath, urlToPromise } from '../../utils';
 
 interface DownloadAdditionalMaterialsButton {
   experiment: Experiment;
@@ -19,7 +19,9 @@ export const DownloadAdditionalMaterialsButton = (
     if (files.length > 0) {
       const zip = new JSZip();
       files.forEach((file) => {
-        zip.file(file.name, urlToPromise(file.file) as any, { binary: true });
+        zip.file(file.name, urlToPromise(getRealPath(file.file)) as any, {
+          binary: true,
+        });
       });
 
       zip.generateAsync({ type: 'blob' }).then((content) => {

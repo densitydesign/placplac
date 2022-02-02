@@ -26,6 +26,7 @@ import { SHOW_COMPONENTS_BUILDER } from '../builderBlocks';
 import { DownloadExperimentMaterialsButton } from './components/DownloadExperimentMaterialsButton';
 import { DownloadButton } from './components/DownloadButton/DownloadButton';
 import { DownloadAdditionalMaterialsButton } from './components/DownloadAdditionalMaterialsButton';
+import { getRealPath } from '../utils';
 export interface ExperimentShowProps {
   experiment: Experiment;
   basePath: string;
@@ -215,7 +216,10 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
                 <ul className={styles.download_list}>
                   {step.downloads.map((download, index) => (
                     <li key={download.id}>
-                      <a href={download.file} download={download.name}>
+                      <a
+                        href={getRealPath(download.file)}
+                        download={download.name}
+                      >
                         {download.title}
                       </a>
                     </li>
@@ -272,7 +276,7 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
                   label="PDF report"
                   onClick={() => {
                     const a = document.createElement('a');
-                    a.href = experiment.pdf_report!;
+                    a.href = getRealPath(experiment.pdf_report!);
                     a.download = experiment.pdf_report!.split('/').pop()!;
                     document.body.append(a);
                     a.click();

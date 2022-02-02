@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './Footer.module.css';
 import { Footer as FooterType, LanguageOptions } from '@algocount/shared/types';
 import { translations } from '../../../translations';
+import { getRealPath } from '../../../utils';
 
 interface FooterProps {
   language: LanguageOptions;
@@ -26,13 +27,13 @@ export const Footer = (props: FooterProps) => {
         <span>{translations[language].foundedby_footer}:</span>
         <div className={styles.founded_by}>
           <a href={'https://www.fondazionecariplo.it'}>
-            <img src={'/assets/cariplo.png'} />
+            <img src={getRealPath('/assets/cariplo.png')} />
           </a>
           {footer &&
             footer.founded_by &&
             footer.founded_by.map((founder, index) => (
               <a key={index} href={founder.link}>
-                <img src={founder.image} />
+                <img src={getRealPath(founder.image)} />
               </a>
             ))}
         </div>
@@ -44,19 +45,19 @@ export const Footer = (props: FooterProps) => {
         <span>{translations[language].partners_footer}:</span>
         <div className={styles.partners}>
           <a href={'https://www.unimi.it'}>
-            <img src={'/assets/uni.png'} />
+            <img src={getRealPath('/assets/uni.png')} />
           </a>
           <a href={'https://www.polimi.it'}>
-            <img src={'/assets/poli.png'} />
+            <img src={getRealPath('/assets/poli.png')} />
           </a>
           <a href={'https://www.densitydesign.org'}>
-            <img src={'/assets/density.png'} />
+            <img src={getRealPath('/assets/density.png')} />
           </a>
           {footer &&
             footer.partners &&
             footer.partners.map((founder, index) => (
               <a key={index} href={founder.link}>
-                <img src={founder.image} />
+                <img src={getRealPath(founder.image)} />
               </a>
             ))}
         </div>
@@ -69,13 +70,13 @@ export const Footer = (props: FooterProps) => {
             <span>{translations[language].contacts_footer}:</span>
             <div className={styles.contacts}>
               {footer && footer.socials && footer.socials.facebook && (
-                <img src={'/assets/facebook-logo-white.png'} />
+                <img src={getRealPath('/assets/facebook-logo-white.png')} />
               )}
               {footer && footer.socials && footer.socials.twitter && (
-                <img src={'/assets/twitter-icon-18-256.png'} />
+                <img src={getRealPath('/assets/twitter-icon-18-256.png')} />
               )}
               {footer && footer.socials && footer.socials.mail && (
-                <img src={'/assets/email.png'} />
+                <img src={getRealPath('/assets/email.png')} />
               )}
             </div>
           </div>

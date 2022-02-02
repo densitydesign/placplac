@@ -11,3 +11,7 @@ export function urlToPromise(url: string) {
     });
   });
 }
+
+export function getRealPath(url: string) {
+  return `${process.env.NX_BASE_PATH ? process.env.NX_BASE_PATH : ''}${url}`;
+}

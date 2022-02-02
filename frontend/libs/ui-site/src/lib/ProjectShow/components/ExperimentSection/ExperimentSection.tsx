@@ -4,6 +4,7 @@ import { Experiment } from '@algocount/shared/types';
 import { TagsSliding } from './components/TagsSliding';
 import styles from './ExperimentSection.module.css';
 import LinesEllipsis from 'react-lines-ellipsis/lib/html';
+import { getRealPath } from '../../../utils';
 interface ExperimentSectionProps {
   experiment: Experiment;
   basePath: string;
@@ -23,7 +24,7 @@ export const ExperimentSection = ({
             <div
               className={classNames(styles.section, styles.cover)}
               style={{
-                backgroundImage: `url('${experiment.cover}')`,
+                backgroundImage: `url('${getRealPath(experiment.cover)}')`,
               }}
             ></div>
             <div className={classNames(styles.section, styles.description)}>
@@ -39,7 +40,11 @@ export const ExperimentSection = ({
         </div>
       </Link>
       <div className={styles.pointing_hand}>
-        <img width="20px" height="auto" src={'/assets/hand-pointing.png'} />
+        <img
+          width="20px"
+          height="auto"
+          src={getRealPath('/assets/hand-pointing.png')}
+        />
       </div>
     </div>
   );

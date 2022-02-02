@@ -1,6 +1,7 @@
 import { GlossaryTerm } from '@algocount/shared/types';
 import React, { ComponentType } from 'react';
 import { TextShow } from '../../TextShow';
+import { getRealPath } from '../../utils';
 import styles from './GlossaryItem.module.css';
 interface GlossaryItemProps {
   glossaryTerm: GlossaryTerm;
@@ -33,7 +34,7 @@ export const GlossaryItem = (props: GlossaryItemProps) => {
       >
         <img
           className={styles.see_more_button}
-          src={'/assets/see more.png'}
+          src={getRealPath('/assets/see more.png')}
           width="28px"
           height="28px"
           alt="see more"

@@ -1,6 +1,6 @@
-import axios, { AxiosRequestConfig } from "axios";
-import { stringify } from "querystring";
-import { Identifier, DataProvider, CreateParams, CreateResult } from "ra-core";
+import axios, { AxiosRequestConfig } from 'axios';
+import { stringify } from 'querystring';
+import { Identifier, DataProvider, CreateParams, CreateResult } from 'ra-core';
 import {
   FilterPayload,
   GetOneParams,
@@ -10,9 +10,9 @@ import {
   GetOneResult,
   UpdateParams,
   UpdateResult,
-} from "react-admin";
-import { getAccessToken, getRefreshToken, getUser } from "./authProvider";
-import { url } from "./constants";
+} from 'react-admin';
+import { getAccessToken, getRefreshToken, getUser } from './authProvider';
+import { url } from './constants';
 
 export const getPaginationQuery = (pagination: PaginationPayload) => {
   return {
@@ -32,7 +32,7 @@ export const getFilterQuery = (filter: FilterPayload) => {
 export const getOrderingQuery = (sort: SortPayload) => {
   const { field, order } = sort;
   return {
-    ordering: `${order === "ASC" ? "" : "-"}${field}`,
+    ordering: `${order === 'ASC' ? '' : '-'}${field}`,
   };
 };
 const app = axios.create();
@@ -41,7 +41,7 @@ app.interceptors.request.use(
     const token = getAccessToken();
     config.headers = {
       Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     };
     return config;
   },
@@ -67,7 +67,7 @@ app.interceptors.response.use(
 
       return app({
         url: `${url}/token/refresh/`,
-        method: "POST",
+        method: 'POST',
         data: {
           refresh: getRefreshToken(),
         },
@@ -75,7 +75,7 @@ app.interceptors.response.use(
         if (res.status === 200) {
           const user = getUser();
           user.access = res.data.access;
-          localStorage.setItem("user", JSON.stringify(user));
+          localStorage.setItem('user', JSON.stringify(user));
           return app(originalRequest);
         }
       });
@@ -104,7 +104,7 @@ export async function client(resource: string, config: AxiosRequestConfig) {
 }
 
 const dataprovider = (
-  apiUrl: String
+  apiUrl: string
 ): DataProvider & {
   createMultipart: <RecordType extends Record = Record>(
     resource: string,
@@ -119,7 +119,7 @@ const dataprovider = (
     params: GetOneParams
   ) => Promise<GetOneResult<RecordType>>;
 } => {
-  const getOneJson = (resource: String, id: Identifier) =>
+  const getOneJson = (resource: string, id: Identifier) =>
     app(`${apiUrl}/${resource}/${id}/`).then((response) => response.data);
 
   return {
@@ -182,7 +182,7 @@ const dataprovider = (
     update: async (resource, params) => {
       console.log(params);
       const { data } = await app(`${apiUrl}/${resource}/${params.id}/`, {
-        method: "PATCH",
+        method: 'PATCH',
         data: params.data,
       });
       return { data };
@@ -192,7 +192,7 @@ const dataprovider = (
       Promise.all(
         params.ids.map((id) =>
           app(`${apiUrl}/${resource}/${id}/`, {
-            method: "PATCH",
+            method: 'PATCH',
             data: JSON.stringify(params.data),
           })
         )
@@ -202,7 +202,7 @@ const dataprovider = (
 
     create: async (resource, params) => {
       return app(`${apiUrl}/${resource}/`, {
-        method: "POST",
+        method: 'POST',
         data: params.data,
       }).then(({ data }: any) => ({
         data: { ...data },
@@ -211,18 +211,18 @@ const dataprovider = (
     createMultipart: async (resource, params) => {
       const formData = new FormData();
       Object.keys(params.data).forEach((key) => {
-        if (key === "file") {
-          formData.append("file", params.data[key].rawFile);
+        if (key === 'file') {
+          formData.append('file', params.data[key].rawFile);
         } else {
           formData.append(key, params.data[key]);
         }
       });
 
       return app(`${apiUrl}/${resource}/`, {
-        method: "POST",
+        method: 'POST',
         data: formData,
         headers: {
-          "Content-Type": "multipart/form-data",
+          'Content-Type': 'multipart/form-data',
         },
       }).then(({ data }: any) => ({
         data: { ...data },
@@ -232,19 +232,19 @@ const dataprovider = (
       const formData = new FormData();
       console.log(params);
       Object.keys(params.data).forEach((key) => {
-        if (key === "file") {
+        if (key === 'file') {
           if (params.data[key].rawFile instanceof File)
-            formData.append("file", params.data[key].rawFile);
+            formData.append('file', params.data[key].rawFile);
         } else {
           formData.append(key, params.data[key]);
         }
       });
 
       return app(`${apiUrl}/${resource}/${params.id}/`, {
-        method: "PATCH",
+        method: 'PATCH',
         data: formData,
         headers: {
-          "Content-Type": "multipart/form-data",
+          'Content-Type': 'multipart/form-data',
         },
       }).then(({ data }: any) => ({
         data: { ...data },
@@ -252,12 +252,12 @@ const dataprovider = (
     },
     delete: (resource, params) =>
       app(`${apiUrl}/${resource}/${params.id}/`, {
-        method: "DELETE",
+        method: 'DELETE',
       }).then(() => ({ data: params.previousData as any })),
 
     deleteMany: (resource, params) =>
       app(`${apiUrl}/${resource}/bulk_delete/`, {
-        method: "POST",
+        method: 'POST',
         data: { ids: params.ids },
       }).then(() => ({ data: params.ids })),
   };
