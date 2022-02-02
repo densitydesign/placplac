@@ -30,10 +30,12 @@ services:
     entrypoint: ["/bin/sh", "-c"]
     command:
       - |
+        /wait
         python3 manage.py migrate --settings=algocount.settings.production
         gunicorn --workers=2 --threads=4  algocount.wsgi:application --bind 0.0.0.0:8000
     expose:
       - 8000
     depends_on:
       - db
-    restart: on-failure 
+    environment:
+      - WAIT_HOSTS = db:5432

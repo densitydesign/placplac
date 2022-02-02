@@ -15,5 +15,6 @@ RUN mkdir -p /app/backend/algocount/media
 WORKDIR /app/frontend
 RUN npm ci
 WORKDIR /app/backend/algocount/
-
+ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.7.3/wait /wait
+RUN chmod +x /wait
 
