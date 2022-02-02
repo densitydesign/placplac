@@ -12,6 +12,7 @@ import { Section } from '../components/Section';
 import { translations } from '../translations';
 import { useReferencesAdjuster } from '../hooks';
 import { ImagesAnimated } from './components/ExperimentSection/ImagesAnimated';
+import { getRealPath } from '../utils';
 
 interface ProjectProps {
   project: Project;
@@ -47,7 +48,7 @@ export const ProjectShow = (props: ProjectProps) => {
               width={container.current!.clientWidth}
               height={container.current!.clientHeight}
               imagesUrls={project.experiments
-                ?.map((experiment) => experiment.cover)
+                ?.map((experiment) => getRealPath(experiment.cover))
                 .filter((cover) => !!cover)}
             />
           </div>

@@ -3,6 +3,7 @@ import styles from './GlossaryCategoryShow.module.css';
 import { TextShow } from '../TextShow';
 import { GlossaryCategory, GlossaryTerm } from '@algocount/shared/types';
 import { GlossaryTermsList } from '../components/GlossaryTermsList';
+import { getRealPath } from '../utils';
 interface GlossaryCategoryShowProps {
   glossaryCategory: GlossaryCategory;
   glossaryTerms: GlossaryTerm[];
@@ -43,7 +44,7 @@ export const GlossaryCategoryShow = (props: GlossaryCategoryShowProps) => {
               {term.image && (
                 <img
                   className={styles.term_image}
-                  src={term.image}
+                  src={getRealPath(term.image)}
                   width={'100%'}
                   height="auto"
                   style={{ maxWidth: '500px' }}

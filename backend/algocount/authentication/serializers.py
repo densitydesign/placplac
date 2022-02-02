@@ -1,5 +1,6 @@
 import os
 
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 from django.core.mail import send_mail
@@ -28,13 +29,16 @@ class UserSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         if not instance.is_active and "is_active" in validated_data and validated_data["is_active"] == True:
-            send_mail(
-                'Account activated',
-                'Your account is active',
-                os.getenv("EMAIL_HOST_USER"),
-                [instance.email],
-                fail_silently=False,
-            )
+            try:
+                send_mail(
+                    'Account activated',
+                    'Your account is active',
+                    os.getenv("EMAIL_HOST_USER"),
+                    [instance.email],
+                    fail_silently=False,
+                )
+            except Exception as e:
+                settings.LOGGER.error(e)
         return super().update(instance, validated_data)
 
     class Meta:
@@ -63,14 +67,17 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         group, result= Group.objects.get_or_create("editor")
         user.groups.add(group)
         users = User.objects.filter(is_superuser=True)
-        send_mail(
-            'New user',
-            'New user {} {} registered to {} with username {}'.format(user.first_name, user.last_name,os.getenv("PLATFORM_NAME"),
-                                                                             user.email),
-            os.getenv("EMAIL_HOST_USER"),
-            [user.email for user in users],
-            fail_silently=False,
-        )
+        try:
+            send_mail(
+                'New user',
+                'New user {} {} registered to {} with username {}'.format(user.first_name, user.last_name,os.getenv("PLATFORM_NAME"),
+                                                                                 user.email),
+                os.getenv("EMAIL_HOST_USER"),
+                [user.email for user in users],
+                fail_silently=False,
+            )
+        except Exception as e:
+            settings.LOGGER.error(e)
         return user
 
     class Meta:

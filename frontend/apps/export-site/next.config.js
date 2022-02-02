@@ -10,6 +10,7 @@ const nextConfig = {
     // See: https://github.com/gregberge/svgr
     svgr: false,
   },
+  basePath:process.env.NX_BASE_PATH
 };
 
 module.exports = withNx(nextConfig);

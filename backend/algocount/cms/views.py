@@ -62,18 +62,21 @@ class ProjectViewSet(CustomModelView):
         except Project.DoesNotExist:
             raise Http404
 
-    @action(detail=True, methods=["GET"])
+    @action(detail=True, methods=["POST"])
     def export(self, request, pk):
         instance = self.get_object()
         serializer = FullProjectSerializer(instance)
         downloads = StepDownload.objects.filter(step__experiment__project=instance)
         additional_material = ExperimentAdditionalMaterial.objects.filter(experiment__project=instance)
         project_media = ProjectMedia.objects.filter(project=instance)
+        base_path = self.request.data.get("base_path", "")
+
         with tempfile.TemporaryDirectory() as tmpdirname:
-            tmpdirname = tmpdirname+"/exit"
+            tmpdirname = tmpdirname + "/exit"
             shutil.copytree(settings.PROJECT_FRONTEND_EXPORT, tmpdirname, symlinks=True)
 
-            dir_export_site = os.path.join(tmpdirname,"apps","export-site")
+            dir_export_site = os.path.join(tmpdirname, "apps", "export-site")
+
             downloads_path = os.path.join(dir_export_site, "public", "media")
             if not os.path.isdir(downloads_path):
                 os.mkdir(downloads_path)
@@ -86,15 +89,16 @@ class ProjectViewSet(CustomModelView):
             file = os.path.join(dir_export_site, "data.json")
             with open(file, 'w') as f:
                 json.dump(serializer.data, f)
-            subprocess.check_call('npx cross-env-shell NX_FILE_PATH="{}" nx run export-site:export '.format(file),
-                                  shell=True,
-                                  cwd=tmpdirname, close_fds=True)
+            with open(os.path.join(dir_export_site, ".env.local"), "w") as f:
+                f.write(f"NX_BASE_PATH={base_path} \n")
+                f.write(f"NX_FILE_PATH={file} \n")
+            subprocess.check_call('npx nx run export-site:export ', shell=True, cwd=tmpdirname, close_fds=True)
 
             zip_name = os.path.join(tmpdirname, "site")
-            out_directory = os.path.join(tmpdirname, "dist","apps", "export-site","exported")
-            exported_assets_out_directory = os.path.join(out_directory,"assets")
-            assets = os.path.join(tmpdirname, "dist","apps", "export-site","public","assets")
-            shutil.copytree(assets, exported_assets_out_directory,  symlinks=True)
+            out_directory = os.path.join(tmpdirname, "dist", "apps", "export-site", "exported")
+            exported_assets_out_directory = os.path.join(out_directory, "assets")
+            assets = os.path.join(tmpdirname, "dist", "apps", "export-site", "public", "assets")
+            shutil.copytree(assets, exported_assets_out_directory, symlinks=True)
             zip_file = open(shutil.make_archive(zip_name, 'zip', out_directory), 'rb')
             response = HttpResponse(zip_file, content_type='application/zip')
             response['Content-Disposition'] = 'attachment; filename=site.zip'
@@ -176,6 +180,7 @@ class StepDownloadViewSet(CustomModelView):
             return StepDownload.objects.all()
         return StepDownload.objects.filter(step__experiment__project__projectuser__user=user)
 
+
 class ExperimentAdditionalMaterialViewSet(CustomModelView):
     queryset = ExperimentAdditionalMaterial.objects.all()
     serializer_class = ExperimentAdditionalMaterialSerializer
@@ -187,8 +192,6 @@ class ExperimentAdditionalMaterialViewSet(CustomModelView):
         if user.is_superuser:
             return ExperimentAdditionalMaterial.objects.all()
         return ExperimentAdditionalMaterial.objects.filter(experiment__project__projectuser__user=user)
-
-
 
 
 class ProjectUserViewSet(CustomModelView):
@@ -239,8 +242,8 @@ class GlossaryCategoryViewSet(CustomModelView):
     filterset_class = GlossaryCategoryFilter
 
     def check_object_permissions(self, request, obj):
-        if not self.request.user.is_superuser\
-                and not ProjectUser.objects.filter(project=obj.project, user=self.request.user, level="1").exists()\
+        if not self.request.user.is_superuser \
+                and not ProjectUser.objects.filter(project=obj.project, user=self.request.user, level="1").exists() \
                 and request.method not in permissions.SAFE_METHODS:
             raise exceptions.PermissionDenied()
 

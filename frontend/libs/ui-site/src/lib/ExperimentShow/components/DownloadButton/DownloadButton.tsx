@@ -1,4 +1,5 @@
 import React from 'react';
+import { getRealPath } from '../../../utils';
 import styles from './DownloadButton.module.css';
 
 interface DownloadButtonPros {
@@ -10,7 +11,7 @@ export const DownloadButton = (props: DownloadButtonPros) => {
 
   return (
     <button onClick={onClick} className={styles.button}>
-      <img width="15px" src="/assets/download-icon.png" />
+      <img width="15px" src={getRealPath("/assets/download-icon.png")} />
       <span>{label}</span>
     </button>
   );

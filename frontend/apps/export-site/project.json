@@ -1,59 +1,53 @@
 {
-    "root": "apps/export-site",
-    "sourceRoot": "apps/export-site",
-    "projectType": "application",
-    "targets": {
-        "build": {
-            "executor": "@nrwl/next:build",
-            "outputs": [
-                "{options.outputPath}"
-            ],
-            "defaultConfiguration": "production",
-            "options": {
-                "root": "apps/export-site",
-                "outputPath": "dist/apps/export-site",
-                "assets": [
-                    {
-                        "input": "libs/ui-site/src/assets",
-                        "glob": "**/*",
-                        "output": "assets/"
-                    }
-                ]
-            },
-            "configurations": {
-                "production": {}
-            }
-        },
-        "serve": {
-            "executor": "@nrwl/next:server",
-            "options": {
-                "buildTarget": "export-site:build",
-                "dev": true
-            },
-            "configurations": {
-                "production": {
-                    "buildTarget": "export-site:build:production",
-                    "dev": false
-                }
-            }
-        },
-        "export": {
-            "executor": "@nrwl/next:export",
-            "options": {
-                "buildTarget": "export-site:build:production"
-            }
-        },
-        "lint": {
-            "executor": "@nrwl/linter:eslint",
-            "outputs": [
-                "{options.outputFile}"
-            ],
-            "options": {
-                "lintFilePatterns": [
-                    "apps/export-site/**/*.{ts,tsx,js,jsx}"
-                ]
-            }
-        }
+  "root": "apps/export-site",
+  "sourceRoot": "apps/export-site",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/next:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "root": "apps/export-site",
+        "outputPath": "dist/apps/export-site",
+        "assets": [
+          {
+            "input": "libs/ui-site/src/assets",
+            "glob": "**/*",
+            "output": "assets/"
+          }
+        ]
+      },
+      "configurations": {
+        "production": {}
+      }
     },
-    "tags": []
+    "serve": {
+      "executor": "@nrwl/next:server",
+      "options": {
+        "buildTarget": "export-site:build",
+        "dev": true
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "export-site:build:production",
+          "dev": false
+        }
+      }
+    },
+    "export": {
+      "executor": "@nrwl/next:export",
+      "options": {
+        "buildTarget": "export-site:build:production"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/export-site/**/*.{ts,tsx,js,jsx}"]
+      }
+    }
+  },
+  "tags": []
 }
