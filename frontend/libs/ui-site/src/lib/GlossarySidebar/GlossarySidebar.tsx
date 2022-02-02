@@ -3,7 +3,7 @@ import { GlossaryTerm } from '@algocount/shared/types';
 import { GlossaryItem } from './GlossaryItem';
 import styles from './GlossarySidebar.module.css';
 // import { History } from "history";
-import { ComponentType, useEffect, useState } from 'react';
+import { ComponentType, useEffect, useRef, useState } from 'react';
 import React from 'react';
 import { useReactHash } from '../useReactPath';
 import { GlossaryCategory } from '@algocount/shared/types';
@@ -24,7 +24,7 @@ export const GlossarySidebar = (props: GlossarySidebarProps) => {
   } = props;
   const hash = useReactHash();
   const [open, setOpen] = useState(false);
-
+  const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (hash && hash.includes('glossary')) {
       setOpen(true);
@@ -42,7 +42,15 @@ export const GlossarySidebar = (props: GlossarySidebarProps) => {
     }
   }, [open]);
   return (
-    <div style={open ? {} : { display: 'none' }} className={styles.glossary}>
+    <div
+      style={
+        open
+          ? { right: 0 }
+          : { right: `-${ref.current ? ref.current.offsetWidth : 0}px` }
+      }
+      className={styles.glossary}
+      ref={ref}
+    >
       <div className={styles.header}>
         <Link href={`${basePath}glossary`}>Glossary</Link>
         {glossaryCategories.map((category) => (

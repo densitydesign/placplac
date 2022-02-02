@@ -9,6 +9,7 @@
   border-left: 1px solid black;
   border-right: 1px solid black;
   z-index: 10;
+  transition: right 1s;
 }
 .header {
   height: 55px;
