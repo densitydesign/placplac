@@ -3,7 +3,7 @@ FROM node:16 as builder
 ARG NODE_ENV
 WORKDIR /app/builder
 COPY . .
-RUN npm i
+RUN npm ci
 RUN npx nx build cms --prod
 
 
