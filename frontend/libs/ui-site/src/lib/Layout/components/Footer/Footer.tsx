@@ -13,13 +13,24 @@ export const Footer = (props: FooterProps) => {
   return (
     <div className={styles.main}>
       <div className={styles.platform}>
-        <b>
-          <u>PlacPlac</u>
-        </b>
-        - a dissemination platform designed within the Algocount project by the
-        Università degli Studi di Milano and DensityDesign Lab from Design
-        Dipartment of Politecnico di Milano, funded by Fondazione Cariplo.
-        License CC-by 2021.
+        <b>PlacPlac</b> is a dissemination platform designed within the{' '}
+        <a href="https://algocount.org/">Algocount</a> project by the{' '}
+        <a href="https://www.unimi.it/en">Università degli Studi di Milano</a>{' '}
+        and <a href="https://densitydesign.org/">DensityDesign Lab</a> from{' '}
+        <a href="http://www.dipartimentodesign.polimi.it/en/">
+          Design Dipartment of Politecnico di Milano
+        </a>
+        , funded by{' '}
+        <a href="https://www.fondazionecariplo.it/en">Fondazione Cariplo</a>.
+        Developed by <a href="https://www.be20.it/">Be20 Innovation</a>. First
+        version released in Jan 2022.
+        <br />
+        <a href="https://creativecommons.org/licenses/by/4.0/">
+          <img
+            src="https://licensebuttons.net/l/by/3.0/88x31.png"
+            alt="cc-by-4.0"
+          ></img>
+        </a>
       </div>
 
       <div className={styles.divider} />
