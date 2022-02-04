@@ -8,6 +8,7 @@ import React from 'react';
 import { useReactHash } from '../useReactPath';
 import { GlossaryCategory } from '@algocount/shared/types';
 import { getRealPath } from '../utils';
+import classNames from 'classnames';
 interface GlossarySidebarProps {
   glossaryTerms: GlossaryTerm[];
   basePath: string;
@@ -41,16 +42,12 @@ export const GlossarySidebar = (props: GlossarySidebarProps) => {
       }
     }
   }, [open]);
-  const rightPosition = useMemo(() => {
-    if (!ref.current) {
-      return { right: '-500px', visibility: 'hidden' as any };
-    }
-    return open
-      ? { right: 0 }
-      : { right: `-${ref.current ? ref.current.offsetWidth : 500}px` };
-  }, [open, ref.current]);
+
   return (
-    <div style={rightPosition} className={styles.glossary} ref={ref}>
+    <div
+      className={classNames(styles.glossary, { [styles.open]: open })}
+      ref={ref}
+    >
       <div className={styles.header}>
         <Link href={`${basePath}glossary`}>Glossary</Link>
         {glossaryCategories.map((category) => (
