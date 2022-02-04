@@ -19,6 +19,7 @@ import SignUp from './SignUp/SignUp';
 import GroupIcon from '@material-ui/icons/Group';
 import CollectionsBookmarkIcon from '@material-ui/icons/CollectionsBookmark';
 import { LoginPage } from './LoginPage';
+import { DefaultMenu } from './components/DefaultMenu';
 function App() {
   const authProvider = jwtTokenAuthProvider({
     obtainAuthTokenUrl: `${url}/token/`,
@@ -46,6 +47,7 @@ function App() {
       layout={CustomLayout}
       history={history}
       authProvider={authProvider}
+      menu={DefaultMenu}
       dataProvider={dataProvider}
     >
       {(permissions) => [
