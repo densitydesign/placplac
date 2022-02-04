@@ -41,13 +41,14 @@ export const GlossarySidebar = (props: GlossarySidebarProps) => {
       }
     }
   }, [open]);
-  const rightPosition = useMemo(
-    () =>
-      open
-        ? { right: 0 }
-        : { right: `-${ref.current ? ref.current.offsetWidth : 500}px` },
-    [open, ref.current]
-  );
+  const rightPosition = useMemo(() => {
+    if (!ref.current) {
+      return { right: '-500px', visibility: 'hidden' as any };
+    }
+    return open
+      ? { right: 0 }
+      : { right: `-${ref.current ? ref.current.offsetWidth : 500}px` };
+  }, [open, ref.current]);
   return (
     <div style={rightPosition} className={styles.glossary} ref={ref}>
       <div className={styles.header}>

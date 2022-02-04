@@ -7,7 +7,44 @@
   border-radius: 80px;
   flex-direction: column;
   margin-bottom: 60px;
+  position: relative;
 }
 .disclaimer h3 {
   margin-top: 0;
 }
+
+.disclaimer.notes {
+  border-radius: 0px;
+}
+
+.disclaimer.notes > span:first-child {
+  width: 3rem;
+  position: absolute;
+  left: -1px;
+  top: -1px;
+  height: 3rem;
+  border: 1px solid black;
+  border-top-color: white;
+  border-left-color: white;
+  background: linear-gradient(
+    to top left,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0) calc(50% - 0.8px),
+    rgba(0, 0, 0, 1) 50%,
+    rgba(0, 0, 0, 0) calc(50% + 0.8px),
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+/* .disclaimer.alert {
+  border: 1px solid black;
+}
+
+.disclaimer.alert .zigzag {
+  position: absolute;
+}
+
+.disclaimer.alert {
+  border: none;
+  border-radius: 0;
+} */
