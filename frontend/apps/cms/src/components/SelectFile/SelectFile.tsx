@@ -34,6 +34,7 @@ import {
 import ListIcon from '@material-ui/icons/AttachFile';
 import { useCallback, useState } from 'react';
 import { MediaDatagrid } from './components/MediaDatagrid';
+import { MAX_FILE_SIZE } from '../../constants';
 
 export interface SelectFileProps extends SelectInputProps {
   source?: string;
@@ -206,20 +207,26 @@ export const SelectFile = ({
                 <Typography variant="h5">Add new file</Typography>
                 {type === 'image' ? (
                   <ImageInput
-                    helperText={false}
+                    helperText={
+                      'The maximum accepted size is 40MB, and only image files will be accepted'
+                    }
                     validate={required()}
                     source="file"
                     label={''}
                     accept="image/*"
+                    maxSize={MAX_FILE_SIZE}
+                    options={{ onDropRejected: () => alert('File rejected') }}
                   >
                     <ImageField source="src" title="title" />
                   </ImageInput>
                 ) : (
                   <FileInput
-                    helperText={false}
+                    helperText={'The maximum accepted size is 40MB'}
                     validate={required()}
                     source="file"
                     label={''}
+                    maxSize={MAX_FILE_SIZE}
+                    options={{ onDropRejected: () => alert('File rejected') }}
                   >
                     <FileField source="src" title="title" />
                   </FileInput>
