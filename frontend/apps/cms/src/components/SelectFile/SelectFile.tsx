@@ -44,7 +44,7 @@ export interface SelectFileProps extends SelectInputProps {
   record?: Record;
   project: number;
   handleChange: () => void;
-  type: 'image' | 'file';
+  type: 'image' | 'file' | 'video';
 }
 
 export const SelectFile = ({
@@ -208,24 +208,29 @@ export const SelectFile = ({
                 {type === 'image' ? (
                   <ImageInput
                     helperText={
-                      'The maximum accepted size is 40MB, and only image files will be accepted'
+                      'The maximum accepted size is 4MB, and only image files will be accepted'
                     }
                     validate={required()}
                     source="file"
                     label={''}
                     accept="image/*"
-                    maxSize={MAX_FILE_SIZE}
+                    maxSize={4000000}
                     options={{ onDropRejected: () => alert('File rejected') }}
                   >
                     <ImageField source="src" title="title" />
                   </ImageInput>
                 ) : (
                   <FileInput
-                    helperText={'The maximum accepted size is 40MB'}
+                    helperText={
+                      type === 'video'
+                        ? 'The maximum accepted size is 16MB, and only video files will be accepted.'
+                        : 'The maximum accepted size is 16MB.'
+                    }
                     validate={required()}
                     source="file"
                     label={''}
-                    maxSize={MAX_FILE_SIZE}
+                    accept={type === 'video' ? 'video/*' : undefined}
+                    maxSize={16000000}
                     options={{ onDropRejected: () => alert('File rejected') }}
                   >
                     <FileField source="src" title="title" />
