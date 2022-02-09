@@ -35,6 +35,17 @@ Steps:
 
 When the build finishes the project will be reachable at the PORT_OUT of the host
 
+## Update
+To update the application pull the update from github then from the project folder rebuild the docker container using the following command:
+
+```
+sudo docker compose up --build --detach
+```
+or for older versions of docker-compose 
+
+```
+sudo docker-compose up --build --detach
+```
 # Development guide
 
 The project is structured this way:
@@ -84,3 +95,15 @@ Then we need to serve the main app using the following command:
 nx serve cms
 ```
 Now you can start editing the files.
+
+# Requirements
+## Minumum requirements:
+- RAM: 4GB 
+- CPU: dual core  1.2 GHz
+- HDD: 30GB plus extra space for media storage
+
+## Recommended requirements
+- RAM: 16GB 
+- CPU: quad core 2.0 GHz
+- SSD: 50 GB for system
+- HDD: for media storage
