@@ -30,7 +30,7 @@
 }
 
 .content ul {
-  list-style-image: url('../../assets/right-arrow.png');
+  list-style-image: url('../../assets/Arrow_list.svg');
 }
 .content ul a {
   text-decoration: none;
