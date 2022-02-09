@@ -48,8 +48,8 @@ export const ProjectShow = (props: ProjectProps) => {
               width={container.current!.clientWidth}
               height={container.current!.clientHeight}
               imagesUrls={project.experiments
-                ?.map((experiment) => getRealPath(experiment.cover))
-                .filter((cover) => !!cover)}
+                .filter((experiment) => !!experiment.cover)
+                ?.map((experiment) => getRealPath(experiment.cover))}
             />
           </div>
         )}
