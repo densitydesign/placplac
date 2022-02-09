@@ -1,5 +1,5 @@
-import React, { ReactNode } from "react";
-import styles from "./DoubleClickContainer.module.css";
+import React, { ReactNode } from 'react';
+import styles from './DoubleClickContainer.module.css';
 interface DoubleClickContainerProps {
   onDoubleClick: () => void;
   height?: string;
@@ -9,7 +9,7 @@ export const DoubleClickContainer = (props: DoubleClickContainerProps) => {
   const { height, onDoubleClick, children } = props;
   return (
     <div
-      style={{ width: "100%", height: height ? height : "400px" }}
+      style={{ width: '100%', height: height ? height : '400px' }}
       className={styles.container}
     >
       <div className={styles.child}>
@@ -17,7 +17,7 @@ export const DoubleClickContainer = (props: DoubleClickContainerProps) => {
           <span>Double click for enabling exploration</span>
         </div>
       </div>
-      <div style={{ width: "100%", height: "100%", opacity: 0.7 }}>
+      <div style={{ width: '100%', height: '100%', opacity: 0.7 }}>
         {children}
       </div>
     </div>

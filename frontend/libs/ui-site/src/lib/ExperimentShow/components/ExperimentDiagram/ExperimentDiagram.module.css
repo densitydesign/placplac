@@ -44,12 +44,12 @@
 
 .arrow_left {
   content: '';
-  background-image: url('../../../../assets/arrow.png');
+  background-image: url('../../../../assets/Arrow_dashed.svg');
   width: 100px;
   height: 65px;
   background-repeat: no-repeat;
   background-position: center;
-  left: -44px;
+  left: -49px;
   position: absolute;
   top: 0;
   background-color: white;
@@ -57,12 +57,12 @@
 
 .arrow_right {
   content: '';
-  background-image: url('../../../../assets/arrow.png');
+  background-image: url('../../../../assets/Arrow_dashed.svg');
   width: 100px;
   height: 65px;
   background-repeat: no-repeat;
   background-position: center;
-  left: 211px;
+  left: 206px;
   position: absolute;
   background-color: white;
   top: 0;
