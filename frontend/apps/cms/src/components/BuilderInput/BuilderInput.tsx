@@ -156,7 +156,7 @@ export const BuilderInput = (props: BuilderInputProps) => {
             <Grid container direction="column">
               <Grid item>
                 <SelectFile
-                  type="file"
+                  type="video"
                   label={'Video file'}
                   source={'src'}
                   project={project}

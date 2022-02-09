@@ -35,7 +35,7 @@ class ProjectUser(CustomModel):
 
 
 class ProjectMedia(CustomModel):
-    TYPE_CHOICES = (("image", "Image"), ("file", "File"))
+    TYPE_CHOICES = (("image", "Image"), ("file", "File"),("video","Video"))
 
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     file = models.FileField()
