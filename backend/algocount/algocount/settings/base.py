@@ -14,10 +14,11 @@ import os
 from datetime import timedelta
 from pathlib import Path
 from dotenv import load_dotenv
-load_dotenv()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
-
+dotenv_path = os.path.join(BASE_DIR, '.backend.env')
+load_dotenv(dotenv_path)
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 

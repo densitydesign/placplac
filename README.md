@@ -4,7 +4,7 @@ To run the project you need to have installed docker and docker-compose.
 Steps:
 
 - download the project
-- edit the file /backend/.env using the following indications:
+- create the file /backend/algocount/.backend.env (see the /backend/algocount/.backend.env.example file) using the following indications:
 
   - ADMIN_EMAIL : the email of the admin account you want to create for the platform
   - ADMIN_PASSWORD: the password of the admin account
@@ -16,7 +16,7 @@ Steps:
   - EMAIL_USE_SSL: Whether to use an implicit TLS (secure) connection when talking to the SMTP server. In most email documentation this type of TLS connection is referred to as SSL. It is generally used on port 465. If you are experiencing problems, set the explicit TLS setting EMAIL_USE_TLS.
   - PLATFORM_NAME: the platform name that will be included in the emails
 
-- edit the file /.env using the following indications:
+- create the file /.env (see the /.env.example file) using the following indications:
 
   - MEDIA_FOLDER: the folder where the media files will be saved
   - DB_FOLDER: the folder where the db will save all the data
@@ -70,7 +70,7 @@ The project is structured this way:
 To start editing the app we need to setup the dev workspace
 
 ## Backend workspace setup
-
+Create the file /backend/algocount/.backend.env (see the /backend/algocount/.backend.env.example file).
 First of all open the shell in the /backend folder.
 Than use the following command to run the backend app:
 ```
