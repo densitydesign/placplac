@@ -45,7 +45,7 @@ export const translations = {
       "Questo è un glossario per seguire e\
     replicare gli esperimenti. Forniamo brevi descrizioni e collegamenti\
     a vari termini a cui si fa riferimento nel progetto.",
-    foundedby_footer: "Fondato da",
+    foundedby_footer: "Con il contributo di",
     partners_footer: "Partners",
     contacts_footer: "Contatti",
   },
