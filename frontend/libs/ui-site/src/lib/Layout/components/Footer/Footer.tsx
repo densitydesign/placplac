@@ -8,9 +8,22 @@ interface FooterProps {
   language: LanguageOptions;
   footer?: FooterType;
 }
+function parseUsername(url: string) {
+  let output = '';
 
+  // Parse username
+  const matches = url.match(
+    /(?:https?:\/\/)?(?:www.)?(?:twitter|medium|facebook|vimeo|instagram)(?:.com\/)?([@a-zA-Z0-9-_]+)/im
+  );
+
+  // Set output
+  output = matches && matches.length ? matches[1] : output;
+
+  return output;
+}
 export const Footer = (props: FooterProps) => {
   const { language, footer } = props;
+
   return (
     <div className={styles.main}>
       <div className={styles.platform}>
@@ -76,13 +89,46 @@ export const Footer = (props: FooterProps) => {
             <span>{translations[language].contacts_footer}:</span>
             <div className={styles.contacts}>
               {footer && footer.socials && footer.socials.facebook && (
-                <img src={getRealPath('/assets/facebook-logo-white.png')} />
+                <div style={{ display: 'flex' }}>
+                  <img src={getRealPath('/assets/facebook-logo-white.png')} />
+                  <a
+                    href={footer.socials.facebook}
+                    target="_blank"
+                    rel="noreferrer"
+                    style={{ textDecoration: 'none' }}
+                  >
+                    <span
+                      style={{ marginLeft: '10px', textDecoration: 'none' }}
+                    >
+                      /{parseUsername(footer.socials.facebook)}
+                    </span>
+                  </a>
+                </div>
               )}
               {footer && footer.socials && footer.socials.twitter && (
-                <img src={getRealPath('/assets/twitter-icon-18-256.png')} />
+                <div style={{ display: 'flex' }}>
+                  <img src={getRealPath('/assets/twitter-icon-18-256.png')} />
+                  <a
+                    href={footer.socials.twitter}
+                    target="_blank"
+                    rel="noreferrer"
+                    style={{ textDecoration: 'none' }}
+                  >
+                    <span
+                      style={{ marginLeft: '10px', textDecoration: 'none' }}
+                    >
+                      @{parseUsername(footer.socials.twitter)}
+                    </span>
+                  </a>
+                </div>
               )}
               {footer && footer.socials && footer.socials.mail && (
-                <img src={getRealPath('/assets/email.png')} />
+                <div style={{ display: 'flex' }}>
+                  <img src={getRealPath('/assets/email.png')} />
+                  <span style={{ marginLeft: '10px' }}>
+                    {footer.socials.mail}
+                  </span>
+                </div>
               )}
             </div>
           </div>
