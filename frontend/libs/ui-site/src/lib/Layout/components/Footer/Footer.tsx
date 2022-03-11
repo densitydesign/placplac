@@ -8,22 +8,17 @@ interface FooterProps {
   language: LanguageOptions;
   footer?: FooterType;
 }
+
 export const Footer = (props: FooterProps) => {
   const { language, footer } = props;
   return (
     <div className={styles.main}>
       <div className={styles.platform}>
-        <b>PlacPlac</b> is a dissemination platform designed within the{' '}
-        <a href="https://algocount.org/">Algocount</a> project by the{' '}
-        <a href="https://www.unimi.it/en">Università degli Studi di Milano</a>{' '}
-        and <a href="https://densitydesign.org/">DensityDesign Lab</a> from{' '}
-        <a href="http://www.dipartimentodesign.polimi.it/en/">
-          Design Dipartment of Politecnico di Milano
-        </a>
-        , funded by{' '}
-        <a href="https://www.fondazionecariplo.it/en">Fondazione Cariplo</a>.
-        Developed by <a href="https://www.be20.it/">Be20 Innovation</a>. First
-        version released in Jan 2022.
+        <div
+          dangerouslySetInnerHTML={{
+            __html: translations[language].info_platform,
+          }}
+        />
         <br />
         <a href="https://creativecommons.org/licenses/by/4.0/">
           <img
