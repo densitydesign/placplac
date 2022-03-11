@@ -1,9 +1,7 @@
 from .base import *
 
 DEBUG = False
-STATIC_ROOT = os.path.join(
-    os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
-    'static_root')
+
 
 DATABASES = {
     'default': {

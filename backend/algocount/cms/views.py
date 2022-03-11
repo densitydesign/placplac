@@ -29,6 +29,28 @@ from cms.serializers.reference import ReferenceSerializer
 from cms.serializers.step import StepSerializer, StepDownloadSerializer
 
 
+def get_all_relation_objects(relation_set):
+    related_objects = []
+    for related in relation_set.all():
+        related.pk = None
+        related._state.adding = True
+        related_objects.append(related)
+    return related_objects
+
+
+def save_new_relation_objects(objects_list, field: str, related_obj):
+    for obj in objects_list:
+        setattr(obj, field, related_obj)
+        obj.save()
+
+def clone_simple_relation(relation_set, project):
+        for related in relation_set.all():
+            new_related= related
+            new_related.pk = None
+            new_related._state.adding = True
+            new_related.project = project
+            new_related.save()
+
 class ProjectViewSet(CustomModelView):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
@@ -113,40 +135,43 @@ class ProjectViewSet(CustomModelView):
         new_instance.save()
         instance = self.get_object()
 
-        for project_user in instance.projectuser_set.all():
-            new_project_user = project_user
-            new_project_user.pk = None
-            new_project_user._state.adding = True
-            new_project_user.project = new_instance
-            new_project_user.save()
-        for project_media in instance.projectmedia_set.all():
-            new_project_media = project_media
-            new_project_media.pk = None
-            new_project_media._state.adding = True
-            new_project_media.project = new_instance
-            new_project_media.save()
+        clone_simple_relation(instance.projectuser_set, new_instance)
+        clone_simple_relation(instance.projectmedia_set, new_instance)
+        clone_simple_relation(instance.reference_set, new_instance)
 
         for glossary_term in instance.glossaryterm_set.all():
+            glossary_category = GlossaryCategory.objects.get_or_create(project=new_instance,
+                                                                       title=glossary_term.glossary_category.title,
+                                                                       description=glossary_term.glossary_category.description,
+                                                                       color=glossary_term.glossary_category.color)
             new_glossary_term = glossary_term
+            new_glossary_term.glossary_category = glossary_category
             new_glossary_term.pk = None
             new_glossary_term._state.adding = True
             new_glossary_term.project = new_instance
             new_glossary_term.save()
 
+
         for experiment in instance.experiment_set.all():
+            references = get_all_relation_objects(experiment.reference_set)
+            additional_materials = get_all_relation_objects(experiment.experimentadditionalmaterial_set)
             steps = []
             for step in experiment.step_set.all():
+                step_downloads =  get_all_relation_objects(step.stepdownload_set)
                 step.pk = None
                 step._state.adding = True
-                steps.append(step)
-            new_experiment = experiment
-            new_experiment.pk = None
-            new_experiment._state.adding = True
-            new_experiment.project = new_instance
-            new_experiment.save()
+                steps.append([step,step_downloads])
+
+            experiment.pk = None
+            experiment._state.adding = True
+            experiment.project = new_instance
+            experiment.save()
+            save_new_relation_objects(references, "experiment", experiment)
+            save_new_relation_objects(additional_materials, "experiment", experiment)
             for step in steps:
-                step.experiment = new_experiment
-                step.save()
+                step[0].experiment=experiment
+                step[0].save()
+                save_new_relation_objects(step[1], "step", step[0])
 
         project_user, result = ProjectUser.objects.get_or_create(project=new_instance, user=self.request.user)
         project_user.level = "1"
