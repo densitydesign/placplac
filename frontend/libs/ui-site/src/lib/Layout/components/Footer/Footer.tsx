@@ -45,9 +45,6 @@ export const Footer = (props: FooterProps) => {
       <div className={styles.column}>
         <span>{translations[language].foundedby_footer}:</span>
         <div className={styles.founded_by}>
-          <a href={'https://www.fondazionecariplo.it'}>
-            <img src={getRealPath('/assets/cariplo.png')} />
-          </a>
           {footer &&
             footer.founded_by &&
             footer.founded_by.map((founder, index) => (
@@ -63,15 +60,6 @@ export const Footer = (props: FooterProps) => {
       <div className={styles.column}>
         <span>{translations[language].partners_footer}:</span>
         <div className={styles.partners}>
-          <a href={'https://www.unimi.it'}>
-            <img src={getRealPath('/assets/uni.png')} />
-          </a>
-          <a href={'https://www.polimi.it'}>
-            <img src={getRealPath('/assets/poli.png')} />
-          </a>
-          <a href={'https://www.densitydesign.org'}>
-            <img src={getRealPath('/assets/density.png')} />
-          </a>
           {footer &&
             footer.partners &&
             footer.partners.map((founder, index) => (
