@@ -15,6 +15,7 @@ Steps:
   - EMAIL_USE_TLS: Whether to use a TLS (secure) connection when talking to the SMTP server
   - EMAIL_USE_SSL: Whether to use an implicit TLS (secure) connection when talking to the SMTP server. In most email documentation this type of TLS connection is referred to as SSL. It is generally used on port 465. If you are experiencing problems, set the explicit TLS setting EMAIL_USE_TLS.
   - PLATFORM_NAME: the platform name that will be included in the emails
+  - SECRET_KEY: the secret key of django (keep secret)
 
 - create the file /.env (see the /.env.example file) using the following indications:
 
