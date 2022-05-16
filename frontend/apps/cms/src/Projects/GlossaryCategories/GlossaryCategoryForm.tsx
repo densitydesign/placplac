@@ -8,27 +8,34 @@ import {
   TextInput,
   Toolbar,
   ToolbarProps,
-} from "react-admin";
+  useRecordContext,
+} from 'react-admin';
 
-const GlossaryCategoryFormToolbar = (props: ToolbarProps) => (
-  <Toolbar
-    style={{ display: "flex", justifyContent: "space-between" }}
-    {...props}
-  >
-    <SaveButton />
-    {props.record && props.record.id && (
-      <DeleteButton redirect={`/projects/${props.record.project}/2`} />
-    )}
-  </Toolbar>
-);
+const GlossaryCategoryFormToolbar = (props: ToolbarProps) => {
+  const record = useRecordContext();
+
+  return (
+    <Toolbar
+      style={{ display: 'flex', justifyContent: 'space-between' }}
+      {...props}
+    >
+      <SaveButton />
+      {record && record.id && (
+        <DeleteButton redirect={`/projects/${record.project}/2`} />
+      )}
+    </Toolbar>
+  );
+};
 
 export const GlossaryCategoryForm = (
-  props: Omit<SimpleFormProps, "children">
+  props: Omit<SimpleFormProps, 'children'>
 ) => {
+  const record = useRecordContext();
+
   const project =
-    props.initialValues && "project" in props.initialValues
-      ? props.initialValues.project
-      : props.record.project;
+    props.defaultValues && 'project' in props.defaultValues
+      ? props.defaultValues.project
+      : record?.project;
   const redirect = `/projects/${project}/2`;
 
   return (

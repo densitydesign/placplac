@@ -1,23 +1,31 @@
-import { CircularProgress, makeStyles } from "@material-ui/core";
-import React from "react";
-import { Button } from "react-admin";
-import ContentSave from "@material-ui/icons/Save";
-import classnames from "classnames";
+import { CircularProgress, makeStyles } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import React from 'react';
+import { Button } from 'react-admin';
+import ContentSave from '@mui/icons-material/Save';
+import classnames from 'classnames';
 
-const useStyles = makeStyles(
-  (theme) => ({
-    button: {
-      position: "relative",
-    },
-    leftIcon: {
-      marginRight: theme.spacing(1),
-    },
-    icon: {
-      fontSize: 18,
-    },
-  }),
-  { name: "RaSaveButton" }
-);
+const PREFIX = 'RaSaveButton';
+
+const classes = {
+  button: `${PREFIX}-button`,
+  leftIcon: `${PREFIX}-leftIcon`,
+  icon: `${PREFIX}-icon`,
+};
+
+const StyledButton = styled(Button)(({ theme }) => ({
+  [`&.${classes.button}`]: {
+    position: 'relative',
+  },
+
+  [`& .${classes.leftIcon}`]: {
+    marginRight: theme.spacing(1),
+  },
+
+  [`& .${classes.icon}`]: {
+    fontSize: 18,
+  },
+}));
 
 export const FormSaveButton = ({
   submitting,
@@ -28,12 +36,10 @@ export const FormSaveButton = ({
   pristine: boolean;
   handleSubmit: React.MouseEventHandler<HTMLButtonElement> | undefined;
 }) => {
-  const classes = useStyles();
-
   return (
-    <Button
+    <StyledButton
       className={classes.button}
-      variant={"contained"}
+      variant={'contained'}
       label="ra.action.save"
       onClick={handleSubmit}
       disabled={submitting || pristine}
@@ -47,6 +53,6 @@ export const FormSaveButton = ({
       ) : (
         <ContentSave className={classes.leftIcon} />
       )}
-    </Button>
+    </StyledButton>
   );
 };

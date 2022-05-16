@@ -36,6 +36,7 @@ export type Reference = {
 export type LanguageOptions = 'it' | 'en';
 
 export type Project = {
+  id: string | number;
   title: string;
   short_description: string;
   experiments_description: string;

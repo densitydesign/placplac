@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { Prompt } from 'react-router-dom';
-import CloudDownload from '@material-ui/icons/CloudDownload';
+import CloudDownload from '@mui/icons-material/CloudDownload';
 import {
   Button,
   useNotify,
-  Record,
+  RaRecord,
   useLoading,
-  FormWithRedirect,
   SaveButton,
   TextInput,
+  RecordContextProvider,
+  Form,
 } from 'react-admin';
 import { clientNoJson } from '../dataProvider';
 import { url } from '../constants';
@@ -17,12 +17,13 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-} from '@material-ui/core';
+} from '@mui/material';
 import { useToggler } from '../useToggler';
-import IconCancel from '@material-ui/icons/Cancel';
+import IconCancel from '@mui/icons-material/Cancel';
+import { FieldValues } from 'react-hook-form';
 
 interface DownloadButtonProps {
-  project?: Record;
+  project?: RaRecord;
 }
 
 export const DownloadButton = (props: DownloadButtonProps) => {
@@ -31,7 +32,7 @@ export const DownloadButton = (props: DownloadButtonProps) => {
   const notify = useNotify();
   const { value, setTrue, setFalse } = useToggler();
 
-  const onClick = (values: any) => {
+  const onClick = (values: FieldValues) => {
     setLoading(true);
     clientNoJson(`${url}/projects/${props.project?.id}/export/`, {
       method: 'POST',
@@ -50,7 +51,7 @@ export const DownloadButton = (props: DownloadButtonProps) => {
       })
       .catch((e) => {
         console.log(e);
-        notify('ra.notification.http_error', 'error');
+        notify('ra.notification.http_error', { type: 'error' });
       })
       .finally(() => {
         setLoading(false);
@@ -59,17 +60,16 @@ export const DownloadButton = (props: DownloadButtonProps) => {
   };
   return (
     <>
-      <Prompt
+      {/* <Prompt
         when={loading}
         message="You are downloading your project, are you sure you want to leave?"
-      />
+      /> */}
       <Button
         onClick={(e) => {
           e.stopPropagation();
           setTrue();
         }}
         label="Build"
-        title="Build and download the project"
         disabled={loading || mainIsLoading}
       >
         {loading ? (
@@ -85,10 +85,8 @@ export const DownloadButton = (props: DownloadButtonProps) => {
         fullWidth
         open={value}
       >
-        <FormWithRedirect
-          save={onClick}
-          saving={loading}
-          render={({ handleSubmitWithRedirect, pristine, saving }) => (
+        <RecordContextProvider value={{}}>
+          <Form onSubmit={onClick}>
             <>
               <DialogContent>
                 <TextInput
@@ -108,16 +106,11 @@ export const DownloadButton = (props: DownloadButtonProps) => {
                 >
                   <IconCancel />
                 </Button>
-                <SaveButton
-                  label="Build"
-                  handleSubmitWithRedirect={handleSubmitWithRedirect}
-                  saving={saving}
-                  disabled={loading}
-                />
+                <SaveButton label="Build" />
               </DialogActions>
             </>
-          )}
-        />
+          </Form>
+        </RecordContextProvider>
       </Dialog>
     </>
   );

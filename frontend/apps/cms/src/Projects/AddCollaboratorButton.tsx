@@ -1,27 +1,45 @@
-import { Dialog, DialogActions, DialogContent } from '@material-ui/core';
+import { Dialog, DialogActions, DialogContent } from '@mui/material';
 import {
   AutocompleteInput,
   Button,
-  FormWithRedirect,
+  Form,
   ReferenceInput,
   SaveButton,
-  useMutation,
   useNotify,
   useRecordContext,
   SelectInput,
   useRefresh,
+  useCreate,
+  RecordContextProvider,
 } from 'react-admin';
-import IconCancel from '@material-ui/icons/Cancel';
-import IconContentAdd from '@material-ui/icons/Add';
+import IconCancel from '@mui/icons-material/Cancel';
+import IconContentAdd from '@mui/icons-material/Add';
 import { useToggler } from '../useToggler';
+import { FieldValues } from 'react-hook-form';
 
 export const AddCollaboratorButton = () => {
   const { value, setTrue, setFalse } = useToggler();
-  const [mutate, { loading }] = useMutation();
   const record = useRecordContext();
   const { id: project } = record;
   const notify = useNotify();
   const refresh = useRefresh();
+  const [create, { isLoading }] = useCreate();
+
+  const onSubmit = (values: FieldValues) =>
+    create(
+      'project-collaborators',
+      { data: values },
+      {
+        onSuccess: (data) => {
+          refresh();
+          setFalse();
+        },
+        onError: (error) => {
+          console.log(error);
+          notify('ra.page.error', { type: 'error' });
+        },
+      }
+    );
   return (
     <>
       <Button
@@ -32,29 +50,8 @@ export const AddCollaboratorButton = () => {
         <IconContentAdd />
       </Button>
       <Dialog open={value}>
-        <FormWithRedirect
-          resource="project-collaborators"
-          initialValues={{ project }}
-          save={(values) => {
-            mutate(
-              {
-                type: 'create',
-                resource: 'project-collaborators',
-                payload: { data: values },
-              },
-              {
-                onSuccess: (data) => {
-                  refresh();
-                  setFalse();
-                },
-                onFailure: (error) => {
-                  console.log(error);
-                  notify('ra.page.error', 'error');
-                },
-              }
-            );
-          }}
-          render={({ handleSubmitWithRedirect, pristine, saving }) => (
+        <RecordContextProvider value={{ project }}>
+          <Form onSubmit={onSubmit}>
             <>
               <DialogContent>
                 <ReferenceInput reference="users" source="user_id">
@@ -74,19 +71,15 @@ export const AddCollaboratorButton = () => {
                 <Button
                   label="ra.action.cancel"
                   onClick={setFalse}
-                  disabled={loading}
+                  disabled={isLoading}
                 >
                   <IconCancel />
                 </Button>
-                <SaveButton
-                  handleSubmitWithRedirect={handleSubmitWithRedirect}
-                  saving={saving}
-                  disabled={loading}
-                />
+                <SaveButton />
               </DialogActions>
             </>
-          )}
-        />
+          </Form>
+        </RecordContextProvider>
       </Dialog>
     </>
   );

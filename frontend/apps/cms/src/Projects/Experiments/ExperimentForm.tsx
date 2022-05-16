@@ -17,6 +17,8 @@ import {
   EditButton,
   RichTextField,
   useGetOne,
+  RaRecord,
+  useRecordContext,
 } from 'react-admin';
 import { BuilderInput } from '../../components/BuilderInput/BuilderInput';
 import { CustomRichTextInput } from '../../components/CustomRichTextInput';
@@ -29,31 +31,31 @@ import { SelectFile } from '../../components/SelectFile';
 import { AddExperimentAdditionalMaterialButton } from './AddExperimentAdditionalMaterialButton';
 import { CustomFileField } from '../../components/CustomFileField';
 
-const ExperimentFormToolbar = (props: ToolbarProps) => (
-  <Toolbar
-    style={{ display: 'flex', justifyContent: 'space-between' }}
-    {...props}
-  >
-    <SaveButton />
-    {props.record && props.record.id && (
-      <DeleteButton redirect={`/projects/${props.record.project}/1`} />
-    )}
-  </Toolbar>
-);
-export const ExperimentForm = (props: Omit<TabbedFormProps, 'children'>) => {
-  const project =
-    props.initialValues && 'project' in props.initialValues
-      ? props.initialValues.project
-      : props.record.project;
-  const { data, loaded } = useGetOne('projects', project);
-  return loaded && data ? (
-    <TabbedForm
+const ExperimentFormToolbar = (props: ToolbarProps) => {
+  const record = useRecordContext();
+  return (
+    <Toolbar
+      style={{ display: 'flex', justifyContent: 'space-between' }}
       {...props}
-      tabs={<Tabs />}
-      redirect="edit"
-      toolbar={<ExperimentFormToolbar />}
-      margin="dense"
     >
+      <SaveButton />
+      {record && record.id && (
+        <DeleteButton redirect={`/projects/${record.project}/1`} />
+      )}
+    </Toolbar>
+  );
+};
+export const ExperimentForm = (props: Omit<TabbedFormProps, 'children'>) => {
+  const record = useRecordContext();
+  const projectId =
+    props.defaultValues && 'project' in props.defaultValues
+      ? props.defaultValues.project
+      : record?.project;
+  const { data: project, isLoading } = useGetOne<RaRecord>('projects', {
+    id: projectId,
+  });
+  return !isLoading && project ? (
+    <TabbedForm {...props} tabs={<Tabs />} toolbar={<ExperimentFormToolbar />}>
       <FormTab label="summary">
         <TextInput
           multiline
@@ -65,7 +67,6 @@ export const ExperimentForm = (props: Omit<TabbedFormProps, 'children'>) => {
           validate={[required(), maxLength(255)]}
         />
         <CustomRichTextInput
-          multiline
           fullWidth
           source="research_question"
           label="Research question (150)"
@@ -75,13 +76,12 @@ export const ExperimentForm = (props: Omit<TabbedFormProps, 'children'>) => {
           onlyStyle
         />
         <CustomRichTextInput
-          glossaryTermsIds={data.glossaryterm_set}
-          referencesIds={props.record.reference_set}
+          glossaryTermsIds={(project as any).glossaryterm_set}
+          referencesIds={record?.reference_set}
+          fullWidth
           source="description"
-          label="Description (400)"
           placeholder="What question are you trying to answer through this experiment"
           helperText="A breif description of the experiment (this will be the experiment description in the main project page)"
-          addLabel={false}
           small
         />
         <ArrayInput source="tags" helperText="The tags of the experiment">
@@ -101,11 +101,11 @@ export const ExperimentForm = (props: Omit<TabbedFormProps, 'children'>) => {
           type="file"
           label={'Pdf report'}
           source={'pdf_report'}
-          project={project}
+          project={projectId}
           helperText="Click the right button to choose a pdf file from the library"
         />
-        <ReferenceInputImage label="Cover" source="cover" project={project} />
-        {props.record.id && (
+        <ReferenceInputImage label="Cover" source="cover" project={projectId} />
+        {record?.id && (
           <>
             <AddExperimentAdditionalMaterialButton />
             <ReferenceArrayField
@@ -124,32 +124,31 @@ export const ExperimentForm = (props: Omit<TabbedFormProps, 'children'>) => {
         )}
       </FormTab>
 
-      {props.record.id && (
+      {record?.id && (
         <FormTab label="context">
           <BuilderInput
             canDivided={false}
-            glossaryTermsIds={data.glossaryterm_set}
-            referencesIds={props.record?.reference_set}
+            glossaryTermsIds={(project as any).glossaryterm_set}
+            referencesIds={record?.reference_set}
             source={'context'}
-            project={project}
+            project={projectId}
           />
         </FormTab>
       )}
 
-      {props.record.id && (
+      {record?.id && (
         <FormTab label="experiment setup">
           <BuilderInput
             canDivided={false}
-            glossaryTermsIds={data.glossaryterm_set}
-            referencesIds={props.record.reference_set}
-            possibleColumns={[2, 3, 4]}
+            glossaryTermsIds={(project as any).glossaryterm_set}
+            referencesIds={record.reference_set}
             possibleComponents={['image', 'listExperimentSetup']}
             source={'experiment_setup'}
-            project={project}
+            project={projectId}
           />
         </FormTab>
       )}
-      {props.record.id && (
+      {record?.id && (
         <FormTab label="steps">
           <AddStepButton />
           <ReferenceArrayField
@@ -169,24 +168,23 @@ export const ExperimentForm = (props: Omit<TabbedFormProps, 'children'>) => {
         </FormTab>
       )}
 
-      {props.record.id && (
+      {record?.id && (
         <FormTab label="findings">
           <BuilderInput
             canDivided={false}
-            glossaryTermsIds={data.glossaryterm_set}
-            referencesIds={props.record?.reference_set}
+            glossaryTermsIds={(project as any).glossaryterm_set}
+            referencesIds={record?.reference_set}
             source={'findings'}
-            project={project}
+            project={projectId}
           />
         </FormTab>
       )}
-      {props.record.id && (
+      {record?.id && (
         <FormTab label="References">
           <AddReferenceButton refersTo="experiment" />
 
           <ReferenceArrayField
-            label="References"
-            addLabel={false}
+            label={false}
             reference="references"
             source="reference_set"
             fullWidth

@@ -1,5 +1,5 @@
-import { Typography } from '@material-ui/core';
-import { cloneElement } from 'react';
+import { Box, Breadcrumbs, Card, Typography } from '@mui/material';
+import React, { cloneElement, ReactNode } from 'react';
 import {
   Datagrid,
   TextField,
@@ -7,13 +7,14 @@ import {
   DateField,
   SelectField,
   FunctionField,
-  Record,
+  RaRecord,
   CreateButton,
   ListActionsProps,
   TopToolbar,
   EditButton,
+  List,
 } from 'react-admin';
-import { CustomList } from '../components/CustomList';
+
 import { CloneButton } from './CloneButton';
 import { DownloadButton } from './DownloadButton';
 import { PreviewButton } from './PreviewButton';
@@ -26,14 +27,17 @@ const ProjectListActions = (props: ListActionsProps) => {
     </TopToolbar>
   );
 };
-
-export const ProjectList = (props: ListProps) => {
+const CardWithBreadCumb: React.FC = (props) => {
   return (
-    <CustomList
-      breacrubms={<Typography variant="h3">Projects</Typography>}
-      actions={<ProjectListActions />}
-      {...props}
-    >
+    <>
+      <Typography variant="h3">Projects</Typography>
+      <Card>{props.children}</Card>
+    </>
+  );
+};
+export const ProjectList = () => {
+  return (
+    <List actions={<ProjectListActions />} component={CardWithBreadCumb}>
       <Datagrid
         rowClick="edit"
         isRowSelectable={(record) => record.user_level === '1'}
@@ -57,7 +61,7 @@ export const ProjectList = (props: ListProps) => {
         />
         <FunctionField
           label=""
-          render={(record?: Record) => (
+          render={(record?: RaRecord) => (
             <>
               {record && <EditButton record={record} />}
               {record && <PreviewButton project={record.id} />}
@@ -69,6 +73,6 @@ export const ProjectList = (props: ListProps) => {
           )}
         />
       </Datagrid>
-    </CustomList>
+    </List>
   );
 };

@@ -24,7 +24,7 @@ import {
 } from '@algocount/ui-site';
 import { EditListExperimentSetup } from './components/EditListExperimentSetup';
 import { EditIframe } from './components/EditIframe';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 import { SelectFile } from '../SelectFile';
 import {
   BuilderBlocks,
@@ -32,10 +32,9 @@ import {
   RowType,
 } from '@algocount/shared/types';
 import SimpleReactLightbox from 'simple-react-lightbox';
-
+import { Box } from '@mui/material';
 interface BuilderInputProps {
   source: string;
-  possibleColumns?: PossibleColumns;
   possibleComponents?: string[];
   glossaryTermsIds: number[];
   referencesIds: number[];
@@ -47,7 +46,7 @@ interface BuilderInputProps {
 export const BuilderInput = (props: BuilderInputProps) => {
   const {
     source,
-    possibleColumns,
+
     possibleComponents,
     glossaryTermsIds,
     referencesIds,
@@ -58,7 +57,7 @@ export const BuilderInput = (props: BuilderInputProps) => {
   const [activeStep, setActiveStep] = React.useState(0);
 
   const {
-    input: { onChange, value: noTypeValue },
+    field: { onChange, value: noTypeValue },
   } = useInput({
     source,
     defaultValue: useMemo(() => [], []),
@@ -221,36 +220,30 @@ export const BuilderInput = (props: BuilderInputProps) => {
 
           getInitialContent: (content: any) => {
             const type: string[] = [];
-            console.log(content);
             if (content?.title) type.push('title');
             if (content?.subtitle) type.push('subtitle');
             if (content?.caption) type.push('caption');
             if (content?.description) type.push('description');
             return {
-              title_bi: content?.title,
-              caption_bi: content?.caption,
-              description_bi: content?.description,
-              subtitle_bi: content?.subtitle,
+              title: content?.title,
+              caption: content?.caption,
+              description: content?.description,
+              subtitle: content?.subtitle,
               type,
+              isWide: content?.isWide,
               image: content?.image,
             };
           },
           getSaveContent: (values: any) => {
-            const {
-              title_bi,
-              subtitle_bi,
-              caption_bi,
-              image,
-              isWide,
-              description_bi,
-            } = values;
+            const { title, subtitle, caption, image, isWide, description } =
+              values;
             return {
-              title: title_bi,
-              subtitle: subtitle_bi,
-              caption: caption_bi,
+              title: title,
+              subtitle: subtitle,
+              caption: caption,
               image,
               isWide,
-              description: description_bi,
+              description: description,
             };
           },
         },
@@ -380,10 +373,9 @@ export const BuilderInput = (props: BuilderInputProps) => {
 
   return (
     <SimpleReactLightbox>
-      <div>
+      <Box width="100%">
         <AddRowButton
           canDivided={canDivided}
-          possibleColumns={possibleColumns}
           onSubmit={(values) => {
             const newRows = [
               ...value,
@@ -432,7 +424,7 @@ export const BuilderInput = (props: BuilderInputProps) => {
             builderBlocks={builderBlocks}
           />
         )}
-      </div>
+      </Box>
     </SimpleReactLightbox>
   );
 };

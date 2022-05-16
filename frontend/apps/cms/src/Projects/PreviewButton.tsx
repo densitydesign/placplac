@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, LinkProps } from 'react-router-dom';
-import Visibility from '@material-ui/icons/Visibility';
+import Visibility from '@mui/icons-material/Visibility';
 import { Button, useLoading } from 'react-admin';
 
 interface PreviewButtonProps {
@@ -20,7 +20,6 @@ export const PreviewButton = (props: PreviewButtonProps) => {
       component={LinkBehavior}
       to={{ pathname: `/preview/${props.project}` }}
       label="Preview"
-      title="Preview"
     >
       <Visibility />
     </Button>

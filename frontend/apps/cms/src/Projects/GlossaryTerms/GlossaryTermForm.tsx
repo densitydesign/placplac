@@ -14,27 +14,33 @@ import {
   TextInput,
   Toolbar,
   ToolbarProps,
+  useRecordContext,
 } from 'react-admin';
 import { CustomRichTextInput } from '../../components/CustomRichTextInput';
 import { ReferenceInputImage } from '../../components/ReferenceInputImage';
 
-const GlossaryTermFormToolbar = (props: ToolbarProps) => (
-  <Toolbar
-    style={{ display: 'flex', justifyContent: 'space-between' }}
-    {...props}
-  >
-    <SaveButton />
-    {props.record && props.record.id && (
-      <DeleteButton redirect={`/projects/${props.record.project}/2`} />
-    )}
-  </Toolbar>
-);
+const GlossaryTermFormToolbar = (props: ToolbarProps) => {
+  const record = useRecordContext();
+  return (
+    <Toolbar
+      style={{ display: 'flex', justifyContent: 'space-between' }}
+      {...props}
+    >
+      <SaveButton />
+      {record && record.id && (
+        <DeleteButton redirect={`/projects/${record.project}/2`} />
+      )}
+    </Toolbar>
+  );
+};
 
 export const GlossaryTermForm = (props: Omit<SimpleFormProps, 'children'>) => {
+  const record = useRecordContext();
+
   const project =
-    props.initialValues && 'project' in props.initialValues
-      ? props.initialValues.project
-      : props.record.project;
+    props.defaultValues && 'project' in props.defaultValues
+      ? props.defaultValues.project
+      : record?.project;
   const redirect = `/projects/${project}/2`;
 
   return (
@@ -61,7 +67,7 @@ export const GlossaryTermForm = (props: Omit<SimpleFormProps, 'children'>) => {
       <CustomRichTextInput
         validate={[required()]}
         source="description"
-        addLabel={false}
+        label={false}
       />
       <ArrayInput label="Other material" source="more_info_url">
         <SimpleFormIterator getItemLabel={(index) => `${index + 1}. link`}>

@@ -1,5 +1,3 @@
-import * as React from "react";
-import { Field, Form } from "react-final-form";
 import {
   Box,
   Button,
@@ -7,51 +5,49 @@ import {
   CircularProgress,
   Grid,
   Link,
-  TextField,
-} from "@material-ui/core";
-import { makeStyles, Theme } from "@material-ui/core/styles";
-import { useTranslate, useLogin, useNotify, useSafeSetState } from "ra-core";
+} from '@mui/material';
+import { styled } from '@mui/material/styles';
+import {
+  useTranslate,
+  useLogin,
+  useNotify,
+  useSafeSetState,
+  TextInput,
+  PasswordInput,
+} from 'react-admin';
+import { Form } from 'react-admin';
+import { FieldErrors, FieldValues } from 'react-hook-form';
+
+const PREFIX = 'RaLoginForm';
+
+const classes = {
+  form: `${PREFIX}-form`,
+  input: `${PREFIX}-input`,
+  button: `${PREFIX}-button`,
+  icon: `${PREFIX}-icon`,
+};
+
+const Root = styled('div')(({ theme }) => ({
+  [`& .${classes.form}`]: {
+    padding: '0 1em 1em 1em',
+  },
+
+  [`& .${classes.input}`]: {
+    marginTop: '1em',
+  },
+
+  [`& .${classes.button}`]: {
+    width: '100%',
+  },
+
+  [`& .${classes.icon}`]: {
+    marginRight: theme.spacing(1),
+  },
+}));
 
 interface Props {
   redirectTo?: string;
 }
-
-interface FormData {
-  username: string;
-  password: string;
-}
-
-const useStyles = makeStyles(
-  (theme: Theme) => ({
-    form: {
-      padding: "0 1em 1em 1em",
-    },
-    input: {
-      marginTop: "1em",
-    },
-    button: {
-      width: "100%",
-    },
-    icon: {
-      marginRight: theme.spacing(1),
-    },
-  }),
-  { name: "RaLoginForm" }
-);
-
-const Input = ({
-  meta: { touched, error }, // eslint-disable-line react/prop-types
-  input: inputProps, // eslint-disable-line react/prop-types
-  ...props
-}: any) => (
-  <TextField
-    error={!!(touched && error)}
-    helperText={touched && error}
-    {...inputProps}
-    {...props}
-    fullWidth
-  />
-);
 
 export const LoginForm = (props: Props) => {
   const { redirectTo } = props;
@@ -59,21 +55,20 @@ export const LoginForm = (props: Props) => {
   const login = useLogin();
   const translate = useTranslate();
   const notify = useNotify();
-  const classes = useStyles(props);
 
-  const validate = (values: FormData) => {
-    const errors: any = { username: undefined, password: undefined };
-
+  const validate = (values: FieldValues) => {
+    const errors: any = {};
     if (!values.username) {
-      errors.username = translate("ra.validation.required");
+      errors.username = translate('ra.validation.required');
     }
     if (!values.password) {
-      errors.password = translate("ra.validation.required");
+      errors.password = translate('ra.validation.required');
     }
+    console.log(errors);
     return errors;
   };
 
-  const submit = (values: any) => {
+  const submit = (values: FieldValues) => {
     setLoading(true);
     login(values, redirectTo)
       .then(() => {
@@ -82,82 +77,73 @@ export const LoginForm = (props: Props) => {
       .catch((error) => {
         setLoading(false);
         notify(
-          typeof error === "string"
+          typeof error === 'string'
             ? error
-            : typeof error === "undefined" || !error.message
-            ? "ra.auth.sign_in_error"
+            : typeof error === 'undefined' || !error.message
+            ? 'ra.auth.sign_in_error'
             : error.message,
-          "warning",
           {
-            _:
-              typeof error === "string"
-                ? error
-                : error && error.message
-                ? error.message
-                : undefined,
+            type: 'warning',
+            messageArgs: {
+              _:
+                typeof error === 'string'
+                  ? error
+                  : error && error.message
+                  ? error.message
+                  : undefined,
+            },
           }
         );
       });
   };
 
   return (
-    <Form
-      onSubmit={submit}
-      validate={validate}
-      render={({ handleSubmit }) => (
-        <form onSubmit={handleSubmit} noValidate>
-          <div className={classes.form}>
-            <div className={classes.input}>
-              <Field
-                autoFocus
-                id="username"
-                name="username"
-                component={Input}
-                label={translate("ra.auth.username")}
-                disabled={loading}
-              />
-            </div>
-            <div className={classes.input}>
-              <Field
-                id="password"
-                name="password"
-                component={Input}
-                label={translate("ra.auth.password")}
-                type="password"
-                disabled={loading}
-                autoComplete="current-password"
-              />
-            </div>
+    <Form onSubmit={submit} validate={validate}>
+      <Root>
+        <div className={classes.form}>
+          <div className={classes.input}>
+            <TextInput
+              label={translate('ra.auth.username')}
+              source="username"
+              fullWidth
+            />
           </div>
-          <CardActions>
-            <Button
-              variant="contained"
-              type="submit"
-              color="primary"
-              disabled={loading}
-              className={classes.button}
-            >
-              {loading && (
-                <CircularProgress
-                  className={classes.icon}
-                  size={18}
-                  thickness={2}
-                />
-              )}
-              {translate("ra.auth.sign_in")}
-            </Button>
-          </CardActions>
-          <Box padding={2}>
-            <Grid container justify="center">
-              <Grid item>
-                <Link href="/register" variant="body2">
-                  Do not have an account? Register
-                </Link>
-              </Grid>
+          <div className={classes.input}>
+            <PasswordInput
+              label={translate('ra.auth.password')}
+              source="password"
+              fullWidth
+            />
+          </div>
+        </div>
+        <CardActions>
+          <Button
+            variant="contained"
+            type="submit"
+            color="primary"
+            disabled={loading}
+            className={classes.button}
+          >
+            {loading && (
+              <CircularProgress
+                className={classes.icon}
+                size={18}
+                thickness={2}
+              />
+            )}
+            {translate('ra.auth.sign_in')}
+          </Button>
+        </CardActions>
+        <Box padding={2}>
+          <Grid container justifyContent="center">
+            <Grid item>
+              <Link href="/register" variant="body2">
+                Do not have an account? Register
+              </Link>
             </Grid>
-          </Box>
-        </form>
-      )}
-    />
+          </Grid>
+        </Box>
+      </Root>
+    </Form>
   );
 };

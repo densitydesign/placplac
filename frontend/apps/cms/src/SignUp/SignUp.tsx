@@ -1,43 +1,49 @@
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import Link from "@material-ui/core/Link";
-import Grid from "@material-ui/core/Grid";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
-import { Form } from "react-final-form";
-import { PasswordInput, TextInput } from "ra-ui-materialui";
-import axios from "axios";
-import { url } from "../constants";
-import { useState } from "react";
-const useStyles = makeStyles((theme) => ({
-  "@global": {
-    body: {
-      backgroundColor: theme.palette.common.white,
-    },
-  },
-  paper: {
+import Avatar from '@mui/material/Avatar';
+import { styled } from '@mui/material/styles';
+import Button from '@mui/material/Button';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import { makeStyles } from '@mui/material/styles';
+import Container from '@mui/material/Container';
+import { Form, PasswordInput, SaveButton, TextInput } from 'react-admin';
+import axios from 'axios';
+import { url } from '../constants';
+import { useState } from 'react';
+const PREFIX = 'SignUp';
+
+const classes = {
+  paper: `${PREFIX}-paper`,
+  avatar: `${PREFIX}-avatar`,
+  form: `${PREFIX}-form`,
+  submit: `${PREFIX}-submit`,
+};
+
+const StyledContainer = styled(Container)(({ theme }) => ({
+  [`& .${classes.paper}`]: {
     marginTop: theme.spacing(8),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
-  avatar: {
+
+  [`& .${classes.avatar}`]: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
-  form: {
-    width: "100%", // Fix IE 11 issue.
+
+  [`& .${classes.form}`]: {
+    width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(3),
   },
-  submit: {
+
+  [`& .${classes.submit}`]: {
     margin: theme.spacing(3, 0, 2),
   },
 }));
 
 export default function SignUp() {
-  const classes = useStyles();
   const [registered, setRegistered] = useState(false);
 
   const onSubmit = (values: Record<string, any>) => {
@@ -48,16 +54,16 @@ export default function SignUp() {
       })
       .catch((error) => {
         if (error.response.data) {
-          let errorDict: Record<string, string> = {};
+          const errorDict: Record<string, string> = {};
           Object.keys(error.response.data).forEach((key) => {
-            errorDict[key] = error.response.data[key].join(". ");
+            errorDict[key] = error.response.data[key].join('. ');
           });
           return errorDict;
         }
       });
   };
   return (
-    <Container component="main" maxWidth="xs">
+    <StyledContainer maxWidth="xs">
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
@@ -71,7 +77,7 @@ export default function SignUp() {
               Utente registrato, riceverai una mail quando il tuo account verrà
               attivato!
             </h1>
-            <Grid container justify="center">
+            <Grid container justifyContent="center">
               <Grid item>
                 <Link href="/" variant="body2">
                   Login
@@ -81,76 +87,65 @@ export default function SignUp() {
           </>
         ) : (
           <form className={classes.form} noValidate>
-            <Form
-              onSubmit={onSubmit}
-              render={({ form, handleSubmit }) => (
-                <>
-                  <Grid container spacing={1}>
-                    <Grid item xs={12} sm={6}>
-                      <TextInput
-                        helperText={false}
-                        fullWidth
-                        variant="outlined"
-                        source="first_name"
-                      />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <TextInput
-                        helperText={false}
-                        fullWidth
-                        variant="outlined"
-                        source="last_name"
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextInput
-                        helperText={false}
-                        fullWidth
-                        variant="outlined"
-                        type="email"
-                        source="email"
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <PasswordInput
-                        helperText={false}
-                        variant="outlined"
-                        fullWidth
-                        source="password"
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <PasswordInput
-                        helperText={false}
-                        variant="outlined"
-                        fullWidth
-                        label="Confirm password"
-                        source="password2"
-                      />
-                    </Grid>
+            <Form onSubmit={onSubmit}>
+              <>
+                <Grid container spacing={1}>
+                  <Grid item xs={12} sm={6}>
+                    <TextInput
+                      helperText={false}
+                      fullWidth
+                      variant="outlined"
+                      source="first_name"
+                    />
                   </Grid>
-                  <Button
-                    onClick={handleSubmit}
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    className={classes.submit}
-                  >
-                    Sign Up
-                  </Button>
-                  <Grid container justify="flex-end">
-                    <Grid item>
-                      <Link href="/" variant="body2">
-                        Already have an account? Sign in
-                      </Link>
-                    </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextInput
+                      helperText={false}
+                      fullWidth
+                      variant="outlined"
+                      source="last_name"
+                    />
                   </Grid>
-                </>
-              )}
-            />
+                  <Grid item xs={12}>
+                    <TextInput
+                      helperText={false}
+                      fullWidth
+                      variant="outlined"
+                      type="email"
+                      source="email"
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <PasswordInput
+                      helperText={false}
+                      variant="outlined"
+                      fullWidth
+                      source="password"
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <PasswordInput
+                      helperText={false}
+                      variant="outlined"
+                      fullWidth
+                      label="Confirm password"
+                      source="password2"
+                    />
+                  </Grid>
+                </Grid>
+                <SaveButton label="Sign up" />
+                <Grid container justifyContent="flex-end">
+                  <Grid item>
+                    <Link href="/" variant="body2">
+                      Already have an account? Sign in
+                    </Link>
+                  </Grid>
+                </Grid>
+              </>
+            </Form>
           </form>
         )}
       </div>
-    </Container>
+    </StyledContainer>
   );
 }

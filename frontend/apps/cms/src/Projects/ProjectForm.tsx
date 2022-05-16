@@ -1,4 +1,4 @@
-import { Typography } from '@material-ui/core';
+import { Typography } from '@mui/material';
 import {
   ArrayInput,
   Datagrid,
@@ -8,7 +8,7 @@ import {
   FormTab,
   FunctionField,
   maxLength,
-  Record,
+  RaRecord,
   ReferenceArrayField,
   ReferenceManyField,
   required,
@@ -23,6 +23,7 @@ import {
   TextInput,
   Toolbar,
   ToolbarProps,
+  useRecordContext,
 } from 'react-admin';
 import { CustomFileField } from '../components/CustomFileField';
 import { CustomRichTextInput } from '../components/CustomRichTextInput';
@@ -34,26 +35,22 @@ import { AddGlossaryCategoryButton } from './AddGlossaryCategoryButton';
 import { AddGlossaryTermButton } from './AddGlossaryTermButton';
 import { AddReferenceButton } from './AddReferenceButton';
 
-const ProjectFormToolbar = (props: ToolbarProps) => (
-  <Toolbar
-    style={{ display: 'flex', justifyContent: 'space-between' }}
-    {...props}
-  >
-    <SaveButton />
-    {props.record && props.record.id && props.record.user_level === '1' && (
-      <DeleteButton />
-    )}
-  </Toolbar>
-);
-export const ProjectForm = (props: Omit<TabbedFormProps, 'children'>) => {
+const ProjectFormToolbar = (props: ToolbarProps) => {
+  const record = useRecordContext();
   return (
-    <TabbedForm
-      tabs={<Tabs />}
+    <Toolbar
+      style={{ display: 'flex', justifyContent: 'space-between' }}
       {...props}
-      redirect="edit"
-      margin="dense"
-      toolbar={<ProjectFormToolbar />}
     >
+      <SaveButton />
+      {record && record.id && record.user_level === '1' && <DeleteButton />}
+    </Toolbar>
+  );
+};
+export const ProjectForm = () => {
+  const record = useRecordContext();
+  return (
+    <TabbedForm tabs={<Tabs />} toolbar={<ProjectFormToolbar />}>
       <FormTab label="summary">
         <SelectInput
           defaultValue="2"
@@ -102,20 +99,20 @@ export const ProjectForm = (props: Omit<TabbedFormProps, 'children'>) => {
           helperText={'Describe the project'}
           label="About the project"
           source="long_description"
-          glossaryTermsIds={props.record?.glossaryterm_set}
-          referencesIds={props.record?.reference_set}
+          glossaryTermsIds={record?.glossaryterm_set}
+          referencesIds={record?.reference_set}
         />
       </FormTab>
 
-      {props.record.id && (
+      {record?.id && (
         <FormTab label="Experiments">
           <CustomRichTextInput
             source="experiments_description"
             helperText={'Describe what the experiments consist of'}
             placeholder="Describe briefly the experiments"
             small
-            glossaryTermsIds={props.record?.glossaryterm_set}
-            referencesIds={props.record?.reference_set}
+            glossaryTermsIds={record?.glossaryterm_set}
+            referencesIds={record?.reference_set}
           />
           <AddExperimentButton />
           <ReferenceArrayField
@@ -133,16 +130,16 @@ export const ProjectForm = (props: Omit<TabbedFormProps, 'children'>) => {
         </FormTab>
       )}
 
-      {props.record.id && (
+      {record?.id && (
         <FormTab label="Glossary">
           <CustomRichTextInput
             source="glossary_description"
             helperText={'Describe the glossary section'}
             placeholder="Describe briefly the section"
             small
-            glossaryTermsIds={props.record?.glossaryterm_set}
+            glossaryTermsIds={record?.glossaryterm_set}
           />
-          {props.record.id && props.record.user_level === '1' && (
+          {record.user_level === '1' && (
             <>
               <AddGlossaryCategoryButton />
               <ReferenceManyField
@@ -155,14 +152,14 @@ export const ProjectForm = (props: Omit<TabbedFormProps, 'children'>) => {
                   <TextField source="title" />
                   <TextField source="description" />
                   <FunctionField
-                    render={(record?: Record) =>
+                    render={(record?: RaRecord) =>
                       record && record.project ? (
                         <EditButton record={record} />
                       ) : null
                     }
                   />
                   <FunctionField
-                    render={(record?: Record) =>
+                    render={(record?: RaRecord) =>
                       record && record.project ? (
                         <DeleteButton
                           record={record}
@@ -192,13 +189,12 @@ export const ProjectForm = (props: Omit<TabbedFormProps, 'children'>) => {
           </ReferenceArrayField>
         </FormTab>
       )}
-      {props.record.id && (
+      {record?.id && (
         <FormTab label="References">
           <AddReferenceButton refersTo="project" />
 
           <ReferenceArrayField
-            label="References"
-            addLabel={false}
+            label={false}
             reference="references"
             source="reference_set"
             fullWidth
@@ -211,7 +207,7 @@ export const ProjectForm = (props: Omit<TabbedFormProps, 'children'>) => {
           </ReferenceArrayField>
         </FormTab>
       )}
-      {props.record.id && (
+      {record?.id && (
         <FormTab label="Footer">
           <ArrayInput label="Founded by:" source="footer.founded_by">
             <SimpleFormIterator>
@@ -223,7 +219,7 @@ export const ProjectForm = (props: Omit<TabbedFormProps, 'children'>) => {
               />
               <ReferenceInputImage
                 source="image"
-                project={props.record.id}
+                project={record.id}
                 label="Image"
                 fullWidth
                 validate={[required()]}
@@ -240,7 +236,7 @@ export const ProjectForm = (props: Omit<TabbedFormProps, 'children'>) => {
               />
               <ReferenceInputImage
                 source="image"
-                project={props.record.id}
+                project={record.id}
                 label="Image"
                 fullWidth
                 validate={[required()]}
@@ -267,9 +263,8 @@ export const ProjectForm = (props: Omit<TabbedFormProps, 'children'>) => {
           <TextInput fullWidth source="footer.socials.mail" label="Mail" />
         </FormTab>
       )}
-      {props.record.id && (
+      {record?.id && (
         <FormTab label="Media">
-          {/* <AddGlossaryTermButton /> */}
           <ReferenceArrayField
             label=""
             reference="project-media"
@@ -288,7 +283,7 @@ export const ProjectForm = (props: Omit<TabbedFormProps, 'children'>) => {
         </FormTab>
       )}
 
-      {props.record.id && props.record.user_level === '1' && (
+      {record?.id && record?.user_level === '1' && (
         <FormTab label="Collaborators">
           <AddCollaboratorButton />
           <ReferenceArrayField

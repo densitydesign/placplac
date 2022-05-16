@@ -1,8 +1,9 @@
-import { SelectFile } from "../SelectFile";
+import { Identifier } from 'react-admin';
+import { SelectFile } from '../SelectFile';
 
 interface ReferenceInputImageProps {
   source: string;
-  project: number;
+  project: Identifier;
   label?: string;
   validate?: any;
   fullWidth?: boolean;
@@ -13,7 +14,8 @@ export const ReferenceInputImage = (props: ReferenceInputImageProps) => {
   return (
     <SelectFile
       type="image"
-      label={label ? label : "Image"}
+      defaultValue=""
+      label={label ? label : 'Image'}
       source={source}
       project={project}
       fullWidth={fullWidth}

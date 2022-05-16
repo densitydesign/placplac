@@ -1,9 +1,14 @@
-import { Grid } from '@material-ui/core';
-import { FormDataConsumer } from 'ra-core';
-import { BooleanInput, CheckboxGroupInput, TextInput } from 'ra-ui-materialui';
+import { Grid } from '@mui/material';
+import { useEffect } from 'react';
+import {
+  BooleanInput,
+  CheckboxGroupInput,
+  FormDataConsumer,
+  TextInput,
+} from 'react-admin';
 
-import { OnChange } from 'react-final-form-listeners';
-import { useForm } from 'react-final-form';
+import { useForm, useFormContext } from 'react-hook-form';
+
 import { CustomRichTextInput } from '../../CustomRichTextInput';
 import { ReferenceInputImage } from '../../ReferenceInputImage';
 interface Props {
@@ -11,20 +16,64 @@ interface Props {
   glossaryTermsIds: number[];
   referencesIds: number[];
 }
+
+interface RTEProps {
+  glossaryTermsIds: number[];
+  referencesIds: number[];
+}
+const RTEDescription = (props: RTEProps) => {
+  const { watch } = useFormContext();
+
+  return watch('type').includes('description') ? (
+    <CustomRichTextInput
+      helperText={false}
+      fullWidth
+      source="description"
+      label="Description"
+      {...props}
+    />
+  ) : null;
+};
+
+const RTECaption = (props: RTEProps) => {
+  const { watch } = useFormContext();
+
+  return watch('type').includes('caption') ? (
+    <CustomRichTextInput
+      helperText={false}
+      fullWidth
+      source="caption"
+      label="Caption"
+      {...props}
+    />
+  ) : null;
+};
 export const EditImage = ({
   project,
   referencesIds,
   glossaryTermsIds,
 }: Props) => {
-  const { change } = useForm();
+  const { setValue, watch } = useFormContext();
+  const type = watch('type');
+  useEffect(() => {
+    !type.includes('title') && setValue('title', undefined);
+    !type.includes('subtitle') && setValue('subtitle', undefined);
+    !type.includes('caption') && setValue('caption', undefined);
+    !type.includes('description') && setValue('description', undefined);
+  }, [type]);
   return (
     <Grid container direction="column">
-      <Grid item>
-        <BooleanInput
-          helperText={false}
-          defaultValue={false}
-          source={'isWide'}
-        />
+      <Grid item container columnGap={2} alignItems="center">
+        <Grid item>
+          <ReferenceInputImage source="image" project={project} />
+        </Grid>
+        <Grid item xs>
+          <BooleanInput
+            helperText={false}
+            defaultValue={false}
+            source={'isWide'}
+          />
+        </Grid>
       </Grid>
       <Grid item>
         <CheckboxGroupInput
@@ -38,15 +87,6 @@ export const EditImage = ({
             { id: 'description', name: 'Description' },
           ]}
         />
-        <OnChange name="type">
-          {(value, previous) => {
-            !value.includes('title') && change('title_bi', undefined);
-            !value.includes('subtitle') && change('subtitle_bi', undefined);
-            !value.includes('caption') && change('caption_bi', undefined);
-            !value.includes('description') &&
-              change('description_bi', undefined);
-          }}
-        </OnChange>
       </Grid>
 
       <Grid item>
@@ -58,7 +98,7 @@ export const EditImage = ({
                 helperText={false}
                 multiline
                 fullWidth
-                source="title_bi"
+                source="title"
                 label="Title"
                 {...rest}
               />
@@ -68,61 +108,31 @@ export const EditImage = ({
       </Grid>
       <Grid item>
         <FormDataConsumer>
-          {({ formData, ...rest }) =>
+          {({ formData, getSource, ...rest }) =>
             formData.type &&
             formData.type.includes('subtitle') && (
               <TextInput
                 helperText={false}
                 multiline
                 fullWidth
-                source="subtitle_bi"
+                source="subtitle"
                 label="Subtitle"
-                {...rest}
               />
             )
           }
         </FormDataConsumer>
       </Grid>
       <Grid item>
-        <FormDataConsumer>
-          {({ formData, ...rest }) =>
-            formData.type &&
-            formData.type.includes('caption') && (
-              <CustomRichTextInput
-                small
-                helperText={false}
-                referencesIds={referencesIds}
-                glossaryTermsIds={glossaryTermsIds}
-                source="caption_bi"
-                label="Caption"
-                {...rest}
-              />
-            )
-          }
-        </FormDataConsumer>
+        <RTECaption
+          referencesIds={referencesIds}
+          glossaryTermsIds={glossaryTermsIds}
+        />
       </Grid>
       <Grid item>
-        <FormDataConsumer>
-          {({ formData, ...rest }) =>
-            formData.type &&
-            formData.type.includes('description') && (
-              <CustomRichTextInput
-                helperText={false}
-                referencesIds={referencesIds}
-                glossaryTermsIds={glossaryTermsIds}
-                multiline
-                fullWidth
-                source="description_bi"
-                label="Description"
-                {...rest}
-              />
-            )
-          }
-        </FormDataConsumer>
-      </Grid>
-
-      <Grid item>
-        <ReferenceInputImage source="image" project={project} />
+        <RTEDescription
+          referencesIds={referencesIds}
+          glossaryTermsIds={glossaryTermsIds}
+        />
       </Grid>
     </Grid>
   );

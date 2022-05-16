@@ -1,52 +1,45 @@
-import { Dialog, DialogActions, DialogContent } from '@material-ui/core';
+import { Dialog, DialogActions, DialogContent } from '@mui/material';
 import {
   Button,
-  FormWithRedirect,
+  Form,
   SaveButton,
   TextInput,
-  useMutation,
   useNotify,
   useRecordContext,
-  Record,
   useRedirect,
   required,
   maxLength,
   SelectInput,
   ReferenceInput,
+  RecordContextProvider,
+  useCreate,
 } from 'react-admin';
-import IconCancel from '@material-ui/icons/Cancel';
-import IconContentAdd from '@material-ui/icons/Add';
+import IconCancel from '@mui/icons-material/Cancel';
+import IconContentAdd from '@mui/icons-material/Add';
 import { useToggler } from '../useToggler';
 import { CustomRichTextInput } from '../components/CustomRichTextInput';
+import { FieldValues } from 'react-hook-form';
 
 export const AddGlossaryTermButton = () => {
   const { value, setTrue, setFalse } = useToggler();
-  const [mutate, { loading }] = useMutation();
+  const [create, { isLoading }] = useCreate();
   const record = useRecordContext();
   const { id: project } = record;
   const notify = useNotify();
   const redirect = useRedirect();
-  const onSave = ({ title_term, ...values }: Partial<Record>) =>
-    mutate(
+  const onSave = (values: FieldValues) =>
+    create(
+      'glossary-terms',
       {
-        type: 'create',
-        resource: 'glossary-terms',
-        payload: {
-          data: {
-            glossary_category: values.glossary_category,
-            title: title_term,
-            description: values.description,
-            project,
-          },
-        },
+        data: values,
       },
       {
-        onSuccess: ({ data }) => {
+        onSuccess: (data) => {
           setFalse();
           redirect('edit', '/glossary-terms', data.id);
         },
-        onFailure: (error) => {
-          notify('ra.page.error', 'error');
+        onError: (error) => {
+          notify('ra.page.error', { type: 'error' });
         },
       }
     );
@@ -61,52 +54,47 @@ export const AddGlossaryTermButton = () => {
         <IconContentAdd />
       </Button>
       <Dialog maxWidth="sm" fullWidth open={value}>
-        <FormWithRedirect
-          resource="glossary-terms"
-          initialValues={{ project }}
-          save={onSave}
-          render={({ handleSubmitWithRedirect, pristine, saving }) => (
+        <RecordContextProvider value={{ project }}>
+          <Form onSubmit={onSave}>
             <>
               <DialogContent>
                 <ReferenceInput
-                  label="Category"
                   source="glossary_category"
                   reference="glossary-categories"
                   filter={{ project }}
-                  validate={required()}
                 >
-                  <SelectInput optionText="title" />
+                  <SelectInput
+                    optionText="title"
+                    label="Category"
+                    validate={required()}
+                  />
                 </ReferenceInput>
                 <TextInput
                   multiline
                   fullWidth
-                  source="title_term"
+                  source="title"
                   label="Title"
                   validate={[required(), maxLength(100)]}
                 />
                 <CustomRichTextInput
                   validate={[required()]}
                   source="description"
-                  addLabel={false}
+                  label={false}
                 />
               </DialogContent>
               <DialogActions>
                 <Button
                   label="ra.action.cancel"
                   onClick={setFalse}
-                  disabled={loading}
+                  disabled={isLoading}
                 >
                   <IconCancel />
                 </Button>
-                <SaveButton
-                  handleSubmitWithRedirect={handleSubmitWithRedirect}
-                  saving={saving}
-                  disabled={loading}
-                />
+                <SaveButton />
               </DialogActions>
             </>
-          )}
-        />
+          </Form>
+        </RecordContextProvider>
       </Dialog>
     </>
   );

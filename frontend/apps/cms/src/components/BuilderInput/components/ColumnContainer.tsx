@@ -1,11 +1,30 @@
-import { Box, IconButton } from "@material-ui/core";
-import React from "react";
-import KeyboardArrowLeftIcon from "@material-ui/icons/KeyboardArrowLeft";
-import KeyboardArrowRightIcon from "@material-ui/icons/KeyboardArrowRight";
+import { Box, IconButton } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import React from 'react';
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 
-import EditIcon from "@material-ui/icons/Edit";
-import Delete from "@material-ui/icons/Delete";
-import { makeStyles } from "@material-ui/styles";
+import EditIcon from '@mui/icons-material/Edit';
+import Delete from '@mui/icons-material/Delete';
+const PREFIX = 'ColumnContainer';
+
+const classes = {
+  container: `${PREFIX}-container`,
+  button: `${PREFIX}-button`,
+};
+
+const StyledBox = styled(Box)(({ theme }) => ({
+  [`& .${classes.container}`]: {
+    '&:hover': {
+      '& .bgBox': { backgroundColor: 'black', opacity: 0.7 },
+      '& button': {
+        display: 'flex',
+      },
+    },
+  },
+
+  [`& .${classes.button}`]: { display: 'none', color: 'white' },
+}));
 
 interface ColumnContainerProps {
   children: React.ReactNode;
@@ -17,48 +36,39 @@ interface ColumnContainerProps {
   colIndex: number;
 }
 
-const useStyles = makeStyles((theme) => ({
-  container: {
-    "&:hover": {
-      backgroundColor: "black",
-      opacity: 0.7,
-      "& $button": {
-        display: "flex",
-      },
-    },
-  },
-  button: { display: "none", color: "white" },
-}));
-
 export const ColumnContainer = (props: ColumnContainerProps) => {
-  const classes = useStyles();
   const {
     children,
     onClick,
     moveCellLeft,
     moveCellRight,
-
     deleteCell,
     rowIndex,
     colIndex,
   } = props;
   return (
-    <Box position={"relative"}>
+    <StyledBox position={'relative'}>
       <Box
-        position={"absolute"}
-        width={"100%"}
-        height={"100%"}
-        display={"flex"}
+        position={'absolute'}
+        width={'100%'}
+        height={'100%'}
+        display={'flex'}
         className={classes.container}
-        zIndex={"10"}
+        zIndex={'10'}
       >
         <Box
-          display={"flex"}
-          justifyContent={"center"}
-          alignItems={"middle"}
+          className="bgBox"
+          position="absolute"
+          width="100%"
+          height="100%"
+        ></Box>
+        <Box
+          display={'flex'}
+          justifyContent={'center'}
+          alignItems={'middle'}
           mt="auto"
           mb="auto"
-          width={"100%"}
+          width={'100%'}
         >
           <IconButton
             className={classes.button}
@@ -108,6 +118,6 @@ export const ColumnContainer = (props: ColumnContainerProps) => {
       </Box>
 
       <div className="inner-column">{children}</div>
-    </Box>
+    </StyledBox>
   );
 };

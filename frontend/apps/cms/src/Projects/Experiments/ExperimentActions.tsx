@@ -1,6 +1,6 @@
-import { Link } from 'ra-ui-materialui';
-import { useGetOne, useRecordContext } from 'ra-core';
-import { Typography, Breadcrumbs } from '@material-ui/core';
+import { Link } from 'react-admin';
+import { useGetOne, useRecordContext } from 'react-admin';
+import { Typography, Breadcrumbs } from '@mui/material';
 import { TopToolbarWithTitle } from '../../components/TopToolbarWithTitle';
 import { PreviewButton } from '../PreviewButton';
 
@@ -9,9 +9,13 @@ interface ExperimentActionsProps {
 }
 export const ExperimentActions = (props: ExperimentActionsProps) => {
   const record = useRecordContext();
-  const { data } = useGetOne('projects', record?.project, {
-    enabled: !!record,
-  });
+  const { data } = useGetOne(
+    'projects',
+    { id: record?.project },
+    {
+      enabled: !!record,
+    }
+  );
   return (
     <TopToolbarWithTitle
       title={

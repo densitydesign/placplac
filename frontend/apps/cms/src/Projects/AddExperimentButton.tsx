@@ -1,47 +1,45 @@
-import { Dialog, DialogActions, DialogContent } from '@material-ui/core';
+import { Dialog, DialogActions, DialogContent } from '@mui/material';
 import {
   Button,
-  FormWithRedirect,
+  Form,
   SaveButton,
   TextInput,
-  useMutation,
   useNotify,
   useRecordContext,
-  Record,
   useRedirect,
   required,
+  useCreate,
+  RecordContextProvider,
 } from 'react-admin';
-import IconCancel from '@material-ui/icons/Cancel';
-import IconContentAdd from '@material-ui/icons/Add';
+import IconCancel from '@mui/icons-material/Cancel';
+import IconContentAdd from '@mui/icons-material/Add';
 import { useToggler } from '../useToggler';
+import { FieldValues } from 'react-hook-form';
 
 export const AddExperimentButton = () => {
   const { value, setTrue, setFalse } = useToggler();
-  const [mutate, { loading }] = useMutation();
+
   const record = useRecordContext();
   const { id: project } = record;
   const notify = useNotify();
   const redirect = useRedirect();
-  const onSave = (values: Partial<Record>) =>
-    mutate(
+  const [create, { isLoading }] = useCreate();
+  const onSave = (values: FieldValues) =>
+    create(
+      'experiments',
       {
-        type: 'create',
-        resource: 'experiments',
-        payload: {
-          data: { title: values.titleProject, project: values.project },
-        },
+        data: values,
       },
       {
-        onSuccess: ({ data }) => {
+        onSuccess: (data) => {
           setFalse();
           redirect('edit', '/experiments', data.id);
         },
-        onFailure: (error) => {
-          notify('ra.page.error', 'error');
+        onError: (error) => {
+          notify('ra.page.error', { type: 'error' });
         },
       }
     );
-  console.log(project);
   return (
     <>
       <Button
@@ -52,18 +50,15 @@ export const AddExperimentButton = () => {
         <IconContentAdd />
       </Button>
       <Dialog maxWidth="sm" fullWidth open={value}>
-        <FormWithRedirect
-          resource="experiments"
-          initialValues={{ project }}
-          save={onSave}
-          render={({ handleSubmitWithRedirect, pristine, saving }) => (
+        <RecordContextProvider value={{ project }}>
+          <Form onSubmit={onSave}>
             <>
               <DialogContent>
                 <TextInput
                   fullWidth
                   multiline
                   validate={[required()]}
-                  source="titleProject"
+                  source="title"
                   label="Title (70)"
                   placeholder="a short title representative of the experiment"
                   helperText="The title of the experiment"
@@ -73,19 +68,15 @@ export const AddExperimentButton = () => {
                 <Button
                   label="ra.action.cancel"
                   onClick={setFalse}
-                  disabled={loading}
+                  disabled={isLoading}
                 >
                   <IconCancel />
                 </Button>
-                <SaveButton
-                  handleSubmitWithRedirect={handleSubmitWithRedirect}
-                  saving={saving}
-                  disabled={loading}
-                />
+                <SaveButton />
               </DialogActions>
             </>
-          )}
-        />
+          </Form>
+        </RecordContextProvider>
       </Dialog>
     </>
   );

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { styled } from '@mui/material/styles';
 import { Children, cloneElement, memo } from 'react';
 import {
   AppBar as MuiAppBar,
@@ -10,88 +11,26 @@ import {
   makeStyles,
   Tooltip,
   IconButton,
-} from '@material-ui/core';
-import { ComponentPropType, useTranslate } from 'ra-core';
+} from '@mui/material';
 import {
   AppBarProps,
   HideOnScroll,
   LoadingIndicator,
+  Logout,
+  SidebarToggleButton,
   SidebarToggleButtonProps,
   UserMenu,
-  useToggleSidebar,
+  useSidebarState,
 } from 'react-admin';
+const PREFIX = 'RaAppBar';
 
-const SidebarToggleButton = (props: SidebarToggleButtonProps) => {
-  const translate = useTranslate();
-  const classes = useStylesButton(props);
-  const { className } = props;
-  const [open, toggleSidebar] = useToggleSidebar();
-
-  return (
-    <Tooltip
-      title={translate(open ? 'ra.action.close_menu' : 'ra.action.open_menu', {
-        _: 'Open/Close menu',
-      })}
-      enterDelay={500}
-    >
-      <IconButton
-        color="inherit"
-        onClick={() => toggleSidebar()}
-        className={className}
-      >
-        <img
-          className={
-            open ? classes.menuButtonIconOpen : classes.menuButtonIconClosed
-          }
-          alt="PlacPlac"
-          src="/assets/negative-placplac.png"
-          width={'18px'}
-        />
-      </IconButton>
-    </Tooltip>
-  );
+const classes = {
+  toolbar: `${PREFIX}-toolbar`,
+  menuButton: `${PREFIX}-menuButton`,
+  menuButtonIconClosed: `${PREFIX}-menuButtonIconClosed`,
+  menuButtonIconOpen: `${PREFIX}-menuButtonIconOpen`,
+  title: `${PREFIX}-title`,
 };
-
-const useStylesButton = makeStyles(
-  (theme) => ({
-    menuButtonIconClosed: {
-      transition: theme.transitions.create(['transform'], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
-      transform: 'rotate(0deg)',
-    },
-    menuButtonIconOpen: {
-      transition: theme.transitions.create(['transform'], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
-      transform: 'rotate(360deg)',
-    },
-  }),
-  { name: 'RaSidebarToggleButton' }
-);
-
-const useStylesAppbar = makeStyles(
-  (theme) => ({
-    toolbar: {
-      paddingRight: 24,
-    },
-    menuButton: {
-      marginLeft: '0.2em',
-      marginRight: '0.2em',
-    },
-    menuButtonIconClosed: {},
-    menuButtonIconOpen: {},
-    title: {
-      flex: 1,
-      textOverflow: 'ellipsis',
-      whiteSpace: 'nowrap',
-      overflow: 'hidden',
-    },
-  }),
-  { name: 'RaAppBar' }
-);
 
 const AppBar = (props: AppBarProps): JSX.Element => {
   const {
@@ -99,14 +38,13 @@ const AppBar = (props: AppBarProps): JSX.Element => {
     classes: classesOverride,
     className,
     color = 'secondary',
-    logout,
     open,
     title,
     userMenu,
     container: Container = HideOnScroll,
     ...rest
   } = props;
-  const classes = useStylesAppbar(props);
+
   const sidebarToggleButtonClasses = {
     menuButtonIconClosed: classes.menuButtonIconClosed,
     menuButtonIconOpen: classes.menuButtonIconOpen,
@@ -123,10 +61,7 @@ const AppBar = (props: AppBarProps): JSX.Element => {
           variant={isXSmall ? 'regular' : 'dense'}
           className={classes.toolbar}
         >
-          <SidebarToggleButton
-            className={classes.menuButton}
-            classes={sidebarToggleButtonClasses}
-          />
+          <SidebarToggleButton className={classes.menuButton} />
           {Children.count(children) === 0 ? (
             <Typography
               variant="h6"
@@ -138,13 +73,9 @@ const AppBar = (props: AppBarProps): JSX.Element => {
             children
           )}
           <LoadingIndicator />
-          {typeof userMenu === 'boolean' ? (
-            userMenu === true ? (
-              <UserMenu logout={logout} />
-            ) : null
-          ) : (
-            cloneElement(userMenu!, { logout })
-          )}
+          <UserMenu>
+            <Logout />
+          </UserMenu>
         </Toolbar>
       </MuiAppBar>
     </Container>
@@ -156,26 +87,34 @@ AppBar.defaultProps = {
   container: HideOnScroll,
 };
 
-const useStyles = makeStyles({
-  title: {
+const StyledAppBar = styled(AppBar)(({ theme }) => ({
+  [`& .${classes.toolbar}`]: {
+    paddingRight: 24,
+  },
+
+  [`& .${classes.menuButton}`]: {
+    marginLeft: '0.2em',
+    marginRight: '0.2em',
+  },
+
+  [`& .${classes.menuButtonIconClosed}`]: {},
+  [`& .${classes.menuButtonIconOpen}`]: {},
+
+  [`& .${classes.title}`]: {
     flex: 1,
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
     overflow: 'hidden',
   },
-  spacer: {
-    flex: 1,
-  },
-});
+}));
+
 export const CustomAppBar = (props: AppBarProps) => {
-  const classes = useStyles();
   return (
-    <AppBar color="primary" {...props}>
+    <StyledAppBar color="primary" {...props}>
       <Typography variant="h6" color="inherit" className={classes.title}>
         PlacPlac
       </Typography>
-
-      <span className={classes.spacer} />
-    </AppBar>
+      {/* <span className={classes.spacer} /> */}
+    </StyledAppBar>
   );
 };

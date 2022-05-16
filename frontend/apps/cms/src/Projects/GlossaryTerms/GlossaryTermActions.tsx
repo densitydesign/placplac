@@ -1,6 +1,6 @@
-import { Link } from 'ra-ui-materialui';
-import { useRecordContext } from 'ra-core';
-import { Typography, Breadcrumbs } from '@material-ui/core';
+import { Link } from 'react-admin';
+import { useRecordContext } from 'react-admin';
+import { Typography, Breadcrumbs } from '@mui/material';
 import { useGetOne } from 'react-admin';
 import { TopToolbarWithTitle } from '../../components/TopToolbarWithTitle';
 import { PreviewButton } from '../PreviewButton';
@@ -10,9 +10,13 @@ interface GlossaryTermActionsProps {
 }
 export const GlossaryTermActions = (props: GlossaryTermActionsProps) => {
   const record = useRecordContext();
-  const { data } = useGetOne('projects', record?.project, {
-    enabled: !!record,
-  });
+  const { data } = useGetOne(
+    'projects',
+    { id: record?.project },
+    {
+      enabled: !!record,
+    }
+  );
   return (
     <TopToolbarWithTitle
       title={

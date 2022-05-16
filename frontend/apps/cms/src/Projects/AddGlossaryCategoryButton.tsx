@@ -1,49 +1,42 @@
-import { Dialog, DialogActions, DialogContent } from '@material-ui/core';
+import { Dialog, DialogActions, DialogContent } from '@mui/material';
 import {
   Button,
-  FormWithRedirect,
+  Form,
   SaveButton,
   TextInput,
-  useMutation,
   useNotify,
   useRecordContext,
-  Record,
   useRedirect,
   required,
   maxLength,
+  RecordContextProvider,
+  useCreate,
 } from 'react-admin';
-import IconCancel from '@material-ui/icons/Cancel';
-import IconContentAdd from '@material-ui/icons/Add';
+import IconCancel from '@mui/icons-material/Cancel';
+import IconContentAdd from '@mui/icons-material/Add';
 import { useToggler } from '../useToggler';
+import { FieldValues } from 'react-hook-form';
 
 export const AddGlossaryCategoryButton = () => {
   const { value, setTrue, setFalse } = useToggler();
-  const [mutate, { loading }] = useMutation();
   const record = useRecordContext();
   const { id: project } = record;
   const notify = useNotify();
   const redirect = useRedirect();
-  const onSave = ({ title_cat, ...values }: Partial<Record>) =>
-    mutate(
+  const [create, { isLoading }] = useCreate();
+  const onSave = (values: FieldValues) =>
+    create(
+      'glossary-categories',
       {
-        type: 'create',
-        resource: 'glossary-categories',
-        payload: {
-          data: {
-            title: title_cat,
-            color: values.color,
-            description: values.description,
-            project,
-          },
-        },
+        data: values,
       },
       {
-        onSuccess: ({ data }) => {
+        onSuccess: (data) => {
           setFalse();
           redirect('edit', '/glossary-categories', data.id);
         },
-        onFailure: (error) => {
-          notify('ra.page.error', 'error');
+        onError: (error) => {
+          notify('ra.page.error', { type: 'error' });
         },
       }
     );
@@ -58,18 +51,15 @@ export const AddGlossaryCategoryButton = () => {
         <IconContentAdd />
       </Button>
       <Dialog maxWidth="sm" fullWidth open={value}>
-        <FormWithRedirect
-          resource="glossary-categories"
-          initialValues={{ project }}
-          save={onSave}
-          render={({ handleSubmitWithRedirect, pristine, saving }) => (
+        <RecordContextProvider value={{ project }}>
+          <Form onSubmit={onSave}>
             <>
               <DialogContent>
                 <TextInput
                   multiline
                   fullWidth
                   label="Title"
-                  source="title_cat"
+                  source="title"
                   validate={[required(), maxLength(100)]}
                 />
                 <TextInput
@@ -88,19 +78,15 @@ export const AddGlossaryCategoryButton = () => {
                 <Button
                   label="ra.action.cancel"
                   onClick={setFalse}
-                  disabled={loading}
+                  disabled={isLoading}
                 >
                   <IconCancel />
                 </Button>
-                <SaveButton
-                  handleSubmitWithRedirect={handleSubmitWithRedirect}
-                  saving={saving}
-                  disabled={loading}
-                />
+                <SaveButton />
               </DialogActions>
             </>
-          )}
-        />
+          </Form>
+        </RecordContextProvider>
       </Dialog>
     </>
   );

@@ -1,18 +1,19 @@
-import { Dialog, DialogActions, DialogContent } from '@material-ui/core';
+import { Dialog, DialogActions, DialogContent } from '@mui/material';
 import {
   Button,
-  FormWithRedirect,
+  Form,
   SaveButton,
-  useMutation,
   useNotify,
   useRecordContext,
-  Record,
   useRedirect,
+  RecordContextProvider,
+  useCreate,
 } from 'react-admin';
-import IconCancel from '@material-ui/icons/Cancel';
-import IconContentAdd from '@material-ui/icons/Add';
+import IconCancel from '@mui/icons-material/Cancel';
+import IconContentAdd from '@mui/icons-material/Add';
 import { useToggler } from '../useToggler';
 import { CustomRichTextInput } from '../components/CustomRichTextInput';
+import { FieldValues } from 'react-hook-form';
 
 interface AddReferenceButtonProps {
   refersTo: 'project' | 'experiment';
@@ -20,26 +21,22 @@ interface AddReferenceButtonProps {
 export const AddReferenceButton = (props: AddReferenceButtonProps) => {
   const { refersTo } = props;
   const { value, setTrue, setFalse } = useToggler();
-  const [mutate, { loading }] = useMutation();
+  const [create, { isLoading }] = useCreate();
   const record = useRecordContext();
   const { id } = record;
   const notify = useNotify();
   const redirect = useRedirect();
-  const onSave = ({ description_ref }: Partial<Record>) => {
-    console.log({ description: description_ref, [refersTo]: id });
-    return mutate(
+  const onSave = (values: FieldValues) => {
+    return create(
+      'references',
+      { data: values },
       {
-        type: 'create',
-        resource: 'references',
-        payload: { data: { description: description_ref, [refersTo]: id } },
-      },
-      {
-        onSuccess: ({ data }) => {
+        onSuccess: (data) => {
           setFalse();
           redirect('edit', '/references', data.id);
         },
-        onFailure: (error) => {
-          notify('ra.page.error', 'error');
+        onError: (error) => {
+          notify('ra.page.error', { type: 'error' });
         },
       }
     );
@@ -55,15 +52,12 @@ export const AddReferenceButton = (props: AddReferenceButtonProps) => {
         <IconContentAdd />
       </Button>
       <Dialog maxWidth="sm" fullWidth open={value} disableEnforceFocus>
-        <FormWithRedirect
-          resource="references"
-          initialValues={{ [refersTo]: id }}
-          save={onSave}
-          render={({ handleSubmitWithRedirect, pristine, saving }) => (
+        <RecordContextProvider value={{ [refersTo]: id }}>
+          <Form onSubmit={onSave}>
             <>
               <DialogContent>
                 <CustomRichTextInput
-                  source="description_ref"
+                  source="description"
                   label="Description of reference"
                   small
                 />
@@ -72,19 +66,15 @@ export const AddReferenceButton = (props: AddReferenceButtonProps) => {
                 <Button
                   label="ra.action.cancel"
                   onClick={setFalse}
-                  disabled={loading}
+                  disabled={isLoading}
                 >
                   <IconCancel />
                 </Button>
-                <SaveButton
-                  handleSubmitWithRedirect={handleSubmitWithRedirect}
-                  saving={saving}
-                  disabled={loading}
-                />
+                <SaveButton />
               </DialogActions>
             </>
-          )}
-        />
+          </Form>
+        </RecordContextProvider>
       </Dialog>
     </>
   );

@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import Copy from "@material-ui/icons/FileCopy";
-import { Button, useListContext, useLoading } from "react-admin";
-import { client } from "../dataProvider";
-import { CircularProgress } from "@material-ui/core";
+import React, { useState } from 'react';
+import Copy from '@mui/icons-material/FileCopy';
+import { Button, useListContext, useLoading } from 'react-admin';
+import { client } from '../dataProvider';
+import { CircularProgress } from '@mui/material';
 
 interface CloneButtonProps {
   project: number | string;
@@ -15,7 +15,7 @@ export const CloneButton = (props: CloneButtonProps) => {
   const onClick = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
     setIsLoading(true);
-    client(`projects/${props.project}/clone`, { method: "GET" })
+    client(`projects/${props.project}/clone`, { method: 'GET' })
       .then(() => {
         refetch();
       })
@@ -26,7 +26,6 @@ export const CloneButton = (props: CloneButtonProps) => {
       disabled={mainIsLoading || isLoading}
       onClick={onClick}
       label="Clone"
-      title="Clone"
     >
       {isLoading ? <CircularProgress size={18} thickness={2} /> : <Copy />}
     </Button>

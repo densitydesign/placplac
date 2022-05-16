@@ -1,43 +1,43 @@
-import { Breadcrumbs, Typography } from '@material-ui/core';
-import { Edit, EditProps, Record, Link } from 'react-admin';
+import { Breadcrumbs, Typography } from '@mui/material';
+import { Edit, EditProps, RaRecord, Link, useRecordContext } from 'react-admin';
 import { TopToolbarWithTitle } from '../components/TopToolbarWithTitle';
 import { DownloadButton } from './DownloadButton';
 import { PreviewButton } from './PreviewButton';
 
 import { ProjectForm } from './ProjectForm';
 
-const PostEditActions = ({ data }: { data?: Record }) => {
+const PostEditActions = () => {
+  const record = useRecordContext();
   return (
     <TopToolbarWithTitle
       title={
         <>
           <span className="breadcumb">{'Project >'}</span>
-          {data && (
+          {record && (
             <Breadcrumbs
               aria-label="breadcrumb"
               separator={<span className="breadcumb-item">{`>`}</span>}
             >
-              <Link to={`/projects/${data.id}`}>
-                <span className="breadcumb-item">{data.title}</span>
+              <Link to={`/projects/${record.id}`}>
+                <span className="breadcumb-item">{record.title}</span>
               </Link>
             </Breadcrumbs>
           )}
         </>
       }
     >
-      {data && <PreviewButton project={data.id} />}
-      {data && data.status === '1' && <DownloadButton project={data} />}
+      {record && <PreviewButton project={record.id} />}
+      {record && record.status === '1' && <DownloadButton project={record} />}
     </TopToolbarWithTitle>
   );
 };
 
-export const ProjectEdit = (props: EditProps) => {
+export const ProjectEdit = () => {
   return (
     <Edit
-      title="idinjadjiajnd"
       mutationMode="pessimistic"
-      {...props}
       actions={<PostEditActions />}
+      redirect="edit"
     >
       <ProjectForm />
     </Edit>

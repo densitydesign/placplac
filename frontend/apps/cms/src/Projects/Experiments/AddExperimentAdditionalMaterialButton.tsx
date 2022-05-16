@@ -1,50 +1,49 @@
-import { Dialog, DialogActions, DialogContent } from '@material-ui/core';
+import { Dialog, DialogActions, DialogContent } from '@mui/material';
 import {
   Button,
-  FormWithRedirect,
   SaveButton,
   TextInput,
-  useMutation,
   useNotify,
   useRecordContext,
-  Record,
   required,
   maxLength,
   FileInput,
   FileField,
   useEditContext,
+  RecordContextProvider,
+  Form,
+  useDataProvider,
 } from 'react-admin';
-import IconCancel from '@material-ui/icons/Cancel';
-import IconContentAdd from '@material-ui/icons/Add';
+import IconCancel from '@mui/icons-material/Cancel';
+import IconContentAdd from '@mui/icons-material/Add';
 import { useToggler } from '../../useToggler';
-
+import { useMutation } from 'react-query';
+import { FieldValues } from 'react-hook-form';
 export const AddExperimentAdditionalMaterialButton = () => {
   const { value, setTrue, setFalse } = useToggler();
-  const [mutate, { loading }] = useMutation();
   const record = useRecordContext();
   const { id: experiment } = record;
   const notify = useNotify();
   const { refetch } = useEditContext();
-  const onSave = (values: Partial<Record>) =>
-    mutate(
-      {
-        type: 'createMultipart',
-        resource: 'experiment-additional-material',
-        payload: {
-          data: { experiment, file: values.file },
-        },
-      },
-      {
-        onSuccess: ({ data }) => {
-          setFalse();
-          refetch && refetch();
-        },
-        onFailure: (error) => {
-          notify('ra.page.error', 'error');
-        },
-      }
-    );
 
+  const dataProvider = useDataProvider();
+  const { mutate, isLoading } = useMutation(
+    ['experiment-additional-material', record.id],
+    (values: FieldValues) =>
+      dataProvider.createMultipart('experiment-additional-material', {
+        data: values,
+        id: record.id,
+      }),
+    {
+      onSuccess: (data) => {
+        setFalse();
+        refetch && refetch();
+      },
+      onError: (error) => {
+        notify('ra.page.error', { type: 'error' });
+      },
+    }
+  );
   return (
     <>
       <Button
@@ -55,11 +54,8 @@ export const AddExperimentAdditionalMaterialButton = () => {
         <IconContentAdd />
       </Button>
       <Dialog maxWidth="sm" fullWidth open={value}>
-        <FormWithRedirect
-          resource="steps"
-          initialValues={{ step: experiment }}
-          save={onSave}
-          render={({ handleSubmitWithRedirect, pristine, saving }) => (
+        <RecordContextProvider value={{ experiment }}>
+          <Form onSubmit={mutate}>
             <>
               <DialogContent>
                 <FileInput source="file" validate={[required()]}>
@@ -70,19 +66,15 @@ export const AddExperimentAdditionalMaterialButton = () => {
                 <Button
                   label="ra.action.cancel"
                   onClick={setFalse}
-                  disabled={loading}
+                  disabled={isLoading}
                 >
                   <IconCancel />
                 </Button>
-                <SaveButton
-                  handleSubmitWithRedirect={handleSubmitWithRedirect}
-                  saving={saving}
-                  disabled={loading}
-                />
+                <SaveButton />
               </DialogActions>
             </>
-          )}
-        />
+          </Form>
+        </RecordContextProvider>
       </Dialog>
     </>
   );

@@ -32,7 +32,7 @@ export const ImagesAnimated: React.FC<ImagesAnimatedProps> = (props) => {
       };
 
       p5.draw = () => {
-        p5.clear();
+        p5.clear(0, 0, 0, 0); //@ts-ignore;
         images.forEach((img) => {
           img.perlinOffsetX += perlinIncrement;
           img.perlinOffsetY += perlinIncrement;

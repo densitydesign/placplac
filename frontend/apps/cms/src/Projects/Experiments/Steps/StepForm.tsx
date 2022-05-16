@@ -14,6 +14,7 @@ import {
   Toolbar,
   ToolbarProps,
   useGetOne,
+  useRecordContext,
 } from 'react-admin';
 import { BuilderInput } from '../../../components/BuilderInput';
 import { CustomFileField } from '../../../components/CustomFileField';
@@ -21,35 +22,39 @@ import { AddStepDownloadButton } from './AddStepDownloadButton';
 import { EditStepDownloadButton } from './EditStepDownloadButton';
 
 const StepFormToolbar = (props: ToolbarProps) => {
+  const record = useRecordContext();
+
   return (
     <Toolbar
       style={{ display: 'flex', justifyContent: 'space-between' }}
       {...props}
     >
       <SaveButton />
-      {props.record && props.record.id && (
-        <DeleteButton redirect={`/experiments/${props.record.experiment}/3`} />
+      {record && record.id && (
+        <DeleteButton redirect={`/experiments/${record.experiment}/3`} />
       )}
     </Toolbar>
   );
 };
 
 export const StepForm = (props: Omit<TabbedFormProps, 'children'>) => {
-  const project =
-    props.initialValues && 'project' in props.initialValues
-      ? props.initialValues.project
-      : props.record.project;
+  const record = useRecordContext();
 
-  const { data, loaded } = useGetOne('projects', project);
+  const project =
+    props.defaultValues && 'project' in props.defaultValues
+      ? props.defaultValues.project
+      : record?.project;
+
+  const { data, isLoading } = useGetOne('projects', { id: project });
   const experiment =
-    props.initialValues && 'experiment' in props.initialValues
-      ? props.initialValues.experiment
-      : props.record.experiment;
-  const { data: experimentData, loaded: loadedExp } = useGetOne(
+    props.defaultValues && 'experiment' in props.defaultValues
+      ? props.defaultValues.experiment
+      : record?.experiment;
+  const { data: experimentData, isLoading: isLoadingExp } = useGetOne(
     'experiments',
-    experiment
+    { id: experiment }
   );
-  return loaded && data && experimentData && loadedExp ? (
+  return !isLoading && data && experimentData && !isLoadingExp ? (
     <TabbedForm {...props} redirect="edit" toolbar={<StepFormToolbar />}>
       <FormTab label="summary">
         <NumberInput
@@ -85,8 +90,8 @@ export const StepForm = (props: Omit<TabbedFormProps, 'children'>) => {
         <BuilderInput
           isStep
           canDivided={true}
-          glossaryTermsIds={data.glossaryterm_set}
-          referencesIds={experimentData.reference_set}
+          glossaryTermsIds={(data as any).glossaryterm_set}
+          referencesIds={(experimentData as any).reference_set}
           source={'content'}
           project={project}
         />

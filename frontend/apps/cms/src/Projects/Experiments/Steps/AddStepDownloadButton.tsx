@@ -1,50 +1,52 @@
-import { Dialog, DialogActions, DialogContent } from '@material-ui/core';
+import { Dialog, DialogActions, DialogContent } from '@mui/material';
 import {
   Button,
-  FormWithRedirect,
+  Form,
   SaveButton,
   TextInput,
-  useMutation,
   useNotify,
   useRecordContext,
-  Record,
   required,
   maxLength,
   FileInput,
   FileField,
   useEditContext,
+  RecordContextProvider,
 } from 'react-admin';
-import IconCancel from '@material-ui/icons/Cancel';
-import IconContentAdd from '@material-ui/icons/Add';
+import { useMutation } from 'react-query';
+import IconCancel from '@mui/icons-material/Cancel';
+import IconContentAdd from '@mui/icons-material/Add';
 import { useToggler } from '../../../useToggler';
+import { FieldValues } from 'react-hook-form';
+import { client } from '../../../dataProvider';
 
 export const AddStepDownloadButton = () => {
   const { value, setTrue, setFalse } = useToggler();
-  const [mutate, { loading }] = useMutation();
   const record = useRecordContext();
   const { id: step } = record;
   const notify = useNotify();
   const { refetch } = useEditContext();
-  const onSave = (values: Partial<Record>) =>
-    mutate(
-      {
-        type: 'createMultipart',
-        resource: 'step-downloads',
-        payload: {
-          data: { step, title: values.titleDownload, file: values.file },
-        },
-      },
-      {
-        onSuccess: ({ data }) => {
-          setFalse();
-          refetch && refetch();
-        },
-        onFailure: (error) => {
-          notify('ra.page.error', 'error');
-        },
-      }
-    );
 
+  const { mutate: onSubmit, isLoading } = useMutation(
+    ['project-media'],
+    (values: FieldValues) =>
+      client('step-downloads/create-multipart', {
+        method: 'POST',
+        data: values,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }),
+    {
+      onSuccess: (data) => {
+        setFalse();
+        refetch && refetch();
+      },
+      onError: ({ error }) => {
+        notify('ra.page.error', { type: 'error' });
+      },
+    }
+  );
   return (
     <>
       <Button
@@ -55,17 +57,15 @@ export const AddStepDownloadButton = () => {
         <IconContentAdd />
       </Button>
       <Dialog maxWidth="sm" fullWidth open={value}>
-        <FormWithRedirect
-          resource="steps"
-          initialValues={{ step }}
-          save={onSave}
-          render={({ handleSubmitWithRedirect, pristine, saving }) => (
+        <RecordContextProvider value={{ step }}>
+          <Form onSubmit={onSubmit}>
+       
             <>
               <DialogContent>
                 <TextInput
                   multiline
                   fullWidth
-                  source="titleDownload"
+                  source="title"
                   label="Title"
                   placeholder="Type the download title, for example 'Download dataset'"
                   helperText="The download title"
@@ -79,19 +79,15 @@ export const AddStepDownloadButton = () => {
                 <Button
                   label="ra.action.cancel"
                   onClick={setFalse}
-                  disabled={loading}
+                  disabled={isLoading}
                 >
                   <IconCancel />
                 </Button>
-                <SaveButton
-                  handleSubmitWithRedirect={handleSubmitWithRedirect}
-                  saving={saving}
-                  disabled={loading}
-                />
+                <SaveButton />
               </DialogActions>
-            </>
-          )}
-        />
+            </>{' '}
+          </Form>{' '}
+        </RecordContextProvider>
       </Dialog>
     </>
   );

@@ -44,7 +44,7 @@ class ProjectMedia(CustomModel):
 
 
 class Experiment(CustomModel):
-    tags = ArrayField(base_field=models.TextField(), null=True, blank=True)
+    tags = ArrayField(base_field=models.TextField(), default=list, blank=True)
     cover = models.TextField(blank=True, null=True)
     title = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True)

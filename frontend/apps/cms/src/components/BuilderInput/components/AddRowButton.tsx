@@ -1,37 +1,42 @@
 import { PossibleColumns } from '@algocount/shared/types';
-import { Grid } from '@material-ui/core';
-import { SelectInput, required, Button, BooleanInput } from 'react-admin';
-import { Form } from 'react-final-form';
+import { Grid } from '@mui/material';
+import {
+  SelectInput,
+  required,
+  BooleanInput,
+  RecordContextProvider,
+  SaveButton,
+  useAugmentedForm,
+} from 'react-admin';
+import { FormProvider } from 'react-hook-form';
 interface AddRowButtonProps {
   onSubmit: (items: any) => void;
-  possibleColumns?: PossibleColumns;
   canDivided: boolean;
 }
 export const AddRowButton = (props: AddRowButtonProps) => {
-  const defualtChoices = [
+  const choices = [
     { id: 1, name: 'One column' },
     { id: 2, name: 'Two columns' },
     { id: 3, name: 'Three columns' },
     { id: 4, name: '4 columns' },
   ];
-  const choices = props.possibleColumns
-    ? props.possibleColumns.map(
-        (col) => defualtChoices.find((choice) => choice.id === col)!
-      )
-    : defualtChoices;
+
+  const { form, formHandleSubmit } = useAugmentedForm({
+    record: {},
+    onSubmit: props.onSubmit,
+    defaultValues: {},
+  });
   return (
-    <Form
-      initialValues={{ cols: choices[0].id, divided: props.canDivided }}
-      onSubmit={(values) => {
-        props.onSubmit(values);
-      }}
-      render={({ handleSubmit }) => (
+    <RecordContextProvider
+      value={{ cols: choices[0].id, divided: props.canDivided }}
+    >
+      <FormProvider {...form}>
         <Grid container alignItems="center" spacing={3}>
           <Grid item>
             <SelectInput
               variant="outlined"
               helperText={false}
-              validate={required()}
+              validate={[required()]}
               source="cols"
               label="Columns number"
               choices={choices}
@@ -46,15 +51,19 @@ export const AddRowButton = (props: AddRowButtonProps) => {
                 source="divided"
                 defaultValue={false}
                 label="Splitted row"
-                choices={choices}
               />
             </Grid>
           )}
           <Grid item>
-            <Button onClick={handleSubmit} label="Add row" />
+            <SaveButton
+              label="Add row"
+              type="button"
+              alwaysEnable
+              onClick={formHandleSubmit}
+            />
           </Grid>
         </Grid>
-      )}
-    />
+      </FormProvider>
+    </RecordContextProvider>
   );
 };

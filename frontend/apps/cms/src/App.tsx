@@ -1,8 +1,7 @@
 import jwtTokenAuthProvider from './authProvider';
 import drfProvider from './dataProvider';
 import { url } from './constants';
-import { Admin, Resource, RouteWithoutLayout } from 'react-admin';
-import { CustomLayout } from './components/CustomLayout';
+import { Admin, CustomRoutes, Resource } from 'react-admin';
 import { ProjectList } from './Projects/ProjectList';
 import { ProjectEdit } from './Projects/ProjectEdit';
 import { ProjectCreate } from './Projects/ProjectCreate';
@@ -16,10 +15,12 @@ import { history } from './browserHistory';
 import { UserEdit } from './Users/UserEdit';
 import { UserList } from './Users/UserList';
 import SignUp from './SignUp/SignUp';
-import GroupIcon from '@material-ui/icons/Group';
-import CollectionsBookmarkIcon from '@material-ui/icons/CollectionsBookmark';
+import GroupIcon from '@mui/icons-material/Group';
+import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
 import { LoginPage } from './LoginPage';
 import { DefaultMenu } from './components/DefaultMenu';
+import { Route } from 'react-router';
+import { Layout } from './components/Layout';
 function App() {
   const authProvider = jwtTokenAuthProvider({
     obtainAuthTokenUrl: `${url}/token/`,
@@ -29,53 +30,54 @@ function App() {
     <Admin
       theme={{
         palette: { primary: { main: '#000000' } },
-        overrides: {
-          MuiFormLabel: { root: { color: 'black', fontWeight: 'bold' } },
-          MuiFilledInput: {
-            inputMarginDense: { paddingTop: '30px' },
+        components: {
+          MuiFormLabel: {
+            styleOverrides: { root: { color: 'black', fontWeight: 'bold' } },
           },
+          //   MuiFilledInput: {
+          //     styleOverrides: { inputMarginDense: { paddingTop: '30px' } },
+          //   },
         },
       }}
       loginPage={LoginPage}
-      customRoutes={[
-        <RouteWithoutLayout
-          component={ProjectShowBackend}
-          path="/preview/:id"
-        />,
-        <RouteWithoutLayout component={SignUp} path="/register" />,
-      ]}
-      layout={CustomLayout}
       history={history}
       authProvider={authProvider}
       menu={DefaultMenu}
       dataProvider={dataProvider}
+      layout={Layout}
     >
-      {(permissions) => [
-        <Resource
-          name="projects"
-          list={ProjectList}
-          edit={ProjectEdit}
-          create={ProjectCreate}
-          icon={CollectionsBookmarkIcon}
-        />,
-        <Resource name="experiments" edit={ExperimentEdit} />,
-        <Resource name="project-media" />,
-        <Resource name="glossary-terms" edit={GlossaryTermEdit} />,
-        <Resource name="steps" edit={StepEdit} />,
-        <Resource name="step-downloads" />,
-        <Resource name="experiment-additional-material" />,
-        <Resource name="glossary-categories" edit={GlossaryCategoryEdit} />,
-        <Resource name="project-collaborators" />,
-        <Resource name="references" edit={ReferenceEdit} />,
-        permissions.includes('authentication.change_user') ? (
+      <CustomRoutes noLayout>
+        <Route element={<ProjectShowBackend />} path="/preview/:id/*" />,
+        <Route element={<SignUp />} path="/register" />
+      </CustomRoutes>
+      {(permissions) => (
+        <>
           <Resource
-            icon={GroupIcon}
-            name="users"
-            edit={UserEdit}
-            list={UserList}
+            name="projects"
+            list={ProjectList}
+            edit={ProjectEdit}
+            create={ProjectCreate}
+            icon={CollectionsBookmarkIcon}
           />
-        ) : null,
-      ]}
+          <Resource name="experiments" edit={ExperimentEdit} />,
+          <Resource name="project-media" />,
+          <Resource name="glossary-terms" edit={GlossaryTermEdit} />,
+          <Resource name="steps" edit={StepEdit} />,
+          <Resource name="step-downloads" />,
+          <Resource name="experiment-additional-material" />,
+          <Resource name="glossary-categories" edit={GlossaryCategoryEdit} />,
+          <Resource name="project-collaborators" />,
+          <Resource name="references" edit={ReferenceEdit} />,
+          {permissions?.includes('authentication.change_user') ? (
+            <Resource
+              icon={GroupIcon}
+              name="users"
+              edit={UserEdit}
+              list={UserList}
+            />
+          ) : null}
+        </>
+      )}
     </Admin>
   );
 }

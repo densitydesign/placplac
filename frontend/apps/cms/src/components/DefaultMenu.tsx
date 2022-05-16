@@ -3,52 +3,35 @@ import {
   Menu,
   MenuItemLink,
   MenuProps,
-  ReduxState,
   usePermissions,
+  useSidebarState,
 } from 'react-admin';
-import GroupIcon from '@material-ui/icons/Group';
-import CollectionsBookmarkIcon from '@material-ui/icons/CollectionsBookmark';
+import GroupIcon from '@mui/icons-material/Group';
+import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
 import {
   Box,
   MenuItem,
   Link,
   makeStyles,
   ListItemIcon,
-} from '@material-ui/core';
-import FindInPageIcon from '@material-ui/icons/FindInPage';
-import { useSelector } from 'react-redux';
+  styled,
+} from '@mui/material';
+import FindInPageIcon from '@mui/icons-material/FindInPage';
 import { DOC_URL } from '../constants';
 
-const useStylesContainer = makeStyles(() => {
-  return { main: { height: '100vh' } };
-});
-
-const useStyles = makeStyles((theme) => ({
-  button: {
-    flex: '1',
-    border: '2px solid black',
-    borderRadius: '2em',
-    fontWeight: 'bold',
-    textDecoration: 'none',
-    '&:hover': {
-      color: 'white',
-      background: 'black',
-      textDecoration: 'none',
-    },
-  },
-  icon: {
-    minWidth: theme.spacing(5),
-  },
+const StyledListItemIcon = styled(ListItemIcon)(({ theme }) => ({
+  minWidth: theme.spacing(5),
+}));
+const StyledMenu = styled(Menu)(({ theme }) => ({
+  height: '100vh',
 }));
 export const DefaultMenu = (props: MenuProps) => {
   const { permissions } = usePermissions();
-  const classes = useStylesContainer();
-  const styles = useStyles();
-  const open = useSelector<ReduxState, boolean>(
-    (state) => state.admin.ui.sidebarOpen
-  );
+
+  const [open] = useSidebarState();
+
   return (
-    <Menu {...props} classes={classes}>
+    <StyledMenu {...props}>
       <MenuItemLink
         to="/projects"
         primaryText="Projects"
@@ -71,7 +54,18 @@ export const DefaultMenu = (props: MenuProps) => {
         {open ? (
           <MenuItem
             component={Link}
-            className={styles.button}
+            sx={{
+              flex: '1',
+              border: '2px solid black',
+              borderRadius: '2em',
+              fontWeight: 'bold',
+              textDecoration: 'none',
+              '&:hover': {
+                color: 'white',
+                background: 'black',
+                textDecoration: 'none',
+              },
+            }}
             href={`${DOC_URL}`}
             target={'_blank'}
             title="go to documentation"
@@ -85,12 +79,12 @@ export const DefaultMenu = (props: MenuProps) => {
             target={'_blank'}
             title="go to documentation"
           >
-            <ListItemIcon className={styles.icon} color="inherit">
+            <StyledListItemIcon color="inherit">
               <FindInPageIcon />
-            </ListItemIcon>
+            </StyledListItemIcon>
           </MenuItem>
         )}
       </Box>
-    </Menu>
+    </StyledMenu>
   );
 };

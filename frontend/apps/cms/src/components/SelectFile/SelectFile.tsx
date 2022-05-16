@@ -5,24 +5,22 @@ import {
   Grid,
   InputAdornment,
   Typography,
-} from '@material-ui/core';
+} from '@mui/material';
 import {
   FieldTitle,
   InputHelperText,
-  Record,
   ResettableTextField,
   SelectInputProps,
   useInput,
   sanitizeInputRestProps,
   ListBase,
   Pagination,
-  FormWithRedirect,
+  Form,
   ImageInput,
   ImageField,
   TextInput,
   SaveButton,
   required,
-  useMutation,
   useNotify,
   FileInput,
   FileField,
@@ -30,18 +28,25 @@ import {
   ListToolbar,
   FilterButton,
   TopToolbar,
+  RecordContextProvider,
+  RaRecord,
+  useDataProvider,
 } from 'react-admin';
-import ListIcon from '@material-ui/icons/AttachFile';
+import ListIcon from '@mui/icons-material/AttachFile';
 import { useCallback, useState } from 'react';
 import { MediaDatagrid } from './components/MediaDatagrid';
 import { MAX_FILE_SIZE } from '../../constants';
+import { FieldValues } from 'react-hook-form';
+import { client, CustomDataProvider } from '../../dataProvider';
+import { useMutation } from 'react-query';
+import { AddMediaForm } from './components/AddMediaForm';
 
 export interface SelectFileProps extends SelectInputProps {
   source?: string;
   choices?: object[];
   fileSource: string;
   titleSource: string;
-  record?: Record;
+  record?: RaRecord;
   project: number;
   handleChange: () => void;
   type: 'image' | 'file' | 'video';
@@ -60,7 +65,7 @@ export const SelectFile = ({
   helperText,
   project,
   handleChange,
-  allowEmpty,
+
   classes: classesOverride,
   className,
   create,
@@ -98,9 +103,10 @@ export const SelectFile = ({
   const [open, setOpen] = useState(false);
   const {
     id,
-    input,
+    field,
     isRequired,
-    meta: { touched, error, submitError },
+    fieldState,
+    formState: { isSubmitted },
   } = useInput({
     format,
     id: idOverride,
@@ -115,25 +121,20 @@ export const SelectFile = ({
     validate,
     ...rest,
   });
+  const { error, invalid, isTouched } = fieldState;
+
   if (!type) {
     throw new Error(`Specify media type`);
   }
   if (!project) {
     throw new Error(`Specify project`);
   }
-  const [mutate] = useMutation();
-  const notify = useNotify();
-  const [version, setVersion] = useState(0);
-  const handleChangedBackend = useCallback(
-    () => setVersion(version + 1),
-    [version]
-  );
 
   return (
     <>
       <ResettableTextField
         id={id}
-        {...input}
+        {...field}
         label={
           label !== '' &&
           label !== false && (
@@ -161,11 +162,11 @@ export const SelectFile = ({
             </InputAdornment>
           ),
         }}
-        error={!!(touched && (error || submitError))}
+        error={(isTouched || isSubmitted) && invalid}
         helperText={
           <InputHelperText
-            touched={!!touched}
-            error={error || submitError}
+            touched={isTouched || isSubmitted}
+            error={error?.message}
             helperText={helperText}
           />
         }
@@ -180,84 +181,16 @@ export const SelectFile = ({
         maxWidth="xl"
       >
         <DialogContent>
-          <FormWithRedirect
-            resource="project-media"
-            initialValues={{ project, type }}
-            save={({ description_file, ...values }) => {
-              mutate(
-                {
-                  type: 'createMultipart',
-                  resource: 'project-media',
-                  payload: {
-                    data: { ...values, description: description_file },
-                  },
-                },
-                {
-                  onSuccess: (data) => {
-                    handleChangedBackend();
-                  },
-                  onFailure: ({ error }) => {
-                    notify(error.message, 'error');
-                  },
-                }
-              );
-            }}
-            render={({ handleSubmitWithRedirect, pristine, saving }) => (
-              <>
-                <Typography variant="h5">Add new file</Typography>
-                {type === 'image' ? (
-                  <ImageInput
-                    helperText={
-                      'The maximum accepted size is 4MB, and only image files will be accepted'
-                    }
-                    validate={required()}
-                    source="file"
-                    label={''}
-                    accept="image/*"
-                    maxSize={4000000}
-                    options={{ onDropRejected: () => alert('File rejected') }}
-                  >
-                    <ImageField source="src" title="title" />
-                  </ImageInput>
-                ) : (
-                  <FileInput
-                    helperText={
-                      type === 'video'
-                        ? 'The maximum accepted size is 16MB, and only video files will be accepted.'
-                        : 'The maximum accepted size is 16MB.'
-                    }
-                    validate={required()}
-                    source="file"
-                    label={''}
-                    accept={type === 'video' ? 'video/*' : undefined}
-                    maxSize={16000000}
-                    options={{ onDropRejected: () => alert('File rejected') }}
-                  >
-                    <FileField source="src" title="title" />
-                  </FileInput>
-                )}
-                <TextInput fullWidth source="description_file" />
-                <Grid container justifyContent="flex-end">
-                  <Grid item>
-                    <SaveButton
-                      handleSubmitWithRedirect={handleSubmitWithRedirect}
-                      saving={saving}
-                      disabled={loading}
-                    />
-                  </Grid>
-                </Grid>
-              </>
-            )}
-          />
+          <AddMediaForm project={project} type={type} />
+
           <Typography variant="h5">Or choose a file</Typography>
           <Box mt={'8px'}>
             <ListBase
-              key={version}
               resource="project-media"
-              syncWithLocation={false}
-              basePath="/project-media"
+              disableSyncWithLocation
               perPage={10}
               filterDefaultValues={{ type, project }}
+              sort={{ field: 'id', order: 'DESC' }}
             >
               <ListToolbar
                 filters={[
@@ -277,10 +210,9 @@ export const SelectFile = ({
               />
               <MediaDatagrid
                 type={type}
-                key={version}
-                value={input.value}
+                value={field.value}
                 onChange={(value) => {
-                  input.onChange(value);
+                  field.onChange(value);
                   setOpen(false);
                 }}
               />

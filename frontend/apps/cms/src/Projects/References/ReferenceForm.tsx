@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo } from 'react';
 import {
   DeleteButton,
   SaveButton,
@@ -6,46 +6,51 @@ import {
   SimpleFormProps,
   Toolbar,
   ToolbarProps,
-} from "react-admin";
-import { CustomRichTextInput } from "../../components/CustomRichTextInput";
+  useRecordContext,
+} from 'react-admin';
+import { CustomRichTextInput } from '../../components/CustomRichTextInput';
 
-const ReferenceFormToolbar = (props: ToolbarProps) => (
-  <Toolbar
-    style={{ display: "flex", justifyContent: "space-between" }}
-    {...props}
-  >
-    <SaveButton />
-    {props.record && props.record.id && props.record.project && (
-      <DeleteButton redirect={`/projects/${props.record.project}/3`} />
-    )}
-    {props.record && props.record.id && props.record.experiment && (
-      <DeleteButton redirect={`/experiments/${props.record.experiment}/5`} />
-    )}
-  </Toolbar>
-);
+const ReferenceFormToolbar = (props: ToolbarProps) => {
+  const record = useRecordContext();
+  return (
+    <Toolbar
+      style={{ display: 'flex', justifyContent: 'space-between' }}
+      {...props}
+    >
+      <SaveButton />
+      {record && record.id && record.project && (
+        <DeleteButton redirect={`/projects/${record.project}/3`} />
+      )}
+      {record && record.id && record.experiment && (
+        <DeleteButton redirect={`/experiments/${record.experiment}/5`} />
+      )}
+    </Toolbar>
+  );
+};
 
-export const ReferenceForm = (props: Omit<SimpleFormProps, "children">) => {
+export const ReferenceForm = (props: Omit<SimpleFormProps, 'children'>) => {
+  const record = useRecordContext();
   const redirectLink = useMemo(() => {
-    if (props.initialValues) {
-      if ("project" in props.initialValues && props.initialValues.project) {
-        return `/projects/${props.initialValues.project}/3`;
+    if (props.defaultValues) {
+      if ('project' in props.defaultValues && props.defaultValues.project) {
+        return `/projects/${props.defaultValues.project}/3`;
       }
       if (
-        "experiment" in props.initialValues &&
-        props.initialValues.experiment
+        'experiment' in props.defaultValues &&
+        props.defaultValues.experiment
       ) {
-        return `/experiments/${props.initialValues.experiment}/5`;
+        return `/experiments/${props.defaultValues.experiment}/5`;
       }
     }
-    if (props.record) {
-      if ("project" in props.record && props.record.project) {
-        return `/projects/${props.record.project}/3`;
+    if (record) {
+      if ('project' in record && record.project) {
+        return `/projects/${record.project}/3`;
       }
-      if ("experiment" in props.record && props.record.experiment) {
-        return `/experiments/${props.record.experiment}/5`;
+      if ('experiment' in record && record.experiment) {
+        return `/experiments/${record.experiment}/5`;
       }
     }
-  }, [props.initialValues, props.record]);
+  }, [props.defaultValues, record]);
 
   return (
     <SimpleForm
