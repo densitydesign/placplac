@@ -2,6 +2,7 @@ import {
   Box,
   Dialog,
   DialogContent,
+  Grid,
   InputAdornment,
   Typography,
 } from '@mui/material';
@@ -14,16 +15,29 @@ import {
   sanitizeInputRestProps,
   ListBase,
   Pagination,
+  Form,
+  ImageInput,
+  ImageField,
   TextInput,
+  SaveButton,
+  required,
+  useNotify,
+  FileInput,
+  FileField,
   Button,
   ListToolbar,
   FilterButton,
   TopToolbar,
+  RecordContextProvider,
   RaRecord,
+  useDataProvider,
 } from 'react-admin';
 import ListIcon from '@mui/icons-material/AttachFile';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { MediaDatagrid } from './components/MediaDatagrid';
+import { MAX_FILE_SIZE } from '../../constants';
+import { FieldValues } from 'react-hook-form';
+import { useMutation } from 'react-query';
 import { AddMediaForm } from './components/AddMediaForm';
 import { useProjectContext } from '../../contexts/project-context';
 
@@ -165,6 +179,7 @@ export const SelectFile = ({
         onClose={() => setOpen(false)}
         fullWidth
         maxWidth="xl"
+        
       >
         <DialogContent>
           <AddMediaForm project={project} type={type} />

@@ -1,4 +1,6 @@
 import json
+import os
+
 from django.contrib.auth import get_user_model
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
@@ -34,14 +36,17 @@ class ProjectUser(CustomModel):
     class Meta:
         unique_together = (('user', 'project'),)
 
+def get_upload_path(instance,filename):
+    return os.path.join(str(instance.project_id), filename)
 
 class ProjectMedia(CustomModel):
     TYPE_CHOICES = (("image", "Image"), ("file", "File"),("video","Video"))
 
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    file = models.FileField()
+    file = models.FileField(upload_to=get_upload_path)
     description = models.TextField(null=True, blank=True)
     type = models.CharField(default="image", choices=TYPE_CHOICES, max_length=10)
+
 
 
 class Experiment(CustomModel):
