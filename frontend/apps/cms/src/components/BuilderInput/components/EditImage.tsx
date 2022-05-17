@@ -12,16 +12,10 @@ import { useForm, useFormContext } from 'react-hook-form';
 import { CustomRichTextInput } from '../../CustomRichTextInput';
 import { ReferenceInputImage } from '../../ReferenceInputImage';
 interface Props {
-  project: number;
-  glossaryTermsIds: number[];
-  referencesIds: number[];
+  project: number | string;
 }
 
-interface RTEProps {
-  glossaryTermsIds: number[];
-  referencesIds: number[];
-}
-const RTEDescription = (props: RTEProps) => {
+const RTEDescription = () => {
   const { watch } = useFormContext();
 
   return watch('type').includes('description') ? (
@@ -30,12 +24,11 @@ const RTEDescription = (props: RTEProps) => {
       fullWidth
       source="description"
       label="Description"
-      {...props}
     />
   ) : null;
 };
 
-const RTECaption = (props: RTEProps) => {
+const RTECaption = () => {
   const { watch } = useFormContext();
 
   return watch('type').includes('caption') ? (
@@ -44,15 +37,10 @@ const RTECaption = (props: RTEProps) => {
       fullWidth
       source="caption"
       label="Caption"
-      {...props}
     />
   ) : null;
 };
-export const EditImage = ({
-  project,
-  referencesIds,
-  glossaryTermsIds,
-}: Props) => {
+export const EditImage = ({ project }: Props) => {
   const { setValue, watch } = useFormContext();
   const type = watch('type');
   useEffect(() => {
@@ -65,7 +53,7 @@ export const EditImage = ({
     <Grid container direction="column">
       <Grid item container columnGap={2} alignItems="center">
         <Grid item>
-          <ReferenceInputImage source="image" project={project} />
+          <ReferenceInputImage source="image" />
         </Grid>
         <Grid item xs>
           <BooleanInput
@@ -123,16 +111,10 @@ export const EditImage = ({
         </FormDataConsumer>
       </Grid>
       <Grid item>
-        <RTECaption
-          referencesIds={referencesIds}
-          glossaryTermsIds={glossaryTermsIds}
-        />
+        <RTECaption />
       </Grid>
       <Grid item>
-        <RTEDescription
-          referencesIds={referencesIds}
-          glossaryTermsIds={glossaryTermsIds}
-        />
+        <RTEDescription />
       </Grid>
     </Grid>
   );

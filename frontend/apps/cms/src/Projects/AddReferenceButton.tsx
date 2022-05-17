@@ -15,11 +15,7 @@ import { useToggler } from '../useToggler';
 import { CustomRichTextInput } from '../components/CustomRichTextInput';
 import { FieldValues } from 'react-hook-form';
 
-interface AddReferenceButtonProps {
-  refersTo: 'project' | 'experiment';
-}
-export const AddReferenceButton = (props: AddReferenceButtonProps) => {
-  const { refersTo } = props;
+export const AddReferenceButton = () => {
   const { value, setTrue, setFalse } = useToggler();
   const [create, { isLoading }] = useCreate();
   const record = useRecordContext();
@@ -52,7 +48,7 @@ export const AddReferenceButton = (props: AddReferenceButtonProps) => {
         <IconContentAdd />
       </Button>
       <Dialog maxWidth="sm" fullWidth open={value} disableEnforceFocus>
-        <RecordContextProvider value={{ [refersTo]: id }}>
+        <RecordContextProvider value={{ project: id }}>
           <Form onSubmit={onSave}>
             <>
               <DialogContent>

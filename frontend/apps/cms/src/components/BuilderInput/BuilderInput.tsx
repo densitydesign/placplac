@@ -6,6 +6,7 @@ import {
   SelectInput,
   TextInput,
   BooleanInput,
+  useGetList,
 } from 'react-admin';
 import { BuilderDialog } from './components/BuilderDialog';
 import { AddRowButton } from './components/AddRowButton';
@@ -28,32 +29,30 @@ import { Grid } from '@mui/material';
 import { SelectFile } from '../SelectFile';
 import {
   BuilderBlocks,
+  GlossaryTerm,
   PossibleColumns,
+  Reference,
   RowType,
 } from '@algocount/shared/types';
 import SimpleReactLightbox from 'simple-react-lightbox';
 import { Box } from '@mui/material';
+import {
+  ProjectContextProvider,
+  useProjectContext,
+} from '../../contexts/project-context';
+import { useGlossaryAdjuster } from 'libs/ui-site/src/lib/hooks';
 interface BuilderInputProps {
   source: string;
   possibleComponents?: string[];
-  glossaryTermsIds: number[];
-  referencesIds: number[];
-  project: number;
   canDivided: boolean;
   isStep?: boolean;
 }
 
 export const BuilderInput = (props: BuilderInputProps) => {
-  const {
-    source,
-
-    possibleComponents,
-    glossaryTermsIds,
-    referencesIds,
-    project,
-    canDivided,
-    isStep = false,
-  } = props;
+  const { glossaryTerms, project } = useProjectContext();
+  if (!project)
+    throw Error('This component must be used in initialized ProjectContext');
+  const { source, possibleComponents, canDivided, isStep = false } = props;
   const [activeStep, setActiveStep] = React.useState(0);
 
   const {
@@ -210,13 +209,7 @@ export const BuilderInput = (props: BuilderInputProps) => {
           ? SHOW_COMPONENTS_BUILDER.image_step
           : SHOW_COMPONENTS_BUILDER.image),
         form: {
-          component: (
-            <EditImage
-              referencesIds={referencesIds}
-              glossaryTermsIds={glossaryTermsIds}
-              project={project}
-            />
-          ),
+          component: <EditImage project={project} />,
 
           getInitialContent: (content: any) => {
             const type: string[] = [];
@@ -252,12 +245,7 @@ export const BuilderInput = (props: BuilderInputProps) => {
         ...SHOW_COMPONENTS_BUILDER.text,
         form: {
           component: (
-            <CustomRichTextInput
-              referencesIds={referencesIds}
-              glossaryTermsIds={glossaryTermsIds}
-              validate={[required()]}
-              source="text"
-            />
+            <CustomRichTextInput validate={[required()]} source="text" />
           ),
 
           getSaveContent: (values: any) => {
@@ -369,8 +357,9 @@ export const BuilderInput = (props: BuilderInputProps) => {
           return filtered;
         }, {} as BuilderBlocks)
       : builderBlocks;
-  }, [glossaryTermsIds, possibleComponents, project, referencesIds]);
+  }, [possibleComponents, project]);
 
+  useGlossaryAdjuster(glossaryTerms);
   return (
     <SimpleReactLightbox>
       <Box width="100%">

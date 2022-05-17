@@ -8,21 +8,35 @@ import {
   TextInput,
   Toolbar,
   ToolbarProps,
+  useNotify,
   useRecordContext,
+  useRedirect,
 } from 'react-admin';
 
 const GlossaryCategoryFormToolbar = (props: ToolbarProps) => {
   const record = useRecordContext();
-
+  const redirectPath = `/projects/${record?.project}/2`;
+  const redirect = useRedirect();
+  const notify = useNotify();
   return (
     <Toolbar
       style={{ display: 'flex', justifyContent: 'space-between' }}
       {...props}
     >
-      <SaveButton />
-      {record && record.id && (
-        <DeleteButton redirect={`/projects/${record.project}/2`} />
-      )}
+      <SaveButton
+        type={'button'}
+        mutationOptions={{
+          onSuccess: () => {
+            notify('ra.notification.updated', {
+              type: 'info',
+              messageArgs: { smart_count: 1 },
+              undoable: true,
+            });
+            redirect(redirectPath);
+          },
+        }}
+      />
+      {record && record.id && <DeleteButton redirect={redirectPath} />}
     </Toolbar>
   );
 };
@@ -30,20 +44,8 @@ const GlossaryCategoryFormToolbar = (props: ToolbarProps) => {
 export const GlossaryCategoryForm = (
   props: Omit<SimpleFormProps, 'children'>
 ) => {
-  const record = useRecordContext();
-
-  const project =
-    props.defaultValues && 'project' in props.defaultValues
-      ? props.defaultValues.project
-      : record?.project;
-  const redirect = `/projects/${project}/2`;
-
   return (
-    <SimpleForm
-      {...props}
-      redirect={redirect}
-      toolbar={<GlossaryCategoryFormToolbar />}
-    >
+    <SimpleForm {...props} toolbar={<GlossaryCategoryFormToolbar />}>
       <TextInput
         multiline
         fullWidth

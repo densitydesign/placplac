@@ -12,7 +12,6 @@ from cms.serializers.step import FullStepSerializer
 
 class ExperimentSerializer(serializers.ModelSerializer):
     step_set = serializers.PrimaryKeyRelatedField(required=False, read_only=True, many=True)
-    reference_set = serializers.PrimaryKeyRelatedField(read_only=True, many=True)
     experimentadditionalmaterial_set = serializers.PrimaryKeyRelatedField(read_only=True, many=True)
 
     class Meta:
@@ -24,7 +23,7 @@ class ExperimentSerializer(serializers.ModelSerializer):
                   "experiment_setup",
                   "findings",
                   "project",
-                  "step_set", "cover", "reference_set","pdf_report","experimentadditionalmaterial_set"]
+                  "step_set", "cover","pdf_report","experimentadditionalmaterial_set"]
 
 class ExperimentAdditionalMaterialSerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField('get_filename')
@@ -53,14 +52,10 @@ class FullExperimentSerializer(serializers.ModelSerializer):
     def get_steps(self, object):
         return FullStepSerializer(object.step_set.all().order_by("step_number"), many=True, source="step_set").data
 
-    def get_glossary_terms(self, object):
+    def get_glossary_terms(self, object:Experiment):
         glossary_terms = object.project.glossaryterm_set.all()
         found_glossary_terms = []
-        steps_content = "".join(
-            ["{}{}".format(json.dumps(step.content), step.description) for step in object.step_set.all()])
-        content_str = "{}{}{}{}{}".format(json.dumps(object.context), json.dumps(object.findings), json.dumps(
-            object.experiment_setup), object.description, steps_content)
-
+        content_str = object.get_all_content()
         for term in glossary_terms:
             check_link = "glossary/{}".format(term.id)
             if check_link in content_str:
@@ -70,8 +65,14 @@ class FullExperimentSerializer(serializers.ModelSerializer):
         return FullGlossaryTermSerializer(found_glossary_terms, many=True).data
 
     def get_references(self, object):
-        references = object.reference_set.all().order_by("description")
-        return ReferenceSerializer(references, many=True).data
+        references = object.project.reference_set.all().order_by("description")
+        in_experiment_references = []
+        content_str = object.get_all_content()
+        for reference in references:
+            check_reference = f'data-reference=\\"{reference.id}\\"'
+            if check_reference in content_str:
+                in_experiment_references.append(reference)
+        return ReferenceSerializer(in_experiment_references, many=True).data
 
     class Meta:
         model = Experiment

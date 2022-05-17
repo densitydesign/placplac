@@ -17,6 +17,7 @@
 }
 .image_container {
   position: relative;
+  min-height: 70px;
 }
 
 .pill {

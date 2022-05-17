@@ -2,7 +2,6 @@ import {
   Box,
   Dialog,
   DialogContent,
-  Grid,
   InputAdornment,
   Typography,
 } from '@mui/material';
@@ -15,31 +14,18 @@ import {
   sanitizeInputRestProps,
   ListBase,
   Pagination,
-  Form,
-  ImageInput,
-  ImageField,
   TextInput,
-  SaveButton,
-  required,
-  useNotify,
-  FileInput,
-  FileField,
   Button,
   ListToolbar,
   FilterButton,
   TopToolbar,
-  RecordContextProvider,
   RaRecord,
-  useDataProvider,
 } from 'react-admin';
 import ListIcon from '@mui/icons-material/AttachFile';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { MediaDatagrid } from './components/MediaDatagrid';
-import { MAX_FILE_SIZE } from '../../constants';
-import { FieldValues } from 'react-hook-form';
-import { client, CustomDataProvider } from '../../dataProvider';
-import { useMutation } from 'react-query';
 import { AddMediaForm } from './components/AddMediaForm';
+import { useProjectContext } from '../../contexts/project-context';
 
 export interface SelectFileProps extends SelectInputProps {
   source?: string;
@@ -47,7 +33,7 @@ export interface SelectFileProps extends SelectInputProps {
   fileSource: string;
   titleSource: string;
   record?: RaRecord;
-  project: number;
+
   handleChange: () => void;
   type: 'image' | 'file' | 'video';
 }
@@ -63,7 +49,7 @@ export const SelectFile = ({
   meta: metaOverride,
   id: idOverride,
   helperText,
-  project,
+
   handleChange,
 
   classes: classesOverride,
@@ -122,12 +108,12 @@ export const SelectFile = ({
     ...rest,
   });
   const { error, invalid, isTouched } = fieldState;
-
-  if (!type) {
-    throw new Error(`Specify media type`);
-  }
+  const { project } = useProjectContext();
   if (!project) {
     throw new Error(`Specify project`);
+  }
+  if (!type) {
+    throw new Error(`Specify media type`);
   }
 
   return (

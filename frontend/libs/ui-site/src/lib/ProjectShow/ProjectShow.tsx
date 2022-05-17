@@ -10,7 +10,7 @@ import { GlossaryCategory } from '@algocount/shared/types';
 import { Row } from '../components/Row';
 import { Section } from '../components/Section';
 import { translations } from '../translations';
-import { useReferencesAdjuster } from '../hooks';
+import { useGlossaryAdjuster, useReferencesAdjuster } from '../hooks';
 import { ImagesAnimated } from './components/ExperimentSection/ImagesAnimated';
 import { getRealPath } from '../utils';
 
@@ -38,6 +38,7 @@ export const ProjectShow = (props: ProjectProps) => {
     setVersion(1);
     return () => setVersion(0);
   }, []);
+  useGlossaryAdjuster(glossaryTerms);
 
   return (
     <>

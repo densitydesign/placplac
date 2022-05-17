@@ -1,3 +1,4 @@
+import json
 from django.contrib.auth import get_user_model
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
@@ -11,14 +12,14 @@ class Project(CustomModel):
     STATUS_CHOICES = (("1", "Published"), ("2", "Draft"))
     LANGUAGE_CHOICES = (("it", "Italian"), ("en", "English"))
     title = models.CharField(max_length=255)
-    short_description = models.TextField(null=True)
-    project_explanation = models.TextField(null=True)
-    experiments_description = models.TextField(null=True)
-    long_description = models.TextField(null=True)
+    short_description = models.TextField(null=True, blank=True)
+    project_explanation = models.TextField(null=True,blank=True)
+    experiments_description = models.TextField(null=True,blank=True)
+    long_description = models.TextField(null=True,blank=True)
     status = models.CharField(default="2", choices=STATUS_CHOICES, max_length=1)
     language = models.CharField(default="en", choices=LANGUAGE_CHOICES, max_length=2)
     footer = models.JSONField(null=True, blank=True)
-    glossary_description = models.TextField(null=True)
+    glossary_description = models.TextField(null=True,blank=True)
 
 
 class ProjectUser(CustomModel):
@@ -56,7 +57,11 @@ class Experiment(CustomModel):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     pdf_report = models.TextField(blank=True, null=True)
 
-
+    def get_all_content(self):
+        steps_content = "".join(
+            ["{}{}".format(json.dumps(step.content), step.description) for step in self.step_set.all()])
+        return  "{}{}{}{}{}".format(json.dumps(self.context), json.dumps(self.findings), json.dumps(
+            self.experiment_setup), self.description, steps_content)
 class ExperimentAdditionalMaterial(CustomModel):
     file = models.FileField()
     experiment = models.ForeignKey(Experiment, on_delete=models.CASCADE)
@@ -64,7 +69,7 @@ class ExperimentAdditionalMaterial(CustomModel):
 
 class Step(CustomModel):
     title = models.CharField(max_length=255)
-    description = models.TextField(null=True)
+    description = models.TextField(null=True,blank=True)
     content = models.JSONField(null=True, blank=True)
     step_number = models.SmallIntegerField()
     experiment = models.ForeignKey(Experiment, on_delete=models.CASCADE)
@@ -95,7 +100,7 @@ class GlossaryTerm(CustomModel):
     related = models.ManyToManyField("self", blank=True)
     glossary_category = models.ForeignKey(GlossaryCategory, on_delete=models.CASCADE)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    more_info_url = ArrayField(base_field=models.JSONField(), null=True, blank=True)
+    more_info_url = ArrayField(base_field=models.JSONField(),  blank=True, default=list)
 
 class ReferenceManager(models.Manager):
     def get_queryset(self):
@@ -112,5 +117,4 @@ class Reference(CustomModel):
     objects=ReferenceManager()
     description = models.TextField()
     project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True, blank=True)
-    experiment = models.ForeignKey(Experiment, on_delete=models.CASCADE, null=True, blank=True)
 

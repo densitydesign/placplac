@@ -1,39 +1,17 @@
-import {
-  FormControl,
-  FormHelperText,
-  InputLabel,
-  makeStyles,
-  PropTypes,
-  Theme,
-} from '@mui/material';
+import { FormControl, FormHelperText, InputLabel } from '@mui/material';
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import contentUiCss from '!!raw-loader!../../../../libs/shared/styles/src/index.css';
 
-import {
-  CommonInputProps,
-  InputProps,
-  useGetMany,
-  useResourceContext,
-} from 'react-admin';
+import { CommonInputProps, useResourceContext } from 'react-admin';
 import { Editor } from '@tinymce/tinymce-react';
-import { ComponentProps, useEffect, useMemo, useRef } from 'react';
+import { useMemo } from 'react';
 import { FieldTitle, InputHelperText, useInput } from 'react-admin';
 import { Box } from '@mui/material';
-import { GlossaryTerm, Reference } from '@algocount/shared/types';
-import { Editor as TinyMCEEditor } from 'tinymce';
+import { useProjectContext } from '../contexts/project-context';
 
 interface CustomRichTextInputProps extends CommonInputProps {
-  label?: string | false;
-  source: string;
-
-  fullWidth?: boolean;
-  record?: Record<any, any>;
-  resource?: string;
   placeholder?: string;
-
   small?: boolean;
-  glossaryTermsIds?: number[];
-  referencesIds?: number[];
   onlyStyle?: boolean;
 }
 
@@ -44,8 +22,6 @@ export const CustomRichTextInput = (props: CustomRichTextInputProps) => {
     helperText,
     label,
     source,
-    referencesIds = [],
-    glossaryTermsIds = [],
     small,
     placeholder,
     onlyStyle,
@@ -60,15 +36,11 @@ export const CustomRichTextInput = (props: CustomRichTextInputProps) => {
   } = useInput({ ...props, source, defaultValue });
   const { error, invalid, isTouched } = fieldState;
   const resource = useResourceContext(props);
-  const { data: unformattedGlossaryItems, isLoading: loadingG } =
-    useGetMany<GlossaryTerm>(
-      'glossary-terms',
-      { ids: glossaryTermsIds },
-      {
-        enabled: glossaryTermsIds.length > 0,
-        initialData: [],
-      }
-    );
+
+  const {
+    glossaryTerms: unformattedGlossaryItems,
+    references: unformattedReferences,
+  } = useProjectContext();
 
   const glossaryItems = useMemo(() => {
     if (unformattedGlossaryItems && unformattedGlossaryItems.length > 0) {
@@ -84,15 +56,6 @@ export const CustomRichTextInput = (props: CustomRichTextInputProps) => {
     return [];
   }, [unformattedGlossaryItems]);
 
-  const { data: unformattedReferences, isLoading: loadingR } =
-    useGetMany<Reference>(
-      'references',
-      { ids: referencesIds },
-      {
-        enabled: referencesIds.length > 0,
-        initialData: [],
-      }
-    );
   const referenceItems = useMemo(() => {
     if (unformattedReferences && unformattedReferences.length > 0) {
       return unformattedReferences
@@ -106,15 +69,14 @@ export const CustomRichTextInput = (props: CustomRichTextInputProps) => {
     }
     return [];
   }, [unformattedReferences]);
-  const editor = useRef<any>(null);
   const rerenderKey =
     JSON.stringify(glossaryItems) + JSON.stringify(referenceItems);
 
-  return !loadingG && !loadingR ? (
+  return (
     <FormControl
       style={{ marginTop: '20px' }}
       error={(isTouched || isSubmitted) && invalid}
-      fullWidth={fullWidth}
+      fullWidth={true}
       className="ra-rich-text-input"
     >
       <InputLabel shrink htmlFor={id}>
@@ -127,13 +89,12 @@ export const CustomRichTextInput = (props: CustomRichTextInputProps) => {
       </InputLabel>
       <Box mt={'8px'}>
         <Editor
-          onInit={(evt, editorInit) => (editor.current = editorInit)}
           tinymceScriptSrc={'/assets/tinymce/js/tinymce/tinymce.min.js'}
           value={field.value ?? ''}
           onEditorChange={(a, editor) => {
-            console.log(a, editor);
             field.onChange(a);
           }}
+          key={rerenderKey}
           init={{
             height: small ? 250 : 500,
             menubar: false,
@@ -163,6 +124,21 @@ export const CustomRichTextInput = (props: CustomRichTextInputProps) => {
                 references.forEach((reference) => {
                   reference.innerHTML = `${index + 1}`;
                 });
+              });
+
+              const glossarySpans =
+                editor.contentDocument.querySelectorAll<HTMLElement>(
+                  'span.mention'
+                );
+              glossarySpans.forEach((span, index) => {
+                const link = span.querySelector('a');
+                const glossaryId = link?.hash.replace('#glossary/', '');
+                const term = unformattedGlossaryItems!.find(
+                  (term) => term.id.toString() === glossaryId
+                );
+                if (term) {
+                  span.style.backgroundColor = term.color;
+                }
               });
             },
             setup: (editor) => {
@@ -285,5 +261,5 @@ export const CustomRichTextInput = (props: CustomRichTextInputProps) => {
         />
       </FormHelperText>
     </FormControl>
-  ) : null;
+  );
 };

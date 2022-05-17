@@ -19,7 +19,7 @@ import { ContentList } from './components/ContentList/ContentList';
 import { Row } from '../components/Row';
 import classNames from 'classnames';
 import { translations } from '../translations';
-import { useReferencesAdjuster } from '../hooks';
+import { useGlossaryAdjuster, useReferencesAdjuster } from '../hooks';
 import { ReferenceList } from '../components/ReferenceList';
 import SimpleReactLightbox from 'simple-react-lightbox';
 import { SHOW_COMPONENTS_BUILDER } from '../builderBlocks';
@@ -63,7 +63,7 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
   });
 
   useReferencesAdjuster();
-
+  useGlossaryAdjuster(glossary_terms);
   const renderRow = (
     row: RowType,
     rowIndex: number,

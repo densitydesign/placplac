@@ -11,7 +11,7 @@ export type Step = {
   downloads: { id: string; file: string; title: string; name: string }[];
 };
 export type GlossaryTerm = {
-  id: string;
+  id: string | number;
   title: string;
   color: string;
   glossary_category: string;
