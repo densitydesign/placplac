@@ -1,5 +1,4 @@
 import json
-import json
 import os
 import shutil
 import tempfile
@@ -9,7 +8,8 @@ from django.conf import settings
 from cms.export_import.resources import ProjectResource, ProjectMediaResource, ExperimentResource, \
     ExperimentAdditionalMaterialResource, \
     StepResource, StepDownloadResource, GlossaryCategoryResource, GlossaryTermResource, ReferenceResource
-from cms.models import Project, ProjectMedia, StepDownload, ExperimentAdditionalMaterial
+from cms.export_import.utils import get_paths_to_copy
+from cms.models import Project, ExperimentAdditionalMaterial
 
 
 def get_project_dataset(*,project:Project):
@@ -46,11 +46,6 @@ def get_project_dataset(*,project:Project):
         project_dataset["experiments"].append(experiment_dataset)
     return project_dataset
 
-def get_paths_to_copy(*, project:Project):
-    downloads = [download.file.path for download in StepDownload.objects.filter(step__experiment__project=project)]
-    additional_materials = [additional_material.file.path for additional_material in ExperimentAdditionalMaterial.objects.filter(experiment__project=project)]
-    project_media =[media.file.path for media in ProjectMedia.objects.filter(project=project)]
-    return downloads + additional_materials + project_media
 
 def make_export(*,project:Project):
     dataset = get_project_dataset(project=project)

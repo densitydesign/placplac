@@ -13,7 +13,7 @@ from rest_framework.parsers import MultiPartParser
 from rest_framework.response import Response
 
 from base.viewsets import CustomModelView
-from cms.export_import import make_import, make_export
+from cms.export_import import make_import, make_export, make_build
 from cms.filters.experiment import ExperimentAdditionalMaterialFilter
 from cms.filters.glossary_category import GlossaryCategoryFilter
 from cms.filters.glossary_term import GlossaryTermFilter
@@ -106,44 +106,11 @@ class ProjectViewSet(CustomModelView):
     @action(detail=True, methods=["POST"])
     def export(self, request, pk):
         instance = self.get_object()
-        serializer = FullProjectSerializer(instance)
-        downloads = StepDownload.objects.filter(step__experiment__project=instance)
-        additional_material = ExperimentAdditionalMaterial.objects.filter(experiment__project=instance)
-        project_media = ProjectMedia.objects.filter(project=instance)
         base_path = self.request.data.get("base_path", "")
-
-        with tempfile.TemporaryDirectory() as tmpdirname:
-            tmpdirname = tmpdirname + "/exit"
-            shutil.copytree(settings.PROJECT_FRONTEND_EXPORT, tmpdirname, symlinks=True)
-
-            dir_export_site = os.path.join(tmpdirname, "apps", "export-site")
-
-            downloads_path = os.path.join(dir_export_site, "public", "media")
-            if not os.path.isdir(downloads_path):
-                os.mkdir(downloads_path)
-            for download in downloads:
-                shutil.copy(download.file.path, downloads_path)
-            for download in additional_material:
-                shutil.copy(download.file.path, downloads_path)
-            for media in project_media:
-                shutil.copy(media.file.path, downloads_path)
-            file = os.path.join(dir_export_site, "data.json")
-            with open(file, 'w') as f:
-                json.dump(serializer.data, f)
-            with open(os.path.join(dir_export_site, ".env.local"), "w") as f:
-                f.write(f"NX_BASE_PATH={base_path} \n")
-                f.write(f"NX_FILE_PATH={file} \n")
-            subprocess.check_call('npx nx run export-site:export ', shell=True, cwd=tmpdirname, close_fds=True)
-
-            zip_name = os.path.join(tmpdirname, "site")
-            out_directory = os.path.join(tmpdirname, "dist", "apps", "export-site", "exported")
-            exported_assets_out_directory = os.path.join(out_directory, "assets")
-            assets = os.path.join(tmpdirname, "dist", "apps", "export-site", "public", "assets")
-            shutil.copytree(assets, exported_assets_out_directory, symlinks=True)
-            zip_file = open(shutil.make_archive(zip_name, 'zip', out_directory), 'rb')
-            response = HttpResponse(zip_file, content_type='application/zip')
-            response['Content-Disposition'] = 'attachment; filename=site.zip'
-            return response
+        zip_file = make_build(project=instance, base_path=base_path)
+        response = HttpResponse(zip_file, content_type='application/zip')
+        response['Content-Disposition'] = 'attachment; filename=site.zip'
+        return response
 
     @action(detail=True, methods=["GET"])
     def clone(self, request, pk):
