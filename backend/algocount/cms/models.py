@@ -67,8 +67,12 @@ class Experiment(CustomModel):
             ["{}{}".format(json.dumps(step.content), step.description) for step in self.step_set.all()])
         return  "{}{}{}{}{}".format(json.dumps(self.context), json.dumps(self.findings), json.dumps(
             self.experiment_setup), self.description, steps_content)
+
+def get_upload_experiment_path(instance,filename):
+    return os.path.join(str(instance.experiment.project_id), filename)
+
 class ExperimentAdditionalMaterial(CustomModel):
-    file = models.FileField()
+    file = models.FileField(upload_to=get_upload_experiment_path)
     experiment = models.ForeignKey(Experiment, on_delete=models.CASCADE)
 
 
@@ -82,9 +86,12 @@ class Step(CustomModel):
     class Meta:
         unique_together = (('experiment', 'step_number'))
 
+def get_upload_step_path(instance,filename):
+    return os.path.join(str(instance.step.experiment.project_id), filename)
+
 class StepDownload(CustomModel):
     title = models.TextField()
-    file = models.FileField()
+    file = models.FileField(upload_to=get_upload_step_path)
     step = models.ForeignKey(Step, on_delete=models.CASCADE)
 
 

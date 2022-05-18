@@ -1,14 +1,15 @@
 import os
+import zipfile
 
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
 
 from base.serializer_fields import CustomFileField
 from cms.models import Project, ProjectMedia, ProjectUser, GlossaryCategory
 from cms.serializers.experiment import FullExperimentSerializer
 from cms.serializers.glossary import FullGlossaryTermSerializer, GlossaryCategorySerializer
 from cms.serializers.reference import ReferenceSerializer
-
 User = get_user_model()
 
 
@@ -81,3 +82,11 @@ class ProjectUserSerializer(serializers.ModelSerializer):
                   "user",
                   "level",
                   ]
+
+class ImportProjectSerializer(serializers.Serializer):
+    file = serializers.FileField()
+
+    def validate_file(self,value):
+        if not zipfile.is_zipfile(value):
+            raise ValidationError("You must upload a zip file!")
+        return value

@@ -7,12 +7,13 @@ import tempfile
 from django.conf import settings
 from django.db.models import Q
 from django.http import Http404, HttpResponse
-from rest_framework import permissions, exceptions
+from rest_framework import permissions, exceptions, status
 from rest_framework.decorators import action
 from rest_framework.parsers import MultiPartParser
 from rest_framework.response import Response
 
 from base.viewsets import CustomModelView
+from cms.export_import import make_import, make_export
 from cms.filters.experiment import ExperimentAdditionalMaterialFilter
 from cms.filters.glossary_category import GlossaryCategoryFilter
 from cms.filters.glossary_term import GlossaryTermFilter
@@ -24,7 +25,7 @@ from cms.models import Project, Experiment, ProjectMedia, GlossaryCategory, Glos
 from cms.serializers.experiment import ExperimentSerializer, ExperimentAdditionalMaterialSerializer
 from cms.serializers.glossary import GlossaryCategorySerializer, GlossaryTermSerializer
 from cms.serializers.project import ProjectSerializer, ProjectMediaSerializer, FullProjectSerializer, \
-    ProjectUserSerializer
+    ProjectUserSerializer, ImportProjectSerializer
 from cms.serializers.reference import ReferenceSerializer
 from cms.serializers.step import StepSerializer, StepDownloadSerializer
 
@@ -83,6 +84,24 @@ class ProjectViewSet(CustomModelView):
             return Response(serializer.data)
         except Project.DoesNotExist:
             raise Http404
+
+    @action(detail=False, methods=["POST"])
+    def import_project(self, request):
+        serializer = ImportProjectSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        file = serializer.validated_data["file"]
+        project = make_import(file=file)
+        if not project:
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={"detail":"The file cannot be imported!"})
+        return Response()
+
+    @action(detail=True, methods=["GET"])
+    def export_to_importable_format(self, request, pk):
+        project = self.get_object()
+        zip_file = make_export(project=project)
+        response = HttpResponse(zip_file, content_type='application/zip')
+        response['Content-Disposition'] = f"attachment; filename={project.title}.zip"
+        return response
 
     @action(detail=True, methods=["POST"])
     def export(self, request, pk):

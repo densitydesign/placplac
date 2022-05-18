@@ -2,6 +2,7 @@ import { Breadcrumbs, Typography } from '@mui/material';
 import { Edit, EditProps, RaRecord, Link, useRecordContext } from 'react-admin';
 import { TopToolbarWithTitle } from '../components/TopToolbarWithTitle';
 import { DownloadButton } from './DownloadButton';
+import { ExportButton } from './ExportButton';
 import { PreviewButton } from './PreviewButton';
 
 import { ProjectForm } from './ProjectForm';
@@ -27,6 +28,7 @@ const PostEditActions = () => {
       }
     >
       {record && <PreviewButton project={record.id} />}
+      {record && <ExportButton projectId={record.id} />}
       {record && record.status === '1' && <DownloadButton project={record} />}
     </TopToolbarWithTitle>
   );

@@ -1,4 +1,10 @@
-import { Box, Breadcrumbs, Card, Typography } from '@mui/material';
+import {
+  Box,
+  Breadcrumbs,
+  Card,
+  Typography,
+  TableContainer,
+} from '@mui/material';
 import React, { cloneElement, ReactNode } from 'react';
 import {
   Datagrid,
@@ -17,12 +23,15 @@ import {
 
 import { CloneButton } from './CloneButton';
 import { DownloadButton } from './DownloadButton';
+import { ExportButton } from './ExportButton';
+import { ImportProjectButton } from './ImportProjectButton';
 import { PreviewButton } from './PreviewButton';
 
 const ProjectListActions = (props: ListActionsProps) => {
   return (
     <TopToolbar className={props.className}>
       {props.filters && cloneElement(props.filters, { context: 'button' })}
+      <ImportProjectButton />
       <CreateButton />
     </TopToolbar>
   );
@@ -31,7 +40,7 @@ const CardWithBreadCumb: React.FC = (props) => {
   return (
     <>
       <Typography variant="h3">Projects</Typography>
-      <Card>{props.children}</Card>
+      <Card style={{ overflow: 'inherit' }}>{props.children}</Card>
     </>
   );
 };
@@ -66,6 +75,7 @@ export const ProjectList = () => {
               {record && <EditButton record={record} />}
               {record && <PreviewButton project={record.id} />}
               {record && <CloneButton project={record.id} />}
+              {record && <ExportButton projectId={record.id} />}
               {record && record.status === '1' && (
                 <DownloadButton project={record} />
               )}
