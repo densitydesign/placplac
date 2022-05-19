@@ -2,6 +2,7 @@ import { redirect } from 'next/dist/server/api-utils';
 import { useMemo } from 'react';
 import {
   DeleteButton,
+  required,
   SaveButton,
   SimpleForm,
   SimpleFormProps,
@@ -49,7 +50,14 @@ export const ReferenceForm = (props: Omit<SimpleFormProps, 'children'>) => {
       <CustomRichTextInput
         source="description"
         label="Description of reference"
+        validate={required()}
         small
+      />
+      <CustomRichTextInput
+        source="in_text_citation"
+        label="In text citation"
+        small
+        validate={required()}
       />
     </SimpleForm>
   );

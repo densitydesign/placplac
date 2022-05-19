@@ -8,6 +8,7 @@ import {
   useRedirect,
   RecordContextProvider,
   useCreate,
+  required,
 } from 'react-admin';
 import IconCancel from '@mui/icons-material/Cancel';
 import IconContentAdd from '@mui/icons-material/Add';
@@ -56,6 +57,13 @@ export const AddReferenceButton = () => {
                   source="description"
                   label="Description of reference"
                   small
+                  validate={required()}
+                />
+                <CustomRichTextInput
+                  source="in_text_citation"
+                  label="In text citation"
+                  small
+                  validate={required()}
                 />
               </DialogContent>
               <DialogActions>

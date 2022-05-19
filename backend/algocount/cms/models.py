@@ -128,5 +128,6 @@ class ReferenceManager(models.Manager):
 class Reference(CustomModel):
     objects=ReferenceManager()
     description = models.TextField()
+    in_text_citation = models.TextField()
     project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True, blank=True)
 

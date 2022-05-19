@@ -204,6 +204,7 @@ export const ProjectForm = () => {
             >
               <Datagrid>
                 <RichTextField stripTags source="description" />
+                <RichTextField stripTags source="in_text_citation" />
                 <EditButton />
                 <DeleteButton redirect={false} mutationMode="optimistic" />
               </Datagrid>
