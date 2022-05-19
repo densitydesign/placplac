@@ -9,6 +9,7 @@ import {
   RecordContextProvider,
   useCreate,
   required,
+  TextInput,
 } from 'react-admin';
 import IconCancel from '@mui/icons-material/Cancel';
 import IconContentAdd from '@mui/icons-material/Add';
@@ -59,11 +60,11 @@ export const AddReferenceButton = () => {
                   small
                   validate={required()}
                 />
-                <CustomRichTextInput
+                <TextInput
                   source="in_text_citation"
                   label="In text citation"
-                  small
                   validate={required()}
+                  fullWidth
                 />
               </DialogContent>
               <DialogActions>

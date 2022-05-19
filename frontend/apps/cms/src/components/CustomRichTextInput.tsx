@@ -117,12 +117,12 @@ export const CustomRichTextInput = (props: CustomRichTextInputProps) => {
             body_class: 'main-application',
             init_instance_callback: (editor) => {
               //set reference numbers
-              referenceItems.forEach((reference, index) => {
+              unformattedReferences.forEach((reference, index) => {
                 const references = editor.contentDocument.querySelectorAll(
-                  `[data-reference="${reference.value}"]`
+                  `[data-reference="${reference.id.toString()}"]`
                 );
-                references.forEach((reference) => {
-                  reference.innerHTML = `${index + 1}`;
+                references.forEach((referenceEl) => {
+                  referenceEl.innerHTML = `${reference.in_text_citation}`;
                 });
               });
 
@@ -176,12 +176,16 @@ export const CustomRichTextInput = (props: CustomRichTextInputProps) => {
                     const index = referenceItems.findIndex(
                       (reference) => reference.value === data.reference
                     );
+                    const reference = unformattedReferences.find(
+                      (reference) => reference.id.toString() === data.reference
+                    );
                     const html = `${text}<sup class="toReferenceTag mceNonEditable">
-                        [<a data-reference="${
+                        (<a data-reference="${
                           data.reference
-                        }" href='#reference${data.reference}'>
-                          ${index + 1}
-                        </a>]</sup>`;
+                        }" href='#reference${data.reference}'>${
+                      reference!.in_text_citation
+                    }
+                        </a>)</sup>`;
                     editor.insertContent(html);
                     api.close();
                   },

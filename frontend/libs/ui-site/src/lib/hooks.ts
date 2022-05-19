@@ -1,23 +1,18 @@
-import { GlossaryTerm } from '@algocount/shared/types';
+import { GlossaryTerm, Reference } from '@algocount/shared/types';
 import { DependencyList, useEffect, useState } from 'react';
-import * as React from "react";
-import useResizeObserver from "@react-hook/resize-observer";
-export function useReferencesAdjuster() {
+import * as React from 'react';
+import useResizeObserver from '@react-hook/resize-observer';
+export function useReferencesAdjuster(references: Reference[]) {
   //adjust reference numbers to respect the list numeration
   return useEffect(() => {
-    const ul = window.document.getElementById('referenceList');
-    if (ul) {
-      const list = ul.querySelectorAll('li');
-      list.forEach((li, index) => {
-        const id = li.getAttribute('data-reference-id');
-        const references = window.document.querySelectorAll(
-          `[data-reference="${id}"]`
-        );
-        references.forEach((reference) => {
-          reference.innerHTML = `${index + 1}`;
-        });
+    references.forEach((reference, index) => {
+      const referencesElements = window.document.querySelectorAll(
+        `[data-reference="${reference.id.toString()}"]`
+      );
+      referencesElements.forEach((referenceEl) => {
+        referenceEl.innerHTML = `${reference.in_text_citation}`;
       });
-    }
+    });
   }, []);
 }
 
@@ -40,7 +35,6 @@ export function useGlossaryAdjuster(glossaryTerms: GlossaryTerm[]) {
   }, [glossaryTerms]);
 }
 
-
 export function useDebounce<T>(value: T, delay: number): T {
   // State and setters for debounced value
   const [debouncedValue, setDebouncedValue] = useState<T>(value);
@@ -59,15 +53,13 @@ export function useDebounce<T>(value: T, delay: number): T {
         clearTimeout(handler);
       };
     },
-    [value, delay], // Only re-call effect if value or delay changes
+    [value, delay] // Only re-call effect if value or delay changes
   );
 
   return debouncedValue;
 }
 
 export default useDebounce;
-
-
 
 export const useSize = (target: HTMLElement | null) => {
   const [size, setSize] = React.useState<DOMRect>();

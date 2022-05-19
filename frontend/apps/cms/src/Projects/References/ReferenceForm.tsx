@@ -6,6 +6,7 @@ import {
   SaveButton,
   SimpleForm,
   SimpleFormProps,
+  TextInput,
   Toolbar,
   ToolbarProps,
   useNotify,
@@ -53,11 +54,11 @@ export const ReferenceForm = (props: Omit<SimpleFormProps, 'children'>) => {
         validate={required()}
         small
       />
-      <CustomRichTextInput
+      <TextInput
         source="in_text_citation"
         label="In text citation"
-        small
         validate={required()}
+        fullWidth
       />
     </SimpleForm>
   );

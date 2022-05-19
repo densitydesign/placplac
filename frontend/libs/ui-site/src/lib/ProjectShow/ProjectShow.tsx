@@ -1,7 +1,7 @@
 import { ReferenceList } from '../components/ReferenceList';
 
 import { TextShow } from '../TextShow';
-import { GlossaryTerm, Project } from '@algocount/shared/types';
+import { GlossaryTerm, Project, Reference } from '@algocount/shared/types';
 import styles from './ProjectShow.module.css';
 import { ExperimentSection } from './components/ExperimentSection';
 import { ComponentType, useEffect, useRef, useState } from 'react';
@@ -20,6 +20,8 @@ interface ProjectProps {
   linkComponent: ComponentType<{ href: string }>;
   glossaryTerms: GlossaryTerm[];
   glossaryCategories: GlossaryCategory[];
+
+  references: Reference[];
 }
 
 export const ProjectShow = (props: ProjectProps) => {
@@ -29,8 +31,9 @@ export const ProjectShow = (props: ProjectProps) => {
     linkComponent,
     glossaryTerms,
     glossaryCategories,
+    references,
   } = props;
-  useReferencesAdjuster();
+
   const [version, setVersion] = useState(0);
   const container = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -39,6 +42,7 @@ export const ProjectShow = (props: ProjectProps) => {
     return () => setVersion(0);
   }, []);
   useGlossaryAdjuster(glossaryTerms);
+  useReferencesAdjuster(references);
 
   return (
     <>

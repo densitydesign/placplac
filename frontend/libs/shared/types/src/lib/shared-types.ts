@@ -31,6 +31,7 @@ export type GlossaryCategory = {
 export type Reference = {
   id: number;
   description: string;
+  in_text_citation: string;
 };
 
 export type LanguageOptions = 'it' | 'en';

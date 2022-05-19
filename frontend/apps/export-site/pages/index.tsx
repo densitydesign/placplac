@@ -14,6 +14,7 @@ export async function getStaticProps() {
       experiments: fileContents.experiments,
       glossaryTerms: fileContents.glossary_terms,
       glossaryCategories: fileContents.glossary_categories,
+      references: fileContents.references,
       language: fileContents.language,
       footer: fileContents.footer,
     },
@@ -31,6 +32,7 @@ const Home: NextPage = ({
   experiments,
   language,
   footer,
+  references,
 }: any) => {
   return (
     <Layout footer={footer} language={language} experiments={experiments}>
@@ -40,6 +42,7 @@ const Home: NextPage = ({
         basePath="/"
         project={project}
         linkComponent={Link}
+        references={references}
       />
     </Layout>
   );

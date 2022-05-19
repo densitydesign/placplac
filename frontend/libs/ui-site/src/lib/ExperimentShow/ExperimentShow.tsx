@@ -62,7 +62,7 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
     }
   });
 
-  useReferencesAdjuster();
+  useReferencesAdjuster(references);
   useGlossaryAdjuster(glossary_terms);
   const renderRow = (
     row: RowType,

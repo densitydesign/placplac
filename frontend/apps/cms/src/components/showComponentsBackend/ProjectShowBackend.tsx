@@ -55,6 +55,7 @@ export const ProjectShowBackend = () => {
               project={project}
               linkComponent={Link}
               glossaryTerms={project.glossary_terms}
+              references={project.references}
             />
           }
         />
