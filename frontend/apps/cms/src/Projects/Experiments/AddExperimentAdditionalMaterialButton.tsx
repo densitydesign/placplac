@@ -70,7 +70,7 @@ export const AddExperimentAdditionalMaterialButton = () => {
                 >
                   <IconCancel />
                 </Button>
-                <SaveButton />
+                <SaveButton alwaysEnable />
               </DialogActions>
             </>
           </Form>

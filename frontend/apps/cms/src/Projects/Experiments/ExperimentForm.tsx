@@ -53,6 +53,7 @@ export const ExperimentForm = (props: Omit<TabbedFormProps, 'children'>) => {
     <ProjectContextProvider project={projectId}>
       <TabbedForm
         {...props}
+        
         tabs={<Tabs />}
         toolbar={<ExperimentFormToolbar />}
       >

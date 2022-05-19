@@ -3,13 +3,15 @@ import os
 import shutil
 import subprocess
 import tempfile
+from io import BytesIO
 
 from django.conf import settings
+from django.core import files
 from django.db.models import Q
 from django.http import Http404, HttpResponse
 from rest_framework import permissions, exceptions, status
 from rest_framework.decorators import action
-from rest_framework.parsers import MultiPartParser
+from rest_framework.parsers import MultiPartParser, JSONParser
 from rest_framework.response import Response
 
 from base.viewsets import CustomModelView
@@ -28,7 +30,7 @@ from cms.serializers.project import ProjectSerializer, ProjectMediaSerializer, F
     ProjectUserSerializer, ImportProjectSerializer
 from cms.serializers.reference import ReferenceSerializer
 from cms.serializers.step import StepSerializer, StepDownloadSerializer
-
+import requests
 
 def get_all_relation_objects(relation_set):
     related_objects = []
@@ -169,8 +171,25 @@ class ProjectViewSet(CustomModelView):
 class ProjectMediaViewSet(CustomModelView):
     queryset = ProjectMedia.objects.all()
     serializer_class = ProjectMediaSerializer
-    parser_classes = [MultiPartParser]
+    parser_classes = [MultiPartParser,JSONParser]
     filterset_class = ProjectMediaFilter
+
+    # @action(detail=False, methods=["POST"])
+    # def upload_image_from_link(self, request):
+    #     url = self.request.data.get("url", "")
+    #     project = self.request.data.get("project", "")
+    #     try:
+    #         response = requests.get(url, stream=True)
+    #     except requests.exceptions.RequestException as e:  # This is the correct syntax
+    #         return Response(status=status.HTTP_400_BAD_REQUEST)
+    #     if response.status_code != requests.codes.ok:
+    #         return Response(status=status.HTTP_400_BAD_REQUEST)
+    #     file_name = url.split('/')[-1]
+    #     fp = BytesIO()
+    #     fp.write(response.content)
+    #
+    #     media = ProjectMedia.objects.create(project_id=project, file=files.File(fp, name=file_name))
+    #     return Response(ProjectMediaSerializer(media).data)
 
     def get_queryset(self):
         user = self.request.user

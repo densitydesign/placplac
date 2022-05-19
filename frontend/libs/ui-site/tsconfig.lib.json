@@ -26,7 +26,6 @@
         "**/*.jsx",
         "**/*.ts",
         "**/*.tsx",
-        "../shared/types/src/lib/react-sigma.d.ts",
         "../shared/types/src/lib/jslibutils.d.ts"
     ]
 }

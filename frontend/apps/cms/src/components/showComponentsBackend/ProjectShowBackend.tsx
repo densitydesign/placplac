@@ -5,6 +5,7 @@ import {
   Layout,
   GlossaryShow,
   GlossaryCategoryShow,
+  ProjectShow,
 } from '@algocount/ui-site';
 import { HashLink as LinkRR } from 'react-router-hash-link';
 import { LinkProps as LinkRRProps } from 'react-router-dom';
@@ -45,6 +46,18 @@ export const ProjectShowBackend = () => {
           </Layout>
         }
       >
+        <Route
+          path={`/`}
+          element={
+            <ProjectShow
+              glossaryCategories={project.glossary_categories}
+              basePath={basePath}
+              project={project}
+              linkComponent={Link}
+              glossaryTerms={project.glossary_terms}
+            />
+          }
+        />
         {project.experiments.map((experiment: any) => (
           <Route
             key={experiment.id}

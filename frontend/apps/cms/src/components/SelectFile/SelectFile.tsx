@@ -5,6 +5,9 @@ import {
   Grid,
   InputAdornment,
   Typography,
+  Tabs,
+  Tab,
+  styled,
 } from '@mui/material';
 import {
   FieldTitle,
@@ -31,6 +34,8 @@ import {
   RecordContextProvider,
   RaRecord,
   useDataProvider,
+  FilterForm,
+  SearchInput,
 } from 'react-admin';
 import ListIcon from '@mui/icons-material/AttachFile';
 import { useCallback, useState } from 'react';
@@ -40,6 +45,47 @@ import { FieldValues } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import { AddMediaForm } from './components/AddMediaForm';
 import { useProjectContext } from '../../contexts/project-context';
+import axios from 'axios';
+import { client, CustomDataProvider } from '../../dataProvider';
+import AppsIcon from '@mui/icons-material/Apps';
+import AddIcon from '@mui/icons-material/Add';
+import SearchIcon from '@mui/icons-material/Search';
+export function isExternalLink(url: string) {
+  const tmp = document.createElement('a');
+  tmp.href = url;
+  return tmp.host !== window.location.host;
+}
+function a11yProps(index: number) {
+  return {
+    id: `media-tab-${index}`,
+    'aria-controls': `media-tabpanel-${index}`,
+  };
+}
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
+}
+
+function TabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
 
 export interface SelectFileProps extends SelectInputProps {
   source?: string;
@@ -101,6 +147,15 @@ export const SelectFile = ({
   ...rest
 }: SelectFileProps & any) => {
   const [open, setOpen] = useState(false);
+  const dataProvider = useDataProvider<CustomDataProvider>();
+  const validate_image = async (value: string | null) => {
+    console.log(value);
+    if (value && value !== '') {
+      if (isExternalLink(value)) {
+        return 'Invalid link: select an uploaded file';
+      }
+    }
+  };
   const {
     id,
     field,
@@ -118,7 +173,12 @@ export const SelectFile = ({
     parse,
     resource,
     source,
-    validate,
+    validate: validate,
+    //   validate && Array.isArray(validate)
+    //     ? [...validate, validate_image]
+    //     : validate
+    //     ? [validate, validate_image]
+    //     : validate_image,
     ...rest,
   });
   const { error, invalid, isTouched } = fieldState;
@@ -129,6 +189,14 @@ export const SelectFile = ({
   if (!type) {
     throw new Error(`Specify media type`);
   }
+  const [selectedTab, setSelectedtab] = useState(0);
+
+  const handleChangeSelectedTab = (
+    event: React.SyntheticEvent,
+    newValue: number
+  ) => {
+    setSelectedtab(newValue);
+  };
 
   return (
     <>
@@ -179,13 +247,21 @@ export const SelectFile = ({
         onClose={() => setOpen(false)}
         fullWidth
         maxWidth="xl"
-        
       >
-        <DialogContent>
-          <AddMediaForm project={project} type={type} />
-
-          <Typography variant="h5">Or choose a file</Typography>
-          <Box mt={'8px'}>
+        <DialogContent style={{ padding: 0 }}>
+          <Tabs
+            value={selectedTab}
+            onChange={handleChangeSelectedTab}
+            aria-label="media gallery tabs"
+          >
+            <Tab label="Select media" icon={<AppsIcon />} {...a11yProps(0)} />
+            <Tab
+              label="Upload new media"
+              icon={<AddIcon />}
+              {...a11yProps(1)}
+            />
+          </Tabs>
+          <TabPanel value={selectedTab} index={0}>
             <ListBase
               resource="project-media"
               disableSyncWithLocation
@@ -193,22 +269,17 @@ export const SelectFile = ({
               filterDefaultValues={{ type, project }}
               sort={{ field: 'id', order: 'DESC' }}
             >
-              <ListToolbar
+              <FilterForm
                 filters={[
-                  <TextInput
+                  <SearchInput
                     source="file"
-                    label="File name"
                     placeholder="Search for file name"
                     alwaysOn
-                    fullWidth
+                    style={{ marginBottom: '20px' }}
                   />,
                 ]}
-                actions={
-                  <TopToolbar>
-                    <FilterButton />
-                  </TopToolbar>
-                }
               />
+
               <MediaDatagrid
                 type={type}
                 value={field.value}
@@ -219,7 +290,10 @@ export const SelectFile = ({
               />
               <Pagination />
             </ListBase>
-          </Box>
+          </TabPanel>
+          <TabPanel value={selectedTab} index={1}>
+            <AddMediaForm project={project} type={type} />
+          </TabPanel>
         </DialogContent>
       </Dialog>
     </>

@@ -5,6 +5,7 @@ import {
   Identifier,
   ImageField,
   ImageInput,
+  RecordContextProvider,
   required,
   TextInput,
   useAugmentedForm,
@@ -12,9 +13,10 @@ import {
   useNotify,
 } from 'react-admin';
 import { FieldValues, FormProvider, useFormContext } from 'react-hook-form';
-import { Typography, Grid } from '@mui/material';
+import { Typography, Grid, Switch, FormControlLabel, Box } from '@mui/material';
 import { useMutation, useQueryClient } from 'react-query';
 import { CustomDataProvider } from '../../../dataProvider';
+import { useState } from 'react';
 interface AddMediaFormProps {
   project: Identifier;
   type: 'image' | 'file' | 'video';
@@ -37,7 +39,9 @@ const ResetSaveButton = () => {
     {
       onSuccess: async () => {
         reset();
-        notify('Media uploaded!', { type: 'success' });
+        notify('Your file has been successfully uploaded!', {
+          type: 'success',
+        });
         queryClient.invalidateQueries('project-media');
       },
       onError: () => {
@@ -64,55 +68,87 @@ export const AddMediaForm = (props: AddMediaFormProps) => {
     record: { project, type },
     defaultValues: {},
   });
-
+  const [uploadFromTheInternet, setUploadFromTheInternet] = useState(false);
   return (
-    <FormProvider {...form}>
-      <>
-        <Typography variant="h5">Add new file</Typography>
-
-        {type === 'image' ? (
-          <ImageInput
-            helperText={
-              'The maximum accepted size is 4MB, and only image files will be accepted'
-            }
-            validate={required()}
-            source="file"
-            label={''}
-            accept="image/*"
-            maxSize={4000000}
-            options={{ onDropRejected: () => alert('File rejected') }}
-          >
-            <ImageField
-              sx={{ '& .RaImageField-image': { maxWidth: '100%' } }}
-              source="src"
-              title="title"
+    <RecordContextProvider value={{}}>
+      <FormProvider {...form}>
+        <>
+          {type === 'image' ? (
+            <>
+              {/* <TextInput
+                fullWidth
+                source="description"
+                label="Paste an url from the web"
+              />
+              <Typography variant="h5" textAlign={'center'}>
+                or
+              </Typography> */}
+              <ImageInput
+                helperText={
+                  'The maximum accepted size is 4MB, and only image files will be accepted'
+                }
+                source="file"
+                label={' '}
+                accept="image/*"
+                maxSize={4000000}
+                options={{
+                  onDropRejected: () =>
+                    alert(
+                      'Cambiare in: “File rejected. The maximum accepted size for images (.png, .jpg, .gif) is 4MB.”'
+                    ),
+                }}
+                sx={{
+                  '& .RaFileInput-dropZone': {
+                    borderWidth: 2,
+                    borderRadius: 2,
+                    borderColor: '#eeeeee',
+                    borderStyle: 'dashed',
+                    backgroundColor: '#fafafa',
+                  },
+                }}
+              >
+                <ImageField
+                  sx={{ '& .RaImageField-image': { maxWidth: '100%' } }}
+                  source="src"
+                  label={false}
+                  title="title"
+                />
+              </ImageInput>
+            </>
+          ) : (
+            <FileInput
+              helperText={
+                type === 'video'
+                  ? 'The maximum accepted size is 16MB, and only video files will be accepted.'
+                  : 'The maximum accepted size is 16MB.'
+              }
+              validate={required()}
+              source="file"
+              label={''}
+              accept={type === 'video' ? 'video/*' : undefined}
+              maxSize={16000000}
+              options={{
+                onDropRejected: () =>
+                  alert('The maximum accepted size for videos (.mp4) is 16MB”'),
+              }}
+            >
+              <FileField source="src" title="title" />
+            </FileInput>
+          )}
+          <Box mt={2}>
+            <TextInput
+              fullWidth
+              source="description"
+              label="Write the description of the media"
             />
-          </ImageInput>
-        ) : (
-          <FileInput
-            helperText={
-              type === 'video'
-                ? 'The maximum accepted size is 16MB, and only video files will be accepted.'
-                : 'The maximum accepted size is 16MB.'
-            }
-            validate={required()}
-            source="file"
-            label={''}
-            accept={type === 'video' ? 'video/*' : undefined}
-            maxSize={16000000}
-            options={{ onDropRejected: () => alert('File rejected') }}
-          >
-            <FileField source="src" title="title" />
-          </FileInput>
-        )}
-
-        <TextInput fullWidth source="description" />
-        <Grid container justifyContent="flex-end">
-          <Grid item>
-            <ResetSaveButton />
+          </Box>
+          <Grid container justifyContent="flex-end">
+            <Grid item>
+              <ResetSaveButton />
+            </Grid>
           </Grid>
-        </Grid>
-      </>
-    </FormProvider>
+        </>
+      </FormProvider>
+    </RecordContextProvider>
   );
 };

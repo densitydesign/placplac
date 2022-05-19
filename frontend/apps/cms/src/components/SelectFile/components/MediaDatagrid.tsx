@@ -1,5 +1,6 @@
 import { Grid, Box, Radio, FormControlLabel } from '@mui/material';
 import { useListContext } from 'react-admin';
+import LinesEllipsis from 'react-lines-ellipsis';
 import fileIcon from './file.png';
 
 interface MediaDatagridProps {
@@ -11,18 +12,19 @@ interface MediaDatagridProps {
 export const MediaDatagrid = (props: MediaDatagridProps) => {
   const { onChange, value, type } = props;
   const { data } = useListContext();
+
   return (
-    <Grid container spacing={2}>
+    <Grid container columnGap={2}>
       {data &&
         data.map((record) => {
           const id = record.id;
           return (
-            <Grid item key={id}>
+            <Grid item key={id} style={{ width: '200px' }}>
               <Grid
                 item
+                xs={12}
                 container
                 direction="column"
-                spacing={1}
                 alignItems="center"
               >
                 <Grid item>
@@ -33,7 +35,7 @@ export const MediaDatagrid = (props: MediaDatagridProps) => {
                     position="relative"
                     overflow="hidden"
                     boxShadow="2"
-                    borderRadius={10}
+                    borderRadius={5}
                   >
                     <Box
                       zIndex={1}
@@ -50,21 +52,26 @@ export const MediaDatagrid = (props: MediaDatagridProps) => {
                     ></Box>
                   </Box>
                 </Grid>
+                <Grid
+                  item
+                  style={{
+                    width: '200px',
+                    textOverflow: 'ellipsis',
+                    overflow: 'hidden',
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  <span>{record.name}</span>
+                </Grid>
                 <Grid item>
-                  <FormControlLabel
-                    label={record.name}
-                    htmlFor={`img_${id}`}
-                    control={
-                      <Radio
-                        id={`img_${id}`}
-                        color="primary"
-                        style={{ backgroundColor: 'white' }}
-                        onChange={(_, isActive) =>
-                          isActive && onChange(record.file)
-                        }
-                        checked={record.file === value}
-                      />
+                  <Radio
+                    id={`img_${id}`}
+                    color="primary"
+                    style={{ backgroundColor: 'white' }}
+                    onChange={(_, isActive) =>
+                      isActive && onChange(record.file)
                     }
+                    checked={record.file === value}
                   />
                 </Grid>
               </Grid>
