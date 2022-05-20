@@ -10,6 +10,7 @@ from cms.models import Project, ProjectMedia, ProjectUser, GlossaryCategory
 from cms.serializers.experiment import FullExperimentSerializer
 from cms.serializers.glossary import FullGlossaryTermSerializer, GlossaryCategorySerializer
 from cms.serializers.reference import ReferenceSerializer
+
 User = get_user_model()
 
 
@@ -35,7 +36,8 @@ class ProjectSerializer(serializers.ModelSerializer):
                   "experiments_description",
                   "long_description",
                   "status", "created_date", "last_update", "experiment_set", "glossaryterm_set", "projectuser_set",
-                  "projectmedia_set", "language","user_level","reference_set","footer","glossary_description","project_explanation"]
+                  "projectmedia_set", "language", "user_level", "reference_set", "footer", "glossary_description",
+                  "project_explanation"]
 
 
 class ProjectMediaSerializer(serializers.ModelSerializer):
@@ -58,9 +60,20 @@ class FullProjectSerializer(serializers.ModelSerializer):
     glossary_terms = FullGlossaryTermSerializer(many=True, source="glossaryterm_set")
     references = ReferenceSerializer(many=True, source="reference_set")
     glossary_categories = serializers.SerializerMethodField('get_categories')
+    in_project_references = serializers.SerializerMethodField('get_references')
 
     def get_categories(self, value):
         return GlossaryCategorySerializer(GlossaryCategory.objects.filter(project=value.id), many=True).data
+
+    def get_references(self, object):
+        references = object.reference_set.all().order_by("description")
+        in_project_references = []
+        content_str = object.get_content()
+        for reference in references:
+            check_reference = f'data-reference=\\"{reference.id}\\"'
+            if check_reference in content_str:
+                in_project_references.append(reference)
+        return ReferenceSerializer(in_project_references, many=True).data
 
     class Meta:
         model = Project
@@ -69,7 +82,8 @@ class FullProjectSerializer(serializers.ModelSerializer):
                   "experiments_description",
                   "long_description",
                   "status", "created_date", "last_update", "experiments", "glossary_terms", "glossary_categories",
-                  "language","references","footer", "glossary_description","project_explanation"]
+                  "language", "references", "footer", "glossary_description", "project_explanation",
+                  "in_project_references"]
 
 
 class ProjectUserSerializer(serializers.ModelSerializer):
@@ -83,10 +97,21 @@ class ProjectUserSerializer(serializers.ModelSerializer):
                   "level",
                   ]
 
+
 class ImportProjectSerializer(serializers.Serializer):
     file = serializers.FileField()
 
-    def validate_file(self,value):
+    def validate_file(self, value):
         if not zipfile.is_zipfile(value):
             raise ValidationError("You must upload a zip file!")
         return value
+
+
+class FilterProjectUserSerializer(serializers.Serializer):
+    project = serializers.PrimaryKeyRelatedField(queryset=Project.objects.all(), required=False)
+
+
+class FilterProjectMediaSerializer(serializers.Serializer):
+    file = serializers.CharField(required=False)
+    project = serializers.PrimaryKeyRelatedField(queryset=Project.objects.all(), required=False)
+    type = serializers.ChoiceField(choices=ProjectMedia.FileTypeChoices.choices, required=False)

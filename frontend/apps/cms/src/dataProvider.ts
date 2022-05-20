@@ -259,10 +259,13 @@ const dataprovider = (apiUrl: string): CustomDataProvider => {
       }).then(() => ({ data: params.previousData as any })),
 
     deleteMany: (resource, params) =>
-      app(`${apiUrl}/${resource}/bulk_delete/`, {
-        method: 'POST',
-        data: { ids: params.ids },
-      }).then(() => ({ data: params.ids })),
+      Promise.all(
+        params.ids.map((id) =>
+          app(`${apiUrl}/${resource}/${id}/`, {
+            method: 'DELETE',
+          })
+        )
+      ).then(() => ({ data: [] })),
   };
 };
 export default dataprovider;

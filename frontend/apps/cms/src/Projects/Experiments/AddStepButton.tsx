@@ -56,11 +56,11 @@ export const AddStepButton = () => {
           <Form onSubmit={onSave}>
             <>
               <DialogContent>
-                <NumberInput
+                {/* <NumberInput
                   source="step_number"
                   validate={[required()]}
                   helperText="The number indicating the order in which the steps are displayed"
-                />
+                /> */}
                 <TextInput
                   multiline
                   fullWidth

@@ -4,7 +4,7 @@ import os
 from rest_framework import serializers
 
 from base.serializer_fields import FormattedJSONField, CustomFileField
-from cms.models import Step, StepDownload
+from cms.models import Step, StepDownload, Experiment
 from cms.serializers.glossary import FullGlossaryTermSerializer
 
 
@@ -60,4 +60,12 @@ class FullStepSerializer(serializers.ModelSerializer):
                   "description",
                   "content",
                   "step_number",
-                  "experiment", "downloads","glossary_terms"]
+                  "experiment", "downloads", "glossary_terms"]
+
+
+class StepFilterSerializer(serializers.Serializer):
+    experiment = serializers.PrimaryKeyRelatedField(queryset=Experiment.objects.all(), required=False)
+
+
+class StepDownloadFilterSerializer(serializers.Serializer):
+    step = serializers.PrimaryKeyRelatedField(queryset=Step.objects.all(), required=False)

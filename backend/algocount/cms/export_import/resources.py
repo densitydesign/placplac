@@ -3,22 +3,27 @@ import os
 from import_export import resources
 
 from cms.models import Project, ProjectMedia, Experiment, ExperimentAdditionalMaterial, Step, StepDownload, \
-    GlossaryCategory, GlossaryTerm, Reference
+    GlossaryCategory, GlossaryTerm, Reference, ProjectUser
+from cms.services.project import add_user_to_project
 
 
 class CustomResource(resources.ModelResource):
     def get_instance(self, instance_loader, row):
         return
+
     def after_save_instance(self, instance, using_transactions, dry_run):
         self.instance = instance
         return super().after_save_instance(instance, using_transactions, dry_run)
 
+
 class ProjectResource(CustomResource):
+    def after_import_instance(self, instance, new, **kwargs):
+        add_user_to_project(user=kwargs['user'], level=ProjectUser.LevelChoices.AUTHOR, project=instance)
 
     class Meta:
         model = Project
         force_init_instance = True
-        exclude=("id")
+        exclude = ("id")
         skip_diff = True
 
 
@@ -28,7 +33,7 @@ class ProjectMediaResource(CustomResource):
         super().__init__()
 
     def before_save_instance(self, instance, using_transactions, dry_run):
-        print("setting project",self._project)
+        print("setting project", self._project)
         setattr(instance, "project", self._project)
 
     def before_import_row(self, row, row_number=None, **kwargs):
@@ -41,8 +46,10 @@ class ProjectMediaResource(CustomResource):
 
     class Meta:
         model = ProjectMedia
-        exclude=("project","id")
+        exclude = ("project", "id")
         skip_diff = True
+
+
 class ExperimentResource(CustomResource):
     def __init__(self, *args, **kwargs):
         self._project = kwargs.pop('project', None)
@@ -50,12 +57,11 @@ class ExperimentResource(CustomResource):
 
     def before_save_instance(self, instance, using_transactions, dry_run):
         setattr(instance, "project", self._project)
+
     class Meta:
         model = Experiment
-        exclude = ("project","id")
+        exclude = ("project", "id")
         skip_diff = True
-
-
 
 
 class ExperimentAdditionalMaterialResource(CustomResource):
@@ -65,10 +71,12 @@ class ExperimentAdditionalMaterialResource(CustomResource):
 
     def before_save_instance(self, instance, using_transactions, dry_run):
         setattr(instance, "experiment", self._experiment)
+
     class Meta:
         model = ExperimentAdditionalMaterial
         skip_diff = True
-        exclude=("experiment","id")
+        exclude = ("experiment", "id")
+
 
 class StepResource(CustomResource):
     def __init__(self, *args, **kwargs):
@@ -77,10 +85,11 @@ class StepResource(CustomResource):
 
     def before_save_instance(self, instance, using_transactions, dry_run):
         setattr(instance, "experiment", self._experiment)
+
     class Meta:
         model = Step
         skip_diff = True
-        exclude=("experiment","id")
+        exclude = ("experiment", "id")
 
 
 class StepDownloadResource(CustomResource):
@@ -90,10 +99,11 @@ class StepDownloadResource(CustomResource):
 
     def before_save_instance(self, instance, using_transactions, dry_run):
         setattr(instance, "step", self._step)
+
     class Meta:
         model = StepDownload
         skip_diff = True
-        exclude=("step","id")
+        exclude = ("step", "id")
 
 
 class GlossaryCategoryResource(CustomResource):
@@ -103,10 +113,11 @@ class GlossaryCategoryResource(CustomResource):
 
     def before_save_instance(self, instance, using_transactions, dry_run):
         setattr(instance, "project", self._project)
+
     class Meta:
         model = GlossaryCategory
         skip_diff = True
-        exclude=("project","id")
+        exclude = ("project", "id")
 
 
 class GlossaryTermResource(CustomResource):
@@ -118,10 +129,12 @@ class GlossaryTermResource(CustomResource):
     def before_save_instance(self, instance, using_transactions, dry_run):
         setattr(instance, "project", self._project)
         setattr(instance, "glossary_category", self._glossary_category)
+
     class Meta:
         model = GlossaryTerm
         skip_diff = True
-        exclude=("project","glossary_category","id")
+        exclude = ("project", "glossary_category", "id")
+
 
 class ReferenceResource(CustomResource):
     def __init__(self, *args, **kwargs):
@@ -130,8 +143,8 @@ class ReferenceResource(CustomResource):
 
     def before_save_instance(self, instance, using_transactions, dry_run):
         setattr(instance, "project", self._project)
+
     class Meta:
         model = Reference
         skip_diff = True
-        exclude=("project","id")
-
+        exclude = ("project", "id")

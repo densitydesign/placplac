@@ -50,12 +50,9 @@ export const ProjectShowBackend = () => {
           path={`/`}
           element={
             <ProjectShow
-              glossaryCategories={project.glossary_categories}
               basePath={basePath}
               project={project}
               linkComponent={Link}
-              glossaryTerms={project.glossary_terms}
-              references={project.references}
             />
           }
         />

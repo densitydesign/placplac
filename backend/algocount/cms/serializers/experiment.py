@@ -23,7 +23,8 @@ class ExperimentSerializer(serializers.ModelSerializer):
                   "experiment_setup",
                   "findings",
                   "project",
-                  "step_set", "cover","pdf_report","experimentadditionalmaterial_set"]
+                  "step_set", "cover", "pdf_report", "experimentadditionalmaterial_set"]
+
 
 class ExperimentAdditionalMaterialSerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField('get_filename')
@@ -39,6 +40,11 @@ class ExperimentAdditionalMaterialSerializer(serializers.ModelSerializer):
                   "name"
                   ]
 
+
+class FilterExperimentAdditionalMaterialSerializer(serializers.Serializer):
+    experiment = serializers.PrimaryKeyRelatedField(queryset=Experiment.objects.all(), required=False)
+
+
 class FullExperimentSerializer(serializers.ModelSerializer):
     context = FormattedJSONField()
     findings = FormattedJSONField()
@@ -48,11 +54,10 @@ class FullExperimentSerializer(serializers.ModelSerializer):
     references = serializers.SerializerMethodField('get_references')
     additional_material = ExperimentAdditionalMaterialSerializer(many=True, source="experimentadditionalmaterial_set")
 
-
     def get_steps(self, object):
         return FullStepSerializer(object.step_set.all().order_by("step_number"), many=True, source="step_set").data
 
-    def get_glossary_terms(self, object:Experiment):
+    def get_glossary_terms(self, object: Experiment):
         glossary_terms = object.project.glossaryterm_set.all()
         found_glossary_terms = []
         content_str = object.get_all_content()
@@ -84,4 +89,4 @@ class FullExperimentSerializer(serializers.ModelSerializer):
                   "experiment_setup",
                   "findings",
                   "project",
-                  "steps", "cover", "glossary_terms", "references","pdf_report","additional_material"]
+                  "steps", "cover", "glossary_terms", "references", "pdf_report", "additional_material"]

@@ -27,22 +27,17 @@ const ProjectShow = dynamic(() => import('../components/projectShow'), {
 
 const Home: NextPage = ({
   project,
-  glossaryTerms,
-  glossaryCategories,
   experiments,
   language,
   footer,
-  references,
 }: any) => {
   return (
     <Layout footer={footer} language={language} experiments={experiments}>
       <ProjectShow
-        glossaryCategories={glossaryCategories}
-        glossaryTerms={glossaryTerms}
         basePath="/"
         project={project}
         linkComponent={Link}
-        references={references}
+ 
       />
     </Layout>
   );

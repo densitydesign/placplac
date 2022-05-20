@@ -12,6 +12,7 @@ import {
   FileField,
   useEditContext,
   RecordContextProvider,
+  useDataProvider,
 } from 'react-admin';
 import { useMutation } from 'react-query';
 import IconCancel from '@mui/icons-material/Cancel';
@@ -26,23 +27,19 @@ export const AddStepDownloadButton = () => {
   const { id: step } = record;
   const notify = useNotify();
   const { refetch } = useEditContext();
-
+  const dataProvider = useDataProvider();
   const { mutate: onSubmit, isLoading } = useMutation(
     ['project-media'],
     (values: FieldValues) =>
-      client('step-downloads/create-multipart', {
-        method: 'POST',
+      dataProvider.createMultipart('step-downloads', {
         data: values,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
       }),
     {
       onSuccess: (data) => {
         setFalse();
         refetch && refetch();
       },
-      onError: ({ error }) => {
+      onError: (error) => {
         notify('ra.page.error', { type: 'error' });
       },
     }
@@ -59,7 +56,6 @@ export const AddStepDownloadButton = () => {
       <Dialog maxWidth="sm" fullWidth open={value}>
         <RecordContextProvider value={{ step }}>
           <Form onSubmit={onSubmit}>
-       
             <>
               <DialogContent>
                 <TextInput
