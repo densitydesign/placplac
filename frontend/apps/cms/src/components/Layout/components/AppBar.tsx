@@ -17,11 +17,11 @@ import {
   HideOnScroll,
   LoadingIndicator,
   Logout,
-  SidebarToggleButton,
   SidebarToggleButtonProps,
   UserMenu,
   useSidebarState,
 } from 'react-admin';
+import { SidebarToggleButton } from './Sidebar/components/SidebarToggleButton';
 const PREFIX = 'RaAppBar';
 
 const classes = {
@@ -32,45 +32,40 @@ const classes = {
   title: `${PREFIX}-title`,
 };
 
-const AppBar = (props: AppBarProps): JSX.Element => {
+export const CustomAppBar = (props: AppBarProps) => {
   const {
     children,
     classes: classesOverride,
     className,
-    color = 'secondary',
+    color = 'primary',
     open,
     title,
     userMenu,
     container: Container = HideOnScroll,
     ...rest
   } = props;
-
-  const sidebarToggleButtonClasses = {
-    menuButtonIconClosed: classes.menuButtonIconClosed,
-    menuButtonIconOpen: classes.menuButtonIconOpen,
-  };
-  const isXSmall = useMediaQuery<Theme>((theme) =>
-    theme.breakpoints.down('xs')
-  );
-
   return (
     <Container>
       <MuiAppBar className={className} color={color} {...rest}>
-        <Toolbar
-          disableGutters
-          variant={isXSmall ? 'regular' : 'dense'}
-          className={classes.toolbar}
-        >
+        <Toolbar disableGutters variant={'dense'} className={classes.toolbar}>
           <SidebarToggleButton className={classes.menuButton} />
           {Children.count(children) === 0 ? (
             <Typography
               variant="h6"
               color="inherit"
               className={classes.title}
+              style={{
+                flex: 1,
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+              }}
               id="react-admin-title"
             />
           ) : (
-            children
+            <Typography variant="h6" color="inherit" className={classes.title}>
+              PlacPlac
+            </Typography>
           )}
           <LoadingIndicator />
           <UserMenu>
@@ -79,42 +74,5 @@ const AppBar = (props: AppBarProps): JSX.Element => {
         </Toolbar>
       </MuiAppBar>
     </Container>
-  );
-};
-
-AppBar.defaultProps = {
-  userMenu: <UserMenu />,
-  container: HideOnScroll,
-};
-
-const StyledAppBar = styled(AppBar)(({ theme }) => ({
-  [`& .${classes.toolbar}`]: {
-    paddingRight: 24,
-  },
-
-  [`& .${classes.menuButton}`]: {
-    marginLeft: '0.2em',
-    marginRight: '0.2em',
-  },
-
-  [`& .${classes.menuButtonIconClosed}`]: {},
-  [`& .${classes.menuButtonIconOpen}`]: {},
-
-  [`& .${classes.title}`]: {
-    flex: 1,
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap',
-    overflow: 'hidden',
-  },
-}));
-
-export const CustomAppBar = (props: AppBarProps) => {
-  return (
-    <StyledAppBar color="primary" {...props}>
-      <Typography variant="h6" color="inherit" className={classes.title}>
-        PlacPlac
-      </Typography>
-      {/* <span className={classes.spacer} /> */}
-    </StyledAppBar>
   );
 };

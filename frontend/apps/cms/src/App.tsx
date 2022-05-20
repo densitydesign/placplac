@@ -2,9 +2,6 @@ import jwtTokenAuthProvider from './authProvider';
 import drfProvider from './dataProvider';
 import { url } from './constants';
 import { Admin, CustomRoutes, Resource } from 'react-admin';
-import { ProjectList } from './Projects/ProjectList';
-import { ProjectEdit } from './Projects/ProjectEdit';
-import { ProjectCreate } from './Projects/ProjectCreate';
 import { ExperimentEdit } from './Projects/Experiments/ExperimentEdit';
 import { GlossaryTermEdit } from './Projects/GlossaryTerms/GlossaryTermEdit';
 import { ReferenceEdit } from './Projects/References/ReferenceEdit';
@@ -16,11 +13,10 @@ import { UserEdit } from './Users/UserEdit';
 import { UserList } from './Users/UserList';
 import SignUp from './SignUp/SignUp';
 import GroupIcon from '@mui/icons-material/Group';
-import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
 import { LoginPage } from './LoginPage';
-import { DefaultMenu } from './components/DefaultMenu';
 import { Route } from 'react-router';
 import { Layout } from './components/Layout';
+import { ProjectResource } from './Projects';
 function App() {
   const authProvider = jwtTokenAuthProvider({
     obtainAuthTokenUrl: `${url}/token/`,
@@ -42,7 +38,6 @@ function App() {
       loginPage={LoginPage}
       history={history}
       authProvider={authProvider}
-      menu={DefaultMenu}
       dataProvider={dataProvider}
       layout={Layout}
     >
@@ -52,13 +47,7 @@ function App() {
       </CustomRoutes>
       {(permissions) => (
         <>
-          <Resource
-            name="projects"
-            list={ProjectList}
-            edit={ProjectEdit}
-            create={ProjectCreate}
-            icon={CollectionsBookmarkIcon}
-          />
+          <Resource {...ProjectResource} />
           <Resource name="experiments" edit={ExperimentEdit} />,
           <Resource name="project-media" />,
           <Resource name="glossary-terms" edit={GlossaryTermEdit} />,

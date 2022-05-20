@@ -2,7 +2,7 @@ import { Link } from 'react-admin';
 import { useGetOne, useRecordContext } from 'react-admin';
 import { Typography, Breadcrumbs } from '@mui/material';
 import { TopToolbarWithTitle } from '../../components/TopToolbarWithTitle';
-import { PreviewButton } from '../PreviewButton';
+import { PreviewButton } from '../components/PreviewButton';
 
 interface ExperimentActionsProps {
   project?: number | string;

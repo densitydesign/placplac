@@ -3,9 +3,8 @@ import { Container } from '@mui/material';
 import { LayoutProps, useSidebarState, Error, Menu } from 'react-admin';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ErrorInfo, useState } from 'react';
-import { CustomSidebar } from './CustomSidebar';
-import { CustomAppBar } from './CustomAppBar';
-import { DefaultMenu } from './DefaultMenu';
+import { Sidebar } from './components/Sidebar/Sidebar';
+import { CustomAppBar } from './components/AppBar';
 import { styled } from '@mui/material/styles';
 import { ReactQueryDevtools } from 'react-query/devtools';
 const PREFIX = 'Layout';
@@ -53,9 +52,9 @@ export const Layout = ({ ...props }: LayoutProps): JSX.Element => {
       <CustomAppBar position="fixed" open={open} />
 
       <StyledDiv className={classes.content}>
-        <CustomSidebar>
-          <DefaultMenu hasDashboard={!!dashboard} />
-        </CustomSidebar>
+        <Sidebar>
+          <Menu hasDashboard={!!dashboard} />
+        </Sidebar>
         <div style={{ display: 'flex', flex: '1 auto', overflow: 'hidden' }}>
           <div style={{ flex: '1 auto', height: '100%', overflow: 'auto' }}>
             <StyledContainer maxWidth={false}>

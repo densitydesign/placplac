@@ -1,11 +1,12 @@
-import { Create, CreateProps } from 'react-admin';
-
-import { ProjectForm } from './ProjectForm';
+import { Create, SimpleForm } from 'react-admin';
+import { ProjectSummaryInputs } from './components/ProjectSummaryInputs';
 
 export const ProjectCreate = () => {
   return (
     <Create>
-      <ProjectForm />
+      <SimpleForm>
+        <ProjectSummaryInputs />
+      </SimpleForm>
     </Create>
   );
 };

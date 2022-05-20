@@ -5,8 +5,8 @@ import {
   useLoading,
   Identifier,
 } from 'react-admin';
-import { clientNoJson } from '../dataProvider';
-import { url } from '../constants';
+import { clientNoJson } from '../../dataProvider';
+import { url } from '../../constants';
 import { CircularProgress } from '@mui/material';
 import SystemUpdateAltIcon from '@mui/icons-material/SystemUpdateAlt';
 interface ExportButtonProps {

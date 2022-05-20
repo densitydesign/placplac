@@ -4,7 +4,7 @@ import { useRecordContext } from 'react-admin';
 import { Typography, Breadcrumbs } from '@mui/material';
 import { TopToolbarWithTitle } from '../../../components/TopToolbarWithTitle';
 import { useGetOne } from 'react-admin';
-import { PreviewButton } from '../../PreviewButton';
+import { PreviewButton } from '../../components/PreviewButton';
 
 interface StepActionsProps {
   experiment?: number | string;

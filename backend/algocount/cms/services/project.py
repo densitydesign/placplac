@@ -82,6 +82,7 @@ def create_project(*, user_request: User, title: str,
                                      footer=footer,
                                      glossary_description=glossary_description)
     add_user_to_project(user=user_request, level=ProjectUser.LevelChoices.AUTHOR, project=project)
+
     if create_defaults:
         create_project_defaults(project=project)
     return project
@@ -118,7 +119,6 @@ def clone_project(*, project: Project, user_request: User):
                                   glossary_description=project.glossary_description,
                                   create_defaults=False)
 
-    clone_simple_relation(project.projectuser_set, new_instance)
     clone_simple_relation(project.projectmedia_set, new_instance)
     clone_simple_relation(project.reference_set, new_instance)
 
@@ -135,7 +135,6 @@ def clone_project(*, project: Project, user_request: User):
         new_glossary_term.save()
 
     for experiment in project.experiment_set.all():
-        references = get_all_relation_objects(experiment.reference_set)
         additional_materials = get_all_relation_objects(experiment.experimentadditionalmaterial_set)
         steps = []
         for step in experiment.step_set.all():
@@ -148,12 +147,12 @@ def clone_project(*, project: Project, user_request: User):
         experiment._state.adding = True
         experiment.project = new_instance
         experiment.save()
-        save_new_relation_objects(references, "experiment", experiment)
         save_new_relation_objects(additional_materials, "experiment", experiment)
         for step in steps:
             step[0].experiment = experiment
             step[0].save()
             save_new_relation_objects(step[1], "step", step[0])
+
     return new_instance
 
 

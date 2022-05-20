@@ -16,6 +16,7 @@ import IconCancel from '@mui/icons-material/Cancel';
 import IconContentAdd from '@mui/icons-material/Add';
 import { useToggler } from '../useToggler';
 import { FieldValues } from 'react-hook-form';
+import { USER_LEVEL_CHOICES } from '../choices';
 
 export const AddCollaboratorButton = () => {
   const { value, setTrue, setFalse } = useToggler();
@@ -60,10 +61,7 @@ export const AddCollaboratorButton = () => {
                 <SelectInput
                   defaultValue="2"
                   fullWidth
-                  choices={[
-                    { name: 'Author', id: '1' },
-                    { name: 'Collaborator', id: '2' },
-                  ]}
+                  choices={USER_LEVEL_CHOICES}
                   source="level"
                 />
               </DialogContent>

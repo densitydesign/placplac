@@ -34,8 +34,6 @@ class Project(CustomModel):
 
 
 class ProjectUser(CustomModel):
-    # the administrator can delete the project
-    # the editor can only edit the project
     class LevelChoices(models.TextChoices):
         AUTHOR = "1", "Author"
         COLLABORATOR = "2", "Collaborator"

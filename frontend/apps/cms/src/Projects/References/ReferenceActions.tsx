@@ -3,7 +3,7 @@ import { useRecordContext } from 'react-admin';
 import { Typography, Breadcrumbs } from '@mui/material';
 import { RichTextField, useGetOne } from 'react-admin';
 import { TopToolbarWithTitle } from '../../components/TopToolbarWithTitle';
-import { PreviewButton } from '../PreviewButton';
+import { PreviewButton } from '../components/PreviewButton';
 
 export const ReferenceActions = () => {
   const record = useRecordContext();

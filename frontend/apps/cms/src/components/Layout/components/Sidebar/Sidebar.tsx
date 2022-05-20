@@ -1,8 +1,8 @@
 import { styled } from '@mui/material/styles';
 import React from 'react';
-import { Sidebar, SidebarProps } from 'react-admin';
+import { Sidebar as SidebarRa, SidebarProps } from 'react-admin';
 
-const StyledSidebar = styled(Sidebar)(({ theme }) => ({
+const StyledSidebar = styled(SidebarRa)(({ theme }) => ({
   [`& .RaSidebar-fixed`]: {
     background: 'transparent',
     borderRight: '1px solid rgba(0, 0, 0, 0.12)',
@@ -13,6 +13,6 @@ const StyledSidebar = styled(Sidebar)(({ theme }) => ({
   },
 }));
 
-export const CustomSidebar = (props: Omit<SidebarProps, 'classes'>) => {
+export const Sidebar = (props: Omit<SidebarProps, 'classes'>) => {
   return <StyledSidebar {...props} />;
 };

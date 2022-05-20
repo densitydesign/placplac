@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Copy from '@mui/icons-material/FileCopy';
 import { Button, useListContext, useLoading } from 'react-admin';
-import { client } from '../dataProvider';
+import { client } from '../../dataProvider';
 import { CircularProgress } from '@mui/material';
 
 interface CloneButtonProps {

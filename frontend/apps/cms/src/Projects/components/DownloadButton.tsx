@@ -10,15 +10,15 @@ import {
   RecordContextProvider,
   Form,
 } from 'react-admin';
-import { clientNoJson } from '../dataProvider';
-import { url } from '../constants';
+import { clientNoJson } from '../../dataProvider';
+import { url } from '../../constants';
 import {
   CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
 } from '@mui/material';
-import { useToggler } from '../useToggler';
+import { useToggler } from '../../useToggler';
 import IconCancel from '@mui/icons-material/Cancel';
 import { FieldValues } from 'react-hook-form';
 

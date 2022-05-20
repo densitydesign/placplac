@@ -14,12 +14,6 @@ class ReferenceViewSet(viewsets.ModelViewSet):
     serializer_class = ReferenceSerializer
     filterset_class = ReferenceFilter
 
-    def get_queryset(self):
-        user = self.request.user
-        if user.is_superuser:
-            return Reference.objects.all()
-        return Reference.objects.filter(project__projectuser__user=user, experiment__isnull=True)
-
     def retrieve(self, request, *args, **kwargs):
         instance = get_reference(user_request=self.request.user, id=kwargs["pk"])
         serializer = ReferenceSerializer(instance)

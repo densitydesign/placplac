@@ -1,6 +1,6 @@
 import {
   DashboardMenuItem,
-  Menu,
+  Menu as RaMenu,
   MenuItemLink,
   MenuProps,
   usePermissions,
@@ -17,15 +17,15 @@ import {
   styled,
 } from '@mui/material';
 import FindInPageIcon from '@mui/icons-material/FindInPage';
-import { DOC_URL } from '../constants';
+import { DOC_URL } from '../../../constants';
 
 const StyledListItemIcon = styled(ListItemIcon)(({ theme }) => ({
   minWidth: theme.spacing(5),
 }));
-const StyledMenu = styled(Menu)(({ theme }) => ({
+const StyledMenu = styled(RaMenu)(({ theme }) => ({
   height: '100vh',
 }));
-export const DefaultMenu = (props: MenuProps) => {
+export const Menu = (props: MenuProps) => {
   const { permissions } = usePermissions();
 
   const [open] = useSidebarState();

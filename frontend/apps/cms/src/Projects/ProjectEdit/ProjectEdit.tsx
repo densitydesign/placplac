@@ -1,13 +1,12 @@
-import { Breadcrumbs, Typography } from '@mui/material';
-import { Edit, EditProps, RaRecord, Link, useRecordContext } from 'react-admin';
-import { TopToolbarWithTitle } from '../components/TopToolbarWithTitle';
-import { DownloadButton } from './DownloadButton';
-import { ExportButton } from './ExportButton';
-import { PreviewButton } from './PreviewButton';
+import { Breadcrumbs } from '@mui/material';
+import { Edit, Link, useRecordContext } from 'react-admin';
+import { TopToolbarWithTitle } from '../../components/TopToolbarWithTitle';
+import { DownloadButton } from '../components/DownloadButton';
+import { ExportButton } from '../components/ExportButton';
+import { PreviewButton } from '../components/PreviewButton';
+import { ProjectEditForm } from './components/ProjectEditForm';
 
-import { ProjectForm } from './ProjectForm';
-
-const PostEditActions = () => {
+const ProjectEditActions = () => {
   const record = useRecordContext();
   return (
     <TopToolbarWithTitle
@@ -38,10 +37,10 @@ export const ProjectEdit = () => {
   return (
     <Edit
       mutationMode="pessimistic"
-      actions={<PostEditActions />}
+      actions={<ProjectEditActions />}
       redirect="edit"
     >
-      <ProjectForm />
+      <ProjectEditForm />
     </Edit>
   );
 };

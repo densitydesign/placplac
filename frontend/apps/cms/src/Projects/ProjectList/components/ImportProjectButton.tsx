@@ -21,8 +21,8 @@ import {
 } from '@mui/material';
 import { useMutation, useQueryClient } from 'react-query';
 import IconContentAdd from '@mui/icons-material/FileUpload';
-import { useToggler } from '../useToggler';
-import { client } from '../dataProvider';
+import { useToggler } from '../../../useToggler';
+import { client } from '../../../dataProvider';
 
 const ResetSaveButton = ({ closeDialog }: { closeDialog: () => void }) => {
   const { reset, handleSubmit } = useFormContext();
