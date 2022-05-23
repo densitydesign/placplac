@@ -15,7 +15,8 @@ import { Row as RowGrid } from '@algocount/ui-site';
 import KeyboardArrowTopIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowBottomIcon from '@mui/icons-material/KeyboardArrowDown';
 import { RowType, BuilderBlock, BuilderBlocks } from '@algocount/shared/types';
-
+import AddRoadIcon from '@mui/icons-material/AddRoad';
+import AddBoxIcon from '@mui/icons-material/AddBox';
 interface RowProps {
   row: RowType;
   rowIndex: number;
@@ -43,6 +44,7 @@ interface RowProps {
   moveRowDown: (rowIndex: number) => void;
   builderBlocks: BuilderBlocks;
   canDivided: boolean;
+  addCell: (rowIndex: number) => void;
 }
 
 export const Row = (props: RowProps) => {
@@ -57,6 +59,7 @@ export const Row = (props: RowProps) => {
     moveRowDown,
     moveRowUp,
     deleteCell,
+    addCell,
     switchDivided,
     builderBlocks,
     canDivided,
@@ -82,7 +85,7 @@ export const Row = (props: RowProps) => {
                   color="primary"
                   onClick={() => setActiveItem({ rowIndex, colIndex })}
                 >
-                  <AddIcon />
+                  <AddBoxIcon />
                 </IconButton>
                 <IconButton
                   size="medium"
@@ -114,6 +117,26 @@ export const Row = (props: RowProps) => {
           )}
         </Fragment>
       ))}
+      <Box
+        style={{
+          transform: 'translateY(-50%)',
+          right: '-16px',
+          position: 'absolute',
+          top: ' 50%',
+        }}
+      >
+        <Button
+          size="small"
+          variant="contained"
+          color="primary"
+          disabled={row.cols.length >= 4}
+          onClick={() => addCell(rowIndex)}
+          title="Add column"
+          style={{ height: '64px', borderRadius: '100%' }}
+        >
+          <AddRoadIcon />
+        </Button>
+      </Box>
       <Box
         component={'span'}
         position="absolute"
@@ -153,6 +176,7 @@ export const Row = (props: RowProps) => {
         >
           <KeyboardArrowBottomIcon />
         </Button>
+
         {canDivided && (
           <FormControlLabel
             style={{

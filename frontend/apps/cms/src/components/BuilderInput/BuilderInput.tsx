@@ -7,6 +7,7 @@ import {
   TextInput,
   BooleanInput,
   useGetList,
+  useNotify,
 } from 'react-admin';
 import { BuilderDialog } from './components/BuilderDialog';
 import { AddRowButton } from './components/AddRowButton';
@@ -50,6 +51,7 @@ interface BuilderInputProps {
 
 export const BuilderInput = (props: BuilderInputProps) => {
   const { glossaryTerms, project } = useProjectContext();
+  const notify = useNotify();
   if (!project)
     throw Error('This component must be used in initialized ProjectContext');
   const { source, possibleComponents, canDivided, isStep = false } = props;
@@ -126,6 +128,16 @@ export const BuilderInput = (props: BuilderInputProps) => {
       newRows.splice(rowIndex, 1);
     }
     onChange(newRows);
+  };
+  const addCell = (rowIndex: number) => {
+    const newRows = [...value];
+    const numOfRows = newRows[rowIndex].cols.length;
+    if (numOfRows < 4) {
+      newRows[rowIndex].cols.splice(numOfRows - 1, 0, []);
+      onChange(newRows);
+    } else {
+      notify('Max number of columns reached!');
+    }
   };
   const onColumnClick = (type: any, rowIndex: number, colIndex: number) => {
     setActiveStep(1);
@@ -394,6 +406,7 @@ export const BuilderInput = (props: BuilderInputProps) => {
                 rowIndex={index}
                 deleteRow={deleteRow}
                 builderBlocks={builderBlocks}
+                addCell={addCell}
               />
             ))}
         </div>
