@@ -1,4 +1,5 @@
 from rest_framework import viewsets, status
+from rest_framework.decorators import action
 from rest_framework.parsers import MultiPartParser
 from rest_framework.response import Response
 
@@ -7,15 +8,22 @@ from cms.filters.step import StepFilter, StepDownloadFilter
 from cms.models import Step, StepDownload
 from cms.selectors.step import get_step, step_list, get_step_download, step_download_list
 from cms.serializers.step import StepSerializer, StepDownloadSerializer, StepFilterSerializer, \
-    StepDownloadFilterSerializer
+    StepDownloadFilterSerializer, ReorderStepSerializer
 from cms.services.step import create_step, update_step, delete_step, create_step_download, update_step_download, \
-    delete_step_download
+    delete_step_download, reorder_steps
 
 
 class StepViewSet(viewsets.ModelViewSet):
     queryset = Step.objects.all()
     serializer_class = StepSerializer
     filterset_class = StepFilter
+
+    @action(detail=False, methods=["POST"])
+    def reorder(self, request):
+        serializer = ReorderStepSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        reorder_steps(user_request=request.user, **serializer.validated_data)
+        return Response()
 
     def retrieve(self, request, *args, **kwargs):
         instance = get_step(user_request=self.request.user, id=kwargs["pk"])

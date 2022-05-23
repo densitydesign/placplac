@@ -158,5 +158,5 @@ logging.basicConfig(
 
 LOGGER = logging.getLogger()
 EXPORT_IMPORT = os.path.join(BASE_DIR, '../../../export/')
-PROJECT_FRONTEND_EXPORT = os.path.join(BASE_DIR, '../../frontend/')
-AUTH_USER_MODEL ="authentication.User"
+PROJECT_FRONTEND_EXPORT = "/code/frontend/"
+AUTH_USER_MODEL = "authentication.User"

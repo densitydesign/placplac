@@ -28,6 +28,10 @@ class Project(CustomModel):
     language = models.CharField(default=LanguageChoices.EN, choices=LanguageChoices.choices, max_length=2)
     footer = models.JSONField(null=True, blank=True)
     glossary_description = models.TextField(null=True, blank=True)
+    last_build = models.FileField(null=True, blank=True)
+    last_build_time = models.DateTimeField(null=True, blank=True)
+    base_path_build = models.TextField(null=True, blank=True)
+    last_update = models.DateTimeField()
 
     def get_content(self):
         return "{}{}{}".format(self.short_description, self.project_explanation, self.long_description)
@@ -82,6 +86,9 @@ class Experiment(CustomModel):
         return "{}{}{}{}{}".format(json.dumps(self.context), json.dumps(self.findings), json.dumps(
             self.experiment_setup), self.description, steps_content)
 
+    class Meta:
+        ordering = ["order"]
+
 
 def get_upload_experiment_path(instance, filename):
     return os.path.join(str(instance.experiment.project_id), filename)
@@ -100,7 +107,7 @@ class Step(CustomModel):
     experiment = models.ForeignKey(Experiment, on_delete=models.CASCADE)
 
     class Meta:
-        unique_together = (('experiment', 'step_number'))
+        ordering = ["step_number"]
 
 
 def get_upload_step_path(instance, filename):

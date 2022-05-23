@@ -38,4 +38,35 @@ export interface Project {
   reference_set: Identifier[];
   footer?: ProjectFooter;
   glossary_description?: string;
+  last_build?: string;
+  last_build_time?: Date;
+}
+
+export interface Experiment {
+  id: Identifier;
+  title: string;
+
+  tags: string[];
+  description?: string;
+  order: number;
+  context?: string;
+  research_question?: string;
+  experiment_setup?: string;
+  findings?: string;
+  project: Identifier;
+  step_set: Identifier[];
+  cover?: string;
+  pdf_report?: string;
+  experimentadditionalmaterial_set: Identifier[];
+}
+
+export interface Step {
+  id: Identifier;
+  title: string;
+  description?: string;
+  content?: string;
+  step_number: number;
+  experiment: Identifier;
+  project: Identifier;
+  stepdownload_set: Identifier[];
 }

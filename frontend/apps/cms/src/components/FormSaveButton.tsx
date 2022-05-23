@@ -31,16 +31,18 @@ export const FormSaveButton = ({
   submitting,
   pristine,
   handleSubmit,
+  label,
 }: {
   submitting: boolean;
   pristine: boolean;
   handleSubmit: React.MouseEventHandler<HTMLButtonElement> | undefined;
+  label?: string;
 }) => {
   return (
     <StyledButton
       className={classes.button}
       variant={'contained'}
-      label="ra.action.save"
+      label={label ? label : 'ra.action.save'}
       onClick={handleSubmit}
       disabled={submitting || pristine}
     >

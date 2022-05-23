@@ -27,6 +27,7 @@ import { SelectFile } from '../../components/SelectFile';
 import { AddExperimentAdditionalMaterialButton } from './AddExperimentAdditionalMaterialButton';
 import { CustomFileField } from '../../components/CustomFileField';
 import { ProjectContextProvider } from '../../contexts/project-context';
+import { ReorderStepsButton } from './ReorderStepsButton';
 
 const ExperimentFormToolbar = (props: ToolbarProps) => {
   const record = useRecordContext();
@@ -53,7 +54,6 @@ export const ExperimentForm = (props: Omit<TabbedFormProps, 'children'>) => {
     <ProjectContextProvider project={projectId}>
       <TabbedForm
         {...props}
-        
         tabs={<Tabs />}
         toolbar={<ExperimentFormToolbar />}
       >
@@ -150,8 +150,9 @@ export const ExperimentForm = (props: Omit<TabbedFormProps, 'children'>) => {
               sort={{ field: 'step_number', order: 'ASC' }}
             >
               <Datagrid>
-                <TextField source="title" />
-                <TextField source="step_number" />
+                <TextField sortable={false} source="title" />
+                <TextField sortable={false} source="step_number" />
+                <ReorderStepsButton />
                 <EditButton />
                 <DeleteButton redirect={false} mutationMode="optimistic" />
               </Datagrid>

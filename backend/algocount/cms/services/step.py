@@ -1,3 +1,7 @@
+import datetime
+from typing import List
+
+from django.db import transaction
 from django.db.models import Max
 from django.db.models.functions import Coalesce
 from rest_framework.exceptions import ValidationError
@@ -22,21 +26,40 @@ def create_step(*, user_request: User,
                                title=title,
                                description=description,
                                content=content,
-                               step_number=step_number)
+                               step_number=step_number + 1)
+    step.experiment.project.last_update = datetime.datetime.now()
+    step.experiment.project.save()
     return step
 
 
 def update_step(*, step: Step, data: dict):
     fields = ["title",
               "description",
-              "content",
-              "step_number"]
+              "content"]
     step, updated = model_update(instance=step, fields=fields, data=data)
+    if updated:
+        step.experiment.project.last_update = datetime.datetime.now()
+        step.experiment.project.save()
     return step
 
 
+@transaction.atomic
+def reorder_steps(*, experiment: Experiment, steps: List[Step], user_request: User):
+    if not user_has_change_project_permissions(project=experiment.project, user=user_request):
+        raise ValidationError({"experiment": ["Experiment not found!"]})
+
+    for index, step in enumerate(steps):
+        if step.experiment != experiment:
+            raise ValidationError({"detail": "The steps must belong to the same experiment!"})
+        step.step_number = index + 1
+        step.save()
+
+
 def delete_step(*, step: Step):
+    project = step.experiment.project
     step.delete()
+    project.last_update = datetime.datetime.now()
+    project.save()
 
 
 def create_step_download(*, user_request: User,
@@ -49,14 +72,22 @@ def create_step_download(*, user_request: User,
     step_download = StepDownload.objects.create(step=step,
                                                 title=title,
                                                 file=file)
+    step_download.step.experiment.project.last_update = datetime.datetime.now()
+    step_download.step.experiment.project.save()
     return step_download
 
 
 def update_step_download(*, step_download: StepDownload, data: dict):
     fields = ["title"]
     step_download, updated = model_update(instance=step_download, fields=fields, data=data)
+    if updated:
+        step_download.step.experiment.project.last_update = datetime.datetime.now()
+        step_download.step.experiment.project.save()
     return step_download
 
 
 def delete_step_download(*, step_download: StepDownload):
+    project = step_download.step.experiment.project
     step_download.delete()
+    project.last_update = datetime.datetime.now()
+    project.save()

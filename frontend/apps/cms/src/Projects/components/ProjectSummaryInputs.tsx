@@ -26,20 +26,20 @@ export const ProjectSummaryInputs = () => {
         helperText="The project title"
       />
 
-      <TextInput
+      <CustomRichTextInput
         fullWidth
         placeholder="A good idea is to fill this area with a short but effective description"
         label="Description (255)"
         source="short_description"
-        multiline
+        small
         helperText={'A small summary description'}
       />
-      <TextInput
+      <CustomRichTextInput
         fullWidth
         placeholder="Explain the project in few lines"
         label="Small project explanation (255)"
         source="project_explanation"
-        multiline
+        small
         helperText={'An explanation of the project objective'}
       />
       <CustomRichTextInput

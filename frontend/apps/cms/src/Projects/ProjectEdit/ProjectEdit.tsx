@@ -1,13 +1,14 @@
 import { Breadcrumbs } from '@mui/material';
 import { Edit, Link, useRecordContext } from 'react-admin';
 import { TopToolbarWithTitle } from '../../components/TopToolbarWithTitle';
+import { Project } from '../../types';
 import { DownloadButton } from '../components/DownloadButton';
 import { ExportButton } from '../components/ExportButton';
 import { PreviewButton } from '../components/PreviewButton';
 import { ProjectEditForm } from './components/ProjectEditForm';
 
 const ProjectEditActions = () => {
-  const record = useRecordContext();
+  const record = useRecordContext<Project>();
   return (
     <TopToolbarWithTitle
       title={

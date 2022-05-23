@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import CloudDownload from '@mui/icons-material/CloudDownload';
 import {
   Button,
   useNotify,
-  RaRecord,
   useLoading,
-  SaveButton,
   TextInput,
   RecordContextProvider,
   Form,
+  SaveContextProvider,
+  useRefresh,
 } from 'react-admin';
 import { clientNoJson } from '../../dataProvider';
 import { url } from '../../constants';
@@ -21,9 +21,13 @@ import {
 import { useToggler } from '../../useToggler';
 import IconCancel from '@mui/icons-material/Cancel';
 import { FieldValues } from 'react-hook-form';
-
+import { Project } from '../../types';
+import { Typography } from '@mui/material';
+import Box from '@mui/material/Box';
+import LinearProgress from '@mui/material/LinearProgress';
+import { FormSaveButton } from '../../components/FormSaveButton';
 interface DownloadButtonProps {
-  project?: RaRecord;
+  project: Project;
 }
 
 export const DownloadButton = (props: DownloadButtonProps) => {
@@ -31,7 +35,13 @@ export const DownloadButton = (props: DownloadButtonProps) => {
   const mainIsLoading = useLoading();
   const notify = useNotify();
   const { value, setTrue, setFalse } = useToggler();
-
+  const refresh = useRefresh();
+  const forceDisabled = !props.project.last_build_time
+    ? false
+    : new Date(props.project.last_build_time) >
+      new Date(props.project.last_update)
+    ? true
+    : false;
   const onClick = (values: FieldValues) => {
     setLoading(true);
     clientNoJson(`${url}/projects/${props.project?.id}/export/`, {
@@ -48,6 +58,7 @@ export const DownloadButton = (props: DownloadButtonProps) => {
         a.click();
         a.remove();
         window.URL.revokeObjectURL(url);
+        refresh();
       })
       .catch((e) => {
         console.log(e);
@@ -60,10 +71,6 @@ export const DownloadButton = (props: DownloadButtonProps) => {
   };
   return (
     <>
-      {/* <Prompt
-        when={loading}
-        message="You are downloading your project, are you sure you want to leave?"
-      /> */}
       <Button
         onClick={(e) => {
           e.stopPropagation();
@@ -85,32 +92,80 @@ export const DownloadButton = (props: DownloadButtonProps) => {
         fullWidth
         open={value}
       >
-        <RecordContextProvider value={{}}>
-          <Form onSubmit={onClick}>
-            <>
-              <DialogContent>
-                <TextInput
-                  source="base_path"
-                  label="Base directory of project"
-                  placeholder="Write the subdirectory ex: /subdirectory"
-                  helperText={
-                    'If the project will be hosted on a subdirectory, write the subdirectory name otherwise leave the field empty. Ex: /subfolder'
-                  }
-                />
-              </DialogContent>
-              <DialogActions>
-                <Button
-                  label="ra.action.cancel"
-                  onClick={setFalse}
-                  disabled={loading}
-                >
-                  <IconCancel />
-                </Button>
-                <SaveButton label="Build" />
-              </DialogActions>
-            </>
-          </Form>
-        </RecordContextProvider>
+        <SaveContextProvider value={{ saving: loading, save: onClick }}>
+          <RecordContextProvider value={{ base_path: '' }}>
+            <Form onSubmit={onClick}>
+              <>
+                <DialogContent>
+                  {loading ? (
+                    <>
+                      <Typography variant="h6">Building ...</Typography>
+                      <Box sx={{ width: '100%' }}>
+                        <LinearProgress />
+                      </Box>
+                    </>
+                  ) : (
+                    <>
+                      {props.project.last_build && (
+                        <>
+                          <Typography variant="h6">
+                            Download latest build:{' '}
+                            <a
+                              href={props.project.last_build}
+                              download
+                              title="download"
+                            >
+                              {new Date(
+                                props.project.last_build_time!
+                              ).toLocaleString()}
+                            </a>
+                          </Typography>
+                          {!forceDisabled && (
+                            <Typography
+                              my={2}
+                              variant="subtitle1"
+                              align="center"
+                            >
+                              or build a new release
+                            </Typography>
+                          )}
+                        </>
+                      )}
+                      {!forceDisabled && (
+                        <TextInput
+                          source="base_path"
+                          label="Base directory of project"
+                          placeholder="Write the subdirectory ex: /subdirectory"
+                          helperText={
+                            'If the project will be hosted on a subdirectory, write the subdirectory name otherwise leave the field empty. Ex: /subfolder'
+                          }
+                        />
+                      )}
+                    </>
+                  )}
+                </DialogContent>
+                <DialogActions>
+                  <Button
+                    label="ra.action.cancel"
+                    onClick={setFalse}
+                    disabled={loading}
+                  >
+                    <IconCancel />
+                  </Button>
+
+                  {!forceDisabled && (
+                    <FormSaveButton
+                      handleSubmit={onClick}
+                      submitting={loading}
+                      pristine={forceDisabled}
+                      label="Build"
+                    />
+                  )}
+                </DialogActions>
+              </>
+            </Form>
+          </RecordContextProvider>
+        </SaveContextProvider>
       </Dialog>
     </>
   );

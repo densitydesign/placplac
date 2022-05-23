@@ -37,6 +37,7 @@ import { AddGlossaryCategoryButton } from '../../AddGlossaryCategoryButton';
 import { AddGlossaryTermButton } from '../../AddGlossaryTermButton';
 import { AddReferenceButton } from '../../AddReferenceButton';
 import { ProjectSummaryInputs } from '../../components/ProjectSummaryInputs';
+import { ReorderExperimentsButton } from './ReorderExperimentsButton';
 
 const ProjectFormToolbar = (props: ToolbarProps) => {
   const record = useRecordContext();
@@ -69,18 +70,21 @@ export const ProjectEditForm = () => {
             small
           />
           <AddExperimentButton />
-          <ReferenceArrayField
-            label=""
-            reference="experiments"
-            source="experiment_set"
-            fullWidth
-          >
-            <Datagrid>
-              <TextField source="title" />
-              <EditButton />
-              <DeleteButton redirect={false} mutationMode="optimistic" />
-            </Datagrid>
-          </ReferenceArrayField>
+          <TableContainer>
+            <ReferenceArrayField
+              label=""
+              reference="experiments"
+              source="experiment_set"
+              fullWidth
+            >
+              <Datagrid>
+                <TextField sortable={false} source="title" />
+                <ReorderExperimentsButton />
+                <EditButton />
+                <DeleteButton redirect={false} mutationMode="pessimistic" />
+              </Datagrid>
+            </ReferenceArrayField>
+          </TableContainer>
         </ProjectContextProvider>
       </FormTab>
 

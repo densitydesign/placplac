@@ -15,7 +15,7 @@ import { DownloadButton } from '../../components/DownloadButton';
 import { PreviewButton } from '../../components/PreviewButton';
 import { ExportButton } from '../../components/ExportButton';
 import { CloneButton } from '../../components/CloneButton';
-import { ProjectStatus } from '../../../types';
+import { Project, ProjectStatus } from '../../../types';
 
 export const RowActionsButton = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -26,7 +26,7 @@ export const RowActionsButton = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const record = useRecordContext();
+  const record = useRecordContext<Project>();
   return (
     <>
       <IconButton

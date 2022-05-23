@@ -1,0 +1,21 @@
+version: "3.9"
+services:
+  db:
+    image: postgres
+    volumes:
+      - ../data/db:/var/lib/postgresql/data
+    env_file:
+      - ./.envs/.local/.postgres
+  web:
+    build:
+      context: .
+      dockerfile: ./backend/compose/local/Dockerfile
+    command: /start
+    volumes:
+      - ./backend:/code/backend
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    env_file:
+      - ./.envs/.local/.postgres

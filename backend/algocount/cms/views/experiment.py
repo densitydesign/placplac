@@ -1,4 +1,5 @@
 from rest_framework import viewsets, status, mixins
+from rest_framework.decorators import action
 from rest_framework.parsers import MultiPartParser
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
@@ -9,14 +10,21 @@ from cms.models import Experiment, ExperimentAdditionalMaterial
 from cms.selectors.experiment import get_experiment, experiment_list, get_experiment_additional_material, \
     experiment_additional_material_list
 from cms.serializers.experiment import ExperimentSerializer, ExperimentAdditionalMaterialSerializer, \
-    FilterExperimentAdditionalMaterialSerializer
+    FilterExperimentAdditionalMaterialSerializer, ReorderExperimentsSerializer
 from cms.services.experiment import create_experiment, update_experiment, delete_experiment, \
-    create_experiment_additional_material, delete_experiment_additional_material
+    create_experiment_additional_material, delete_experiment_additional_material, reorder_experiments
 
 
 class ExperimentViewSet(viewsets.ModelViewSet):
     queryset = Experiment.objects.all()
     serializer_class = ExperimentSerializer
+
+    @action(detail=False, methods=["POST"])
+    def reorder(self, request):
+        serializer = ReorderExperimentsSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        reorder_experiments(user_request=request.user, **serializer.validated_data)
+        return Response()
 
     def retrieve(self, request, *args, **kwargs):
         instance = get_experiment(user_request=self.request.user, id=kwargs["pk"])

@@ -4,7 +4,7 @@ import os
 from rest_framework import serializers
 
 from base.serializer_fields import FormattedJSONField, CustomFileField
-from cms.models import Experiment, ExperimentAdditionalMaterial
+from cms.models import Experiment, ExperimentAdditionalMaterial, Project
 from cms.serializers.glossary import FullGlossaryTermSerializer
 from cms.serializers.reference import ReferenceSerializer
 from cms.serializers.step import FullStepSerializer
@@ -18,6 +18,7 @@ class ExperimentSerializer(serializers.ModelSerializer):
         model = Experiment
         fields = ["id", "title", "tags",
                   "description",
+                  "order",
                   "context",
                   "research_question",
                   "experiment_setup",
@@ -39,6 +40,11 @@ class ExperimentAdditionalMaterialSerializer(serializers.ModelSerializer):
                   "file",
                   "name"
                   ]
+
+
+class ReorderExperimentsSerializer(serializers.Serializer):
+    project = serializers.PrimaryKeyRelatedField(queryset=Project.objects.all())
+    experiments = serializers.PrimaryKeyRelatedField(queryset=Experiment.objects.all(), many=True)
 
 
 class FilterExperimentAdditionalMaterialSerializer(serializers.Serializer):

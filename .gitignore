@@ -1,5 +1,6 @@
 .idea
 /data
 /LOG
+/
 .DS_Store
 .env

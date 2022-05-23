@@ -11,6 +11,7 @@ from cms.serializers.glossary import FullGlossaryTermSerializer
 class StepSerializer(serializers.ModelSerializer):
     project = serializers.SlugRelatedField(read_only=True, source="experiment", slug_field="project_id")
     stepdownload_set = serializers.PrimaryKeyRelatedField(read_only=True, many=True)
+    step_number = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = Step
@@ -19,6 +20,11 @@ class StepSerializer(serializers.ModelSerializer):
                   "content",
                   "step_number",
                   "experiment", "project", "stepdownload_set"]
+
+
+class ReorderStepSerializer(serializers.Serializer):
+    experiment = serializers.PrimaryKeyRelatedField(queryset=Experiment.objects.all())
+    steps = serializers.PrimaryKeyRelatedField(queryset=Step.objects.all(), many=True)
 
 
 class StepDownloadSerializer(serializers.ModelSerializer):

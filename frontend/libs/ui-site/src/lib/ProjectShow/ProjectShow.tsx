@@ -51,12 +51,14 @@ export const ProjectShow = (props: ProjectProps) => {
             <div className={styles.hero_section_content}>
               <h1>{project.title}</h1>
               {project.short_description && (
-                <div className="text-only">{project.short_description}</div>
+                <div className="text-only">
+                  <TextShow text={project.short_description} />
+                </div>
               )}
             </div>
             {project.project_explanation && (
               <div className={styles.hero_section_content}>
-                <div className="text-only">{project.project_explanation}</div>
+                <TextShow text={project.project_explanation} />
               </div>
             )}
           </div>

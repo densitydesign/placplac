@@ -50,11 +50,6 @@ export const StepForm = (props: Omit<TabbedFormProps, 'children'>) => {
     <ProjectContextProvider project={project}>
       <TabbedForm {...props} redirect="edit" toolbar={<StepFormToolbar />}>
         <FormTab label="summary">
-          {/* <NumberInput
-            source="step_number"
-            validate={[required()]}
-            helperText="The number indicating the order in which the steps are displayed"
-          /> */}
           <TextInput
             multiline
             fullWidth

@@ -1,3 +1,4 @@
+import datetime
 from pathlib import Path
 
 from django.contrib.staticfiles.finders import find
@@ -80,7 +81,8 @@ def create_project(*, user_request: User, title: str,
                                      status=status,
                                      language=language,
                                      footer=footer,
-                                     glossary_description=glossary_description)
+                                     glossary_description=glossary_description,
+                                     last_update=datetime.datetime.now())
     add_user_to_project(user=user_request, level=ProjectUser.LevelChoices.AUTHOR, project=project)
 
     if create_defaults:
@@ -99,6 +101,9 @@ def update_project(*, project: Project, data: dict):
               "footer",
               "glossary_description"]
     project, updated = model_update(instance=project, fields=fields, data=data)
+    if updated:
+        project.last_update = datetime.datetime.now()
+        project.save()
     return project
 
 

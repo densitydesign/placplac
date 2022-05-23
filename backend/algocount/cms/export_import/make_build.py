@@ -1,3 +1,4 @@
+import datetime
 import json
 import os
 import shutil
@@ -11,7 +12,7 @@ from cms.models import Project
 from cms.serializers.project import FullProjectSerializer
 
 
-def make_build(*,project:Project, base_path:str =""):
+def make_build(*, project: Project, base_path: str = ""):
     files_to_copy_paths = get_paths_to_copy(project=project)
     with tempfile.TemporaryDirectory() as tmp_dirname:
         tmp_dirname = tmp_dirname + "/exit"
@@ -28,7 +29,7 @@ def make_build(*,project:Project, base_path:str =""):
         with open(os.path.join(dir_export_site, ".env.local"), "w") as f:
             f.write(f"NX_BASE_PATH={base_path} \n")
             f.write(f"NX_FILE_PATH={file} \n")
-        subprocess.check_call('npx nx run export-site:export ', shell=True, cwd=tmp_dirname, close_fds=True)
+        subprocess.check_call('npm ci && npx nx run export-site:export ', shell=True, cwd=tmp_dirname, close_fds=True)
 
         zip_name = os.path.join(tmp_dirname, "site")
         out_directory = os.path.join(tmp_dirname, "dist", "apps", "export-site", "exported")

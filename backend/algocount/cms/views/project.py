@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.http import HttpResponse
 from rest_framework import status, viewsets, mixins
 from rest_framework.decorators import action
@@ -86,7 +88,12 @@ class ProjectViewSet(viewsets.ModelViewSet):
         instance = get_project(user_request=self.request.user, id=pk, permission=PermissionType.READ)
         base_path = self.request.data.get("base_path", "")
         zip_file = make_build(project=instance, base_path=base_path)
-        response = HttpResponse(zip_file, content_type='application/zip')
+
+        instance.last_build.save("project.zip", zip_file)
+        instance.last_build_time = datetime.now()
+        instance.base_path = base_path
+        instance.save()
+        response = HttpResponse(open(instance.last_build.path, 'rb'), content_type='application/zip')
         response['Content-Disposition'] = 'attachment; filename=site.zip'
         return response
 
