@@ -49,14 +49,15 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
     references,
   } = experiment;
 
-  const [topPositionStep, setTopPositionStep] = useState(55);
+  const [topPositionStep, setTopPositionStep] = useState(0);
   const glossaryCategoriesInText = glossaryCategories.filter((category) =>
     glossary_terms.some((term) => term.category_title === category.title)
   );
+  const heightHeader = 55;
   useEffect(() => {
     const element = document.getElementById('researchQuestionDiv');
     if (element) {
-      setTopPositionStep(element.getBoundingClientRect().height + 55);
+      setTopPositionStep(element.getBoundingClientRect().height);
     } else {
       setTopPositionStep(0);
     }
@@ -175,6 +176,7 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
       {experimentSetup && (
         <Section
           id="experimentSetup"
+          style={{}}
           title={translations[language].experiment_experimentsetup}
           marginFix
         >
@@ -193,14 +195,17 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
         {steps &&
           steps.map((step, index) => (
             <div
-              style={{ minHeight: `calc(100vh - ${topPositionStep}px)` }}
+              style={{
+                minHeight: `calc(100vh - ${topPositionStep + heightHeader}px)`,
+                scrollMarginTop: `${topPositionStep}px`,
+              }}
               id={`step${step.step_number}`}
               key={index}
               className={styles.step}
             >
               <div
                 className={styles.sidebar}
-                style={{ top: `${topPositionStep}px` }}
+                style={{ top: `${topPositionStep + heightHeader}px` }}
               >
                 <div className={styles.step_number}>
                   <h3>
@@ -239,6 +244,7 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
           id="findings"
           title={translations[language].experiment_findings}
           marginFix
+          style={{ scrollMarginTop: `${topPositionStep}px` }}
         >
           {renderSection(findings, true)}
         </Section>
@@ -251,10 +257,25 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
         <Section
           id="references"
           title={translations[language].references_title}
+          style={{ scrollMarginTop: `${topPositionStep}px` }}
         >
           <Row>
             <div className={'inner-column'}>
-              <ReferenceList references={references} />
+              <ul
+                style={{ listStyleType: 'decimal', margin: '0', padding: 0 }}
+                id="referenceList"
+              >
+                {references.map((reference, index) => (
+                  <li
+                    key={reference.id}
+                    data-reference-id={reference.id}
+                    id={`reference${reference.id}`}
+                    style={{ scrollMarginTop: `${topPositionStep}px` }}
+                  >
+                    <TextShow text={reference.description} />
+                  </li>
+                ))}
+              </ul>
             </div>
           </Row>
           <div

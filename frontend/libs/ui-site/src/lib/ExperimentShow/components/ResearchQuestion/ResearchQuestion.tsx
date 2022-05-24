@@ -27,8 +27,12 @@ export const ResearchQuestion = (props: { researchQuestion: string }) => {
 
   return (
     <>
-      <div ref={refContainer} className={styles.research_question_outer}>
-        <Section id="researchQuestion">
+      <div
+        ref={refContainer}
+        id="researchQuestion"
+        className={styles.research_question_outer}
+      >
+        <Section>
           <div className={styles.research_question_container}>
             <div className={styles.research_question_title_big}>
               <span>

@@ -80,8 +80,9 @@ class FullExperimentSerializer(serializers.ModelSerializer):
         in_experiment_references = []
         content_str = object.get_all_content()
         for reference in references:
-            check_reference = f'data-reference=\\"{reference.id}\\"'
-            if check_reference in content_str:
+            check_reference = f'data-reference="{reference.id}"'
+            check_reference_json = f'data-reference=\\"{reference.id}\\"'
+            if check_reference in content_str or check_reference_json in content_str:
                 in_experiment_references.append(reference)
         return ReferenceSerializer(in_experiment_references, many=True).data
 
