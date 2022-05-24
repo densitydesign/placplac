@@ -133,7 +133,11 @@ export const ExperimentForm = (props: Omit<TabbedFormProps, 'children'>) => {
           <FormTab label="experiment setup">
             <BuilderInput
               canDivided={false}
-              possibleComponents={['image', 'listExperimentSetup']}
+              possibleComponents={[
+                'image',
+                'listExperimentSetup',
+                'disclaimer',
+              ]}
               source={'experiment_setup'}
             />
           </FormTab>

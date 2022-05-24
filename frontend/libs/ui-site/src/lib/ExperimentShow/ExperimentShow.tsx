@@ -316,7 +316,6 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
         </Section>
       )}
       <GlossarySidebar
-        glossaryCategories={glossaryCategories}
         linkComponent={linkComponent}
         basePath={basePath}
         glossaryTerms={glossary_terms}

@@ -1,60 +1,44 @@
-// import { useHistory } from "react-router-dom";
 import { GlossaryTerm } from '@algocount/shared/types';
 import { GlossaryItem } from './GlossaryItem';
 import styles from './GlossarySidebar.module.css';
-// import { History } from "history";
-import { ComponentType, useEffect, useMemo, useRef, useState } from 'react';
-import React from 'react';
+import { ComponentType, useEffect, useRef, useState } from 'react';
 import { useReactHash } from '../useReactPath';
-import { GlossaryCategory } from '@algocount/shared/types';
 import { getRealPath } from '../utils';
 import classNames from 'classnames';
 interface GlossarySidebarProps {
   glossaryTerms: GlossaryTerm[];
   basePath: string;
   linkComponent: ComponentType<{ href: string }>;
-  glossaryCategories: GlossaryCategory[];
 }
 
 export const GlossarySidebar = (props: GlossarySidebarProps) => {
-  const {
-    glossaryTerms,
-    basePath,
-    linkComponent: Link,
-    glossaryCategories,
-  } = props;
+  const { glossaryTerms, basePath, linkComponent: Link } = props;
   const hash = useReactHash();
-  const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    if (hash && hash.includes('glossary')) {
-      setOpen(true);
-    } else {
-      setOpen(false);
-    }
-  }, [hash]);
+  const [activeItem, setActiveItem] = useState<GlossaryTerm>();
 
   useEffect(() => {
-    if (open && hash && hash.includes('glossary')) {
-      const element = document.getElementById(hash.replace('#', ''));
-      if (element) {
-        element.scrollIntoView();
+    if (hash && hash.includes('glossary')) {
+      const glossaryTermId = hash.replace('#glossary/', '');
+      const glossaryTerm = glossaryTerms.find(
+        (term) => term.id.toString() === glossaryTermId
+      );
+      if (glossaryTerm) {
+        setActiveItem(glossaryTerm);
       }
+    } else {
+      setActiveItem(undefined);
     }
-  }, [open]);
+  }, [glossaryTerms, hash]);
 
   return (
     <div
-      className={classNames(styles.glossary, { [styles.open]: open })}
+      className={classNames(styles.glossary, { [styles.open]: !!activeItem })}
       ref={ref}
     >
       <div className={styles.header}>
         <Link href={`${basePath}glossary`}>Glossary</Link>
-        {glossaryCategories.map((category) => (
-          <Link key={category.id} href={`${basePath}glossary/${category.id}`}>
-            {category.title}
-          </Link>
-        ))}
+
         <img
           className={styles.close_button}
           onClick={() => {
@@ -68,14 +52,13 @@ export const GlossarySidebar = (props: GlossarySidebarProps) => {
         />
       </div>
       <div className={styles.content} id="glossarySidebarContent">
-        {glossaryTerms.map((term) => (
+        {activeItem && (
           <GlossaryItem
             basePath={basePath}
             linkComponent={Link}
-            key={term.id}
-            glossaryTerm={term}
+            glossaryTerm={activeItem}
           />
-        ))}
+        )}
       </div>
     </div>
   );

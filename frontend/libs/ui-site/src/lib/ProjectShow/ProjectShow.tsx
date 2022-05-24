@@ -106,7 +106,6 @@ export const ProjectShow = (props: ProjectProps) => {
           </Section>
         )}
       <GlossarySidebar
-        glossaryCategories={project.glossary_categories}
         linkComponent={linkComponent}
         basePath={basePath}
         glossaryTerms={project.glossary_terms}
