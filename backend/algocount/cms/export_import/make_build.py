@@ -18,9 +18,9 @@ def make_build(*, project: Project, base_path: str = ""):
         tmp_dirname = tmp_dirname + "/exit"
         shutil.copytree(settings.PROJECT_FRONTEND_EXPORT, tmp_dirname, symlinks=True)
         dir_export_site = os.path.join(tmp_dirname, "apps", "export-site")
-        downloads_path = os.path.join(dir_export_site, "public", "media")
+        downloads_path = os.path.join(dir_export_site, "public", "media", str(project.id))
         if not os.path.isdir(downloads_path):
-            os.mkdir(downloads_path)
+            os.makedirs(downloads_path)
         for path in files_to_copy_paths:
             shutil.copy(path, downloads_path)
         file = os.path.join(dir_export_site, "data.json")

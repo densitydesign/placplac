@@ -25,20 +25,10 @@ const ProjectShow = dynamic(() => import('../components/projectShow'), {
   ssr: false,
 });
 
-const Home: NextPage = ({
-  project,
-  experiments,
-  language,
-  footer,
-}: any) => {
+const Home: NextPage = ({ project }: any) => {
   return (
-    <Layout footer={footer} language={language} experiments={experiments}>
-      <ProjectShow
-        basePath="/"
-        project={project}
-        linkComponent={Link}
- 
-      />
+    <Layout project={project}>
+      <ProjectShow basePath="/" project={project} linkComponent={Link} />
     </Layout>
   );
 };

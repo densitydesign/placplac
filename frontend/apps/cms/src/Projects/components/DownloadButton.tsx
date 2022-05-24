@@ -9,6 +9,7 @@ import {
   Form,
   SaveContextProvider,
   useRefresh,
+  SaveButton,
 } from 'react-admin';
 import { clientNoJson } from '../../dataProvider';
 import { url } from '../../constants';
@@ -43,6 +44,7 @@ export const DownloadButton = (props: DownloadButtonProps) => {
     ? true
     : false;
   const onClick = (values: FieldValues) => {
+    console.log(values);
     setLoading(true);
     clientNoJson(`${url}/projects/${props.project?.id}/export/`, {
       method: 'POST',
@@ -154,12 +156,7 @@ export const DownloadButton = (props: DownloadButtonProps) => {
                   </Button>
 
                   {!forceDisabled && (
-                    <FormSaveButton
-                      handleSubmit={onClick}
-                      submitting={loading}
-                      pristine={forceDisabled}
-                      label="Build"
-                    />
+                    <SaveButton disabled={forceDisabled} label="Build" />
                   )}
                 </DialogActions>
               </>

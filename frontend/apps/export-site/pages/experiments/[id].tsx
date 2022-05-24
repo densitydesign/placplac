@@ -28,10 +28,7 @@ export async function getStaticProps({ params }: { params: { id: number } }) {
   return {
     props: {
       experiment,
-      glossaryCategories: fileContents.glossary_categories,
-      experiments: fileContents.experiments,
-      language: fileContents.language,
-      footer: fileContents.footer,
+      project: fileContents,
     },
   };
 }
@@ -41,18 +38,12 @@ const ExperimentShow = dynamic(
   { ssr: false }
 );
 
-const Experiment: NextPage = ({
-  experiment,
-  glossaryCategories,
-  experiments,
-  language,
-  footer,
-}: any) => {
+const Experiment: NextPage = ({ experiment, project }: any) => {
   return (
-    <Layout footer={footer} language={language} experiments={experiments}>
+    <Layout project={project}>
       <ExperimentShow
-        language={language}
-        glossaryCategories={glossaryCategories}
+        language={project.language}
+        glossaryCategories={project.glossary_categories}
         basePath="/"
         experiment={experiment}
         linkComponent={Link}

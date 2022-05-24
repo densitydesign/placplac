@@ -13,6 +13,3 @@
   display: flex;
   flex-direction: column;
 }
-html {
-  scroll-padding-top: 55px;
-}
