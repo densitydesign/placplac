@@ -15,27 +15,23 @@ interface LayoutProps {
   basePath: string;
   linkComponent: ComponentType<{ href: string }>;
   children: React.ReactNode;
-  experiments: Experiment[];
-  language: LanguageOptions;
-  footer?: FooterType;
+  project: Project;
 }
 
 export const Layout = (props: LayoutProps) => {
-  const { basePath, linkComponent, children, experiments, language, footer } =
-    props;
+  const { basePath, linkComponent, children, project } = props;
   return (
     <div
       id="main-application"
       className={classnames(styles.main, 'main-application')}
     >
       <Header
-        language={language}
-        experiments={experiments}
+        project={project}
         basePath={basePath}
         linkComponent={linkComponent}
       />
       <div className={styles.content_wrapper}>{children}</div>
-      <Footer footer={footer} language={language} />
+      <Footer footer={project.footer} language={project.language} />
       <BackToTopButton />
     </div>
   );

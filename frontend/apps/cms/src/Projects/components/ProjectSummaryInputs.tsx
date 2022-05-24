@@ -20,9 +20,9 @@ export const ProjectSummaryInputs = () => {
       />
       <TextInput
         source="title"
-        label="Title (100)"
+        label="Title (70)"
         fullWidth
-        validate={[required(), maxLength(255)]}
+        validate={[required(), maxLength(70)]}
         helperText="The project title"
       />
 

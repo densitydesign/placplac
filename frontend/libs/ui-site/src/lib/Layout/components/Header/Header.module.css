@@ -16,6 +16,7 @@
   display: flex;
   align-items: center;
   height: 100%;
+  overflow: hidden;
 }
 .item {
   width: 180px;
@@ -24,9 +25,17 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  text-decoration: none !important;
+  padding: 10px 10px !important;
+  box-sizing: border-box;
 }
-.left > .item {
-  border-right: 1px solid black;
+.title {
+  font-family: 'Source Sans Pro';
+  text-decoration: none !important;
+  padding: 0 10px !important;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 .right > .item {
   border-left: 1px solid black;
@@ -82,4 +91,8 @@
 
 .submenu li:hover:before {
   background: white;
+}
+
+.submenu a {
+  text-decoration: none !important;
 }

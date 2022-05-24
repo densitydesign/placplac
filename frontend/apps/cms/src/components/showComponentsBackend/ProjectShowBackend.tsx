@@ -34,13 +34,7 @@ export const ProjectShowBackend = () => {
       <Route
         path={'/'}
         element={
-          <Layout
-            language={project.language}
-            experiments={project.experiments}
-            linkComponent={Link}
-            basePath={basePath}
-            footer={project.footer}
-          >
+          <Layout project={project} linkComponent={Link} basePath={basePath}>
             <ScrollToTop />
             <Outlet />
           </Layout>

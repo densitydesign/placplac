@@ -48,7 +48,8 @@ export type Project = {
   references: Reference[];
   project_explanation?: string;
   in_project_references: Reference[];
-  glossary_categories:GlossaryCategory[]
+  glossary_categories: GlossaryCategory[];
+  footer: Footer;
 };
 export type Experiment = {
   id: number;
