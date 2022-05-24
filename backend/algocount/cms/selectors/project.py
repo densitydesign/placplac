@@ -1,6 +1,7 @@
 from django.db.models import Q
 from django.http import Http404
 from rest_framework import exceptions
+from rest_framework.filters import OrderingFilter
 
 from authentication.models import User
 from base.services import get_object
@@ -79,7 +80,7 @@ def project_media_list(*, user_request: User, filters: dict = None):
         users = ProjectMedia.objects.all()
     else:
         users = ProjectMedia.objects.filter(project__projectuser__user=user_request)
-    return ProjectMediaFilter(filters, users).qs
+    return ProjectMediaFilter(filters, users).qs.order_by("-id")
 
 
 def get_project_media(*, user_request: User, **kwargs):

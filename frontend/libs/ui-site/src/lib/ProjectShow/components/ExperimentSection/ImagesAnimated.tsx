@@ -29,6 +29,7 @@ export const ImagesAnimated: React.FC<ImagesAnimatedProps> = (props) => {
             p5.max(images.map((d) => d.width)),
             p5.max(images.map((d) => d.height))
           );
+        console.log(k);
       };
 
       p5.draw = () => {
@@ -38,7 +39,13 @@ export const ImagesAnimated: React.FC<ImagesAnimatedProps> = (props) => {
           img.perlinOffsetY += perlinIncrement;
           const pos_x = p5.noise(img.perlinOffsetX) * width;
           const pos_y = p5.noise(img.perlinOffsetY) * height;
-          p5.image(img, pos_x, pos_y, img.width * k, img.height * k);
+          let imageWidth = img.width * k;
+          let imageHeight = img.height * k;
+          if (imageWidth < 150) {
+            imageWidth = 150;
+            imageHeight = (imageWidth * img.height) / img.width;
+          }
+          p5.image(img, pos_x, pos_y, imageWidth, imageHeight);
         });
       };
 
