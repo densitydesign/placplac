@@ -41,87 +41,81 @@ export const Footer = (props: FooterProps) => {
         </a>
       </div>
 
-      <div className={styles.divider} />
-      <div className={styles.column}>
-        <span>{translations[language].foundedby_footer}:</span>
-        <div className={styles.founded_by}>
-          {footer &&
-            footer.founded_by &&
-            footer.founded_by.map((founder, index) => (
-              <a key={index} href={founder.link}>
-                <img src={getRealPath(founder.image)} />
-              </a>
-            ))}
-        </div>
-      </div>
-
-      <div className={styles.divider} />
-
-      <div className={styles.column}>
-        <span>{translations[language].partners_footer}:</span>
-        <div className={styles.partners}>
-          {footer &&
-            footer.partners &&
-            footer.partners.map((founder, index) => (
-              <a key={index} href={founder.link}>
-                <img src={getRealPath(founder.image)} />
-              </a>
-            ))}
-        </div>
-      </div>
-
-      {footer && footer.socials && (
-        <>
-          <div className={styles.divider} />
-          <div className={styles.column}>
-            <span>{translations[language].contacts_footer}:</span>
-            <div className={styles.contacts}>
-              {footer && footer.socials && footer.socials.facebook && (
-                <div style={{ display: 'flex' }}>
-                  <img src={getRealPath('/assets/facebook-logo-white.png')} />
-                  <a
-                    href={footer.socials.facebook}
-                    target="_blank"
-                    rel="noreferrer"
-                    style={{ textDecoration: 'none' }}
-                  >
-                    <span
-                      style={{ marginLeft: '10px', textDecoration: 'none' }}
-                    >
-                      /{parseUsername(footer.socials.facebook)}
-                    </span>
-                  </a>
-                </div>
-              )}
-              {footer && footer.socials && footer.socials.twitter && (
-                <div style={{ display: 'flex' }}>
-                  <img src={getRealPath('/assets/twitter-icon-18-256.png')} />
-                  <a
-                    href={footer.socials.twitter}
-                    target="_blank"
-                    rel="noreferrer"
-                    style={{ textDecoration: 'none' }}
-                  >
-                    <span
-                      style={{ marginLeft: '10px', textDecoration: 'none' }}
-                    >
-                      @{parseUsername(footer.socials.twitter)}
-                    </span>
-                  </a>
-                </div>
-              )}
-              {footer && footer.socials && footer.socials.mail && (
-                <div style={{ display: 'flex' }}>
-                  <img src={getRealPath('/assets/email.png')} />
-                  <span style={{ marginLeft: '10px' }}>
-                    {footer.socials.mail}
-                  </span>
-                </div>
-              )}
+      <div className={styles.details}>
+        {footer && footer.founded_by && (
+          <>
+            <span className={styles.section_title}>
+              {translations[language].foundedby_footer}:
+            </span>
+            <div className={styles.image_list}>
+              {footer.founded_by.map((founder, index) => (
+                <a key={index} href={founder.link}>
+                  <img src={getRealPath(founder.image)} />
+                </a>
+              ))}
             </div>
-          </div>
-        </>
-      )}
+          </>
+        )}
+        {footer && footer.partners && (
+          <>
+            <span className={styles.section_title}>
+              {translations[language].partners_footer}:
+            </span>
+            <div className={styles.image_list}>
+              {footer.partners.map((founder, index) => (
+                <a key={index} href={founder.link}>
+                  <img src={getRealPath(founder.image)} />
+                </a>
+              ))}
+            </div>
+          </>
+        )}
+        {footer &&
+          footer.socials &&
+          (footer.socials.facebook ||
+            footer.socials.mail ||
+            footer.socials.twitter) && (
+            <>
+              <span className={styles.section_title}>
+                {translations[language].contacts_footer}:
+              </span>
+              <div className={styles.contacts}>
+                {footer.socials.facebook && (
+                  <div className={styles.contact_item}>
+                    <img src={getRealPath('/assets/facebook-logo-white.svg')} />
+                    <a
+                      href={footer.socials.facebook}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <span>/{parseUsername(footer.socials.facebook)}</span>
+                    </a>
+                  </div>
+                )}
+                {footer.socials.twitter && (
+                  <div className={styles.contact_item}>
+                    <img src={getRealPath('/assets/twitter-icon-18-256.svg')} />
+                    <a
+                      href={footer.socials.twitter}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <span>@{parseUsername(footer.socials.twitter)}</span>
+                    </a>
+                  </div>
+                )}
+                {footer.socials.mail && (
+                  <div className={styles.contact_item}>
+                    <img src={getRealPath('/assets/email.svg')} />
+                    <a rel="noreferrer" href={`mailto:${footer.socials.mail}`}>
+                      <span>{footer.socials.mail}</span>
+                    </a>
+                  </div>
+                )}
+              </div>
+            </>
+          )}
+      </div>
     </div>
   );
 };
