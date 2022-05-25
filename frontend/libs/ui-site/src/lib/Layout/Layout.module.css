@@ -3,6 +3,7 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  min-width: 1024px;
 }
 .content_wrapper {
   padding-top: 55px;

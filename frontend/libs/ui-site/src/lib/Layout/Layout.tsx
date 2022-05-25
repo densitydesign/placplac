@@ -10,6 +10,7 @@ import {
 } from '@algocount/shared/types';
 import { Footer } from './components/Footer';
 import { BackToTopButton } from '../components/BackToTopButton';
+import { Helmet } from 'react-helmet';
 
 interface LayoutProps {
   basePath: string;
@@ -25,6 +26,14 @@ export const Layout = (props: LayoutProps) => {
       id="main-application"
       className={classnames(styles.main, 'main-application')}
     >
+      <Helmet
+        meta={[
+          {
+            name: 'viewport',
+            content: 'width=device-width, initial-scale=0, shrink-to-fit=YES',
+          },
+        ]}
+      />
       <Header
         project={project}
         basePath={basePath}

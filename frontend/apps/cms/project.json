@@ -56,7 +56,8 @@
                 "buildTarget": "cms:build",
                 "hmr": true,
                 "proxyConfig": "apps/cms/proxy.conf.json",
-                "port": 4201
+                "port": 4201,
+                "host": "0.0.0.0"
             },
             "configurations": {
                 "production": {
