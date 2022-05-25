@@ -1,0 +1,37 @@
+.main {
+  height: 100%;
+  min-height: 100vh;
+  width: 100vw;
+  position: absolute;
+  top: 0;
+  background-color: white;
+  z-index: 100000;
+  overflow: hidden;
+  overflow-y: auto;
+  font-size: 18px;
+  line-height: 24px;
+  box-sizing: border-box;
+  text-align: center;
+}
+.alert {
+  background-image: url('../../../../assets/Alert-error.svg');
+  width: 340px;
+  height: auto;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  min-height: 115px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+.alert span {
+  padding: 30px;
+}
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

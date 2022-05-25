@@ -10,19 +10,6 @@
   background-repeat: no-repeat;
   background-size: 100% auto;
 }
-.see_more_button {
-  cursor: pointer;
-  display: block;
-  margin-left: auto;
-  background: #ffffff;
-  border: 1px solid #000000;
-  border-radius: 50px;
-  text-decoration: none;
-  font-size: 20px;
-  line-height: 36px;
-
-  padding: 0 20px;
-}
 
 .image_container {
   position: relative;

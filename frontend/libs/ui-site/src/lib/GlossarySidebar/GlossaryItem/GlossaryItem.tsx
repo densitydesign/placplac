@@ -1,5 +1,6 @@
 import { GlossaryTerm } from '@algocount/shared/types';
 import React, { ComponentType } from 'react';
+import { OutlinedButton } from '../../components/OutlinedButton';
 import { TextShow } from '../../TextShow';
 import { getRealPath } from '../../utils';
 import styles from './GlossaryItem.module.css';
@@ -35,7 +36,7 @@ export const GlossaryItem = (props: GlossaryItemProps) => {
         style={{ textDecoration: 'none' }}
         href={`${basePath}glossary/${glossaryTerm.glossary_category}#glossary/${glossaryTerm.id}`}
       >
-        <button className={styles.see_more_button}>Read more</button>
+        <OutlinedButton>Read more</OutlinedButton>
       </Link>
     </div>
   );
