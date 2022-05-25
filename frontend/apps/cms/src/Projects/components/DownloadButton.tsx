@@ -156,7 +156,7 @@ export const DownloadButton = (props: DownloadButtonProps) => {
                   </Button>
 
                   {!forceDisabled && (
-                    <SaveButton disabled={forceDisabled} label="Build" />
+                    <FormSaveButton disabled={forceDisabled} label="Build" />
                   )}
                 </DialogActions>
               </>

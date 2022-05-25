@@ -17,6 +17,7 @@ export const ImagesAnimated: React.FC<ImagesAnimatedProps> = (props) => {
     const sketch = (p5: p5) => {
       p5.setup = () => {
         p5.createCanvas(width, height);
+        p5.pixelDensity(1);
         p5.imageMode(p5.CENTER);
         images.forEach((img) => {
           img.perlinOffsetX = p5.round(p5.random(images.length * 1000));
@@ -29,7 +30,6 @@ export const ImagesAnimated: React.FC<ImagesAnimatedProps> = (props) => {
             p5.max(images.map((d) => d.width)),
             p5.max(images.map((d) => d.height))
           );
-        console.log(k);
       };
 
       p5.draw = () => {
