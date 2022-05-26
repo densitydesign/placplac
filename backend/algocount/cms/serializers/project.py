@@ -23,6 +23,7 @@ class ProjectSerializer(serializers.ModelSerializer):
     user_level = serializers.SerializerMethodField(method_name="get_user_level")
     last_build = CustomFileField(read_only=True)
     last_build_time = serializers.DateTimeField(read_only=True)
+    last_update = serializers.DateTimeField(read_only=True)
 
     def get_user_level(self, object):
         request = self.context["request"]
@@ -39,7 +40,7 @@ class ProjectSerializer(serializers.ModelSerializer):
                   "long_description",
                   "status", "created_date", "last_update", "experiment_set", "glossaryterm_set", "projectuser_set",
                   "projectmedia_set", "language", "user_level", "reference_set", "footer", "glossary_description",
-                  "project_explanation", "last_build", "last_build_time"]
+                  "project_explanation", "last_build", "last_build_time", "cover_images"]
 
 
 class ProjectMediaSerializer(serializers.ModelSerializer):
@@ -85,7 +86,7 @@ class FullProjectSerializer(serializers.ModelSerializer):
                   "long_description",
                   "status", "created_date", "last_update", "experiments", "glossary_terms", "glossary_categories",
                   "language", "references", "footer", "glossary_description", "project_explanation",
-                  "in_project_references"]
+                  "in_project_references", "cover_images"]
 
 
 class ProjectUserSerializer(serializers.ModelSerializer):

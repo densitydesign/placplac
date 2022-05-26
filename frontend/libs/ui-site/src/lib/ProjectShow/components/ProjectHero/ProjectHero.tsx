@@ -34,9 +34,12 @@ export const ProjectHero = ({
           <ImagesAnimated
             width={container.current!.clientWidth}
             height={container.current!.clientHeight}
-            imagesUrls={project.experiments
-              .filter((experiment) => !!experiment.cover)
-              ?.map((experiment) => getRealPath(experiment.cover))}
+            imagesUrls={[
+              ...project.experiments
+                .filter((experiment) => !!experiment.cover)
+                .map((experiment) => getRealPath(experiment.cover)),
+              ...project.cover_images.map((image) => getRealPath(image)),
+            ]}
           />
         </div>
       )}
@@ -53,15 +56,14 @@ export const ProjectHero = ({
               )}
             </div>
           </div>
-          {project.project_explanation ||
-            (bottomContent && (
-              <div className={styles.hero_section_content}>
-                {project.project_explanation && (
-                  <TextShow text={project.project_explanation} />
-                )}
-                {bottomContent && bottomContent}
-              </div>
-            ))}
+          {(project.project_explanation || bottomContent) && (
+            <div className={styles.hero_section_content}>
+              {project.project_explanation && (
+                <TextShow text={project.project_explanation} />
+              )}
+              {bottomContent && bottomContent}
+            </div>
+          )}
         </div>
       </div>
     </div>

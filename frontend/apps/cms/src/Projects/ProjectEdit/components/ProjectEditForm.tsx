@@ -58,7 +58,22 @@ export const ProjectEditForm = () => {
   return (
     <TabbedForm tabs={<Tabs />} toolbar={<ProjectFormToolbar />}>
       <FormTab label="summary">
-        <ProjectSummaryInputs />
+        <ProjectContextProvider project={record.id}>
+          <ProjectSummaryInputs />
+          <ArrayInput
+            source="cover_images"
+            label="Additional cover images"
+            helperText="Choose other images for the cover of the project, besides those of the experiments"
+          >
+            <SimpleFormIterator disableReordering>
+              <ReferenceInputImage
+                label="Cover"
+                source=""
+                validate={required()}
+              />
+            </SimpleFormIterator>
+          </ArrayInput>
+        </ProjectContextProvider>
       </FormTab>
 
       <FormTab label="Experiments">

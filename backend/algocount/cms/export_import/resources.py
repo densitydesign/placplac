@@ -23,7 +23,7 @@ class ProjectResource(CustomResource):
     class Meta:
         model = Project
         force_init_instance = True
-        exclude = ("id")
+        exclude = ("id", "last_build_time", "base_path_build", "last_build")
         skip_diff = True
 
 

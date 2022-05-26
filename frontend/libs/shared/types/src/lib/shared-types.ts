@@ -50,6 +50,7 @@ export type Project = {
   in_project_references: Reference[];
   glossary_categories: GlossaryCategory[];
   footer: Footer;
+  cover_images: string[];
 };
 export type Experiment = {
   id: number;

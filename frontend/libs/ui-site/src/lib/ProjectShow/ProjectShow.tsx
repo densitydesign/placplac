@@ -4,14 +4,12 @@ import { TextShow } from '../TextShow';
 import { Project } from '@algocount/shared/types';
 import styles from './ProjectShow.module.css';
 import { ExperimentSection } from './components/ExperimentSection';
-import { ComponentType, useEffect, useRef, useState } from 'react';
+import { ComponentType } from 'react';
 import { GlossarySidebar } from '../GlossarySidebar';
 import { Row } from '../components/Row';
 import { Section } from '../components/Section';
 import { translations } from '../translations';
 import { useGlossaryAdjuster, useReferencesAdjuster } from '../hooks';
-import { ImagesAnimated } from './components/ExperimentSection/ImagesAnimated';
-import { getRealPath } from '../utils';
 import { ProjectHero } from './components/ProjectHero';
 
 interface ProjectProps {

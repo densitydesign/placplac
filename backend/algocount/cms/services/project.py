@@ -1,5 +1,6 @@
 import datetime
 from pathlib import Path
+from typing import List
 
 from django.contrib.staticfiles.finders import find
 from django.core.files.base import ContentFile
@@ -50,6 +51,12 @@ def create_project_defaults(*, project: Project):
     GlossaryCategory.objects.get_or_create(title="Tools",
                                            description="We careful try to choose online, free and open tools and web apps.",
                                            color="#000000", project=project)
+    if len(project.cover_images) <= 0:
+        covers = [create_default_media("media-frontend/circles.svg", project, "Circles"),
+                  create_default_media("media-frontend/oval.svg", project, "Oval"),
+                  create_default_media("media-frontend/square.svg", project, "Square"),
+                  create_default_media("media-frontend/square2.svg", project, "Square 2")]
+        project.cover_images = [cover.file.url for cover in covers]
     if project.footer is None:
         cariplo_logo = create_default_media("media-frontend/cariplo.png", project, "Cariplo logo")
         density_logo = create_default_media("media-frontend/density.png", project, "Density logo")
@@ -59,7 +66,7 @@ def create_project_defaults(*, project: Project):
                                        {"link": "https://www.polimi.it", "image": poli_logo.file.url},
                                        {"link": "https://www.densitydesign.org", "image": density_logo.file.url}],
                           "founded_by": [{"link": "https://www.fondazionecariplo.it", "image": cariplo_logo.file.url}]}
-        project.save()
+    project.save()
 
 
 @transaction.atomic
@@ -72,7 +79,9 @@ def create_project(*, user_request: User, title: str,
                    language: Project.LanguageChoices = Project.LanguageChoices.EN,
                    footer: str = None,
                    glossary_description: str = None,
+                   cover_images: List[str] = None,
                    create_defaults: bool = True):
+    cover_images = cover_images if cover_images else []
     project = Project.objects.create(title=title,
                                      short_description=short_description,
                                      project_explanation=project_explanation,
@@ -82,7 +91,8 @@ def create_project(*, user_request: User, title: str,
                                      language=language,
                                      footer=footer,
                                      glossary_description=glossary_description,
-                                     last_update=datetime.datetime.now())
+                                     last_update=datetime.datetime.now(),
+                                     cover_images=cover_images)
     add_user_to_project(user=user_request, level=ProjectUser.LevelChoices.AUTHOR, project=project)
 
     if create_defaults:
@@ -99,7 +109,8 @@ def update_project(*, project: Project, data: dict):
               "status",
               "language",
               "footer",
-              "glossary_description"]
+              "glossary_description",
+              "cover_images"]
     project, updated = model_update(instance=project, fields=fields, data=data)
     if updated:
         project.last_update = datetime.datetime.now()

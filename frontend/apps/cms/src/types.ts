@@ -40,6 +40,7 @@ export interface Project {
   glossary_description?: string;
   last_build?: string;
   last_build_time?: Date;
+  cover_images: string[];
 }
 
 export interface Experiment {

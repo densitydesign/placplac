@@ -1,4 +1,3 @@
-import React from 'react';
 import { SelectInput, TextInput, required, maxLength } from 'react-admin';
 import { STATUS_CHOICES, LANGUAGE_CHOICES } from '../../choices';
 import { CustomRichTextInput } from '../../components/CustomRichTextInput';

@@ -28,6 +28,7 @@ class Project(CustomModel):
     language = models.CharField(default=LanguageChoices.EN, choices=LanguageChoices.choices, max_length=2)
     footer = models.JSONField(null=True, blank=True)
     glossary_description = models.TextField(null=True, blank=True)
+    cover_images = ArrayField(base_field=models.TextField(), blank=True)
     last_build = models.FileField(null=True, blank=True)
     last_build_time = models.DateTimeField(null=True, blank=True)
     base_path_build = models.TextField(null=True, blank=True)
