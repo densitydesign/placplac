@@ -10,6 +10,7 @@ import {
   required,
   useCreate,
   RecordContextProvider,
+  maxLength,
 } from 'react-admin';
 import IconCancel from '@mui/icons-material/Cancel';
 import IconContentAdd from '@mui/icons-material/Add';
@@ -57,9 +58,9 @@ export const AddExperimentButton = () => {
                 <TextInput
                   fullWidth
                   multiline
-                  validate={[required()]}
+                  validate={[required(), maxLength(200)]}
                   source="title"
-                  label="Title (70)"
+                  label="Title (200)"
                   placeholder="a short title representative of the experiment"
                   helperText="The title of the experiment"
                 />

@@ -3,7 +3,7 @@ import React, { ComponentType } from 'react';
 import styles from './GlossaryTermsList.module.css';
 
 interface GlossaryTermsListProps {
-  glossaryTerms: GlossaryTerm[];
+  glossaryTerms: Pick<GlossaryTerm, 'id' | 'title' | 'color'>[];
   linkTo?: string;
   linkComponent?: ComponentType<{ href: string }>;
 }
@@ -21,7 +21,7 @@ export const GlossaryTermsList = (props: GlossaryTermsListProps) => {
           <span
             key={term.id}
             className="mention"
-            style={{ backgroundColor: term.color }}
+            style={{ backgroundColor: term.color, marginRight: '10px' }}
           >
             {Link ? (
               <Link href={`${linkTo}#glossary/${term.id}`}>

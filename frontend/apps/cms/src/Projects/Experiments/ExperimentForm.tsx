@@ -16,6 +16,7 @@ import {
   ToolbarProps,
   EditButton,
   useRecordContext,
+  FunctionField,
 } from 'react-admin';
 import { BuilderInput } from '../../components/BuilderInput/BuilderInput';
 import { CustomRichTextInput } from '../../components/CustomRichTextInput';
@@ -28,6 +29,7 @@ import { AddExperimentAdditionalMaterialButton } from './AddExperimentAdditional
 import { CustomFileField } from '../../components/CustomFileField';
 import { ProjectContextProvider } from '../../contexts/project-context';
 import { ReorderStepsButton } from './ReorderStepsButton';
+import { Step } from '../../types';
 
 const ExperimentFormToolbar = (props: ToolbarProps) => {
   const record = useRecordContext();
@@ -62,10 +64,10 @@ export const ExperimentForm = (props: Omit<TabbedFormProps, 'children'>) => {
             multiline
             fullWidth
             source="title"
-            label="Title (70)"
+            label="Title (200)"
             placeholder="a short title representative of the experiment"
             helperText="The title of the experiment"
-            validate={[required(), maxLength(255)]}
+            validate={[required(), maxLength(200)]}
           />
           <CustomRichTextInput
             fullWidth
@@ -154,10 +156,18 @@ export const ExperimentForm = (props: Omit<TabbedFormProps, 'children'>) => {
               sort={{ field: 'step_number', order: 'ASC' }}
             >
               <Datagrid>
-                <TextField sortable={false} source="title" />
+                <FunctionField
+                  label="Title"
+                  render={(record: Step) => (
+                    <EditButton
+                      variant="text"
+                      record={record}
+                      label={record.title}
+                    />
+                  )}
+                />
                 <TextField sortable={false} source="step_number" />
                 <ReorderStepsButton />
-                <EditButton />
                 <DeleteButton redirect={false} mutationMode="optimistic" />
               </Datagrid>
             </ReferenceArrayField>

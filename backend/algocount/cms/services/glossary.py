@@ -69,8 +69,7 @@ def create_glossary_term(*, user_request: User, project: Project,
                                                 image=image,
                                                 glossary_category=glossary_category,
                                                 more_info_url=more_info_url)
-    for r in related:
-        glossary_term.related.add(r)
+    glossary_term.related.set(related)
     glossary_term.project.last_update = datetime.datetime.now()
     glossary_term.project.save()
     return glossary_term
@@ -81,11 +80,15 @@ def update_glossary_term(*, glossary_term: GlossaryTerm, data: dict):
               "description",
               "image",
               "glossary_category",
-              "more_info_url"
+              "more_info_url",
               ]
     if data["glossary_category"].project != glossary_term.project:
         raise ValidationError({"glossary_category": ["Glossary category not found!"]})
     glossary_term, updated = model_update(instance=glossary_term, fields=fields, data=data)
+    related = data.get("related", None)
+    if related is not None:
+        glossary_term.related.set(related)
+        updated = True
     if updated:
         glossary_term.project.last_update = datetime.datetime.now()
         glossary_term.project.save()

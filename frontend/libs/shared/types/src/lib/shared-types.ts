@@ -20,7 +20,7 @@ export type GlossaryTerm = {
   image: string | null;
   description: string;
   used_in: { id: number | string; title: string }[];
-  related: Partial<GlossaryTerm>[];
+  related: Pick<GlossaryTerm, 'id' | 'title' | 'color'>[];
 };
 export type GlossaryCategory = {
   id: number;

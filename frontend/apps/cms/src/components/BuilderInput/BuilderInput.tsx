@@ -6,7 +6,6 @@ import {
   SelectInput,
   TextInput,
   BooleanInput,
-  useGetList,
   useNotify,
 } from 'react-admin';
 import { BuilderDialog } from './components/BuilderDialog';
@@ -15,32 +14,15 @@ import { AddRowButton } from './components/AddRowButton';
 import { Row } from './components/Row';
 import { CustomRichTextInput } from '../CustomRichTextInput';
 import { EditImage } from './components/EditImage';
-import {
-  Disclaimer,
-  ExperimentSetupListShow,
-  IFrame,
-  ImageShow,
-  SHOW_COMPONENTS_BUILDER,
-  SigmaShow,
-  TextShow,
-} from '@algocount/ui-site';
+import { SHOW_COMPONENTS_BUILDER } from '@algocount/ui-site';
 import { EditListExperimentSetup } from './components/EditListExperimentSetup';
 import { EditIframe } from './components/EditIframe';
 import { Grid } from '@mui/material';
 import { SelectFile } from '../SelectFile';
-import {
-  BuilderBlocks,
-  GlossaryTerm,
-  PossibleColumns,
-  Reference,
-  RowType,
-} from '@algocount/shared/types';
+import { BuilderBlocks, RowType } from '@algocount/shared/types';
 import SimpleReactLightbox from 'simple-react-lightbox';
 import { Box } from '@mui/material';
-import {
-  ProjectContextProvider,
-  useProjectContext,
-} from '../../contexts/project-context';
+import { useProjectContext } from '../../contexts/project-context';
 import { useGlossaryAdjuster } from 'libs/ui-site/src/lib/hooks';
 interface BuilderInputProps {
   source: string;
@@ -285,7 +267,7 @@ export const BuilderInput = (props: BuilderInputProps) => {
                 />
               </Grid>
               <Grid item>
-                <TextInput
+                <CustomRichTextInput
                   validate={[required()]}
                   helperText={false}
                   fullWidth
