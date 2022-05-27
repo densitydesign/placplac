@@ -1,17 +1,20 @@
 import { GlossaryTerm, Reference } from '@algocount/shared/types';
-import React, { useContext } from 'react';
-import { Identifier, useGetList } from 'react-admin';
+import React, { useContext, useMemo } from 'react';
+import { Identifier, useGetList, useGetOne } from 'react-admin';
+import { Project, ProjectAnchor } from '../types';
 
 interface IProjectContext {
   glossaryTerms: GlossaryTerm[];
   references: Reference[];
-  project?: string | number;
+  project?: Identifier;
+  anchors: { text: string; items: { text: string; value: string }[] }[];
 }
 
 const defaultState = {
   glossaryTerms: [],
   references: [],
   project: undefined,
+  anchors: [],
 };
 
 const ProjectContext = React.createContext<IProjectContext>(defaultState);
@@ -20,6 +23,9 @@ export const ProjectContextProvider: React.FC<{ project: Identifier }> = (
   props
 ) => {
   const { children, project } = props;
+  const { data: projectObject } = useGetOne<Project>('projects', {
+    id: project,
+  });
   const { data: unformattedGlossaryItems, isLoading: loadingG } =
     useGetList<GlossaryTerm>(
       'glossary-terms',
@@ -38,12 +44,21 @@ export const ProjectContextProvider: React.FC<{ project: Identifier }> = (
         initialData: { data: [] as Reference[] },
       }
     );
-  return unformattedGlossaryItems && unformattedReferences ? (
+  const anchors = useMemo(() => {
+    if (projectObject) {
+      return projectObject.anchors.map((anchor) => ({
+        text: anchor.title,
+        items: anchor.anchors,
+      }));
+    } else return [];
+  }, [projectObject]);
+  return unformattedGlossaryItems && unformattedReferences && projectObject ? (
     <ProjectContext.Provider
       value={{
         project,
         glossaryTerms: unformattedGlossaryItems,
         references: unformattedReferences,
+        anchors: anchors,
       }}
     >
       {children}
@@ -53,6 +68,5 @@ export const ProjectContextProvider: React.FC<{ project: Identifier }> = (
 
 export const useProjectContext = () => {
   const context = useContext(ProjectContext);
-  if (!context) throw Error('Use this hook inside a ProjectContext');
   return context;
 };

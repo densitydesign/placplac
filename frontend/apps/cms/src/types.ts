@@ -20,6 +20,10 @@ interface ProjectFooter {
   partners: { link: string; image: string }[];
   socials: { facebook?: string; twitter?: string; mail?: string };
 }
+export interface ProjectAnchor {
+  title: string;
+  anchors: { text: string; value: string }[];
+}
 export interface Project {
   id: Identifier;
   title: string;
@@ -41,6 +45,7 @@ export interface Project {
   last_build?: string;
   last_build_time?: Date;
   cover_images: string[];
+  anchors: ProjectAnchor[];
 }
 
 export interface Experiment {

@@ -39,7 +39,7 @@ class StepViewSet(viewsets.ModelViewSet):
 
     def update(self, request, *args, **kwargs):
         instance = get_step(user_request=self.request.user, id=kwargs["pk"])
-        serializer = StepSerializer(data=request.data)
+        serializer = StepSerializer(instance=instance, partial=True, data=request.data)
         serializer.is_valid(raise_exception=True)
         instance = update_step(step=instance, data=serializer.validated_data)
         serializer = StepSerializer(instance)
@@ -82,7 +82,7 @@ class StepDownloadViewSet(viewsets.ModelViewSet):
 
     def update(self, request, *args, **kwargs):
         instance = get_step_download(user_request=self.request.user, id=kwargs["pk"])
-        serializer = StepDownloadSerializer(data=request.data)
+        serializer = StepDownloadSerializer(instance=instance, partial=True, data=request.data)
         serializer.is_valid(raise_exception=True)
         instance = update_step_download(step_download=instance, data=serializer.validated_data)
         serializer = StepDownloadSerializer(instance)

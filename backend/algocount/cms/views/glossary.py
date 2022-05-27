@@ -34,7 +34,7 @@ class GlossaryCategoryViewSet(viewsets.ModelViewSet):
     def update(self, request, *args, **kwargs):
         instance = get_glossary_category(user_request=self.request.user, id=kwargs["pk"],
                                          permission=PermissionType.WRITE)
-        serializer = GlossaryCategorySerializer(data=request.data)
+        serializer = GlossaryCategorySerializer(instance=instance, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         instance = update_glossary_category(glossary_category=instance, data=serializer.validated_data)
         serializer = GlossaryCategorySerializer(instance)
@@ -77,7 +77,7 @@ class GlossaryTermViewSet(viewsets.ModelViewSet):
 
     def update(self, request, *args, **kwargs):
         instance = get_glossary_term(user_request=self.request.user, id=kwargs["pk"])
-        serializer = GlossaryTermSerializer(data=request.data)
+        serializer = GlossaryTermSerializer(instance=instance, partial=True, data=request.data)
         serializer.is_valid(raise_exception=True)
         instance = update_glossary_term(glossary_term=instance, data=serializer.validated_data)
         serializer = GlossaryTermSerializer(instance)

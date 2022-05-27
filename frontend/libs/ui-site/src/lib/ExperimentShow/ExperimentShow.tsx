@@ -19,7 +19,11 @@ import { ContentList } from './components/ContentList/ContentList';
 import { Row } from '../components/Row';
 import classNames from 'classnames';
 import { translations } from '../translations';
-import { useGlossaryAdjuster, useReferencesAdjuster } from '../hooks';
+import {
+  useAnchors,
+  useGlossaryAdjuster,
+  useReferencesAdjuster,
+} from '../hooks';
 import { ReferenceList } from '../components/ReferenceList';
 import SimpleReactLightbox from 'simple-react-lightbox';
 import { SHOW_COMPONENTS_BUILDER } from '../builderBlocks';
@@ -62,7 +66,7 @@ export const ExperimentShow = (props: ExperimentShowProps) => {
       setTopPositionStep(0);
     }
   });
-
+  useAnchors(basePath);
   useReferencesAdjuster(references);
   useGlossaryAdjuster(glossary_terms);
   const renderRow = (

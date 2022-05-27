@@ -9,7 +9,7 @@ import { GlossarySidebar } from '../GlossarySidebar';
 import { Row } from '../components/Row';
 import { Section } from '../components/Section';
 import { translations } from '../translations';
-import { useGlossaryAdjuster, useReferencesAdjuster } from '../hooks';
+import { useAnchors, useGlossaryAdjuster, useReferencesAdjuster } from '../hooks';
 import { ProjectHero } from './components/ProjectHero';
 
 interface ProjectProps {
@@ -23,6 +23,7 @@ export const ProjectShow = (props: ProjectProps) => {
 
   useGlossaryAdjuster(project.glossary_terms);
   useReferencesAdjuster(project.references);
+  useAnchors(basePath);
 
   return (
     <>

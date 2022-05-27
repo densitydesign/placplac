@@ -28,7 +28,7 @@ class ReferenceViewSet(viewsets.ModelViewSet):
 
     def update(self, request, *args, **kwargs):
         instance = get_reference(user_request=self.request.user, id=kwargs["pk"])
-        serializer = ReferenceSerializer(data=request.data)
+        serializer = ReferenceSerializer(instance=instance, partial=True, data=request.data)
         serializer.is_valid(raise_exception=True)
         instance = update_reference(reference=instance, data=serializer.validated_data)
         serializer = ReferenceSerializer(instance)

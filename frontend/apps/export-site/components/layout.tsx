@@ -15,7 +15,11 @@ interface LayoutProps {
 const Layout = (props: LayoutProps) => {
   const { children, project } = props;
   return (
-    <MainLayout project={project} basePath="/" linkComponent={Link}>
+    <MainLayout
+      project={project}
+      basePath="/"
+      linkComponent={Link}
+    >
       {children}
     </MainLayout>
   );

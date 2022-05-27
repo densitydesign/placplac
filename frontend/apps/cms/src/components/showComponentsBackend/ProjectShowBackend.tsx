@@ -9,7 +9,6 @@ import {
 } from '@algocount/ui-site';
 import { HashLink as LinkRR } from 'react-router-hash-link';
 import { LinkProps as LinkRRProps } from 'react-router-dom';
-import { ScrollToTop } from './ScrollToTop';
 import { useQuery } from 'react-query';
 import { client } from '../../dataProvider';
 interface LinkProps extends Omit<LinkRRProps, 'to'> {
@@ -35,7 +34,6 @@ export const ProjectShowBackend = () => {
         path={'/'}
         element={
           <Layout project={project} linkComponent={Link} basePath={basePath}>
-            <ScrollToTop />
             <Outlet />
           </Layout>
         }

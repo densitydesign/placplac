@@ -18,7 +18,7 @@ export const GlossarySidebar = (props: GlossarySidebarProps) => {
   const [activeItem, setActiveItem] = useState<GlossaryTerm>();
 
   useEffect(() => {
-    if (hash && hash.includes('glossary')) {
+    if (hash && hash.includes('glossary/')) {
       const glossaryTermId = hash.replace('#glossary/', '');
       const glossaryTerm = glossaryTerms.find(
         (term) => term.id.toString() === glossaryTermId

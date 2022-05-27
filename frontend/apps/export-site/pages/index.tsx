@@ -11,12 +11,6 @@ export async function getStaticProps() {
   return {
     props: {
       project: fileContents,
-      experiments: fileContents.experiments,
-      glossaryTerms: fileContents.glossary_terms,
-      glossaryCategories: fileContents.glossary_categories,
-      references: fileContents.references,
-      language: fileContents.language,
-      footer: fileContents.footer,
     },
   };
 }

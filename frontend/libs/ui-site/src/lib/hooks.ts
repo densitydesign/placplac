@@ -1,7 +1,8 @@
 import { GlossaryTerm, Reference } from '@algocount/shared/types';
-import { DependencyList, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as React from 'react';
 import useResizeObserver from '@react-hook/resize-observer';
+import { useReactHash } from './useReactPath';
 export function useReferencesAdjuster(references: Reference[]) {
   //adjust reference numbers to respect the list numeration
   return useEffect(() => {
@@ -35,6 +36,41 @@ export function useGlossaryAdjuster(glossaryTerms: GlossaryTerm[]) {
   }, [glossaryTerms]);
 }
 
+export function useAnchors(basePath: string) {
+  const hash = useReactHash();
+  useEffect(() => {
+    const serverPath = process.env.NX_BASE_PATH
+      ? process.env.NX_BASE_PATH
+      : basePath;
+    const path = serverPath.endsWith('/') ? serverPath : `${serverPath}/`;
+
+    const anchors = document.querySelectorAll('.anchorExperiments');
+    anchors.forEach((element) => {
+      console.log(element);
+      const el = element as HTMLAnchorElement;
+      const href = el.getAttribute('data-href');
+      el.href = `${path}${href}`;
+    });
+  });
+
+  useEffect(() => {
+    //remember there is another useeffect watching for hash in glossarysidebar, so we mush check there is no glossary/ in hash
+    if (hash && !hash.includes('glossary/')) {
+      const anchorId = decodeURI(hash.replace('#', ''));
+      const element = document.getElementById(anchorId);
+      if (!element) {
+        const anchor = document.querySelector(
+          `span[data-anchor-id="${anchorId}"]`
+        );
+        if (anchor)
+          anchor.scrollIntoView({
+            behavior: 'smooth', // smooth scroll
+            block: 'start',
+          });
+      }
+    }
+  }, [hash]);
+}
 export function useDebounce<T>(value: T, delay: number): T {
   // State and setters for debounced value
   const [debouncedValue, setDebouncedValue] = useState<T>(value);

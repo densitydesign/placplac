@@ -4,6 +4,7 @@ import { TextShow } from '../TextShow';
 import { GlossaryCategory, GlossaryTerm } from '@algocount/shared/types';
 import { GlossaryTermsList } from '../components/GlossaryTermsList';
 import { getRealPath } from '../utils';
+import { useAnchors } from '../hooks';
 interface GlossaryCategoryShowProps {
   glossaryCategory: GlossaryCategory;
   glossaryTerms: GlossaryTerm[];
@@ -17,6 +18,8 @@ export const GlossaryCategoryShow = (props: GlossaryCategoryShowProps) => {
     basePath,
     linkComponent: Link,
   } = props;
+  useAnchors(basePath);
+
   return (
     <div className={styles.main}>
       <div className={styles.sidebar}>

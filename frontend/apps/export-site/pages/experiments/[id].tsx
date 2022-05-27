@@ -40,7 +40,7 @@ const ExperimentShow = dynamic(
 
 const Experiment: NextPage = ({ experiment, project }: any) => {
   return (
-    <Layout project={project}>
+    <Layout project={project} >
       <ExperimentShow
         language={project.language}
         glossaryCategories={project.glossary_categories}

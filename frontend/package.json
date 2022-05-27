@@ -13,7 +13,7 @@
         "@nrwl/next": "^14.1.5",
         "@react-hook/resize-observer": "^1.2.5",
         "@react-sigma/core": "^2.0.2",
-        "@tinymce/tinymce-react": "^3.13.0",
+        "@tinymce/tinymce-react": "^4.1.0",
         "@types/react-lines-ellipsis": "^0.15.1",
         "@types/react-portal": "^4.0.4",
         "axios": "^0.24.0",

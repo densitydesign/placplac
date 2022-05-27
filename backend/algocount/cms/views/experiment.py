@@ -40,7 +40,7 @@ class ExperimentViewSet(viewsets.ModelViewSet):
 
     def update(self, request, *args, **kwargs):
         instance = get_experiment(user_request=self.request.user, id=kwargs["pk"])
-        serializer = ExperimentSerializer(data=request.data)
+        serializer = ExperimentSerializer(instance=instance, partial=True, data=request.data)
         serializer.is_valid(raise_exception=True)
         instance = update_experiment(experiment=instance, data=serializer.validated_data)
         serializer = ExperimentSerializer(instance)

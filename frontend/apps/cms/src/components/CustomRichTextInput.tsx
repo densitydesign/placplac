@@ -18,7 +18,6 @@ interface CustomRichTextInputProps extends CommonInputProps {
 export const CustomRichTextInput = (props: CustomRichTextInputProps) => {
   const {
     defaultValue = '',
-    fullWidth,
     helperText,
     label,
     source,
@@ -40,6 +39,7 @@ export const CustomRichTextInput = (props: CustomRichTextInputProps) => {
   const {
     glossaryTerms: unformattedGlossaryItems,
     references: unformattedReferences,
+    anchors,
   } = useProjectContext();
 
   const glossaryItems = useMemo(() => {
@@ -71,7 +71,6 @@ export const CustomRichTextInput = (props: CustomRichTextInputProps) => {
   }, [unformattedReferences]);
   const rerenderKey =
     JSON.stringify(glossaryItems) + JSON.stringify(referenceItems);
-
   return (
     <FormControl
       style={{ marginTop: '20px' }}
@@ -89,7 +88,7 @@ export const CustomRichTextInput = (props: CustomRichTextInputProps) => {
       </InputLabel>
       <Box mt={'8px'}>
         <Editor
-          tinymceScriptSrc={'/assets/tinymce/js/tinymce/tinymce.min.js'}
+          tinymceScriptSrc={'/assets/tinymce6/tinymce.min.js'}
           value={field.value ?? ''}
           onEditorChange={(a, editor) => {
             field.onChange(a);
@@ -100,18 +99,31 @@ export const CustomRichTextInput = (props: CustomRichTextInputProps) => {
             menubar: false,
             branding: false,
             placeholder,
-
+            convert_urls: false,
             plugins: [
-              'noneditable emoticons',
-              'advlist autolink lists link charmap print preview anchor',
-              'searchreplace visualblocks code fullscreen',
-              'insertdatetime media table paste help wordcount',
+              'emoticons',
+              'advlist',
+              'autolink',
+              'lists',
+              'link',
+              'charmap',
+              'preview',
+              'searchreplace',
+              'visualblocks',
+              'code',
+              'fullscreen',
+              'insertdatetime',
+              'media',
+              'table',
+              'help',
+              'wordcount',
             ],
+            extended_valid_elements: 'span[data-anchor-id|class]',
             toolbar: onlyStyle
               ? 'undo redo | bold italic underline | '
               : 'undo redo | formatselect | ' +
                 'bold italic underline backcolor forecolor | alignleft aligncenter ' +
-                'alignright alignjustify | bullist numlist outdent indent emoticons table image link example glossary | ' +
+                'alignright alignjustify | bullist numlist outdent indent emoticons table image link anchorsExperiment createAnchor example glossary | ' +
                 'removeformat  | help ',
             content_style: contentUiCss,
             body_class: 'main-application',
@@ -173,9 +185,7 @@ export const CustomRichTextInput = (props: CustomRichTextInputProps) => {
                     const text = editor.selection.getContent({
                       format: 'html',
                     });
-                    const index = referenceItems.findIndex(
-                      (reference) => reference.value === data.reference
-                    );
+
                     const reference = unformattedReferences.find(
                       (reference) => reference.id.toString() === data.reference
                     );
@@ -236,6 +246,99 @@ export const CustomRichTextInput = (props: CustomRichTextInputProps) => {
                   },
                 });
               };
+              const openDialogAnchors = function () {
+                const text = editor.selection.getContent({
+                  format: 'text',
+                });
+                return editor.windowManager.open({
+                  title: 'Anchors',
+                  initialData: { content: text, link: '' },
+                  body: {
+                    type: 'panel',
+                    items: [
+                      {
+                        type: 'listbox', // component type
+                        name: 'link', // identifier
+                        label: 'Select anchor',
+                        items: [{ text: 'None', value: '' }, ...anchors],
+                      },
+                      {
+                        type: 'input', // component type
+                        name: 'content', // identifier
+                        inputMode: 'text',
+                        label: 'Content', // text for the label
+                        placeholder: 'Example', // placeholder text for the input
+                        maximized: false, // grow width to take as much space as possible
+                      },
+                    ],
+                  },
+                  buttons: [
+                    {
+                      type: 'cancel',
+                      text: 'Close',
+                    },
+                    {
+                      type: 'submit',
+                      text: 'Save',
+                      primary: true,
+                    },
+                  ],
+                  onSubmit: function (api) {
+                    const data = api.getData() as any;
+                    if (!data?.link || !data?.content)
+                      alert('Make sure you selected anchor and display value!');
+                    else {
+                      const html = `
+                        <a class="anchorExperiments" data-href='${data.link}' href='${data.link}'>
+                        ${data.content}
+                        </a>`;
+                      editor.insertContent(html);
+
+                      api.close();
+                    }
+                  },
+                });
+              };
+              const openDialogCreateAnchor = function () {
+                return editor.windowManager.open({
+                  title: 'Anchors',
+                  body: {
+                    type: 'panel',
+                    items: [
+                      {
+                        type: 'input', // component type
+                        name: 'anchor_id', // identifier
+                        inputMode: 'text',
+                        label: 'ID', // text for the label
+                        placeholder: 'Example', // placeholder text for the input
+                        maximized: false, // grow width to take as much space as possible
+                      },
+                    ],
+                  },
+                  buttons: [
+                    {
+                      type: 'cancel',
+                      text: 'Close',
+                    },
+                    {
+                      type: 'submit',
+                      text: 'Save',
+                      primary: true,
+                    },
+                  ],
+                  onSubmit: function (api) {
+                    const data = api.getData() as any;
+                    if (!data?.anchor_id)
+                      alert('Make sure you defined the anchor id!');
+                    else {
+                      const html = `<span class="mce-item-anchor-exp mceNonEditable" data-anchor-id='${data.anchor_id}'></span>`;
+                      editor.insertContent(html);
+
+                      api.close();
+                    }
+                  },
+                });
+              };
               /* Add a button that opens a window */
               editor.ui.registry.addButton('example', {
                 text: 'Add reference',
@@ -247,6 +350,18 @@ export const CustomRichTextInput = (props: CustomRichTextInputProps) => {
                 text: 'Add glossary term',
                 onAction: function () {
                   openDialogGlossary();
+                },
+              });
+              editor.ui.registry.addButton('anchorsExperiment', {
+                text: 'Add link to anchor',
+                onAction: function () {
+                  openDialogAnchors();
+                },
+              });
+              editor.ui.registry.addButton('createAnchor', {
+                text: 'Create anchor',
+                onAction: function () {
+                  openDialogCreateAnchor();
                 },
               });
             },

@@ -97,7 +97,6 @@ export const FormSaveButton = <RecordType extends RaRecord = any>(
       aria-label={displayedLabel}
       disabled={disabled}
       onClick={handleClick}
-      // TODO: find a way to display the loading state (LoadingButton from mui Lab?)
       {...sanitizeButtonRestProps(rest)}
     >
       {finalSaving ? <CircularProgress size={18} thickness={2} /> : icon}
