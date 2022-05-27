@@ -49,24 +49,19 @@ export const CustomAppBar = (props: AppBarProps) => {
       <MuiAppBar className={className} color={color} {...rest}>
         <Toolbar disableGutters variant={'dense'} className={classes.toolbar}>
           <SidebarToggleButton className={classes.menuButton} />
-          {Children.count(children) === 0 ? (
-            <Typography
-              variant="h6"
-              color="inherit"
-              className={classes.title}
-              style={{
-                flex: 1,
-                textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap',
-                overflow: 'hidden',
-              }}
-              id="react-admin-title"
-            />
-          ) : (
-            <Typography variant="h6" color="inherit" className={classes.title}>
-              PlacPlac
-            </Typography>
-          )}
+          <Typography
+            style={{
+              flex: 1,
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+            }}
+            variant="h6"
+            color="inherit"
+            className={classes.title}
+          >
+            PlacPlac
+          </Typography>
           <LoadingIndicator />
           <UserMenu>
             <Logout />
