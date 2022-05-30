@@ -53,6 +53,7 @@ import GraphAppearance from '../GraphAppearance';
 import GraphControls from '../GraphControls';
 import NodeSizeCaption from '../NodeSizeCaption';
 import { BsChevronDoubleLeft, BsChevronDoubleRight } from 'react-icons/bs';
+import { useSize } from '../../../hooks';
 interface SigmaGraphProps {
   gexfPath: string;
   hasControls?: boolean;
@@ -62,7 +63,12 @@ export const SigmaGraph = (props: SigmaGraphProps) => {
   const { gexfPath, hasControls = true } = props;
   const location = useLocation();
   const domRoot = useRef<HTMLElement>(null);
+  const size = useSize(domRoot.current);
+
   const [sigma, setSigma] = useState<Sigma | undefined>(undefined);
+  useEffect(() => {
+    if (sigma) sigma.refresh();
+  }, [size, sigma]);
   const [dimensions, setDimensions] = useState<Dimensions>({
     width: 1000,
     height: 1000,
