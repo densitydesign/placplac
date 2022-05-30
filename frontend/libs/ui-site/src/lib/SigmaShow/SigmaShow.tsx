@@ -2,7 +2,7 @@ import React from 'react';
 import Modal from 'react-modal';
 import { DoubleClickContainer } from '../components/DoubleClickContainer';
 import { FullScreenModal } from '../components/FullScreenModal';
-import { SigmaGraph } from './SigmaGraph';
+import { SigmaGraph } from './views/SigmaGraph';
 interface SigmaShowProps {
   gexfPath: string;
   height?: string;
@@ -22,7 +22,7 @@ export const SigmaShow = (props: SigmaShowProps) => {
 
   return (
     <>
-      <DoubleClickContainer height={height}  onDoubleClick={openModal}>
+      <DoubleClickContainer height={height} onDoubleClick={openModal}>
         <SigmaGraph hasControls={false} gexfPath={gexfPath} />
       </DoubleClickContainer>
       <FullScreenModal isOpen={modalIsOpen} onClose={closeModal}>

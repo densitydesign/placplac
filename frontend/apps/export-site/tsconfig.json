@@ -1,29 +1,36 @@
 {
-  "extends": "../../tsconfig.base.json",
-  "compilerOptions": {
-    "jsx": "preserve",
-    "allowJs": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "types": [
-      "node",
-      "jest"
+    "extends": "../../tsconfig.base.json",
+    "compilerOptions": {
+        "jsx": "preserve",
+        "allowJs": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "types": [
+            "node",
+            "jest"
+        ],
+        "strict": false,
+        "forceConsistentCasingInFileNames": true,
+        "noEmit": true,
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "incremental": true,
+    },
+    "files": [
+        "../../node_modules/@nrwl/react/typings/cssmodule.d.ts",
+        "../../node_modules/@nrwl/react/typings/image.d.ts",
+        "../../libs/shared/types/src/lib/jslibutils.d.ts",
+        "../../libs/ui-site/src/lib/SigmaShow/types/glsl.d.ts",
+        "../../libs/ui-site/src/lib/SigmaShow/types/iwanthue.d.ts",
     ],
-    "strict": false,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "incremental": true
-  },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    "**/*.js",
-    "**/*.jsx",
-    "next-env.d.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+    "include": [
+        "**/*.ts",
+        "**/*.tsx",
+        "**/*.js",
+        "**/*.jsx",
+        "next-env.d.ts"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
 }

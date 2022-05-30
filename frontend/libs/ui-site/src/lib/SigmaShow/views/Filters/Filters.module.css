@@ -1,0 +1,81 @@
+.search_filter_form {
+  display: flex;
+  flex-direction: row;
+}
+
+.term_list {
+  list-style: none;
+  padding: 0;
+}
+
+.term_list li {
+  margin-bottom: 0.1em;
+  border-radius: 5px;
+  padding: 2px;
+}
+
+.term_list .bar {
+  position: relative;
+  height: 5px;
+}
+
+.term_list .bar .global,
+.term_list .bar .filtered {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  transition: width ease-in-out 0.2s;
+}
+.term_list .bar .global {
+  background: #dee2e6;
+}
+
+.term_list .bar .filtered {
+  background: #343a40;
+}
+
+.range_filter_list {
+  list-style: none;
+  padding: 0;
+  height: 160px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.range_filter_list .bar {
+  position: relative;
+  height: 100%;
+  flex-grow: 1;
+}
+
+.range_filter_list .bar .global,
+.range_filter_list .bar .filtered {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: height ease-in-out 0.2s;
+}
+
+.range_filter_list .bar .global {
+  background: #dee2e6;
+}
+
+.range_filter_list .bar .filtered {
+  background: #343a40;
+}
+.range_filter_list .bar .label {
+  position: absolute;
+  text-align: center;
+  width: 100%;
+  font-size: 0.8em;
+}
+.range_filter_list .bar .inside {
+  top: 0;
+}
+
+.range_filter_list .bar .outside {
+  bottom: 100%;
+}

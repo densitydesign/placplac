@@ -10,6 +10,7 @@ export const FullScreenModal = (props: FullScreenModalProps) => {
   const { onClose, isOpen, children } = props;
   return (
     <Modal
+      id={'fullScreenModal'}
       shouldCloseOnEsc
       isOpen={isOpen}
       style={{ overlay: { zIndex: 10 } }}

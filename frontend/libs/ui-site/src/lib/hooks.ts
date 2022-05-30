@@ -46,7 +46,6 @@ export function useAnchors(basePath: string) {
 
     const anchors = document.querySelectorAll('.anchorExperiments');
     anchors.forEach((element) => {
-      console.log(element);
       const el = element as HTMLAnchorElement;
       const href = el.getAttribute('data-href');
       el.href = `${path}${href}`;
