@@ -173,12 +173,12 @@ export const SelectFile = ({
     parse,
     resource,
     source,
-    validate: validate,
-    //   validate && Array.isArray(validate)
-    //     ? [...validate, validate_image]
-    //     : validate
-    //     ? [validate, validate_image]
-    //     : validate_image,
+    validate:
+      validate && Array.isArray(validate)
+        ? [...validate, validate_image]
+        : validate
+        ? [validate, validate_image]
+        : validate_image,
     ...rest,
   });
   const { error, invalid, isTouched } = fieldState;

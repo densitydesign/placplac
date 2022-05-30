@@ -1,10 +1,17 @@
 import datetime
+import os
+import urllib
 from pathlib import Path
 from typing import List
+from urllib import request
+from urllib.parse import urlparse
+from urllib.request import urlopen
 
 from django.contrib.staticfiles.finders import find
 from django.core.files.base import ContentFile
+from django.core.files.temp import NamedTemporaryFile
 from django.db import transaction
+from django.utils.crypto import get_random_string
 from rest_framework import exceptions
 from rest_framework.exceptions import ValidationError
 
@@ -12,6 +19,9 @@ from authentication.models import User
 from base.services import model_update
 from cms.models import GlossaryCategory, Project, ProjectMedia, ProjectUser
 from cms.selectors.project import user_has_delete_project_permissions, user_has_change_project_permissions
+from io import BytesIO, StringIO
+
+from PIL import Image, UnidentifiedImageError
 
 
 def get_all_relation_objects(relation_set):
@@ -189,11 +199,35 @@ def remove_user_from_project(*, project_user: ProjectUser):
 
 def create_project_media(*, request_user: User,
                          project: Project,
-                         file: str,
+                         file: str = None,
                          description: str,
-                         type: ProjectMedia.FileTypeChoices):
+                         type: ProjectMedia.FileTypeChoices,
+                         file_url: str = None):
     if request_user and not user_has_change_project_permissions(project=project, user=request_user):
         raise ValidationError({"project": ["Project not found!"]})
+    if file_url and type != ProjectMedia.FileTypeChoices.IMAGE:
+        raise ValidationError({"file_url": "You can specify file url olny for images"})
+    if file is None and file_url is None:
+        raise ValidationError({"detail": "Specify file or file url"})
+    if file and file_url:
+        raise ValidationError({"detail": "Specify only one between file and file url"})
+    if file_url:
+        try:
+            file_name = os.path.basename(urlparse(file_url).path)
+            file_name, file_extension = os.path.splitext(file_name)
+        except OSError:
+            file_name = get_random_string()
+        try:
+            request = urllib.request.Request(file_url, headers={'User-Agent': 'Mozilla/5.0'})
+            response = urlopen(request)
+            file = ContentFile(content=response.read())
+            image = Image.open(file)
+            file_name = f"{file_name}.{image.format.lower()}"
+            file.name = file_name
+
+        except (OSError, UnidentifiedImageError) as e:
+            raise ValidationError({"file_url": "The file is not an image!"})
+
     project_media = ProjectMedia.objects.create(project=project, file=file, description=description, type=type)
     return project_media
 

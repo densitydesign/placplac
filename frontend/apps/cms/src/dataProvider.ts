@@ -215,7 +215,8 @@ const dataprovider = (apiUrl: string): CustomDataProvider => {
       const formData = new FormData();
       Object.keys(params.data).forEach((key) => {
         if (key === 'file') {
-          formData.append('file', params.data[key].rawFile);
+          if (params.data[key])
+            formData.append('file', params.data[key].rawFile);
         } else {
           formData.append(key, params.data[key]);
         }

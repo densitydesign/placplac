@@ -87,7 +87,8 @@ class ProjectSerializer(serializers.ModelSerializer):
 
 class ProjectMediaSerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField('get_filename')
-    file = CustomFileField()
+    file = CustomFileField(required=False)
+    file_url = serializers.URLField(required=False, write_only=True)
 
     def get_filename(self, object):
         return os.path.basename(object.file.path) if object.file else None
@@ -96,7 +97,7 @@ class ProjectMediaSerializer(serializers.ModelSerializer):
         model = ProjectMedia
         fields = ["id", "project",
                   "file",
-                  "description", "type", "name",
+                  "description", "type", "name", "file_url"
                   ]
 
 
