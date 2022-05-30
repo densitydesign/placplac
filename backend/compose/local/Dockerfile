@@ -8,9 +8,14 @@ RUN mkdir /export/
 COPY ./backend/requirements.txt .
 RUN pip3 install -r requirements.txt
 
+COPY ./frontend/package.json /code/frontend/package.json
+COPY ./frontend/package-lock.json /code/frontend/package-lock.json
+WORKDIR /code/frontend
+RUN npm install -g nx
+RUN npm ci
 COPY ./frontend /code/frontend
-RUN mkdir -p /code/backend/algocount/media
 
+RUN mkdir -p /code/backend/algocount/media
 WORKDIR /code
 COPY ./backend/compose/local/entrypoint /entrypoint
 RUN sed -i 's/\r$//g' /entrypoint

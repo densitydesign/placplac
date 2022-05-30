@@ -99,7 +99,7 @@ const OptionComponent = ({
 
 const IndicatorComponent = () => {
   return (
-    <div className="text-center" style={{ width: '2em' }}>
+    <div className="text-center" style={{ width: '2em', textAlign: 'center' }}>
       <BsSearch />
     </div>
   );

@@ -12,7 +12,7 @@ services:
       dockerfile: ./backend/compose/local/Dockerfile
     command: /start
     volumes:
-      - ./backend:/code/backend
+      - ./backend/algocount:/code/backend/algocount
     ports:
       - "8000:8000"
     depends_on:
