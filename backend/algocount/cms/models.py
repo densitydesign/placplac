@@ -34,6 +34,23 @@ class Project(CustomModel):
     base_path_build = models.TextField(null=True, blank=True)
     last_update = models.DateTimeField()
 
+    @classmethod
+    def get_to_replace_media_attributes(cls):
+        return ["short_description",
+                "footer",
+                "project_explanation",
+                "experiments_description",
+                "long_description",
+                "glossary_description", "cover_images"]
+
+    @classmethod
+    def get_to_replace_glossary_attributes(cls):
+        return ["short_description",
+                "project_explanation",
+                "experiments_description",
+                "long_description",
+                "glossary_description"]
+
     def get_content(self):
         return "{}{}{}".format(self.short_description, self.project_explanation, self.long_description)
 
@@ -87,6 +104,23 @@ class Experiment(CustomModel):
         return "{}{}{}{}{}".format(json.dumps(self.context), json.dumps(self.findings), json.dumps(
             self.experiment_setup), self.description, steps_content)
 
+    @classmethod
+    def get_to_replace_media_attributes(cls):
+        return ["cover",
+                "context",
+                "description",
+                "experiment_setup",
+                "findings",
+                "pdf_report"]
+
+    @classmethod
+    def get_to_replace_glossary_attributes(cls):
+        return [
+            "context",
+            "description",
+            "experiment_setup",
+            "findings"]
+
     class Meta:
         ordering = ["order"]
 
@@ -99,6 +133,14 @@ class ExperimentAdditionalMaterial(CustomModel):
     file = models.FileField(upload_to=get_upload_experiment_path)
     experiment = models.ForeignKey(Experiment, on_delete=models.CASCADE)
 
+    @classmethod
+    def get_to_replace_media_attributes(cls):
+        return ["file"]
+
+    @classmethod
+    def get_to_replace_glossary_attributes(cls):
+        return []
+
 
 class Step(CustomModel):
     title = models.CharField(max_length=255)
@@ -110,6 +152,16 @@ class Step(CustomModel):
     class Meta:
         ordering = ["step_number"]
 
+    @classmethod
+    def get_to_replace_media_attributes(cls):
+        return ["description",
+                "content"]
+
+    @classmethod
+    def get_to_replace_glossary_attributes(cls):
+        return ["description",
+                "content"]
+
 
 def get_upload_step_path(instance, filename):
     return os.path.join(str(instance.step.experiment.project_id), filename)
@@ -120,12 +172,29 @@ class StepDownload(CustomModel):
     file = models.FileField(upload_to=get_upload_step_path)
     step = models.ForeignKey(Step, on_delete=models.CASCADE)
 
+    @classmethod
+    def get_to_replace_media_attributes(cls):
+        return ["file",
+                "title"]
+
+    @classmethod
+    def get_to_replace_glossary_attributes(cls):
+        return ["title"]
+
 
 class GlossaryCategory(CustomModel):
     title = models.CharField(max_length=50)
     description = models.TextField()
     color = models.CharField(max_length=10)
     project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True)
+
+    @classmethod
+    def get_to_replace_media_attributes(cls):
+        return ["description"]
+
+    @classmethod
+    def get_to_replace_glossary_attributes(cls):
+        return ["description"]
 
     class Meta:
         unique_together = ('title', 'project',)
@@ -139,6 +208,14 @@ class GlossaryTerm(CustomModel):
     glossary_category = models.ForeignKey(GlossaryCategory, on_delete=models.CASCADE)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     more_info_url = ArrayField(base_field=models.JSONField(), blank=True, default=list)
+
+    @classmethod
+    def get_to_replace_media_attributes(cls):
+        return ["image", "description"]
+
+    @classmethod
+    def get_to_replace_glossary_attributes(cls):
+        return ["description"]
 
 
 class ReferenceManager(models.Manager):
@@ -157,3 +234,11 @@ class Reference(CustomModel):
     description = models.TextField()
     in_text_citation = models.TextField()
     project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True, blank=True)
+
+    @classmethod
+    def get_to_replace_media_attributes(cls):
+        return []
+
+    @classmethod
+    def get_to_replace_glossary_attributes(cls):
+        return ["description", "in_text_citation"]
