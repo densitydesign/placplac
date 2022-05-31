@@ -10,7 +10,16 @@ const nextConfig = {
     // See: https://github.com/gregberge/svgr
     svgr: false,
   },
-  basePath:process.env.NX_BASE_PATH
+  basePath: process.env.NX_BASE_PATH,
+  webpack: (config, options) => {
+    config.module.rules.push({
+      test: /\.glsl$/,
+      loader: 'raw-loader',
+      exclude: /node_modules/,
+    });
+
+    return config;
+  },
 };
 
 module.exports = withNx(nextConfig);

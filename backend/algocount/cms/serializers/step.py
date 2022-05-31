@@ -4,13 +4,14 @@ import os
 from rest_framework import serializers
 
 from base.serializer_fields import FormattedJSONField, CustomFileField
-from cms.models import Step, StepDownload
+from cms.models import Step, StepDownload, Experiment
 from cms.serializers.glossary import FullGlossaryTermSerializer
 
 
 class StepSerializer(serializers.ModelSerializer):
     project = serializers.SlugRelatedField(read_only=True, source="experiment", slug_field="project_id")
     stepdownload_set = serializers.PrimaryKeyRelatedField(read_only=True, many=True)
+    step_number = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = Step
@@ -19,6 +20,11 @@ class StepSerializer(serializers.ModelSerializer):
                   "content",
                   "step_number",
                   "experiment", "project", "stepdownload_set"]
+
+
+class ReorderStepSerializer(serializers.Serializer):
+    experiment = serializers.PrimaryKeyRelatedField(queryset=Experiment.objects.all())
+    steps = serializers.PrimaryKeyRelatedField(queryset=Step.objects.all(), many=True)
 
 
 class StepDownloadSerializer(serializers.ModelSerializer):
@@ -60,4 +66,12 @@ class FullStepSerializer(serializers.ModelSerializer):
                   "description",
                   "content",
                   "step_number",
-                  "experiment", "downloads","glossary_terms"]
+                  "experiment", "downloads", "glossary_terms"]
+
+
+class StepFilterSerializer(serializers.Serializer):
+    experiment = serializers.PrimaryKeyRelatedField(queryset=Experiment.objects.all(), required=False)
+
+
+class StepDownloadFilterSerializer(serializers.Serializer):
+    step = serializers.PrimaryKeyRelatedField(queryset=Step.objects.all(), required=False)

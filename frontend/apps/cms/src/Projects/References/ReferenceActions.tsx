@@ -1,19 +1,23 @@
-import { Link } from 'ra-ui-materialui';
-import { useRecordContext } from 'ra-core';
-import { Typography, Breadcrumbs } from '@material-ui/core';
+import { Link } from 'react-admin';
+import { useRecordContext } from 'react-admin';
+import { Typography, Breadcrumbs } from '@mui/material';
 import { RichTextField, useGetOne } from 'react-admin';
 import { TopToolbarWithTitle } from '../../components/TopToolbarWithTitle';
-import { PreviewButton } from '../PreviewButton';
+import { PreviewButton } from '../components/PreviewButton';
 
 export const ReferenceActions = () => {
   const record = useRecordContext();
 
-  const { data: experiment } = useGetOne('experiments', record?.experiment, {
-    enabled: !!record?.experiment,
-  });
+  const { data: experiment } = useGetOne(
+    'experiments',
+    { id: record?.experiment },
+    {
+      enabled: !!record?.experiment,
+    }
+  );
   const { data: project } = useGetOne(
     'projects',
-    record?.project ? record.project : experiment?.project,
+    { id: record?.project ? record.project : experiment?.project },
     {
       enabled: !!record?.project || !!experiment?.project,
     }

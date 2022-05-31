@@ -11,7 +11,7 @@ export type Step = {
   downloads: { id: string; file: string; title: string; name: string }[];
 };
 export type GlossaryTerm = {
-  id: string;
+  id: string | number;
   title: string;
   color: string;
   glossary_category: string;
@@ -20,7 +20,7 @@ export type GlossaryTerm = {
   image: string | null;
   description: string;
   used_in: { id: number | string; title: string }[];
-  related: Partial<GlossaryTerm>[];
+  related: Pick<GlossaryTerm, 'id' | 'title' | 'color'>[];
 };
 export type GlossaryCategory = {
   id: number;
@@ -31,11 +31,13 @@ export type GlossaryCategory = {
 export type Reference = {
   id: number;
   description: string;
+  in_text_citation: string;
 };
 
 export type LanguageOptions = 'it' | 'en';
 
 export type Project = {
+  id: string | number;
   title: string;
   short_description: string;
   experiments_description: string;
@@ -45,6 +47,10 @@ export type Project = {
   language: LanguageOptions;
   references: Reference[];
   project_explanation?: string;
+  in_project_references: Reference[];
+  glossary_categories: GlossaryCategory[];
+  footer: Footer;
+  cover_images: string[];
 };
 export type Experiment = {
   id: number;

@@ -1,11 +1,11 @@
-import { Edit, EditProps } from "react-admin";
-import { ExperimentActions } from "./ExperimentActions";
+import { Edit, EditProps } from 'react-admin';
+import { ExperimentActions } from './ExperimentActions';
 
-import { ExperimentForm } from "./ExperimentForm";
+import { ExperimentForm } from './ExperimentForm';
 
-export const ExperimentEdit = (props: EditProps) => {
+export const ExperimentEdit = () => {
   return (
-    <Edit {...props} actions={<ExperimentActions />}>
+    <Edit redirect="edit" actions={<ExperimentActions />}>
       <ExperimentForm />
     </Edit>
   );

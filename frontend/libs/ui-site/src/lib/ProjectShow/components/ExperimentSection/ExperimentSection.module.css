@@ -16,7 +16,7 @@
 .cover {
   background-repeat: no-repeat;
   background-size: cover;
-  background-color: grey;
+  background-color: white;
   border-right: 1px solid #000000;
   box-sizing: border-box;
 }

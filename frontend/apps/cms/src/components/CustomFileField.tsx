@@ -1,4 +1,4 @@
-import { CircularProgress, Link } from '@material-ui/core';
+import { CircularProgress, Link } from '@mui/material';
 import { get } from 'lodash';
 import React from 'react';
 import { useNotify, useRecordContext } from 'react-admin';
@@ -36,7 +36,7 @@ export const CustomFileField = (props: Props) => {
       setLoading(false);
     } catch (err) {
       setLoading(false);
-      notify('Errore', 'error');
+      notify('Errore', { type: 'error' });
       return;
     }
 

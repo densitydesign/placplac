@@ -1,5 +1,7 @@
 .idea
 /data
 /LOG
+/
 .DS_Store
 .env
+/.envs/.production/.backend

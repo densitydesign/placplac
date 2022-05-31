@@ -5,12 +5,17 @@ import { ExperimentSetupListShow } from './ExperimentSetupListShow';
 import { IFrame } from './IFrame';
 import { ImageShow } from './ImageShow';
 import { ImageShowStep } from './ImageShowStep';
+import { PDFShow } from './PDFShow/PDFShow';
 import { SigmaShow } from './SigmaShow';
 import { TextShow } from './TextShow';
 import { getRealPath } from './utils';
 import { VideoPlayer } from './VideoPlayer';
 
 export const SHOW_COMPONENTS_BUILDER: BuilderShowBlocks = {
+  pdf: {
+    description: 'PDF',
+    render: (content: any) => <PDFShow {...content} />,
+  },
   image: {
     description: 'Image',
 

@@ -2,7 +2,7 @@ import json
 
 from rest_framework import serializers
 
-from cms.models import GlossaryCategory, GlossaryTerm
+from cms.models import GlossaryCategory, GlossaryTerm, Project
 
 
 class GlossaryTermSerializer(serializers.ModelSerializer):
@@ -25,10 +25,12 @@ class FullGlossaryTermSerializer(serializers.ModelSerializer):
     category_title = serializers.CharField(source="glossary_category.title", read_only=True)
     used_in = serializers.SerializerMethodField(method_name="get_used_in")
     related = serializers.SerializerMethodField(method_name="get_related")
-    def get_related (self,object):
+
+    def get_related(self, object):
         result = []
         for related in object.related.all():
-            result.append({"id":related.id,"title":related.title,"color":related.glossary_category.color, "category":related.glossary_category.id})
+            result.append({"id": related.id, "title": related.title, "color": related.glossary_category.color,
+                           "category": related.glossary_category.id})
         return result
 
     def get_used_in(self, object):
@@ -36,11 +38,12 @@ class FullGlossaryTermSerializer(serializers.ModelSerializer):
         for experiment in object.project.experiment_set.all():
             steps_content = "".join(
                 ["{}{}".format(json.dumps(step.content), step.description) for step in experiment.step_set.all()])
-            content_str = "{}{}{}{}{}".format(json.dumps(experiment.context), json.dumps(experiment.findings), json.dumps(
-                experiment.experiment_setup), experiment.description, steps_content)
+            content_str = "{}{}{}{}{}".format(json.dumps(experiment.context), json.dumps(experiment.findings),
+                                              json.dumps(
+                                                  experiment.experiment_setup), experiment.description, steps_content)
             check_link = "glossary/{}".format(object.id)
             if check_link in content_str:
-                found_experiments.append({"id":experiment.id, "title" :experiment.title})
+                found_experiments.append({"id": experiment.id, "title": experiment.title})
         return found_experiments
 
     def get_image(self, obj):
@@ -54,7 +57,7 @@ class FullGlossaryTermSerializer(serializers.ModelSerializer):
                   "related",
                   "glossary_category",
                   "color",
-                  "more_info_url", "project", "category_title","used_in"]
+                  "more_info_url", "project", "category_title", "used_in"]
 
 
 class GlossaryCategorySerializer(serializers.ModelSerializer):
@@ -62,7 +65,13 @@ class GlossaryCategorySerializer(serializers.ModelSerializer):
         model = GlossaryCategory
         fields = ["id", "title",
                   "description",
-                  "color","project"
+                  "color", "project"
                   ]
 
 
+class FilterGlossaryCategorySerializer(serializers.Serializer):
+    project = serializers.PrimaryKeyRelatedField(queryset=Project.objects.all(), required=False)
+
+
+class FilterGlossaryTermSerializer(serializers.Serializer):
+    project = serializers.PrimaryKeyRelatedField(queryset=Project.objects.all(), required=False)

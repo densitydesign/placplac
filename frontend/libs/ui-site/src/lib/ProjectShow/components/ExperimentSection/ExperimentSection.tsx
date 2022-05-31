@@ -40,11 +40,7 @@ export const ExperimentSection = ({
         </div>
       </Link>
       <div className={styles.pointing_hand}>
-        <img
-          width="20px"
-          height="auto"
-          src={getRealPath('/assets/hand-pointing.png')}
-        />
+        <img width="20px" height="auto" src={getRealPath('/assets/Hand.svg')} />
       </div>
     </div>
   );

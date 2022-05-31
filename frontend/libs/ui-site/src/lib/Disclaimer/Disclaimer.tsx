@@ -1,5 +1,6 @@
 import classnames from 'classnames';
 import React, { useEffect, useRef, useState } from 'react';
+import { TextShow } from '../TextShow';
 import styles from './Disclaimer.module.css';
 interface DisclaimerProps {
   disclaimerType: string;
@@ -14,7 +15,9 @@ export const Disclaimer = (props: DisclaimerProps) => {
       <span>
         <h3>{disclaimerType}</h3>
       </span>
-      <span>{description}</span>
+      <span>
+        <TextShow text={description} />
+      </span>
     </div>
   );
 };

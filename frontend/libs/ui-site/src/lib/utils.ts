@@ -12,6 +12,12 @@ export function urlToPromise(url: string) {
   });
 }
 
+export function isExternalLink(url: string) {
+  const tmp = document.createElement('a');
+  tmp.href = url;
+  return tmp.host !== window.location.host;
+}
 export function getRealPath(url: string) {
+  if (isExternalLink(url)) return url;
   return `${process.env.NX_BASE_PATH ? process.env.NX_BASE_PATH : ''}${url}`;
 }

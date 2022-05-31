@@ -17,8 +17,8 @@ from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
-dotenv_path = os.path.join(BASE_DIR, '.backend.env')
-load_dotenv(dotenv_path)
+# dotenv_path = os.path.join(BASE_DIR, '.backend.env')
+# load_dotenv(dotenv_path)
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
     'corsheaders',
+    'import_export',
 ]
 
 MIDDLEWARE = [
@@ -125,6 +126,17 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv("POSTGRES_USER"),
+        'USER': os.getenv("POSTGRES_DB"),
+        'PASSWORD': os.getenv("POSTGRES_PASSWORD"),
+        'HOST': os.getenv("POSTGRES_HOST"),
+        'PORT': os.getenv("POSTGRES_PORT"),
+    }
+}
+
 REST_FRAMEWORK = {
     'DEFAULT_METADATA_CLASS': 'base.metadata.OverridePermissionsMetadata',
     'DEFAULT_FILTER_BACKENDS': (
@@ -157,5 +169,5 @@ logging.basicConfig(
 
 LOGGER = logging.getLogger()
 EXPORT_IMPORT = os.path.join(BASE_DIR, '../../../export/')
-PROJECT_FRONTEND_EXPORT = os.path.join(BASE_DIR, '../../frontend/')
-AUTH_USER_MODEL ="authentication.User"
+PROJECT_FRONTEND_EXPORT = "/code/frontend/"
+AUTH_USER_MODEL = "authentication.User"

@@ -1,49 +1,44 @@
-import { Dialog, DialogActions, DialogContent } from '@material-ui/core';
+import { Dialog, DialogActions, DialogContent } from '@mui/material';
 import {
   Button,
-  FormWithRedirect,
+  Form,
   SaveButton,
   TextInput,
-  useMutation,
-  useNotify,
   useRecordContext,
-  Record,
   useRedirect,
-  required,
+  useNotify,
   NumberInput,
   maxLength,
+  RecordContextProvider,
+  useCreate,
+  required,
+  SaveContextProvider,
 } from 'react-admin';
-import IconCancel from '@material-ui/icons/Cancel';
-import IconContentAdd from '@material-ui/icons/Add';
+import IconCancel from '@mui/icons-material/Cancel';
+import IconContentAdd from '@mui/icons-material/Add';
 import { useToggler } from '../../useToggler';
+import { FieldValues } from 'react-hook-form';
 
 export const AddStepButton = () => {
   const { value, setTrue, setFalse } = useToggler();
-  const [mutate, { loading }] = useMutation();
+  const [create, { isLoading }] = useCreate();
   const record = useRecordContext();
   const { id: experiment } = record;
   const notify = useNotify();
   const redirect = useRedirect();
-  const onSave = ({ title_step, ...values }: Partial<Record>) =>
-    mutate(
+  const onSave = (values: FieldValues) =>
+    create(
+      'steps',
       {
-        type: 'create',
-        resource: 'steps',
-        payload: {
-          data: {
-            step_number: values.step_number,
-            experiment: values.experiment,
-            title: title_step,
-          },
-        },
+        data: values,
       },
       {
-        onSuccess: ({ data }) => {
+        onSuccess: (data) => {
           setFalse();
           redirect('edit', '/steps', data.id);
         },
-        onFailure: (error) => {
-          notify('ra.page.error', 'error');
+        onError: (error) => {
+          notify('ra.page.error', { type: 'error' });
         },
       }
     );
@@ -58,44 +53,38 @@ export const AddStepButton = () => {
         <IconContentAdd />
       </Button>
       <Dialog maxWidth="sm" fullWidth open={value}>
-        <FormWithRedirect
-          resource="steps"
-          initialValues={{ experiment }}
-          save={onSave}
-          render={({ handleSubmitWithRedirect, pristine, saving }) => (
-            <>
-              <DialogContent>
-                <NumberInput
-                  source="step_number"
-                  validate={[required()]}
-                  helperText="The number indicating the order in which the steps are displayed"
-                />
-                <TextInput
-                  multiline
-                  fullWidth
-                  source="title_step"
-                  label="Title"
-                  helperText="The title of the step"
-                  validate={[required(), maxLength(255)]}
-                />
-              </DialogContent>
-              <DialogActions>
-                <Button
-                  label="ra.action.cancel"
-                  onClick={setFalse}
-                  disabled={loading}
-                >
-                  <IconCancel />
-                </Button>
-                <SaveButton
-                  handleSubmitWithRedirect={handleSubmitWithRedirect}
-                  saving={saving}
-                  disabled={loading}
-                />
-              </DialogActions>
-            </>
-          )}
-        />
+        <SaveContextProvider
+          value={{
+            saving: isLoading,
+          }}
+        >
+          <RecordContextProvider value={{ experiment }}>
+            <Form onSubmit={onSave}>
+              <>
+                <DialogContent>
+                  <TextInput
+                    multiline
+                    fullWidth
+                    source="title"
+                    label="Title"
+                    helperText="The title of the step"
+                    validate={[required(), maxLength(255)]}
+                  />
+                </DialogContent>
+                <DialogActions>
+                  <Button
+                    label="ra.action.cancel"
+                    onClick={setFalse}
+                    disabled={isLoading}
+                  >
+                    <IconCancel />
+                  </Button>
+                  <SaveButton />
+                </DialogActions>
+              </>
+            </Form>
+          </RecordContextProvider>
+        </SaveContextProvider>
       </Dialog>
     </>
   );

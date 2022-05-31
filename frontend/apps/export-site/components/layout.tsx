@@ -3,23 +3,20 @@ import {
   Experiment,
   LanguageOptions,
   Footer as FooterType,
+  Project,
 } from '@algocount/shared/types';
 import { Layout as MainLayout } from '@algocount/ui-site';
 import Link from '../components/link';
 
 interface LayoutProps {
   children: React.ReactNode;
-  experiments: Experiment[];
-  language: LanguageOptions;
-  footer: FooterType;
+  project: Project;
 }
 const Layout = (props: LayoutProps) => {
-  const { children, experiments, language, footer } = props;
+  const { children, project } = props;
   return (
     <MainLayout
-      footer={footer}
-      language={language}
-      experiments={experiments}
+      project={project}
       basePath="/"
       linkComponent={Link}
     >

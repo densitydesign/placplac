@@ -1,12 +1,17 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import { stringify } from 'querystring';
-import { Identifier, DataProvider, CreateParams, CreateResult } from 'ra-core';
+import {
+  Identifier,
+  DataProvider,
+  CreateParams,
+  CreateResult,
+} from 'react-admin';
 import {
   FilterPayload,
   GetOneParams,
   PaginationPayload,
   SortPayload,
-  Record,
+  RaRecord,
   GetOneResult,
   UpdateParams,
   UpdateResult,
@@ -102,23 +107,21 @@ export async function client(resource: string, config: AxiosRequestConfig) {
     return await response.data;
   });
 }
-
-const dataprovider = (
-  apiUrl: string
-): DataProvider & {
-  createMultipart: <RecordType extends Record = Record>(
+export type CustomDataProvider = DataProvider & {
+  createMultipart: <RecordType extends RaRecord = RaRecord>(
     resource: string,
     params: CreateParams
   ) => Promise<CreateResult<RecordType>>;
-  updateMultipart: <RecordType extends Record = Record>(
+  updateMultipart: <RecordType extends RaRecord = RaRecord>(
     resource: string,
     params: UpdateParams<any>
   ) => Promise<UpdateResult<RecordType>>;
-  getFull: <RecordType extends Record = Record>(
+  getFull: <RecordType extends RaRecord = RaRecord>(
     resource: string,
     params: GetOneParams
   ) => Promise<GetOneResult<RecordType>>;
-} => {
+};
+const dataprovider = (apiUrl: string): CustomDataProvider => {
   const getOneJson = (resource: string, id: Identifier) =>
     app(`${apiUrl}/${resource}/${id}/`).then((response) => response.data);
 
@@ -212,7 +215,8 @@ const dataprovider = (
       const formData = new FormData();
       Object.keys(params.data).forEach((key) => {
         if (key === 'file') {
-          formData.append('file', params.data[key].rawFile);
+          if (params.data[key])
+            formData.append('file', params.data[key].rawFile);
         } else {
           formData.append(key, params.data[key]);
         }
@@ -256,10 +260,13 @@ const dataprovider = (
       }).then(() => ({ data: params.previousData as any })),
 
     deleteMany: (resource, params) =>
-      app(`${apiUrl}/${resource}/bulk_delete/`, {
-        method: 'POST',
-        data: { ids: params.ids },
-      }).then(() => ({ data: params.ids })),
+      Promise.all(
+        params.ids.map((id) =>
+          app(`${apiUrl}/${resource}/${id}/`, {
+            method: 'DELETE',
+          })
+        )
+      ).then(() => ({ data: [] })),
   };
 };
 export default dataprovider;

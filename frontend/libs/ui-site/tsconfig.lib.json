@@ -9,7 +9,7 @@
     "files": [
         "../../node_modules/@nrwl/react/typings/cssmodule.d.ts",
         "../../node_modules/@nrwl/react/typings/image.d.ts",
-        "../shared/types/src/lib/jslibutils.d.ts"
+        "../shared/types/src/lib/jslibutils.d.ts",
     ],
     "exclude": [
         "**/*.spec.ts",
@@ -26,7 +26,6 @@
         "**/*.jsx",
         "**/*.ts",
         "**/*.tsx",
-        "../shared/types/src/lib/react-sigma.d.ts",
-        "../shared/types/src/lib/jslibutils.d.ts"
+        "../shared/types/src/lib/jslibutils.d.ts",
     ]
 }

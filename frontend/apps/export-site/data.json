@@ -1,92 +1,81 @@
 {
-    "id": 4,
-    "title": "wewe",
-    "short_description": null,
-    "experiments_description": null,
-    "long_description": "<p>wewewewewewe</p>",
-    "status": "2",
-    "created_date": "2022-01-21T15:27:37.300983+01:00",
-    "last_update": "2022-01-21T15:28:55.724890+01:00",
+    "id": 1,
+    "title": "Algorithms and infodemiaaas",
+    "short_description": "<p>Exploring the action of algorithms on social media platforms<br>by studying infodemics.</p>",
+    "experiments_description": "<p>ss</p>",
+    "long_description": "<p>asdniasndbasidioabgsdiubgasdubsaudbabdbasdi</p>",
+    "status": "1",
+    "created_date": "2022-05-23T10:37:39.798876+02:00",
+    "last_update": "2022-05-27T14:16:21.258068+02:00",
     "experiments": [
         {
-            "id": 2,
-            "title": "wewwewee",
-            "tags": null,
-            "description": "<p><span class=\"mceNonEditable mention\" style=\"background-color: #000000;\"> <a href=\"#glossary/4\"> wewe </a> </span></p>",
+            "id": 5,
+            "title": "Esperimento 1",
+            "tags": [
+                "sadsadsadasd",
+                "sadadsad",
+                "asdasdasd"
+            ],
+            "description": "<p>sasadasd<span data-anchor-id=\"anchor1\" class=\"mce-item-anchor-exp mceNonEditable\"></span></p>",
             "context": [
                 {
                     "cols": [
                         {
                             "type": "text",
                             "content": {
-                                "text": "<table style=\"border-collapse: collapse; width: 100%;\" border=\"1\">\n<tbody>\n<tr>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n</tr>\n<tr>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n</tr>\n<tr>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n</tr>\n<tr>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n</tr>\n<tr>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n</tr>\n<tr>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n</tr>\n<tr>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n</tr>\n<tr>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n</tr>\n<tr>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n</tr>\n<tr>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">iuygg</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n</tr>\n<tr>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n</tr>\n<tr>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n</tr>\n<tr>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n</tr>\n<tr>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n</tr>\n<tr>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n</tr>\n<tr>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n</tr>\n<tr>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n</tr>\n<tr>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n</tr>\n<tr>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n<td style=\"width: 10.9251%;\">&nbsp;</td>\n</tr>\n</tbody>\n</table>"
+                                "text": "<p>fasdasdasda</p>"
                             }
                         }
-                    ],
-                    "divided": false
+                    ]
                 },
                 {
                     "cols": [
                         {
-                            "type": "listExperimentSetup",
+                            "type": "disclaimer",
                             "content": {
-                                "list": [
-                                    "yfyfv"
-                                ],
-                                "title": "wewwewee",
-                                "subtitle": "ygygv"
-                            }
-                        }
-                    ],
-                    "divided": false
-                },
-                {
-                    "cols": [
-                        {
-                            "type": "listExperimentSetup",
-                            "content": {
-                                "list": [
-                                    "ygv"
-                                ],
-                                "title": "wewwewee",
-                                "subtitle": "uhu"
+                                "type": "alert",
+                                "description": "<p style=\"text-align: center;\">Ciao mi chiamo gianpiero e questo &egrave; un alert, fai attenzione</p>"
                             }
                         },
                         {
-                            "type": "listExperimentSetup",
-                            "content": {
-                                "list": [
-                                    "yg"
-                                ],
-                                "title": "wewwewee",
-                                "subtitle": "7g"
-                            }
-                        }
-                    ],
-                    "divided": false
-                },
-                {
-                    "cols": [
-                        {
                             "type": "text",
                             "content": {
-                                "text": "<p><a href=\"qwewqe\">ewrewrewr</a></p>",
-                                "type": null,
-                                "description": null
+                                "text": "<p>aaa anchor <span data-anchor-id=\"anchor to context\" class=\"mce-item-anchor-exp mceNonEditable\"></span></p>"
                             }
                         }
-                    ],
-                    "divided": false
+                    ]
                 }
             ],
-            "research_question": "<p>Ciao questa &egrave; la reearch question, ciao ciao ciao ciao ciao ciao ciao aciooa coaopm c</p>",
-            "experiment_setup": null,
-            "findings": null,
-            "project": 4,
+            "research_question": "<p>this is the research questiondddddddd</p>",
+            "experiment_setup": [
+                {
+                    "cols": [
+                        {}
+                    ]
+                }
+            ],
+            "findings": [
+                {
+                    "cols": [
+                        {}
+                    ]
+                }
+            ],
+            "project": 1,
             "steps": [
                 {
                     "id": 2,
-                    "title": "wewwewee",
+                    "title": "2",
+                    "description": null,
+                    "content": null,
+                    "step_number": 1,
+                    "experiment": 5,
+                    "downloads": [],
+                    "glossary_terms": []
+                },
+                {
+                    "id": 1,
+                    "title": "1",
                     "description": null,
                     "content": [
                         {
@@ -94,209 +83,280 @@
                                 {
                                     "type": "text",
                                     "content": {
-                                        "text": "<p>yv</p>"
-                                    }
-                                }
-                            ],
-                            "divided": true
-                        },
-                        {
-                            "cols": [
-                                {
-                                    "type": "image",
-                                    "content": {
-                                        "image": "/media/logo.png",
-                                        "title": "wewwewee",
-                                        "isWide": false,
-                                        "subtitle": "wdw"
-                                    }
-                                },
-                                {}
-                            ],
-                            "divided": true
-                        },
-                        {
-                            "cols": [
-                                {
-                                    "type": "text",
-                                    "content": {
-                                        "text": "<p><span class=\"mceNonEditable mention\" style=\"background-color: #000000;\"> <a href=\"#glossary/1\"> wewe </a> </span> <span class=\"mceNonEditable mention\" style=\"background-color: #ff6b6b;\"> <a href=\"#glossary/2\"> prova ciao ciao </a> </span> <span class=\"mceNonEditable mention\" style=\"background-color: #000000;\"> <a href=\"#glossary/1\"> wewe </a> </span> <span class=\"mceNonEditable mention\" style=\"background-color: #ff6b6b;\"> <a href=\"#glossary/3\"> cross platform analysis </a> </span></p>"
+                                        "text": "<p>asiodhiaobhdiboad</p>\n<p>asiodhiaobhdiboadasdsa</p>\n<p>asiodhiaobhdiboad</p>\n<p>asiodhiaobhdiboad</p>\n<p>asiodhiaobhdiboad</p>\n<p>asiodhiaobhdiboad</p>\n<p>asiodhiaobhdiboad</p>\n<p>asiodhiaobhdiboad</p>\n<p>asiodhiaobhdiboad</p>\n<p>asiodhiaobhdiboad</p>\n<p>asiodhiaobhdiboad</p>\n<p>asiodhiaobhdiboad</p>\n<p>asiodhiaobhdiboad</p>\n<p>asiodhiaobhdiboad</p>\n<p>asiodhiaobhdiboad</p>\n<p>asiodhiaobhdiboad</p>\n<p>asiodhiaobhdiboad</p>\n<p>asiodhiaobhdiboad</p>\n<p>asiodhiaobhdiboad</p>\n<p>asiodhiaobhdiboad</p>"
                                     }
                                 }
                             ],
                             "divided": true
                         }
                     ],
-                    "step_number": 1,
-                    "experiment": 2,
+                    "step_number": 2,
+                    "experiment": 5,
                     "downloads": [],
                     "glossary_terms": []
                 }
             ],
-            "cover": null,
+            "cover": "/media/1/WhatsApp_Image_2022-04-30_at_14.12.17_1_eb9aTwu.jpeg",
+            "glossary_terms": [],
+            "references": [],
+            "pdf_report": null,
+            "additional_material": []
+        },
+        {
+            "id": 6,
+            "title": "Esperimento 2",
+            "tags": [],
+            "description": "<p><span class=\"mceNonEditable mention\"> <a href=\"#glossary/1\"> asdsdsads </a> </span> <span class=\"mceNonEditable mention\"> <a href=\"#glossary/3\"> ciaociaociao </a> </span> <span class=\"mceNonEditable mention\"> <a href=\"#glossary/2\"> ciaociaociao </a> </span> <a class=\"anchorExperiments\" href=\"experiments/5#anchor1\" data-href=\"experiments/5#anchor1\"> link exp 1&nbsp; </a><a class=\"anchorExperiments\" href=\"experiments/5#anchor to context\" data-href=\"experiments/5#anchor to context\"> &nbsp;linkto context </a>&nbsp; &nbsp;&nbsp; <a class=\"anchorExperiments\" href=\"#adsadadsad\" data-href=\"#adsadadsad\"> link ad homepage </a>&nbsp; &nbsp;&nbsp; <a class=\"anchorExperiments\" href=\"glossary/1#anhcorglossary\" data-href=\"glossary/1#anhcorglossary\"> link alglossario </a></p>",
+            "context": null,
+            "research_question": "<p>s</p>",
+            "experiment_setup": null,
+            "findings": null,
+            "project": 1,
+            "steps": [],
+            "cover": "",
             "glossary_terms": [
                 {
-                    "id": 4,
-                    "title": "wewe",
-                    "image": "/media/logo.png",
-                    "description": "<p>Prova cuiaio</p>",
+                    "id": 1,
+                    "title": "asdsdsads",
+                    "image": "",
+                    "description": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vitae massa erat. Quisque porttitor ultricies laoreet. <span data-anchor-id=\"anhcorglossary\" class=\"mce-item-anchor-exp mceNonEditable\"></span>Etiam hendrerit metus vel arcu suscipit malesuada. Mauris dignissim consectetur mauris, vitae consectetur sapien laoreet non. Nam finibus lacus sit amet erat condimentum malesuada. Aenean sed dictum massa. Fusce ut porta neque. Nam in arcu nunc. Pellentesque porttitor mollis metus et placerat. In id interdum libero. Aliquam ut viverra purus. Phasellus odio magna, ultrices vel tristique vitae, elementum eget mi. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Integer risus mauris, bibendum venenatis pulvinar in, tincidunt nec leo. Fusce sit amet convallis quam.</p>\n<p>Sed varius convallis mauris vel ultricies. In in tristique metus. Integer egestas nisl eget ante sagittis malesuada. Sed tincidunt erat vitae purus dictum laoreet vel euismod nisl. Suspendisse mattis mauris non facilisis mattis. Proin nulla nisi, lobortis vel neque sed, interdum egestas mi. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec sit amet dignissim augue. Aliquam finibus tortor quis quam euismod sagittis at a elit. Morbi tempus sollicitudin elit, at facilisis ipsum efficitur non. Aenean tincidunt blandit urna, ac euismod sapien fringilla non.</p>\n<p>Nam quis augue lacinia, mollis tortor eu, gravida nunc. Nunc quis odio ut nulla mattis blandit sed in mauris. Duis id nibh nec ipsum scelerisque malesuada. Vivamus rutrum diam a mollis pretium. Aliquam mattis purus nunc, a efficitur ligula elementum non. Mauris maximus lorem non porttitor accumsan. Curabitur eleifend molestie tortor, nec porttitor nibh posuere non. Morbi pretium blandit odio, nec tincidunt ipsum sodales at. In id tristique arcu. Duis dolor mi, malesuada vitae dolor id, rutrum tempor magna. Nam faucibus tellus id hendrerit placerat. Donec in faucibus lectus, et condimentum sem. Duis sit amet quam justo. Cras volutpat ante vel auctor lacinia.</p>\n<p>Etiam varius nibh laoreet risus ultricies rhoncus. Suspendisse maximus felis augue, at gravida magna vulputate imperdiet. Curabitur mollis est in dolor tincidunt iaculis. Morbi sit amet eros vehicula, eleifend ligula quis, mattis arcu. Nulla blandit urna ut efficitur commodo. Donec at leo velit. Quisque et malesuada leo. Proin quis nunc sagittis, cursus diam eget, gravida arcu. In fringilla eros a luctus eleifend. Pellentesque nec ante sem. In scelerisque tempor dolor nec finibus. Proin fringilla risus quis faucibus convallis. Curabitur malesuada sodales libero. Cras euismod mi in odio placerat, in lobortis nisi volutpat.</p>",
                     "related": [
                         {
-                            "id": 6,
-                            "title": "cross platform analysis",
-                            "color": "#FF6B6B",
-                            "category": 1
-                        },
-                        {
-                            "id": 5,
-                            "title": "prova ciao ciao",
-                            "color": "#FF6B6B",
-                            "category": 6
-                        },
-                        {
-                            "id": 4,
-                            "title": "wewe",
+                            "id": 3,
+                            "title": "ciaociaociao",
                             "color": "#000000",
-                            "category": 7
+                            "category": 2
+                        },
+                        {
+                            "id": 2,
+                            "title": "ciaociaociao",
+                            "color": "#6eff6b",
+                            "category": 1
                         }
                     ],
-                    "glossary_category": 7,
-                    "color": "#000000",
+                    "glossary_category": 1,
+                    "color": "#6eff6b",
                     "more_info_url": [
                         {
-                            "url": "https://google.it",
-                            "title": "ciao prova cia"
+                            "url": "http://google.it",
+                            "title": "mat 1"
+                        },
+                        {
+                            "url": "http://google.it",
+                            "title": "mat 2"
                         }
                     ],
-                    "project": 4,
+                    "project": 1,
+                    "category_title": "Techniques",
+                    "used_in": [
+                        {
+                            "id": 6,
+                            "title": "Esperimento 2"
+                        }
+                    ]
+                },
+                {
+                    "id": 3,
+                    "title": "ciaociaociao",
+                    "image": null,
+                    "description": "<p>&nbsp;iaooao</p>",
+                    "related": [
+                        {
+                            "id": 1,
+                            "title": "asdsdsads",
+                            "color": "#6eff6b",
+                            "category": 1
+                        }
+                    ],
+                    "glossary_category": 2,
+                    "color": "#000000",
+                    "more_info_url": [],
+                    "project": 1,
                     "category_title": "Tools",
                     "used_in": [
                         {
-                            "id": 2,
-                            "title": "wewwewee"
+                            "id": 6,
+                            "title": "Esperimento 2"
+                        }
+                    ]
+                },
+                {
+                    "id": 2,
+                    "title": "ciaociaociao",
+                    "image": "",
+                    "description": "<p>&nbsp;iaooao</p>",
+                    "related": [
+                        {
+                            "id": 1,
+                            "title": "asdsdsads",
+                            "color": "#6eff6b",
+                            "category": 1
+                        }
+                    ],
+                    "glossary_category": 1,
+                    "color": "#6eff6b",
+                    "more_info_url": [],
+                    "project": 1,
+                    "category_title": "Techniques",
+                    "used_in": [
+                        {
+                            "id": 6,
+                            "title": "Esperimento 2"
                         }
                     ]
                 }
             ],
-            "references": []
+            "references": [],
+            "pdf_report": null,
+            "additional_material": []
         }
     ],
     "glossary_terms": [
         {
-            "id": 6,
-            "title": "cross platform analysis",
-            "image": null,
-            "description": "<p>s</p>",
+            "id": 1,
+            "title": "asdsdsads",
+            "image": "",
+            "description": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vitae massa erat. Quisque porttitor ultricies laoreet. <span data-anchor-id=\"anhcorglossary\" class=\"mce-item-anchor-exp mceNonEditable\"></span>Etiam hendrerit metus vel arcu suscipit malesuada. Mauris dignissim consectetur mauris, vitae consectetur sapien laoreet non. Nam finibus lacus sit amet erat condimentum malesuada. Aenean sed dictum massa. Fusce ut porta neque. Nam in arcu nunc. Pellentesque porttitor mollis metus et placerat. In id interdum libero. Aliquam ut viverra purus. Phasellus odio magna, ultrices vel tristique vitae, elementum eget mi. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Integer risus mauris, bibendum venenatis pulvinar in, tincidunt nec leo. Fusce sit amet convallis quam.</p>\n<p>Sed varius convallis mauris vel ultricies. In in tristique metus. Integer egestas nisl eget ante sagittis malesuada. Sed tincidunt erat vitae purus dictum laoreet vel euismod nisl. Suspendisse mattis mauris non facilisis mattis. Proin nulla nisi, lobortis vel neque sed, interdum egestas mi. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec sit amet dignissim augue. Aliquam finibus tortor quis quam euismod sagittis at a elit. Morbi tempus sollicitudin elit, at facilisis ipsum efficitur non. Aenean tincidunt blandit urna, ac euismod sapien fringilla non.</p>\n<p>Nam quis augue lacinia, mollis tortor eu, gravida nunc. Nunc quis odio ut nulla mattis blandit sed in mauris. Duis id nibh nec ipsum scelerisque malesuada. Vivamus rutrum diam a mollis pretium. Aliquam mattis purus nunc, a efficitur ligula elementum non. Mauris maximus lorem non porttitor accumsan. Curabitur eleifend molestie tortor, nec porttitor nibh posuere non. Morbi pretium blandit odio, nec tincidunt ipsum sodales at. In id tristique arcu. Duis dolor mi, malesuada vitae dolor id, rutrum tempor magna. Nam faucibus tellus id hendrerit placerat. Donec in faucibus lectus, et condimentum sem. Duis sit amet quam justo. Cras volutpat ante vel auctor lacinia.</p>\n<p>Etiam varius nibh laoreet risus ultricies rhoncus. Suspendisse maximus felis augue, at gravida magna vulputate imperdiet. Curabitur mollis est in dolor tincidunt iaculis. Morbi sit amet eros vehicula, eleifend ligula quis, mattis arcu. Nulla blandit urna ut efficitur commodo. Donec at leo velit. Quisque et malesuada leo. Proin quis nunc sagittis, cursus diam eget, gravida arcu. In fringilla eros a luctus eleifend. Pellentesque nec ante sem. In scelerisque tempor dolor nec finibus. Proin fringilla risus quis faucibus convallis. Curabitur malesuada sodales libero. Cras euismod mi in odio placerat, in lobortis nisi volutpat.</p>",
             "related": [
                 {
-                    "id": 4,
-                    "title": "wewe",
+                    "id": 3,
+                    "title": "ciaociaociao",
                     "color": "#000000",
-                    "category": 7
+                    "category": 2
+                },
+                {
+                    "id": 2,
+                    "title": "ciaociaociao",
+                    "color": "#6eff6b",
+                    "category": 1
                 }
             ],
             "glossary_category": 1,
-            "color": "#FF6B6B",
-            "more_info_url": null,
-            "project": 4,
-            "category_title": "Techniques",
-            "used_in": []
-        },
-        {
-            "id": 5,
-            "title": "prova ciao ciao",
-            "image": null,
-            "description": "<p>sdsdsd</p>",
-            "related": [
-                {
-                    "id": 4,
-                    "title": "wewe",
-                    "color": "#000000",
-                    "category": 7
-                }
-            ],
-            "glossary_category": 6,
-            "color": "#FF6B6B",
-            "more_info_url": null,
-            "project": 4,
-            "category_title": "Techniques",
-            "used_in": []
-        },
-        {
-            "id": 4,
-            "title": "wewe",
-            "image": "/media/logo.png",
-            "description": "<p>Prova cuiaio</p>",
-            "related": [
-                {
-                    "id": 6,
-                    "title": "cross platform analysis",
-                    "color": "#FF6B6B",
-                    "category": 1
-                },
-                {
-                    "id": 5,
-                    "title": "prova ciao ciao",
-                    "color": "#FF6B6B",
-                    "category": 6
-                },
-                {
-                    "id": 4,
-                    "title": "wewe",
-                    "color": "#000000",
-                    "category": 7
-                }
-            ],
-            "glossary_category": 7,
-            "color": "#000000",
+            "color": "#6eff6b",
             "more_info_url": [
                 {
-                    "url": "https://google.it",
-                    "title": "ciao prova cia"
+                    "url": "http://google.it",
+                    "title": "mat 1"
+                },
+                {
+                    "url": "http://google.it",
+                    "title": "mat 2"
                 }
             ],
-            "project": 4,
+            "project": 1,
+            "category_title": "Techniques",
+            "used_in": [
+                {
+                    "id": 6,
+                    "title": "Esperimento 2"
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "title": "ciaociaociao",
+            "image": null,
+            "description": "<p>&nbsp;iaooao</p>",
+            "related": [
+                {
+                    "id": 1,
+                    "title": "asdsdsads",
+                    "color": "#6eff6b",
+                    "category": 1
+                }
+            ],
+            "glossary_category": 2,
+            "color": "#000000",
+            "more_info_url": [],
+            "project": 1,
             "category_title": "Tools",
             "used_in": [
                 {
-                    "id": 2,
-                    "title": "wewwewee"
+                    "id": 6,
+                    "title": "Esperimento 2"
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "title": "ciaociaociao",
+            "image": "",
+            "description": "<p>&nbsp;iaooao</p>",
+            "related": [
+                {
+                    "id": 1,
+                    "title": "asdsdsads",
+                    "color": "#6eff6b",
+                    "category": 1
+                }
+            ],
+            "glossary_category": 1,
+            "color": "#6eff6b",
+            "more_info_url": [],
+            "project": 1,
+            "category_title": "Techniques",
+            "used_in": [
+                {
+                    "id": 6,
+                    "title": "Esperimento 2"
                 }
             ]
         }
     ],
     "glossary_categories": [
         {
-            "id": 6,
+            "id": 1,
             "title": "Techniques",
             "description": "A list of basic methods for making and replicating the procedures present throughout the experiments.",
-            "color": "#FF6B6B",
-            "project": 4
+            "color": "#6eff6b",
+            "project": 1
         },
         {
-            "id": 7,
+            "id": 2,
             "title": "Tools",
             "description": "We careful try to choose online, free and open tools and web apps.",
             "color": "#000000",
-            "project": 4
+            "project": 1
         }
     ],
     "language": "en",
-    "references": [],
+    "references": [
+        {
+            "id": 1,
+            "description": "<p>dsasadasd</p>",
+            "project": 1,
+            "in_text_citation": "sassad"
+        }
+    ],
     "footer": {
-        "socials": null,
+        "socials": {
+            "mail": "prova@prova.it",
+            "twitter": "http://twitter.com/KimKardashian",
+            "facebook": "https://it-it.facebook.com/densitydesign"
+        },
         "partners": [
             {
-                "link": "sdsd",
-                "image": "/media/logo.png"
+                "link": "https://www.unimi.it",
+                "image": "/media/1/uni.png"
+            },
+            {
+                "link": "https://www.polimi.it",
+                "image": "/media/1/poli.png"
+            },
+            {
+                "link": "https://www.densitydesign.org",
+                "image": "/media/1/density.png"
             }
         ],
         "founded_by": [
             {
-                "link": "dsds",
-                "image": "/media/logo.png"
+                "link": "https://www.fondazionecariplo.it",
+                "image": "/media/1/cariplo.png"
             }
         ]
     },
-    "glossary_description": null
+    "glossary_description": "",
+    "project_explanation": "<p><a href=\"experiments/5#ciao\">dddsd</a>. &nbsp;<span data-anchor-id=\"adsadadsad\" class=\" mceNonEditable\"></span><span data-anchor-id=\"sdfsdfsdf\"></span></p>",
+    "in_project_references": [],
+    "cover_images": []
 }

@@ -1,3 +1,6 @@
+import json
+import os
+
 from django.contrib.auth import get_user_model
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
@@ -8,43 +11,82 @@ User = get_user_model()
 
 
 class Project(CustomModel):
-    STATUS_CHOICES = (("1", "Published"), ("2", "Draft"))
-    LANGUAGE_CHOICES = (("it", "Italian"), ("en", "English"))
+    class StatusChoices(models.TextChoices):
+        PUBLISHED = "1", "Published"
+        DRAFT = "2", "Draft"
+
+    class LanguageChoices(models.TextChoices):
+        IT = "it", "Italian"
+        EN = "en", "English"
+
     title = models.CharField(max_length=255)
-    short_description = models.TextField(null=True)
-    project_explanation = models.TextField(null=True)
-    experiments_description = models.TextField(null=True)
-    long_description = models.TextField(null=True)
-    status = models.CharField(default="2", choices=STATUS_CHOICES, max_length=1)
-    language = models.CharField(default="en", choices=LANGUAGE_CHOICES, max_length=2)
+    short_description = models.TextField(null=True, blank=True)
+    project_explanation = models.TextField(null=True, blank=True)
+    experiments_description = models.TextField(null=True, blank=True)
+    long_description = models.TextField(null=True, blank=True)
+    status = models.CharField(default=StatusChoices.DRAFT, choices=StatusChoices.choices, max_length=1)
+    language = models.CharField(default=LanguageChoices.EN, choices=LanguageChoices.choices, max_length=2)
     footer = models.JSONField(null=True, blank=True)
-    glossary_description = models.TextField(null=True)
+    glossary_description = models.TextField(null=True, blank=True)
+    cover_images = ArrayField(base_field=models.TextField(), blank=True)
+    last_build = models.FileField(null=True, blank=True)
+    last_build_time = models.DateTimeField(null=True, blank=True)
+    base_path_build = models.TextField(null=True, blank=True)
+    last_update = models.DateTimeField()
+
+    @classmethod
+    def get_to_replace_media_attributes(cls):
+        return ["short_description",
+                "footer",
+                "project_explanation",
+                "experiments_description",
+                "long_description",
+                "glossary_description", "cover_images"]
+
+    @classmethod
+    def get_to_replace_glossary_attributes(cls):
+        return ["short_description",
+                "project_explanation",
+                "experiments_description",
+                "long_description",
+                "glossary_description"]
+
+    def get_content(self):
+        return "{}{}{}".format(self.short_description, self.project_explanation, self.long_description)
 
 
 class ProjectUser(CustomModel):
-    # the administrator can delete the project
-    # the editor can only edit the project
-    LEVEL_CHOICES = (("1", "Author"), ("2", "Collaborator"))
+    class LevelChoices(models.TextChoices):
+        AUTHOR = "1", "Author"
+        COLLABORATOR = "2", "Collaborator"
+        VIEWER = "3", "Viewer"
 
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    level = models.CharField(choices=LEVEL_CHOICES, max_length=1, default="2")
+    level = models.CharField(choices=LevelChoices.choices, max_length=1, default=LevelChoices.COLLABORATOR)
 
     class Meta:
         unique_together = (('user', 'project'),)
 
 
+def get_upload_path(instance, filename):
+    return os.path.join(str(instance.project_id), filename)
+
+
 class ProjectMedia(CustomModel):
-    TYPE_CHOICES = (("image", "Image"), ("file", "File"),("video","Video"))
+    class FileTypeChoices(models.TextChoices):
+        IMAGE = "image", "Image"
+        VIDEO = "video", "Video"
+        FILE = "file", "Generic file"
 
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    file = models.FileField()
+    file = models.FileField(upload_to=get_upload_path)
     description = models.TextField(null=True, blank=True)
-    type = models.CharField(default="image", choices=TYPE_CHOICES, max_length=10)
+    type = models.CharField(default=FileTypeChoices.IMAGE, choices=FileTypeChoices.choices, max_length=10)
 
 
 class Experiment(CustomModel):
-    tags = ArrayField(base_field=models.TextField(), null=True, blank=True)
+    tags = ArrayField(base_field=models.TextField(), default=list, blank=True)
     cover = models.TextField(blank=True, null=True)
     title = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True)
@@ -56,26 +98,88 @@ class Experiment(CustomModel):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     pdf_report = models.TextField(blank=True, null=True)
 
+    def get_all_content(self):
+        steps_content = "".join(
+            ["{}{}".format(json.dumps(step.content), step.description) for step in self.step_set.all()])
+        return "{}{}{}{}{}".format(json.dumps(self.context), json.dumps(self.findings), json.dumps(
+            self.experiment_setup), self.description, steps_content)
+
+    @classmethod
+    def get_to_replace_media_attributes(cls):
+        return ["cover",
+                "context",
+                "description",
+                "experiment_setup",
+                "findings",
+                "pdf_report"]
+
+    @classmethod
+    def get_to_replace_glossary_attributes(cls):
+        return [
+            "context",
+            "description",
+            "experiment_setup",
+            "findings"]
+
+    class Meta:
+        ordering = ["order"]
+
+
+def get_upload_experiment_path(instance, filename):
+    return os.path.join(str(instance.experiment.project_id), filename)
+
 
 class ExperimentAdditionalMaterial(CustomModel):
-    file = models.FileField()
+    file = models.FileField(upload_to=get_upload_experiment_path)
     experiment = models.ForeignKey(Experiment, on_delete=models.CASCADE)
+
+    @classmethod
+    def get_to_replace_media_attributes(cls):
+        return ["file"]
+
+    @classmethod
+    def get_to_replace_glossary_attributes(cls):
+        return []
 
 
 class Step(CustomModel):
     title = models.CharField(max_length=255)
-    description = models.TextField(null=True)
+    description = models.TextField(null=True, blank=True)
     content = models.JSONField(null=True, blank=True)
     step_number = models.SmallIntegerField()
     experiment = models.ForeignKey(Experiment, on_delete=models.CASCADE)
 
     class Meta:
-        unique_together = (('experiment', 'step_number'))
+        ordering = ["step_number"]
+
+    @classmethod
+    def get_to_replace_media_attributes(cls):
+        return ["description",
+                "content"]
+
+    @classmethod
+    def get_to_replace_glossary_attributes(cls):
+        return ["description",
+                "content"]
+
+
+def get_upload_step_path(instance, filename):
+    return os.path.join(str(instance.step.experiment.project_id), filename)
+
 
 class StepDownload(CustomModel):
     title = models.TextField()
-    file = models.FileField()
+    file = models.FileField(upload_to=get_upload_step_path)
     step = models.ForeignKey(Step, on_delete=models.CASCADE)
+
+    @classmethod
+    def get_to_replace_media_attributes(cls):
+        return ["file",
+                "title"]
+
+    @classmethod
+    def get_to_replace_glossary_attributes(cls):
+        return ["title"]
 
 
 class GlossaryCategory(CustomModel):
@@ -83,6 +187,14 @@ class GlossaryCategory(CustomModel):
     description = models.TextField()
     color = models.CharField(max_length=10)
     project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True)
+
+    @classmethod
+    def get_to_replace_media_attributes(cls):
+        return ["description"]
+
+    @classmethod
+    def get_to_replace_glossary_attributes(cls):
+        return ["description"]
 
     class Meta:
         unique_together = ('title', 'project',)
@@ -95,22 +207,38 @@ class GlossaryTerm(CustomModel):
     related = models.ManyToManyField("self", blank=True)
     glossary_category = models.ForeignKey(GlossaryCategory, on_delete=models.CASCADE)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    more_info_url = ArrayField(base_field=models.JSONField(), null=True, blank=True)
+    more_info_url = ArrayField(base_field=models.JSONField(), blank=True, default=list)
+
+    @classmethod
+    def get_to_replace_media_attributes(cls):
+        return ["image", "description"]
+
+    @classmethod
+    def get_to_replace_glossary_attributes(cls):
+        return ["description"]
+
 
 class ReferenceManager(models.Manager):
     def get_queryset(self):
         qs = super().get_queryset()
         return qs.annotate(desc=Func(
-        F('description'),
-        Value(r'<[^>]+>'), Value(""), Value("gi"),
-        function='REGEXP_REPLACE',
-        output_field=models.TextField(),
-    )).order_by('desc')
+            F('description'),
+            Value(r'<[^>]+>'), Value(""), Value("gi"),
+            function='REGEXP_REPLACE',
+            output_field=models.TextField(),
+        )).order_by('desc')
 
 
 class Reference(CustomModel):
-    objects=ReferenceManager()
+    objects = ReferenceManager()
     description = models.TextField()
+    in_text_citation = models.TextField()
     project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True, blank=True)
-    experiment = models.ForeignKey(Experiment, on_delete=models.CASCADE, null=True, blank=True)
 
+    @classmethod
+    def get_to_replace_media_attributes(cls):
+        return []
+
+    @classmethod
+    def get_to_replace_glossary_attributes(cls):
+        return ["description", "in_text_citation"]

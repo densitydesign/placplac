@@ -1,46 +1,54 @@
-import { Dialog, DialogActions, DialogContent } from "@material-ui/core";
+import { Dialog, DialogActions, DialogContent } from '@mui/material';
 import {
   Button,
-  FormWithRedirect,
   SaveButton,
   TextInput,
-  useMutation,
   useNotify,
   useRecordContext,
-  Record,
+  RaRecord,
   required,
   maxLength,
   useListContext,
-} from "react-admin";
-import IconCancel from "@material-ui/icons/Cancel";
-import IconContentAdd from "@material-ui/icons/Edit";
-import { useToggler } from "../../../useToggler";
+  Form,
+  useDataProvider,
+} from 'react-admin';
+import IconCancel from '@mui/icons-material/Cancel';
+import IconContentAdd from '@mui/icons-material/Edit';
+import { useToggler } from '../../../useToggler';
+import { useMutation } from 'react-query';
+import { FieldValue, FieldValues } from 'react-hook-form';
+import { CustomDataProvider } from '../../../dataProvider';
 
 export const EditStepDownloadButton = () => {
   const { value, setTrue, setFalse } = useToggler();
-  const [mutate, { loading }] = useMutation();
   const record = useRecordContext();
+  const { mutate, isLoading } = useMutation(
+    ['step-downloads', record.id],
+    (values: FieldValues) =>
+      dataProvider.updateMultipart('step-downloads', {
+        data: values,
+        id: record.id,
+        previousData: {},
+      }),
+    {
+      onSuccess: (data) => {
+        setFalse();
+        notify('ra.notification.updated', {
+          type: 'success',
+          messageArgs: { smart_count: 1 },
+        });
+        refetch();
+      },
+      onError: (error) => {
+        notify('ra.page.error', { type: 'error' });
+      },
+    }
+  );
 
   const notify = useNotify();
   const { refetch } = useListContext();
-  const onSave = (values: Partial<Record>) =>
-    mutate(
-      {
-        type: "updateMultipart",
-        resource: "step-downloads",
-        payload: { data: values, id: record.id },
-      },
-      {
-        onSuccess: ({ data }) => {
-          setFalse();
-          notify("ra.notification.updated", "success", { smart_count: 1 });
-          refetch();
-        },
-        onFailure: (error) => {
-          notify("ra.page.error", "error");
-        },
-      }
-    );
+  const dataProvider = useDataProvider<CustomDataProvider>();
+  const onSave = (values: Partial<RaRecord>) => mutate(values);
 
   return (
     <>
@@ -48,40 +56,31 @@ export const EditStepDownloadButton = () => {
         <IconContentAdd />
       </Button>
       <Dialog maxWidth="sm" fullWidth open={value}>
-        <FormWithRedirect
-          resource="steps"
-          initialValues={record}
-          save={onSave}
-          render={({ handleSubmitWithRedirect, pristine, saving }) => (
-            <>
-              <DialogContent>
-                <TextInput
-                  multiline
-                  fullWidth
-                  source="title"
-                  label="Title"
-                  placeholder="Type the download title, for example 'Download dataset'"
-                  helperText="The download title"
-                  validate={[required(), maxLength(150)]}
-                />
-              </DialogContent>
-              <DialogActions>
-                <Button
-                  label="ra.action.cancel"
-                  onClick={setFalse}
-                  disabled={loading}
-                >
-                  <IconCancel />
-                </Button>
-                <SaveButton
-                  handleSubmitWithRedirect={handleSubmitWithRedirect}
-                  saving={saving}
-                  disabled={loading}
-                />
-              </DialogActions>
-            </>
-          )}
-        />
+        <Form defaultValues={record} onSubmit={onSave}>
+          <>
+            <DialogContent>
+              <TextInput
+                multiline
+                fullWidth
+                source="title"
+                label="Title"
+                placeholder="Type the download title, for example 'Download dataset'"
+                helperText="The download title"
+                validate={[required(), maxLength(150)]}
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button
+                label="ra.action.cancel"
+                onClick={setFalse}
+                disabled={isLoading}
+              >
+                <IconCancel />
+              </Button>
+              <SaveButton />
+            </DialogActions>
+          </>
+        </Form>
       </Dialog>
     </>
   );

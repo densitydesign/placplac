@@ -1,67 +1,50 @@
-import {
-  FormControl,
-  FormHelperText,
-  InputLabel,
-  makeStyles,
-  PropTypes,
-  Theme,
-} from '@material-ui/core';
+import { FormControl, FormHelperText, InputLabel } from '@mui/material';
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import contentUiCss from '!!raw-loader!../../../../libs/shared/styles/src/index.css';
 
-import { InputProps, useGetMany } from 'ra-core';
+import { CommonInputProps, useResourceContext } from 'react-admin';
 import { Editor } from '@tinymce/tinymce-react';
-import { ComponentProps, useMemo, useRef } from 'react';
+import { useMemo } from 'react';
 import { FieldTitle, InputHelperText, useInput } from 'react-admin';
+import { Box } from '@mui/material';
+import { useProjectContext } from '../contexts/project-context';
 
-const useStyles = makeStyles<Theme, CustomRichTextInputProps>((theme) => ({
-  label: { position: 'relative' },
-}));
-
-interface CustomRichTextInputProps extends InputProps {
-  label?: string | false;
-  source: string;
-
-  fullWidth?: boolean;
-  helperText?: ComponentProps<typeof InputHelperText>['helperText'];
-  record?: Record<any, any>;
-  resource?: string;
+interface CustomRichTextInputProps extends CommonInputProps {
   placeholder?: string;
-  variant?: string;
-  margin?: PropTypes.Margin;
   small?: boolean;
-  glossaryTermsIds?: number[];
-  referencesIds?: number[];
   onlyStyle?: boolean;
 }
 
-function useReferences(referencesIds: number[]) {
-  const { data, loading } = useGetMany('references', referencesIds, {
-    enabled: referencesIds.length > 0,
-  });
-  const actualData = useMemo(() => {
-    if (data && data.length > 0) {
-      return data
-        .filter((record) => !!record)
-        .map((record) => {
-          return {
-            value: record.id.toString() as any,
-            text: record.description,
-          };
-        });
-    }
-    return [];
-  }, [data]);
-  return { data: actualData, loading };
-}
+export const CustomRichTextInput = (props: CustomRichTextInputProps) => {
+  const {
+    defaultValue = '',
+    helperText,
+    label,
+    source,
+    small,
+    placeholder,
+    onlyStyle,
+  } = props;
 
-function useGlossaryTerms(glossaryTermsIds: number[]) {
-  const { data, loading } = useGetMany('glossary-terms', glossaryTermsIds, {
-    enabled: glossaryTermsIds.length > 0,
-  });
-  const actualData = useMemo(() => {
-    if (data && data.length > 0) {
-      return data
+  const {
+    id,
+    isRequired,
+    field,
+    fieldState,
+    formState: { isSubmitted },
+  } = useInput({ ...props, source, defaultValue });
+  const { error, invalid, isTouched } = fieldState;
+  const resource = useResourceContext(props);
+
+  const {
+    glossaryTerms: unformattedGlossaryItems,
+    references: unformattedReferences,
+    anchors,
+  } = useProjectContext();
+
+  const glossaryItems = useMemo(() => {
+    if (unformattedGlossaryItems && unformattedGlossaryItems.length > 0) {
+      return unformattedGlossaryItems
         .filter((record) => !!record)
         .map((record) => {
           return {
@@ -71,55 +54,31 @@ function useGlossaryTerms(glossaryTermsIds: number[]) {
         });
     }
     return [];
-  }, [data]);
-  return { data: actualData, loading, unformattedGlossaryItems: data };
-}
+  }, [unformattedGlossaryItems]);
 
-export const CustomRichTextInput = (props: CustomRichTextInputProps) => {
-  const {
-    fullWidth = true,
-    helperText,
-    placeholder,
-    label,
-    source,
-    resource,
-    variant,
-    margin = 'dense',
-    small,
-    referencesIds = [],
-    glossaryTermsIds = [],
-    onlyStyle = false,
-
-    ...rest
-  } = props;
-
-  const {
-    id,
-    isRequired,
-    input: { value, onChange },
-    meta: { touched, error },
-  } = useInput({ source, ...rest });
-
-  const {
-    data: glossaryItems,
-    loading: loadingG,
-    unformattedGlossaryItems,
-  } = useGlossaryTerms(glossaryTermsIds);
-
-  const { data: referenceItems, loading: loadirngR } =
-    useReferences(referencesIds);
-
-  const classes = useStyles(props);
-
-  const editorRef = useRef<any>(null);
-  return !loadingG && !loadirngR ? (
+  const referenceItems = useMemo(() => {
+    if (unformattedReferences && unformattedReferences.length > 0) {
+      return unformattedReferences
+        .filter((record) => !!record)
+        .map((record) => {
+          return {
+            value: record.id.toString(),
+            text: record.description,
+          };
+        });
+    }
+    return [];
+  }, [unformattedReferences]);
+  const rerenderKey =
+    JSON.stringify(glossaryItems) + JSON.stringify(referenceItems);
+  return (
     <FormControl
-      error={!!(touched && error)}
-      fullWidth={fullWidth}
+      style={{ marginTop: '20px' }}
+      error={(isTouched || isSubmitted) && invalid}
+      fullWidth={true}
       className="ra-rich-text-input"
-      margin={margin}
     >
-      <InputLabel shrink htmlFor={id} className={classes.label}>
+      <InputLabel shrink htmlFor={id}>
         <FieldTitle
           label={label}
           source={source}
@@ -127,169 +86,299 @@ export const CustomRichTextInput = (props: CustomRichTextInputProps) => {
           isRequired={isRequired}
         />
       </InputLabel>
-      <FormHelperText
-        error={!!error}
-        className={error ? 'ra-rich-text-input-error' : ''}
-      >
-        <InputHelperText
-          error={error}
-          helperText={helperText}
-          touched={!!touched}
-        />
-      </FormHelperText>
-      <Editor
-        onInit={(evt, editor) => (editorRef.current = editor)}
-        tinymceScriptSrc={'/assets/tinymce/js/tinymce/tinymce.min.js'}
-        value={value}
-        onEditorChange={onChange}
-        init={{
-          height: small ? 250 : 500,
-          menubar: false,
-          branding: false,
-          placeholder,
-
-          plugins: [
-            'noneditable emoticons',
-            'advlist autolink lists link charmap print preview anchor',
-            'searchreplace visualblocks code fullscreen',
-            'insertdatetime media table paste help wordcount',
-          ],
-          toolbar: onlyStyle
-            ? 'undo redo | bold italic underline | '
-            : 'undo redo | formatselect | ' +
-              'bold italic underline backcolor forecolor | alignleft aligncenter ' +
-              'alignright alignjustify | bullist numlist outdent indent emoticons table image link example glossary | ' +
-              'removeformat  | help ',
-          content_style: contentUiCss,
-          body_class: 'main-application',
-          init_instance_callback: (editor) => {
-            //set reference numbers
-            referenceItems.forEach((reference, index) => {
-              const references = editor.contentDocument.querySelectorAll(
-                `[data-reference="${reference.value}"]`
-              );
-              references.forEach((reference) => {
-                reference.innerHTML = `${index + 1}`;
+      <Box mt={'8px'}>
+        <Editor
+          tinymceScriptSrc={'/assets/tinymce6/tinymce.min.js'}
+          value={field.value ?? ''}
+          onEditorChange={(a, editor) => {
+            field.onChange(a);
+          }}
+          key={rerenderKey}
+          init={{
+            height: small ? 250 : 500,
+            menubar: false,
+            branding: false,
+            placeholder,
+            convert_urls: false,
+            plugins: [
+              'emoticons',
+              'advlist',
+              'autolink',
+              'lists',
+              'link',
+              'charmap',
+              'preview',
+              'searchreplace',
+              'visualblocks',
+              'code',
+              'fullscreen',
+              'insertdatetime',
+              'media',
+              'table',
+              'help',
+              'wordcount',
+            ],
+            extended_valid_elements: 'span[data-anchor-id|class]',
+            toolbar: onlyStyle
+              ? 'undo redo | bold italic underline | '
+              : 'undo redo | formatselect | ' +
+                'bold italic underline backcolor forecolor | alignleft aligncenter ' +
+                'alignright alignjustify | bullist numlist outdent indent emoticons table image link anchorsExperiment createAnchor example glossary | ' +
+                'removeformat  | help ',
+            content_style: contentUiCss,
+            body_class: 'main-application',
+            init_instance_callback: (editor) => {
+              //set reference numbers
+              unformattedReferences.forEach((reference, index) => {
+                const references = editor.contentDocument.querySelectorAll(
+                  `[data-reference="${reference.id.toString()}"]`
+                );
+                references.forEach((referenceEl) => {
+                  referenceEl.innerHTML = `${reference.in_text_citation}`;
+                });
               });
-            });
-          },
-          setup: (editor) => {
-            const getMatchedChars = function (pattern: string) {
-              console.log(pattern);
-              if (pattern === '') return glossaryItems;
-              return glossaryItems.filter(function (char) {
-                return char.text.indexOf(pattern) !== -1;
-              });
-            };
 
-            const openDialog = function () {
-              return editor.windowManager.open({
-                title: 'References',
-                body: {
-                  type: 'panel',
-                  items: [
+              const glossarySpans =
+                editor.contentDocument.querySelectorAll<HTMLElement>(
+                  'span.mention'
+                );
+              glossarySpans.forEach((span, index) => {
+                const link = span.querySelector('a');
+                const glossaryId = link?.hash.replace('#glossary/', '');
+                const term = unformattedGlossaryItems!.find(
+                  (term) => term.id.toString() === glossaryId
+                );
+                if (term) {
+                  span.style.backgroundColor = term.color;
+                }
+              });
+            },
+            setup: (editor) => {
+              const openDialog = function () {
+                return editor.windowManager.open({
+                  title: 'References',
+                  body: {
+                    type: 'panel',
+                    items: [
+                      {
+                        type: 'selectbox', // component type
+                        name: 'reference', // identifier
+                        label: 'Select reference',
+                        items: referenceItems,
+                      },
+                    ],
+                  },
+                  buttons: [
                     {
-                      type: 'selectbox', // component type
-                      name: 'reference', // identifier
-                      label: 'Select reference',
-                      items: referenceItems,
+                      type: 'cancel',
+                      text: 'Close',
+                    },
+                    {
+                      type: 'submit',
+                      text: 'Save',
+                      primary: true,
                     },
                   ],
-                },
-                buttons: [
-                  {
-                    type: 'cancel',
-                    text: 'Close',
-                  },
-                  {
-                    type: 'submit',
-                    text: 'Save',
-                    primary: true,
-                  },
-                ],
-                onSubmit: function (api) {
-                  const data = api.getData() as any;
-                  /* Insert content when the window form is submitted */
-                  const text = editor.selection.getContent({
-                    format: 'html',
-                  });
-                  const index = referenceItems.findIndex(
-                    (reference) => reference.value === data.reference
-                  );
-                  const html = `${text}<sup class="toReferenceTag mceNonEditable">
-                        [<a data-reference="${
+                  onSubmit: function (api) {
+                    const data = api.getData() as any;
+                    /* Insert content when the window form is submitted */
+                    const text = editor.selection.getContent({
+                      format: 'html',
+                    });
+
+                    const reference = unformattedReferences.find(
+                      (reference) => reference.id.toString() === data.reference
+                    );
+                    const html = `${text}<sup class="toReferenceTag mceNonEditable">
+                        (<a data-reference="${
                           data.reference
-                        }" href='#reference${data.reference}'>
-                          ${index + 1}
-                        </a>]</sup>`;
-                  editor.insertContent(html);
-                  api.close();
-                },
-              });
-            };
-            const openDialogGlossary = function () {
-              return editor.windowManager.open({
-                title: 'Glossary ',
-                body: {
-                  type: 'panel',
-                  items: [
+                        }" href='#reference${data.reference}'>${
+                      reference!.in_text_citation
+                    }
+                        </a>)</sup>`;
+                    editor.insertContent(html);
+                    api.close();
+                  },
+                });
+              };
+              const openDialogGlossary = function () {
+                return editor.windowManager.open({
+                  title: 'Glossary ',
+                  body: {
+                    type: 'panel',
+                    items: [
+                      {
+                        type: 'selectbox', // component type
+                        name: 'glossaryterm', // identifier
+                        label: 'Select glossary term',
+                        items: glossaryItems,
+                      },
+                    ],
+                  },
+                  buttons: [
                     {
-                      type: 'selectbox', // component type
-                      name: 'glossaryterm', // identifier
-                      label: 'Select glossary term',
-                      items: glossaryItems,
+                      type: 'cancel',
+                      text: 'Close',
+                    },
+                    {
+                      type: 'submit',
+                      text: 'Save',
+                      primary: true,
                     },
                   ],
-                },
-                buttons: [
-                  {
-                    type: 'cancel',
-                    text: 'Close',
-                  },
-                  {
-                    type: 'submit',
-                    text: 'Save',
-                    primary: true,
-                  },
-                ],
-                onSubmit: function (api) {
-                  const data = api.getData() as any;
-                  const term = unformattedGlossaryItems.find(
-                    (glossaryTerm) =>
-                      glossaryTerm.id.toString() ===
-                      data.glossaryterm.toString()
-                  );
-                  if (term) {
-                    const html = `
+                  onSubmit: function (api) {
+                    const data = api.getData() as any;
+                    const term = unformattedGlossaryItems!.find(
+                      (glossaryTerm) =>
+                        glossaryTerm.id.toString() ===
+                        data.glossaryterm.toString()
+                    ) as any;
+                    if (term) {
+                      const html = `
                     <span class="mceNonEditable mention" style="background-color:${term.color}"> 
                         <a href='#glossary/${term.id}'>
                             <span>${term.title}</span>
                         </a>
                     </span>`;
-                    editor.insertContent(html);
-                  }
-                  api.close();
+                      editor.insertContent(html);
+                    }
+                    api.close();
+                  },
+                });
+              };
+              const openDialogAnchors = function () {
+                const text = editor.selection.getContent({
+                  format: 'text',
+                });
+                return editor.windowManager.open({
+                  title: 'Anchors',
+                  initialData: { content: text, link: '' },
+                  body: {
+                    type: 'panel',
+                    items: [
+                      {
+                        type: 'listbox', // component type
+                        name: 'link', // identifier
+                        label: 'Select anchor',
+                        items: [{ text: 'None', value: '' }, ...anchors],
+                      },
+                      {
+                        type: 'input', // component type
+                        name: 'content', // identifier
+                        inputMode: 'text',
+                        label: 'Content', // text for the label
+                        placeholder: 'Example', // placeholder text for the input
+                        maximized: false, // grow width to take as much space as possible
+                      },
+                    ],
+                  },
+                  buttons: [
+                    {
+                      type: 'cancel',
+                      text: 'Close',
+                    },
+                    {
+                      type: 'submit',
+                      text: 'Save',
+                      primary: true,
+                    },
+                  ],
+                  onSubmit: function (api) {
+                    const data = api.getData() as any;
+                    if (!data?.link || !data?.content)
+                      alert('Make sure you selected anchor and display value!');
+                    else {
+                      const html = `
+                        <a class="anchorExperiments" data-href='${data.link}' href='${data.link}'>
+                        ${data.content}
+                        </a>`;
+                      editor.insertContent(html);
+
+                      api.close();
+                    }
+                  },
+                });
+              };
+              const openDialogCreateAnchor = function () {
+                return editor.windowManager.open({
+                  title: 'Anchors',
+                  body: {
+                    type: 'panel',
+                    items: [
+                      {
+                        type: 'input', // component type
+                        name: 'anchor_id', // identifier
+                        inputMode: 'text',
+                        label: 'ID', // text for the label
+                        placeholder: 'Example', // placeholder text for the input
+                        maximized: false, // grow width to take as much space as possible
+                      },
+                    ],
+                  },
+                  buttons: [
+                    {
+                      type: 'cancel',
+                      text: 'Close',
+                    },
+                    {
+                      type: 'submit',
+                      text: 'Save',
+                      primary: true,
+                    },
+                  ],
+                  onSubmit: function (api) {
+                    const data = api.getData() as any;
+                    if (!data?.anchor_id)
+                      alert('Make sure you defined the anchor id!');
+                    else {
+                      const html = `<span class="mce-item-anchor-exp mceNonEditable" data-anchor-id='${data.anchor_id}'></span>`;
+                      editor.insertContent(html);
+
+                      api.close();
+                    }
+                  },
+                });
+              };
+              /* Add a button that opens a window */
+              editor.ui.registry.addButton('example', {
+                text: 'Add reference',
+                onAction: function () {
+                  openDialog();
                 },
               });
-            };
-            /* Add a button that opens a window */
-            editor.ui.registry.addButton('example', {
-              text: 'Add reference',
-              onAction: function () {
-                /* Open window */
-                openDialog();
-              },
-            });
-            editor.ui.registry.addButton('glossary', {
-              text: 'Add glossary term',
-              onAction: function () {
-                /* Open window */
-                openDialogGlossary();
-              },
-            });
-          },
-        }}
-      />
+              editor.ui.registry.addButton('glossary', {
+                text: 'Add glossary term',
+                onAction: function () {
+                  openDialogGlossary();
+                },
+              });
+              editor.ui.registry.addButton('anchorsExperiment', {
+                text: 'Add link to anchor',
+                onAction: function () {
+                  openDialogAnchors();
+                },
+              });
+              editor.ui.registry.addButton('createAnchor', {
+                text: 'Create anchor',
+                onAction: function () {
+                  openDialogCreateAnchor();
+                },
+              });
+            },
+          }}
+        />
+      </Box>
+      <FormHelperText
+        error={(isTouched || isSubmitted) && invalid}
+        className={error ? 'ra-rich-text-input-error' : ''}
+      >
+        <InputHelperText
+          helperText={
+            (isTouched || isSubmitted) && invalid ? error?.message : helperText
+          }
+          touched={!!isTouched}
+        />
+      </FormHelperText>
     </FormControl>
-  ) : null;
+  );
 };

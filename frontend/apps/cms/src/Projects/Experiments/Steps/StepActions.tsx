@@ -1,22 +1,30 @@
-import { Link } from 'ra-ui-materialui';
+import { Link } from 'react-admin';
 import React from 'react';
-import { useRecordContext } from 'ra-core';
-import { Typography, Breadcrumbs } from '@material-ui/core';
+import { useRecordContext } from 'react-admin';
+import { Typography, Breadcrumbs } from '@mui/material';
 import { TopToolbarWithTitle } from '../../../components/TopToolbarWithTitle';
 import { useGetOne } from 'react-admin';
-import { PreviewButton } from '../../PreviewButton';
+import { PreviewButton } from '../../components/PreviewButton';
 
 interface StepActionsProps {
   experiment?: number | string;
 }
 export const StepActions = (props: StepActionsProps) => {
   const record = useRecordContext();
-  const { data: dataExp } = useGetOne('experiments', record?.experiment, {
-    enabled: !!record,
-  });
-  const { data } = useGetOne('projects', dataExp?.project, {
-    enabled: !!dataExp,
-  });
+  const { data: dataExp } = useGetOne(
+    'experiments',
+    { id: record?.experiment },
+    {
+      enabled: !!record,
+    }
+  );
+  const { data } = useGetOne(
+    'projects',
+    { id: dataExp?.project },
+    {
+      enabled: !!dataExp,
+    }
+  );
   return (
     <TopToolbarWithTitle
       title={

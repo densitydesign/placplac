@@ -1,8 +1,8 @@
 import React from 'react';
-import { Sigma, LoadGEXF } from 'react-sigma';
 import Modal from 'react-modal';
 import { DoubleClickContainer } from '../components/DoubleClickContainer';
 import { FullScreenModal } from '../components/FullScreenModal';
+import { SigmaGraph } from './views/SigmaGraph';
 interface SigmaShowProps {
   gexfPath: string;
   height?: string;
@@ -23,14 +23,10 @@ export const SigmaShow = (props: SigmaShowProps) => {
   return (
     <>
       <DoubleClickContainer height={height} onDoubleClick={openModal}>
-        <Sigma renderer="canvas" style={{ width: '100%', height: '100%' }}>
-          <LoadGEXF path={gexfPath} />
-        </Sigma>
+        <SigmaGraph hasControls={false} gexfPath={gexfPath} />
       </DoubleClickContainer>
       <FullScreenModal isOpen={modalIsOpen} onClose={closeModal}>
-        <Sigma renderer="canvas" style={{ width: '100%', height: '100%' }}>
-          <LoadGEXF path={gexfPath} />
-        </Sigma>
+        <SigmaGraph gexfPath={gexfPath} />
       </FullScreenModal>
     </>
   );

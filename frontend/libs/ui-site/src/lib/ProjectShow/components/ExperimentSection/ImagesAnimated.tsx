@@ -1,4 +1,4 @@
-import { createRef, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import p5 from 'p5';
 interface ImagesAnimatedProps {
   imagesUrls: string[];
@@ -17,6 +17,7 @@ export const ImagesAnimated: React.FC<ImagesAnimatedProps> = (props) => {
     const sketch = (p5: p5) => {
       p5.setup = () => {
         p5.createCanvas(width, height);
+        // p5.pixelDensity(1);
         p5.imageMode(p5.CENTER);
         images.forEach((img) => {
           img.perlinOffsetX = p5.round(p5.random(images.length * 1000));
@@ -32,13 +33,19 @@ export const ImagesAnimated: React.FC<ImagesAnimatedProps> = (props) => {
       };
 
       p5.draw = () => {
-        p5.clear();
+        p5.clear(0, 0, 0, 0); //@ts-ignore;
         images.forEach((img) => {
           img.perlinOffsetX += perlinIncrement;
           img.perlinOffsetY += perlinIncrement;
           const pos_x = p5.noise(img.perlinOffsetX) * width;
           const pos_y = p5.noise(img.perlinOffsetY) * height;
-          p5.image(img, pos_x, pos_y, img.width * k, img.height * k);
+          let imageWidth = img.width * k;
+          let imageHeight = img.height * k;
+          if (imageWidth < 150) {
+            imageWidth = 150;
+            imageHeight = (imageWidth * img.height) / img.width;
+          }
+          p5.image(img, pos_x, pos_y, imageWidth, imageHeight);
         });
       };
 

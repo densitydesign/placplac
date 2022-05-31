@@ -1,17 +1,16 @@
-import { useQuery } from 'ra-core';
 import { history } from '../../browserHistory';
-import { Route, Switch, useParams } from 'react-router';
+import { Outlet, Route, Routes, useParams } from 'react-router';
 import {
   ExperimentShow,
-  ProjectShow,
   Layout,
   GlossaryShow,
   GlossaryCategoryShow,
+  ProjectShow,
 } from '@algocount/ui-site';
 import { HashLink as LinkRR } from 'react-router-hash-link';
 import { LinkProps as LinkRRProps } from 'react-router-dom';
-import { ScrollToTop } from './ScrollToTop';
-
+import { useQuery } from 'react-query';
+import { client } from '../../dataProvider';
 interface LinkProps extends Omit<LinkRRProps, 'to'> {
   href: string;
 }
@@ -20,34 +19,40 @@ const Link = ({ href, ...props }: LinkProps) => <LinkRR to={href} {...props} />;
 export const ProjectShowBackend = () => {
   const { id } = useParams<{ id: string }>();
   const { data: project } = useQuery(
+    ['projects', 'getFull', id],
+    () => client(`projects/${id}/get_full`, { method: 'GET' }),
     {
-      type: 'getFull',
-      resource: 'projects',
-      payload: { id },
-    },
-    {
-      onFailure: () => {
+      onError: () => {
         history.push('/');
       },
     }
   );
   const basePath = `/preview/${id}/`;
   return project ? (
-    <Layout
-      language={project.language}
-      experiments={project.experiments}
-      linkComponent={Link}
-      basePath={basePath}
-      footer={project.footer}
-    >
-      <ScrollToTop />
-      <Switch>
+    <Routes>
+      <Route
+        path={'/'}
+        element={
+          <Layout project={project} linkComponent={Link} basePath={basePath}>
+            <Outlet />
+          </Layout>
+        }
+      >
+        <Route
+          path={`/`}
+          element={
+            <ProjectShow
+              basePath={basePath}
+              project={project}
+              linkComponent={Link}
+            />
+          }
+        />
         {project.experiments.map((experiment: any) => (
           <Route
             key={experiment.id}
-            exact
-            path={`${basePath}experiments/${experiment.id}`}
-            render={() => (
+            path={`experiments/${experiment.id}`}
+            element={
               <ExperimentShow
                 language={project.language}
                 glossaryCategories={project.glossary_categories}
@@ -55,26 +60,12 @@ export const ProjectShowBackend = () => {
                 experiment={experiment}
                 linkComponent={Link}
               />
-            )}
+            }
           />
         ))}
         <Route
-          exact
-          path={basePath}
-          render={() => (
-            <ProjectShow
-              glossaryCategories={project.glossary_categories}
-              basePath={basePath}
-              project={project}
-              linkComponent={Link}
-              glossaryTerms={project.glossary_terms}
-            />
-          )}
-        />
-        <Route
-          exact
-          path={`${basePath}glossary/`}
-          render={() => (
+          path={`glossary/`}
+          element={
             <GlossaryShow
               language={project.language}
               description={project.glossary_description}
@@ -83,14 +74,13 @@ export const ProjectShowBackend = () => {
               glossaryCategories={project.glossary_categories}
               glossaryTerms={project.glossary_terms}
             />
-          )}
+          }
         />
         {project.glossary_categories.map((category: any) => (
           <Route
             key={category.id}
-            exact
-            path={`${basePath}glossary/${category.id}/`}
-            render={() => (
+            path={`glossary/${category.id}/`}
+            element={
               <GlossaryCategoryShow
                 linkComponent={Link}
                 basePath={basePath}
@@ -99,10 +89,10 @@ export const ProjectShowBackend = () => {
                   (term: any) => term.category_title === category.title
                 )}
               />
-            )}
+            }
           />
         ))}
-      </Switch>
-    </Layout>
+      </Route>
+    </Routes>
   ) : null;
 };

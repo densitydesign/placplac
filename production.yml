@@ -1,0 +1,38 @@
+version: "3.9"
+services:
+  nginx:
+    container_name: cms
+    build:
+      context: .
+      dockerfile: ./compose/production/nginx/Dockerfile
+    volumes:
+      - ${MEDIA_FOLDER}:/app/backend/algocount/media/
+      - cms_build:/usr/share/nginx/html
+    ports:
+      - ${PORT_OUT}:80
+    depends_on:
+      - web
+    restart: "on-failure"
+  db:
+    image: postgres
+    volumes:
+      - ${DB_FOLDER}:/var/lib/postgresql/data
+    env_file:
+      - ./.envs/.local/.postgres
+  web:
+    build:
+      context: .
+      dockerfile: ./compose/production/django/Dockerfile
+    command: /start
+    volumes:
+      - cms_build:/code/frontend/dist/apps/cms
+      - ${MEDIA_FOLDER}:/code/backend/algocount/media/
+    expose:
+      - 8000
+    depends_on:
+      - db
+    env_file:
+      - ./.envs/.local/.postgres
+      - ./.envs/.production/.backend
+volumes:
+  cms_build:

@@ -8,35 +8,44 @@ import {
   TextInput,
   Toolbar,
   ToolbarProps,
-} from "react-admin";
+  useNotify,
+  useRecordContext,
+  useRedirect,
+} from 'react-admin';
 
-const GlossaryCategoryFormToolbar = (props: ToolbarProps) => (
-  <Toolbar
-    style={{ display: "flex", justifyContent: "space-between" }}
-    {...props}
-  >
-    <SaveButton />
-    {props.record && props.record.id && (
-      <DeleteButton redirect={`/projects/${props.record.project}/2`} />
-    )}
-  </Toolbar>
-);
+const GlossaryCategoryFormToolbar = (props: ToolbarProps) => {
+  const record = useRecordContext();
+  const redirectPath = `/projects/${record?.project}/2`;
+  const redirect = useRedirect();
+  const notify = useNotify();
+  return (
+    <Toolbar
+      style={{ display: 'flex', justifyContent: 'space-between' }}
+      {...props}
+    >
+      <SaveButton
+        type={'button'}
+        mutationOptions={{
+          onSuccess: () => {
+            notify('ra.notification.updated', {
+              type: 'info',
+              messageArgs: { smart_count: 1 },
+              undoable: true,
+            });
+            redirect(redirectPath);
+          },
+        }}
+      />
+      {record && record.id && <DeleteButton redirect={redirectPath} />}
+    </Toolbar>
+  );
+};
 
 export const GlossaryCategoryForm = (
-  props: Omit<SimpleFormProps, "children">
+  props: Omit<SimpleFormProps, 'children'>
 ) => {
-  const project =
-    props.initialValues && "project" in props.initialValues
-      ? props.initialValues.project
-      : props.record.project;
-  const redirect = `/projects/${project}/2`;
-
   return (
-    <SimpleForm
-      {...props}
-      redirect={redirect}
-      toolbar={<GlossaryCategoryFormToolbar />}
-    >
+    <SimpleForm {...props} toolbar={<GlossaryCategoryFormToolbar />}>
       <TextInput
         multiline
         fullWidth

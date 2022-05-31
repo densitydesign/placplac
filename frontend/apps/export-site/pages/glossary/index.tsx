@@ -10,12 +10,11 @@ export async function getStaticProps() {
   const fileContents = JSON.parse(await fs.readFile(filePath, 'utf8'));
   return {
     props: {
-      experiments: fileContents.experiments,
       glossaryTerms: fileContents.glossary_terms,
       glossaryCategories: fileContents.glossary_categories,
       language: fileContents.language,
-      footer: fileContents.footer,
       description: fileContents.glossary_description,
+      project: fileContents,
     },
   };
 }
@@ -27,13 +26,12 @@ const GlossaryShow = dynamic(() => import('../../components/glossaryShow'), {
 const Glossary: NextPage = ({
   glossaryTerms,
   glossaryCategories,
-  experiments,
   language,
-  footer,
   description,
+  project,
 }: any) => {
   return (
-    <Layout footer={footer} language={language} experiments={experiments}>
+    <Layout project={project}>
       <GlossaryShow
         language={language}
         glossaryCategories={glossaryCategories}

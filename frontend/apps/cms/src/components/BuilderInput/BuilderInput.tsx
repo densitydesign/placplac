@@ -6,6 +6,7 @@ import {
   SelectInput,
   TextInput,
   BooleanInput,
+  useNotify,
 } from 'react-admin';
 import { BuilderDialog } from './components/BuilderDialog';
 import { AddRowButton } from './components/AddRowButton';
@@ -13,52 +14,33 @@ import { AddRowButton } from './components/AddRowButton';
 import { Row } from './components/Row';
 import { CustomRichTextInput } from '../CustomRichTextInput';
 import { EditImage } from './components/EditImage';
-import {
-  Disclaimer,
-  ExperimentSetupListShow,
-  IFrame,
-  ImageShow,
-  SHOW_COMPONENTS_BUILDER,
-  SigmaShow,
-  TextShow,
-} from '@algocount/ui-site';
+import { SHOW_COMPONENTS_BUILDER } from '@algocount/ui-site';
 import { EditListExperimentSetup } from './components/EditListExperimentSetup';
 import { EditIframe } from './components/EditIframe';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 import { SelectFile } from '../SelectFile';
-import {
-  BuilderBlocks,
-  PossibleColumns,
-  RowType,
-} from '@algocount/shared/types';
+import { BuilderBlocks, RowType } from '@algocount/shared/types';
 import SimpleReactLightbox from 'simple-react-lightbox';
-
+import { Box } from '@mui/material';
+import { useProjectContext } from '../../contexts/project-context';
+import { useGlossaryAdjuster } from 'libs/ui-site/src/lib/hooks';
 interface BuilderInputProps {
   source: string;
-  possibleColumns?: PossibleColumns;
   possibleComponents?: string[];
-  glossaryTermsIds: number[];
-  referencesIds: number[];
-  project: number;
   canDivided: boolean;
   isStep?: boolean;
 }
 
 export const BuilderInput = (props: BuilderInputProps) => {
-  const {
-    source,
-    possibleColumns,
-    possibleComponents,
-    glossaryTermsIds,
-    referencesIds,
-    project,
-    canDivided,
-    isStep = false,
-  } = props;
+  const { glossaryTerms, project } = useProjectContext();
+  const notify = useNotify();
+  if (!project)
+    throw Error('This component must be used in initialized ProjectContext');
+  const { source, possibleComponents, canDivided, isStep = false } = props;
   const [activeStep, setActiveStep] = React.useState(0);
 
   const {
-    input: { onChange, value: noTypeValue },
+    field: { onChange, value: noTypeValue },
   } = useInput({
     source,
     defaultValue: useMemo(() => [], []),
@@ -129,6 +111,16 @@ export const BuilderInput = (props: BuilderInputProps) => {
     }
     onChange(newRows);
   };
+  const addCell = (rowIndex: number) => {
+    const newRows = [...value];
+    const numOfRows = newRows[rowIndex].cols.length;
+    if (numOfRows < 4) {
+      newRows[rowIndex].cols.splice(numOfRows - 1, 0, []);
+      onChange(newRows);
+    } else {
+      notify('Max number of columns reached!');
+    }
+  };
   const onColumnClick = (type: any, rowIndex: number, colIndex: number) => {
     setActiveStep(1);
     setDialogStatus(type);
@@ -149,6 +141,25 @@ export const BuilderInput = (props: BuilderInputProps) => {
 
   const builderBlocks = useMemo(() => {
     const builderBlocks: BuilderBlocks = {
+      pdf: {
+        ...SHOW_COMPONENTS_BUILDER.pdf,
+        form: {
+          component: (
+            <Grid container direction="column">
+              <Grid item>
+                <SelectFile
+                  type="file"
+                  label={'Select pdf file'}
+                  source={'pdfUrl'}
+                  project={project}
+                  fullWidth
+                  validate={[required()]}
+                />
+              </Grid>
+            </Grid>
+          ),
+        },
+      },
       video: {
         ...SHOW_COMPONENTS_BUILDER.video,
         form: {
@@ -211,46 +222,34 @@ export const BuilderInput = (props: BuilderInputProps) => {
           ? SHOW_COMPONENTS_BUILDER.image_step
           : SHOW_COMPONENTS_BUILDER.image),
         form: {
-          component: (
-            <EditImage
-              referencesIds={referencesIds}
-              glossaryTermsIds={glossaryTermsIds}
-              project={project}
-            />
-          ),
+          component: <EditImage project={project} />,
 
           getInitialContent: (content: any) => {
             const type: string[] = [];
-            console.log(content);
             if (content?.title) type.push('title');
             if (content?.subtitle) type.push('subtitle');
             if (content?.caption) type.push('caption');
             if (content?.description) type.push('description');
             return {
-              title_bi: content?.title,
-              caption_bi: content?.caption,
-              description_bi: content?.description,
-              subtitle_bi: content?.subtitle,
+              title: content?.title,
+              caption: content?.caption,
+              description: content?.description,
+              subtitle: content?.subtitle,
               type,
+              isWide: content?.isWide,
               image: content?.image,
             };
           },
           getSaveContent: (values: any) => {
-            const {
-              title_bi,
-              subtitle_bi,
-              caption_bi,
-              image,
-              isWide,
-              description_bi,
-            } = values;
+            const { title, subtitle, caption, image, isWide, description } =
+              values;
             return {
-              title: title_bi,
-              subtitle: subtitle_bi,
-              caption: caption_bi,
+              title: title,
+              subtitle: subtitle,
+              caption: caption,
               image,
               isWide,
-              description: description_bi,
+              description: description,
             };
           },
         },
@@ -259,12 +258,7 @@ export const BuilderInput = (props: BuilderInputProps) => {
         ...SHOW_COMPONENTS_BUILDER.text,
         form: {
           component: (
-            <CustomRichTextInput
-              referencesIds={referencesIds}
-              glossaryTermsIds={glossaryTermsIds}
-              validate={[required()]}
-              source="text"
-            />
+            <CustomRichTextInput validate={[required()]} source="text" />
           ),
 
           getSaveContent: (values: any) => {
@@ -292,7 +286,7 @@ export const BuilderInput = (props: BuilderInputProps) => {
                 />
               </Grid>
               <Grid item>
-                <TextInput
+                <CustomRichTextInput
                   validate={[required()]}
                   helperText={false}
                   fullWidth
@@ -376,14 +370,14 @@ export const BuilderInput = (props: BuilderInputProps) => {
           return filtered;
         }, {} as BuilderBlocks)
       : builderBlocks;
-  }, [glossaryTermsIds, possibleComponents, project, referencesIds]);
+  }, [possibleComponents, project]);
 
+  useGlossaryAdjuster(glossaryTerms);
   return (
     <SimpleReactLightbox>
-      <div>
+      <Box width="100%">
         <AddRowButton
           canDivided={canDivided}
-          possibleColumns={possibleColumns}
           onSubmit={(values) => {
             const newRows = [
               ...value,
@@ -413,6 +407,7 @@ export const BuilderInput = (props: BuilderInputProps) => {
                 rowIndex={index}
                 deleteRow={deleteRow}
                 builderBlocks={builderBlocks}
+                addCell={addCell}
               />
             ))}
         </div>
@@ -432,7 +427,7 @@ export const BuilderInput = (props: BuilderInputProps) => {
             builderBlocks={builderBlocks}
           />
         )}
-      </div>
+      </Box>
     </SimpleReactLightbox>
   );
 };

@@ -1,0 +1,22 @@
+version: "3.9"
+services:
+  db:
+    image: postgres
+    volumes:
+      - ../data/db:/var/lib/postgresql/data
+    env_file:
+      - ./.envs/.local/.postgres
+  web:
+    build:
+      context: .
+      dockerfile: ./compose/local/django/Dockerfile
+    command: /start
+    volumes:
+      - ./backend/algocount:/code/backend/algocount
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    env_file:
+      - ./.envs/.local/.postgres
+      - ./.envs/.local/.backend

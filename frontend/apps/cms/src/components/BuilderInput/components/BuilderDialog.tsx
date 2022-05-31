@@ -10,12 +10,10 @@ import {
   CardContent,
   Typography,
   DialogActions,
-} from '@material-ui/core';
-import IconCancel from '@material-ui/icons/Cancel';
-import { Button } from 'react-admin';
-import { Form } from 'react-final-form';
-import { FormSaveButton } from '../../FormSaveButton';
-import arrayMutators from 'final-form-arrays';
+} from '@mui/material';
+import IconCancel from '@mui/icons-material/Cancel';
+import { Button, Form, RecordContextProvider, SaveButton } from 'react-admin';
+
 import React from 'react';
 import { BuilderBlocks } from '@algocount/shared/types';
 
@@ -121,28 +119,18 @@ export const BuilderDialog = (props: BuilderDialogProps) => {
         </>
       )}
       {activeStep === 1 && (
-        <Form
-          mutators={{ ...arrayMutators }} // necessary for ArrayInput
-          keepDirtyOnReinitialize
-          initialValues={getContent()}
-          onSubmit={onSubmit}
-          render={({ handleSubmit, pristine, submitting }) => (
-            <>
-              <DialogContent>
-                {React.cloneElement(builderBlocks[dialogForm!].form.component, {
-                  ...builderBlocks[dialogForm!].form.component.props,
-                })}
-              </DialogContent>
-              <DialogActions>
-                <FormSaveButton
-                  submitting={submitting}
-                  pristine={pristine}
-                  handleSubmit={handleSubmit}
-                />
-              </DialogActions>
-            </>
-          )}
-        />
+        <RecordContextProvider value={getContent()}>
+          <Form onSubmit={onSubmit}>
+            <DialogContent>
+              {React.cloneElement(builderBlocks[dialogForm!].form.component, {
+                ...builderBlocks[dialogForm!].form.component.props,
+              })}
+            </DialogContent>
+            <DialogActions>
+              <SaveButton />
+            </DialogActions>
+          </Form>
+        </RecordContextProvider>
       )}
     </Dialog>
   );

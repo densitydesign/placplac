@@ -4,6 +4,7 @@ import { TextShow } from '../TextShow';
 import { GlossaryCategory, GlossaryTerm } from '@algocount/shared/types';
 import { GlossaryTermsList } from '../components/GlossaryTermsList';
 import { getRealPath } from '../utils';
+import { useAnchors } from '../hooks';
 interface GlossaryCategoryShowProps {
   glossaryCategory: GlossaryCategory;
   glossaryTerms: GlossaryTerm[];
@@ -17,6 +18,8 @@ export const GlossaryCategoryShow = (props: GlossaryCategoryShowProps) => {
     basePath,
     linkComponent: Link,
   } = props;
+  useAnchors(basePath);
+
   return (
     <div className={styles.main}>
       <div className={styles.sidebar}>
@@ -58,14 +61,21 @@ export const GlossaryCategoryShow = (props: GlossaryCategoryShowProps) => {
                   <tr>
                     <td>Used in:</td>
                     <td>
-                      {term.used_in.map((exp) => (
-                        <Link
-                          href={`${basePath}experiments/${exp.id}`}
-                          key={exp.id}
-                        >
-                          {exp.title}
-                        </Link>
-                      ))}
+                      <ul className={styles.used_in_list}>
+                        {term.used_in.map((exp) => (
+                          <li>
+                            <Link
+                              href={`${basePath}experiments/${exp.id}`}
+                              key={exp.id}
+                            >
+                              <span role="img" aria-label="Link to experiment">
+                                👀{' '}
+                              </span>
+                              {exp.title}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
                     </td>
                   </tr>
                 )}
@@ -73,27 +83,15 @@ export const GlossaryCategoryShow = (props: GlossaryCategoryShowProps) => {
                   <tr>
                     <td>Related:</td>
                     <td>
-                      {term.related.map((term: any) => (
-                        <span
-                          key={term.id}
-                          className="mention"
-                          style={{ backgroundColor: term.color }}
-                        >
-                          <Link
-                            href={`${basePath}glossary/${term.category}#glossary/${term.id}`}
-                          >
-                            <span>{term.title}</span>
-                          </Link>
-                        </span>
-                      ))}
+                      <GlossaryTermsList glossaryTerms={term.related} />
                     </td>
                   </tr>
                 )}
                 {term.more_info_url && term.more_info_url.length > 0 && (
                   <tr>
-                    <td>Other material:</td>
+                    <td>External links:</td>
                     <td>
-                      <ul>
+                      <ul className={styles.other_material_list}>
                         {term.more_info_url.map((exp) => (
                           <li key={exp.url}>
                             <a

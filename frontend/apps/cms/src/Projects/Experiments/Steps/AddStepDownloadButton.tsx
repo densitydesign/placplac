@@ -1,50 +1,50 @@
-import { Dialog, DialogActions, DialogContent } from '@material-ui/core';
+import { Dialog, DialogActions, DialogContent } from '@mui/material';
 import {
   Button,
-  FormWithRedirect,
+  Form,
   SaveButton,
   TextInput,
-  useMutation,
   useNotify,
   useRecordContext,
-  Record,
   required,
   maxLength,
   FileInput,
   FileField,
   useEditContext,
+  RecordContextProvider,
+  useDataProvider,
+  SaveContextProvider,
 } from 'react-admin';
-import IconCancel from '@material-ui/icons/Cancel';
-import IconContentAdd from '@material-ui/icons/Add';
+import { useMutation } from 'react-query';
+import IconCancel from '@mui/icons-material/Cancel';
+import IconContentAdd from '@mui/icons-material/Add';
 import { useToggler } from '../../../useToggler';
+import { FieldValues } from 'react-hook-form';
+import { client } from '../../../dataProvider';
 
 export const AddStepDownloadButton = () => {
   const { value, setTrue, setFalse } = useToggler();
-  const [mutate, { loading }] = useMutation();
   const record = useRecordContext();
   const { id: step } = record;
   const notify = useNotify();
   const { refetch } = useEditContext();
-  const onSave = (values: Partial<Record>) =>
-    mutate(
-      {
-        type: 'createMultipart',
-        resource: 'step-downloads',
-        payload: {
-          data: { step, title: values.titleDownload, file: values.file },
-        },
+  const dataProvider = useDataProvider();
+  const { mutate: onSubmit, isLoading } = useMutation(
+    ['project-media'],
+    (values: FieldValues) =>
+      dataProvider.createMultipart('step-downloads', {
+        data: values,
+      }),
+    {
+      onSuccess: (data) => {
+        setFalse();
+        refetch && refetch();
       },
-      {
-        onSuccess: ({ data }) => {
-          setFalse();
-          refetch && refetch();
-        },
-        onFailure: (error) => {
-          notify('ra.page.error', 'error');
-        },
-      }
-    );
-
+      onError: (error) => {
+        notify('ra.page.error', { type: 'error' });
+      },
+    }
+  );
   return (
     <>
       <Button
@@ -55,43 +55,42 @@ export const AddStepDownloadButton = () => {
         <IconContentAdd />
       </Button>
       <Dialog maxWidth="sm" fullWidth open={value}>
-        <FormWithRedirect
-          resource="steps"
-          initialValues={{ step }}
-          save={onSave}
-          render={({ handleSubmitWithRedirect, pristine, saving }) => (
-            <>
-              <DialogContent>
-                <TextInput
-                  multiline
-                  fullWidth
-                  source="titleDownload"
-                  label="Title"
-                  placeholder="Type the download title, for example 'Download dataset'"
-                  helperText="The download title"
-                  validate={[required(), maxLength(150)]}
-                />
-                <FileInput source="file" validate={[required()]}>
-                  <FileField source="src" title="title" />
-                </FileInput>
-              </DialogContent>
-              <DialogActions>
-                <Button
-                  label="ra.action.cancel"
-                  onClick={setFalse}
-                  disabled={loading}
-                >
-                  <IconCancel />
-                </Button>
-                <SaveButton
-                  handleSubmitWithRedirect={handleSubmitWithRedirect}
-                  saving={saving}
-                  disabled={loading}
-                />
-              </DialogActions>
-            </>
-          )}
-        />
+        <SaveContextProvider
+          value={{
+            saving: isLoading,
+          }}
+        >
+          <RecordContextProvider value={{ step }}>
+            <Form onSubmit={onSubmit}>
+              <>
+                <DialogContent>
+                  <TextInput
+                    multiline
+                    fullWidth
+                    source="title"
+                    label="Title"
+                    placeholder="Type the download title, for example 'Download dataset'"
+                    helperText="The download title"
+                    validate={[required(), maxLength(150)]}
+                  />
+                  <FileInput source="file" validate={[required()]}>
+                    <FileField source="src" title="title" />
+                  </FileInput>
+                </DialogContent>
+                <DialogActions>
+                  <Button
+                    label="ra.action.cancel"
+                    onClick={setFalse}
+                    disabled={isLoading}
+                  >
+                    <IconCancel />
+                  </Button>
+                  <SaveButton />
+                </DialogActions>
+              </>{' '}
+            </Form>{' '}
+          </RecordContextProvider>
+        </SaveContextProvider>
       </Dialog>
     </>
   );

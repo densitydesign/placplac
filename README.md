@@ -4,7 +4,7 @@ To run the project you need to have installed docker and docker-compose.
 Steps:
 
 - download the project
-- create the file /backend/algocount/.backend.env (see the /backend/algocount/.backend.env.example file) using the following indications:
+- create the file /.envs/.production/.backend (see the  /.envs/.local/.backend file) using the following indications:
 
   - ADMIN_EMAIL : the email of the admin account you want to create for the platform
   - ADMIN_PASSWORD: the password of the admin account
@@ -26,11 +26,11 @@ Steps:
 - open the shell in the main folder of the project
 - run the following commands:
   ```
-  sudo docker compose up --build --detach
+  sudo docker compose -f production.yml up --build --detach
   ```
   or for older versions of docker-compose
   ```
-  sudo docker-compose up --build --detach
+  sudo docker-compose -f production.yml up --build --detach
 
   ```
 
@@ -40,12 +40,12 @@ When the build finishes the project will be reachable at the PORT_OUT of the hos
 To update the application pull the update from github then from the project folder rebuild the docker container using the following command:
 
 ```
-sudo docker compose up --build --detach
+sudo docker compose -f production.yml up --build --detach
 ```
 or for older versions of docker-compose 
 
 ```
-sudo docker-compose up --build --detach
+sudo docker-compose -f production.yml up --build --detach
 ```
 # Development guide
 
@@ -71,11 +71,9 @@ The project is structured this way:
 To start editing the app we need to setup the dev workspace
 
 ## Backend workspace setup
-Create the file /backend/algocount/.backend.env (see the /backend/algocount/.backend.env.example file).
-First of all open the shell in the /backend folder.
-Than use the following command to run the backend app:
+Use the following command to run the backend app:
 ```
-sudo docker compose up --build
+sudo docker compose -f local.yml up --build
 ```
 This command will run a django server on the port 8000 and will save the db data to the folder "data" outside the project root.
 Now your backend is up and ready to accept connections

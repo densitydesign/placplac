@@ -1,14 +1,14 @@
-import classNames from "classnames";
-import React, { ComponentProps } from "react";
-import { SectionOuter } from "../SectionOuter";
-import { SectionTitle } from "../SectionTitle";
-import styles from "./Section.module.css";
+import classNames from 'classnames';
+import React, { ComponentProps } from 'react';
+import { SectionOuter } from '../SectionOuter';
+import { SectionTitle } from '../SectionTitle';
+import styles from './Section.module.css';
 
-interface SectionProps extends ComponentProps<"div"> {
+interface SectionProps extends ComponentProps<'div'> {
   small?: boolean;
   children: React.ReactNode;
   title?: string;
-  contentAlign?: "start" | "title";
+  contentAlign?: 'start' | 'title';
   marginFix?: boolean;
 }
 export const Section = (props: SectionProps) => {
@@ -16,24 +16,19 @@ export const Section = (props: SectionProps) => {
     small = false,
     children,
     title,
-    contentAlign = "start",
+    contentAlign = 'start',
     className,
     marginFix,
     ...rest
   } = props;
   return (
     <SectionOuter {...rest}>
-      <div
-        className={classNames(
-          { [styles.small]: small, [styles.normal]: !small },
-          styles.main
-        )}
-      >
+      <div className={classNames({ [styles.small]: small }, styles.main)}>
         {title && <SectionTitle title={title} />}
         <div
           className={classNames(
             {
-              [styles.content_align_title]: contentAlign === "title",
+              [styles.content_align_title]: contentAlign === 'title',
             },
             styles.content,
             className

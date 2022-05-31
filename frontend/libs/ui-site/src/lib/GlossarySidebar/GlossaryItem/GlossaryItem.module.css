@@ -10,13 +10,10 @@
   background-repeat: no-repeat;
   background-size: 100% auto;
 }
-.see_more_button {
-  cursor: pointer;
-  display: block;
-  margin-left: auto;
-}
+
 .image_container {
   position: relative;
+  min-height: 70px;
 }
 
 .pill {

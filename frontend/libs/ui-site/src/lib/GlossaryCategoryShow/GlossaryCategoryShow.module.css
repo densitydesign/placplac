@@ -29,13 +29,6 @@
   cursor: pointer;
 }
 
-.content ul {
-  list-style-image: url('../../assets/Arrow_list.svg');
-}
-.content ul a {
-  text-decoration: none;
-}
-
 .content table {
   border: 1px solid black;
   border-collapse: collapse;
@@ -49,6 +42,7 @@
 }
 .content table tbody tr td {
   padding: 0.5em 1.5em;
+  vertical-align: initial;
 }
 .content .title {
   display: flex;
@@ -71,6 +65,9 @@
   margin-top: -55px;
   padding-top: 55px;
 }
+.glossary_term_item:last-child {
+  border-bottom: none;
+}
 .description {
   padding: 0em 5em;
   padding-bottom: 1.5em;
@@ -86,4 +83,30 @@
 
 .term_title {
   margin: 1em 2em 1em 2em;
+}
+
+ul.used_in_list li {
+  list-style: none;
+  padding: 0;
+}
+ul.used_in_list a {
+  text-decoration: underline;
+  font-family: Source Sans Pro;
+}
+
+ul.other_material_list {
+  list-style: none;
+  padding: 0;
+}
+
+ul.other_material_list a {
+  text-decoration: none;
+  font-family: 'Source Serif Pro';
+}
+ul.other_material_list li {
+  background: url('../../assets/Arrow_list.svg') no-repeat left center;
+  padding: 3px 0px 3px 40px;
+  list-style: none;
+  margin: 0;
+  vertical-align: middle;
 }

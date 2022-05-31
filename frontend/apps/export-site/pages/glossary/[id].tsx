@@ -29,10 +29,7 @@ export async function getStaticProps({ params }: { params: { id: number } }) {
 
   return {
     props: {
-      language: fileContents.language,
-      experiments: fileContents.experiments,
-      footer: fileContents.footer,
-
+      project: fileContents,
       category,
       terms,
     },
@@ -44,15 +41,9 @@ const GlossaryCategoryShow = dynamic(
   { ssr: false }
 );
 
-const GlossaryCategory: NextPage = ({
-  category,
-  terms,
-  experiments,
-  language,
-  footer,
-}: any) => {
+const GlossaryCategory: NextPage = ({ category, terms, project }: any) => {
   return (
-    <Layout footer={footer} experiments={experiments} language={language}>
+    <Layout project={project}>
       <GlossaryCategoryShow
         basePath="/"
         glossaryCategory={category}
