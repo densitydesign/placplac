@@ -17,7 +17,13 @@ export const PDFViewer = ({
   function onDocumentLoadSuccess({ numPages }: { numPages: number }) {
     setNumPages(numPages);
   }
-
+  const buttonStyling = {
+    border: '1px solid black',
+    background: 'white',
+    padding: '0px 10px',
+    marginRight: '10px',
+    fontSize: '2rem',
+  };
   return (
     <div
       style={{
@@ -25,27 +31,58 @@ export const PDFViewer = ({
         height: '100%',
         marginLeft: 'auto',
         marginRight: 'auto',
+        overflow: 'hidden',
       }}
     >
-      <TransformWrapper pinch={{ disabled: true }}>
-        <TransformComponent
-          wrapperStyle={{ width: '100%' }}
-          contentStyle={{ width: '100%', justifyContent: 'center' }}
-        >
-          <Document file={url} onLoadSuccess={onDocumentLoadSuccess}>
-            {single ? (
-              <Page height={600} pageNumber={1} />
-            ) : (
-              Array.from(new Array(numPages), (el, index) => (
-                <Page
-                  height={600}
-                  key={`page_${index + 1}`}
-                  pageNumber={index + 1}
-                />
-              ))
+      <TransformWrapper wheel={{ disabled: true }} pinch={{ disabled: true }}>
+        {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
+          <>
+            {!single && (
+              <div
+                style={{
+                  position: 'absolute',
+                  left: '0',
+                  right: '0',
+                  textAlign: 'center',
+                  zIndex: '100',
+                  bottom: '10px',
+                  background: '#00000073',
+                  margin: '10px',
+                  padding: '5px',
+                  borderRadius: '13px',
+                }}
+              >
+                <button style={buttonStyling} onClick={() => zoomIn()}>
+                  +
+                </button>
+                <button style={buttonStyling} onClick={() => zoomOut()}>
+                  -
+                </button>
+                <button style={buttonStyling} onClick={() => resetTransform()}>
+                  x
+                </button>
+              </div>
             )}
-          </Document>
-        </TransformComponent>
+            <TransformComponent
+              wrapperStyle={{ width: '100%', height: '100%', overflow: 'auto' }}
+              contentStyle={{ width: '100%', justifyContent: 'center' }}
+            >
+              <Document file={url} onLoadSuccess={onDocumentLoadSuccess}>
+                {single ? (
+                  <Page height={600} pageNumber={1} />
+                ) : (
+                  Array.from(new Array(numPages), (el, index) => (
+                    <Page
+                      height={600}
+                      key={`page_${index + 1}`}
+                      pageNumber={index + 1}
+                    />
+                  ))
+                )}
+              </Document>
+            </TransformComponent>
+          </>
+        )}
       </TransformWrapper>
     </div>
   );
