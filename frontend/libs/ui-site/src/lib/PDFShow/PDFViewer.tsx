@@ -28,7 +28,10 @@ export const PDFViewer = ({
       }}
     >
       <TransformWrapper pinch={{ disabled: true }}>
-        <TransformComponent>
+        <TransformComponent
+          wrapperStyle={{ width: '100%' }}
+          contentStyle={{ width: '100%', justifyContent: 'center' }}
+        >
           <Document file={url} onLoadSuccess={onDocumentLoadSuccess}>
             {single ? (
               <Page height={600} pageNumber={1} />
