@@ -141,6 +141,25 @@ export const BuilderInput = (props: BuilderInputProps) => {
 
   const builderBlocks = useMemo(() => {
     const builderBlocks: BuilderBlocks = {
+      pdf: {
+        ...SHOW_COMPONENTS_BUILDER.pdf,
+        form: {
+          component: (
+            <Grid container direction="column">
+              <Grid item>
+                <SelectFile
+                  type="file"
+                  label={'Select pdf file'}
+                  source={'pdfUrl'}
+                  project={project}
+                  fullWidth
+                  validate={[required()]}
+                />
+              </Grid>
+            </Grid>
+          ),
+        },
+      },
       video: {
         ...SHOW_COMPONENTS_BUILDER.video,
         form: {
