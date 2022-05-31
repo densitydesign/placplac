@@ -1,12 +1,13 @@
 import classnames from 'classnames';
 import { Container } from '@mui/material';
-import { LayoutProps, useSidebarState, Error, Menu } from 'react-admin';
+import { LayoutProps, useSidebarState, Error } from 'react-admin';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ErrorInfo, useState } from 'react';
 import { Sidebar } from './components/Sidebar/Sidebar';
 import { CustomAppBar } from './components/AppBar';
 import { styled } from '@mui/material/styles';
 import { ReactQueryDevtools } from 'react-query/devtools';
+import { Menu } from './components/Menu';
 const PREFIX = 'Layout';
 const classes = {
   root: `${PREFIX}-root`,
