@@ -11,6 +11,7 @@ import {
   useCreate,
   RecordContextProvider,
   maxLength,
+  SaveContextProvider,
 } from 'react-admin';
 import IconCancel from '@mui/icons-material/Cancel';
 import IconContentAdd from '@mui/icons-material/Add';
@@ -51,33 +52,39 @@ export const AddExperimentButton = () => {
         <IconContentAdd />
       </Button>
       <Dialog maxWidth="sm" fullWidth open={value}>
-        <RecordContextProvider value={{ project }}>
-          <Form onSubmit={onSave}>
-            <>
-              <DialogContent>
-                <TextInput
-                  fullWidth
-                  multiline
-                  validate={[required(), maxLength(200)]}
-                  source="title"
-                  label="Title (200)"
-                  placeholder="a short title representative of the experiment"
-                  helperText="The title of the experiment"
-                />
-              </DialogContent>
-              <DialogActions>
-                <Button
-                  label="ra.action.cancel"
-                  onClick={setFalse}
-                  disabled={isLoading}
-                >
-                  <IconCancel />
-                </Button>
-                <SaveButton />
-              </DialogActions>
-            </>
-          </Form>
-        </RecordContextProvider>
+        <SaveContextProvider
+          value={{
+            saving: isLoading,
+          }}
+        >
+          <RecordContextProvider value={{ project }}>
+            <Form onSubmit={onSave}>
+              <>
+                <DialogContent>
+                  <TextInput
+                    fullWidth
+                    multiline
+                    validate={[required(), maxLength(200)]}
+                    source="title"
+                    label="Title (200)"
+                    placeholder="a short title representative of the experiment"
+                    helperText="The title of the experiment"
+                  />
+                </DialogContent>
+                <DialogActions>
+                  <Button
+                    label="ra.action.cancel"
+                    onClick={setFalse}
+                    disabled={isLoading}
+                  >
+                    <IconCancel />
+                  </Button>
+                  <SaveButton />
+                </DialogActions>
+              </>
+            </Form>
+          </RecordContextProvider>
+        </SaveContextProvider>
       </Dialog>
     </>
   );

@@ -11,6 +11,7 @@ import {
   useRefresh,
   useCreate,
   RecordContextProvider,
+  SaveContextProvider,
 } from 'react-admin';
 import IconCancel from '@mui/icons-material/Cancel';
 import IconContentAdd from '@mui/icons-material/Add';
@@ -51,33 +52,39 @@ export const AddCollaboratorButton = () => {
         <IconContentAdd />
       </Button>
       <Dialog open={value}>
-        <RecordContextProvider value={{ project }}>
-          <Form onSubmit={onSubmit}>
-            <>
-              <DialogContent>
-                <ReferenceInput reference="users" source="user_id">
-                  <AutocompleteInput optionText="email" />
-                </ReferenceInput>
-                <SelectInput
-                  defaultValue="2"
-                  fullWidth
-                  choices={USER_LEVEL_CHOICES}
-                  source="level"
-                />
-              </DialogContent>
-              <DialogActions>
-                <Button
-                  label="ra.action.cancel"
-                  onClick={setFalse}
-                  disabled={isLoading}
-                >
-                  <IconCancel />
-                </Button>
-                <SaveButton />
-              </DialogActions>
-            </>
-          </Form>
-        </RecordContextProvider>
+        <SaveContextProvider
+          value={{
+            saving: isLoading,
+          }}
+        >
+          <RecordContextProvider value={{ project }}>
+            <Form onSubmit={onSubmit}>
+              <>
+                <DialogContent>
+                  <ReferenceInput reference="users" source="user_id">
+                    <AutocompleteInput optionText="email" />
+                  </ReferenceInput>
+                  <SelectInput
+                    defaultValue="2"
+                    fullWidth
+                    choices={USER_LEVEL_CHOICES}
+                    source="level"
+                  />
+                </DialogContent>
+                <DialogActions>
+                  <Button
+                    label="ra.action.cancel"
+                    onClick={setFalse}
+                    disabled={isLoading}
+                  >
+                    <IconCancel />
+                  </Button>
+                  <SaveButton />
+                </DialogActions>
+              </>
+            </Form>
+          </RecordContextProvider>
+        </SaveContextProvider>
       </Dialog>
     </>
   );

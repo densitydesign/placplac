@@ -13,6 +13,7 @@ import {
   useEditContext,
   RecordContextProvider,
   useDataProvider,
+  SaveContextProvider,
 } from 'react-admin';
 import { useMutation } from 'react-query';
 import IconCancel from '@mui/icons-material/Cancel';
@@ -54,36 +55,42 @@ export const AddStepDownloadButton = () => {
         <IconContentAdd />
       </Button>
       <Dialog maxWidth="sm" fullWidth open={value}>
-        <RecordContextProvider value={{ step }}>
-          <Form onSubmit={onSubmit}>
-            <>
-              <DialogContent>
-                <TextInput
-                  multiline
-                  fullWidth
-                  source="title"
-                  label="Title"
-                  placeholder="Type the download title, for example 'Download dataset'"
-                  helperText="The download title"
-                  validate={[required(), maxLength(150)]}
-                />
-                <FileInput source="file" validate={[required()]}>
-                  <FileField source="src" title="title" />
-                </FileInput>
-              </DialogContent>
-              <DialogActions>
-                <Button
-                  label="ra.action.cancel"
-                  onClick={setFalse}
-                  disabled={isLoading}
-                >
-                  <IconCancel />
-                </Button>
-                <SaveButton />
-              </DialogActions>
-            </>{' '}
-          </Form>{' '}
-        </RecordContextProvider>
+        <SaveContextProvider
+          value={{
+            saving: isLoading,
+          }}
+        >
+          <RecordContextProvider value={{ step }}>
+            <Form onSubmit={onSubmit}>
+              <>
+                <DialogContent>
+                  <TextInput
+                    multiline
+                    fullWidth
+                    source="title"
+                    label="Title"
+                    placeholder="Type the download title, for example 'Download dataset'"
+                    helperText="The download title"
+                    validate={[required(), maxLength(150)]}
+                  />
+                  <FileInput source="file" validate={[required()]}>
+                    <FileField source="src" title="title" />
+                  </FileInput>
+                </DialogContent>
+                <DialogActions>
+                  <Button
+                    label="ra.action.cancel"
+                    onClick={setFalse}
+                    disabled={isLoading}
+                  >
+                    <IconCancel />
+                  </Button>
+                  <SaveButton />
+                </DialogActions>
+              </>{' '}
+            </Form>{' '}
+          </RecordContextProvider>
+        </SaveContextProvider>
       </Dialog>
     </>
   );

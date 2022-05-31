@@ -17,7 +17,7 @@ def create_glossary_category(*, user_request: User, project: Project,
                              title: str,
                              description: str,
                              ):
-    if user_has_delete_project_permissions(project=project, user=user_request):
+    if not user_has_delete_project_permissions(project=project, user=user_request):
         raise ValidationError({"project": ["Project not found!"]})
 
     glossary_category = GlossaryCategory.objects.create(project=project,

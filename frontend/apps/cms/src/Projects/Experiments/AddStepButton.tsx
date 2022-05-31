@@ -12,6 +12,7 @@ import {
   RecordContextProvider,
   useCreate,
   required,
+  SaveContextProvider,
 } from 'react-admin';
 import IconCancel from '@mui/icons-material/Cancel';
 import IconContentAdd from '@mui/icons-material/Add';
@@ -52,32 +53,38 @@ export const AddStepButton = () => {
         <IconContentAdd />
       </Button>
       <Dialog maxWidth="sm" fullWidth open={value}>
-        <RecordContextProvider value={{ experiment }}>
-          <Form onSubmit={onSave}>
-            <>
-              <DialogContent>
-                <TextInput
-                  multiline
-                  fullWidth
-                  source="title"
-                  label="Title"
-                  helperText="The title of the step"
-                  validate={[required(), maxLength(255)]}
-                />
-              </DialogContent>
-              <DialogActions>
-                <Button
-                  label="ra.action.cancel"
-                  onClick={setFalse}
-                  disabled={isLoading}
-                >
-                  <IconCancel />
-                </Button>
-                <SaveButton />
-              </DialogActions>
-            </>
-          </Form>
-        </RecordContextProvider>
+        <SaveContextProvider
+          value={{
+            saving: isLoading,
+          }}
+        >
+          <RecordContextProvider value={{ experiment }}>
+            <Form onSubmit={onSave}>
+              <>
+                <DialogContent>
+                  <TextInput
+                    multiline
+                    fullWidth
+                    source="title"
+                    label="Title"
+                    helperText="The title of the step"
+                    validate={[required(), maxLength(255)]}
+                  />
+                </DialogContent>
+                <DialogActions>
+                  <Button
+                    label="ra.action.cancel"
+                    onClick={setFalse}
+                    disabled={isLoading}
+                  >
+                    <IconCancel />
+                  </Button>
+                  <SaveButton />
+                </DialogActions>
+              </>
+            </Form>
+          </RecordContextProvider>
+        </SaveContextProvider>
       </Dialog>
     </>
   );

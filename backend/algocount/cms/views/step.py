@@ -74,7 +74,7 @@ class StepDownloadViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
     def create(self, request, *args, **kwargs):
-        serializer = StepSerializer(data=request.data)
+        serializer = StepDownloadSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         project = create_step_download(user_request=self.request.user, **serializer.validated_data)
         serializer = StepDownloadSerializer(project)

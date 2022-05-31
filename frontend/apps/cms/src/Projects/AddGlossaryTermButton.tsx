@@ -13,6 +13,7 @@ import {
   ReferenceInput,
   RecordContextProvider,
   useCreate,
+  SaveContextProvider,
 } from 'react-admin';
 import IconCancel from '@mui/icons-material/Cancel';
 import IconContentAdd from '@mui/icons-material/Add';
@@ -54,47 +55,53 @@ export const AddGlossaryTermButton = () => {
         <IconContentAdd />
       </Button>
       <Dialog maxWidth="sm" fullWidth open={value}>
-        <RecordContextProvider value={{ project }}>
-          <Form onSubmit={onSave}>
-            <>
-              <DialogContent>
-                <ReferenceInput
-                  source="glossary_category"
-                  reference="glossary-categories"
-                  filter={{ project }}
-                >
-                  <SelectInput
-                    optionText="title"
-                    label="Category"
-                    validate={required()}
+        <SaveContextProvider
+          value={{
+            saving: isLoading,
+          }}
+        >
+          <RecordContextProvider value={{ project }}>
+            <Form onSubmit={onSave}>
+              <>
+                <DialogContent>
+                  <ReferenceInput
+                    source="glossary_category"
+                    reference="glossary-categories"
+                    filter={{ project }}
+                  >
+                    <SelectInput
+                      optionText="title"
+                      label="Category"
+                      validate={required()}
+                    />
+                  </ReferenceInput>
+                  <TextInput
+                    multiline
+                    fullWidth
+                    source="title"
+                    label="Title"
+                    validate={[required(), maxLength(100)]}
                   />
-                </ReferenceInput>
-                <TextInput
-                  multiline
-                  fullWidth
-                  source="title"
-                  label="Title"
-                  validate={[required(), maxLength(100)]}
-                />
-                <CustomRichTextInput
-                  validate={[required()]}
-                  source="description"
-                  label={false}
-                />
-              </DialogContent>
-              <DialogActions>
-                <Button
-                  label="ra.action.cancel"
-                  onClick={setFalse}
-                  disabled={isLoading}
-                >
-                  <IconCancel />
-                </Button>
-                <SaveButton />
-              </DialogActions>
-            </>
-          </Form>
-        </RecordContextProvider>
+                  <CustomRichTextInput
+                    validate={[required()]}
+                    source="description"
+                    label={false}
+                  />
+                </DialogContent>
+                <DialogActions>
+                  <Button
+                    label="ra.action.cancel"
+                    onClick={setFalse}
+                    disabled={isLoading}
+                  >
+                    <IconCancel />
+                  </Button>
+                  <SaveButton />
+                </DialogActions>
+              </>
+            </Form>
+          </RecordContextProvider>
+        </SaveContextProvider>
       </Dialog>
     </>
   );
