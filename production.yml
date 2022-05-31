@@ -33,6 +33,6 @@ services:
       - db
     env_file:
       - ./.envs/.local/.postgres
-      - ./.envs/.local/.backend
+      - ./.envs/.production/.backend
 volumes:
   cms_build:
