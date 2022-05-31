@@ -2,7 +2,7 @@ asgiref==3.4.1
 asn1crypto==0.24.0
 certifi==2021.10.8
 charset-normalizer==2.0.12
-cryptography==3.2
+cryptography==3.3.2
 defusedxml==0.7.1
 diff-match-patch==20200713
 Django==3.2.13
