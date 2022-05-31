@@ -69,7 +69,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
         serializer = ImportProjectSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         file = serializer.validated_data["file"]
-        project = make_import(file=file)
+        project = make_import(file=file, user_request=self.request.user)
         if not project:
             return Response(status=status.HTTP_400_BAD_REQUEST, data={"detail": "The file cannot be imported!"})
         serializer = ProjectSerializer(project, context={"request": self.request})

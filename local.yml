@@ -9,7 +9,7 @@ services:
   web:
     build:
       context: .
-      dockerfile: ./backend/compose/local/Dockerfile
+      dockerfile: ./compose/local/django/Dockerfile
     command: /start
     volumes:
       - ./backend/algocount:/code/backend/algocount
@@ -19,3 +19,4 @@ services:
       - db
     env_file:
       - ./.envs/.local/.postgres
+      - ./.envs/.local/.backend

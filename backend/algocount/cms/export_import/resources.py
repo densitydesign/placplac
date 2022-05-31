@@ -3,8 +3,7 @@ import os
 from import_export import resources
 
 from cms.models import Project, ProjectMedia, Experiment, ExperimentAdditionalMaterial, Step, StepDownload, \
-    GlossaryCategory, GlossaryTerm, Reference, ProjectUser
-from cms.services.project import add_user_to_project
+    GlossaryCategory, GlossaryTerm, Reference
 
 
 class CustomResource(resources.ModelResource):
@@ -17,9 +16,6 @@ class CustomResource(resources.ModelResource):
 
 
 class ProjectResource(CustomResource):
-    def after_import_instance(self, instance, new, **kwargs):
-        add_user_to_project(user=kwargs['user'], level=ProjectUser.LevelChoices.AUTHOR, project=instance)
-
     class Meta:
         model = Project
         force_init_instance = True

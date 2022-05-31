@@ -17,11 +17,11 @@ COPY ./frontend /code/frontend
 
 RUN mkdir -p /code/backend/algocount/media
 WORKDIR /code
-COPY ./backend/compose/local/entrypoint /entrypoint
+COPY ./compose/production/django/entrypoint /entrypoint
 RUN sed -i 's/\r$//g' /entrypoint
 RUN chmod +x /entrypoint
 
-COPY ./backend/compose/local/start /start
+COPY ./compose/local/django/start /start
 RUN sed -i 's/\r$//g' /start
 RUN chmod +x /start
 

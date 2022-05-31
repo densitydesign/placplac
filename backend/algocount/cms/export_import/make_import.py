@@ -8,10 +8,12 @@ from django.conf import settings
 from django.db import transaction
 from rest_framework.exceptions import ValidationError
 
+from authentication.models import User
 from cms.export_import.resources import ProjectResource, ProjectMediaResource, ExperimentResource, \
     ExperimentAdditionalMaterialResource, \
     StepResource, StepDownloadResource, GlossaryCategoryResource, GlossaryTermResource, ReferenceResource
-from cms.models import Project
+from cms.models import ProjectUser
+from cms.services.project import add_user_to_project
 
 
 def get_import_dataset(*, data: dict, resource, resource_args: dict = None):
@@ -42,15 +44,15 @@ def clean_up(project_id):
     shutil.rmtree(destination, ignore_errors=True)
 
 
-
 @transaction.atomic
-def make_import(*,file):
+def make_import(*, file, user_request: User):
     with ZipFile(file) as zip_file:
         names = zip_file.namelist()
         if "data.json" not in names or "media/" not in names:
             raise ValidationError({"file": ["The file has a wrong format"]})
         dataset = json.loads(zip_file.read("data.json"))
         project = get_import_dataset(data=dataset["project"], resource=ProjectResource)
+        add_user_to_project(user=user_request, level=ProjectUser.LevelChoices.AUTHOR, project=project)
         extract_media(archive=zip_file, project=project)
         try:
             get_import_dataset(data=dataset["project_media"], resource=ProjectMediaResource,
@@ -81,7 +83,7 @@ def make_import(*,file):
                     get_import_dataset(data=step_dataset["step_downloads"],
                                        resource=StepDownloadResource,
                                        resource_args={"step": step})
-                return project
+            return project
         except Exception as e:
             settings.LOGGER.error(e)
             clean_up(project.id)
