@@ -11,8 +11,8 @@ RUN pip3 install -r requirements.txt
 COPY ./frontend/package.json /code/frontend/package.json
 COPY ./frontend/package-lock.json /code/frontend/package-lock.json
 WORKDIR /code/frontend
-RUN npm install -g nx
-RUN npm ci
+RUN npm install -g nx@13.3.1
+RUN npm ci --force
 COPY ./frontend /code/frontend
 
 RUN mkdir -p /code/backend/algocount/media

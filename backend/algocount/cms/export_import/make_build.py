@@ -26,13 +26,16 @@ def make_build(*, project: Project, base_path: str = ""):
         file = os.path.join(dir_export_site, "data.json")
         with open(file, 'w') as f:
             json.dump(FullProjectSerializer(project).data, f)
+        
         with open(os.path.join(dir_export_site, ".env.local"), "w") as f:
             f.write(f"NX_BASE_PATH={base_path} \n")
             f.write(f"NX_FILE_PATH={file} \n")
         subprocess.check_call('npx nx run export-site:export ', shell=True, cwd=tmp_dirname, close_fds=True)
-
+        
         zip_name = os.path.join(tmp_dirname, "site")
         out_directory = os.path.join(tmp_dirname, "dist", "apps", "export-site", "exported")
+        file_jekyll = os.path.join(out_directory, ".nojekyll")
+        open(file_jekyll, 'a').close()
         exported_assets_out_directory = os.path.join(out_directory, "assets")
         assets = os.path.join(tmp_dirname, "dist", "apps", "export-site", "public", "assets")
         shutil.copytree(assets, exported_assets_out_directory, symlinks=True)

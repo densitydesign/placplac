@@ -13,8 +13,8 @@ RUN pip3 install -q gunicorn
 WORKDIR /code/frontend
 COPY ./frontend/package.json .
 COPY ./frontend/package-lock.json .
-RUN npm install -g nx
-RUN npm ci
+RUN npm install -g nx@13.3.1
+RUN npm ci --force
 COPY ./frontend .
 RUN npx nx build cms --prod
 
