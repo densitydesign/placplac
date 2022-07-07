@@ -189,13 +189,12 @@ export const CustomRichTextInput = (props: CustomRichTextInputProps) => {
                     const reference = unformattedReferences.find(
                       (reference) => reference.id.toString() === data.reference
                     );
-                    const html = `${text}<sup class="toReferenceTag mceNonEditable">
+                    const html = `${text}<span class="toReferenceTag referenceStyle mceNonEditable">
                         (<a data-reference="${
                           data.reference
                         }" href='#reference${data.reference}'>${
                       reference!.in_text_citation
-                    }
-                        </a>)</sup>`;
+                    }</a>)</span>`;
                     editor.insertContent(html);
                     api.close();
                   },

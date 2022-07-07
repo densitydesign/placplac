@@ -8,18 +8,11 @@ import { PreviewButton } from '../components/PreviewButton';
 export const ReferenceActions = () => {
   const record = useRecordContext();
 
-  const { data: experiment } = useGetOne(
-    'experiments',
-    { id: record?.experiment },
-    {
-      enabled: !!record?.experiment,
-    }
-  );
   const { data: project } = useGetOne(
     'projects',
-    { id: record?.project ? record.project : experiment?.project },
+    { id: record?.project },
     {
-      enabled: !!record?.project || !!experiment?.project,
+      enabled: !!record?.project,
     }
   );
   return (
@@ -37,21 +30,10 @@ export const ReferenceActions = () => {
                   <span className="breadcumb-item">{project.title}</span>
                 </Link>
               )}
-              {experiment && (
-                <Link to={`/experiments/${experiment.id}/5`}>
-                  <span className="breadcumb-item">{experiment.title}</span>
-                </Link>
-              )}
+
               <Link to={`/references/${record.id}`}>
                 <span className="breadcumb-item">
-                  <RichTextField
-                    variant="inherit"
-                    stripTags
-                    source="id"
-                    record={{
-                      id: record.description.substring(0, 20).trimEnd() + '...',
-                    }}
-                  />
+                  {record.in_text_citation}
                 </span>
               </Link>
             </Breadcrumbs>
