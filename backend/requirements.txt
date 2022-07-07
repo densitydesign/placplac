@@ -5,7 +5,7 @@ charset-normalizer==2.0.12
 cryptography==3.3.2
 defusedxml==0.7.1
 diff-match-patch==20200713
-Django==3.2.13
+Django==3.2.14
 django-cors-headers==3.10.0
 django-filter==21.1
 django-import-export==2.8.0
