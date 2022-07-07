@@ -37,12 +37,7 @@ export const DownloadButton = (props: DownloadButtonProps) => {
   const notify = useNotify();
   const { value, setTrue, setFalse } = useToggler();
   const refresh = useRefresh();
-  const forceDisabled = !props.project.last_build_time
-    ? false
-    : new Date(props.project.last_build_time) >
-      new Date(props.project.last_update)
-    ? true
-    : false;
+
   const onClick = (values: FieldValues) => {
     console.log(values);
     setLoading(true);
@@ -122,27 +117,21 @@ export const DownloadButton = (props: DownloadButtonProps) => {
                               ).toLocaleString()}
                             </a>
                           </Typography>
-                          {!forceDisabled && (
-                            <Typography
-                              my={2}
-                              variant="subtitle1"
-                              align="center"
-                            >
-                              or build a new release
-                            </Typography>
-                          )}
+
+                          <Typography my={2} variant="subtitle1" align="center">
+                            or build a new release
+                          </Typography>
                         </>
                       )}
-                      {!forceDisabled && (
-                        <TextInput
-                          source="base_path"
-                          label="Base directory of project"
-                          placeholder="Write the subdirectory ex: /subdirectory"
-                          helperText={
-                            'If the project will be hosted on a subdirectory, write the subdirectory name otherwise leave the field empty. Ex: /subfolder'
-                          }
-                        />
-                      )}
+
+                      <TextInput
+                        source="base_path"
+                        label="Base directory of project"
+                        placeholder="Write the subdirectory ex: /subdirectory"
+                        helperText={
+                          'If the project will be hosted on a subdirectory, write the subdirectory name otherwise leave the field empty. Ex: /subfolder'
+                        }
+                      />
                     </>
                   )}
                 </DialogContent>
@@ -155,9 +144,7 @@ export const DownloadButton = (props: DownloadButtonProps) => {
                     <IconCancel />
                   </Button>
 
-                  {!forceDisabled && (
-                    <FormSaveButton disabled={forceDisabled} label="Build" />
-                  )}
+                  <FormSaveButton label="Build" />
                 </DialogActions>
               </>
             </Form>
