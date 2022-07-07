@@ -50,7 +50,10 @@ class ProjectViewSet(viewsets.ModelViewSet):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
     def list(self, request, *args, **kwargs):
+        sort = request.query_params.get('ordering')
         queryset = project_list(user_request=self.request.user)
+        if sort:
+            queryset = queryset.order_by(sort)
         return get_paginated_response(
             pagination_class=self.pagination_class,
             serializer_class=self.get_serializer,
