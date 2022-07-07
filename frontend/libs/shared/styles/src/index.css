@@ -137,3 +137,9 @@ iframe {
   color: #616161;
   font-family: sans-serif;
 }
+
+#steps .mce-item-anchor-exp {
+  top: -55px;
+  position: relative;
+  scroll-margin-top: 55px;
+}
