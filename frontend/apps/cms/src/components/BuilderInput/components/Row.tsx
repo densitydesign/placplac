@@ -123,6 +123,7 @@ export const Row = (props: RowProps) => {
           right: '-16px',
           position: 'absolute',
           top: ' 50%',
+          zIndex: '10',
         }}
       >
         <Button

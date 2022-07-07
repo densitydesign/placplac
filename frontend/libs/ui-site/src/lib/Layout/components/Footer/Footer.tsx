@@ -49,7 +49,12 @@ export const Footer = (props: FooterProps) => {
             </span>
             <div className={styles.image_list}>
               {footer.founded_by.map((founder, index) => (
-                <a key={index} href={founder.link}>
+                <a
+                  target="_blank"
+                  key={index}
+                  href={founder.link}
+                  rel="noreferrer"
+                >
                   <img src={getRealPath(founder.image)} />
                 </a>
               ))}
@@ -63,7 +68,12 @@ export const Footer = (props: FooterProps) => {
             </span>
             <div className={styles.image_list}>
               {footer.partners.map((founder, index) => (
-                <a key={index} href={founder.link}>
+                <a
+                  target="_blank"
+                  key={index}
+                  href={founder.link}
+                  rel="noreferrer"
+                >
                   <img src={getRealPath(founder.image)} />
                 </a>
               ))}
