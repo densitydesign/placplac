@@ -129,7 +129,7 @@ export const AddMediaForm = (props: AddMediaFormProps) => {
                 options={{
                   onDropRejected: () =>
                     alert(
-                      'The maximum accepted size for videos (.mp4) is 16MB”'
+                      'The maximum accepted size for files is 16MB”'
                     ),
                 }}
               >
