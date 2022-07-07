@@ -108,7 +108,7 @@ export const SHOW_COMPONENTS_BUILDER: BuilderShowBlocks = {
   iframe: {
     description: 'Embed block',
     render: (content: any) => (
-      <IFrame src={getRealPath(content.src)} height={content.height} />
+      <IFrame src={content.src} height={content.height} />
     ),
   },
   sigma: {
