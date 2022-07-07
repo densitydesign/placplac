@@ -19,7 +19,7 @@ export const ReferenceInputImage = (props: ReferenceInputImageProps) => {
       source={source}
       fullWidth={fullWidth}
       validate={validate}
-      helperText="Paste the url of the image or click the right button to choose a file from the library"
+      helperText="Click the right button to choose a file from the library"
     />
   );
 };
