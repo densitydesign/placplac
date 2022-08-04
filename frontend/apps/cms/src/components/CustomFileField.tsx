@@ -67,6 +67,7 @@ export const CustomFileField = (props: Props) => {
   ) : (
     <Link
       href="#"
+      download={get(record, title)}
       onClick={(e) => {
         e.preventDefault();
         if (!loading) handleClick();
