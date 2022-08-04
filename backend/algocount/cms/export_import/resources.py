@@ -2,6 +2,7 @@ import json
 import os
 from typing import List
 
+from django.db.models.fields.files import FieldFile
 from import_export import resources
 from import_export.fields import Field
 
@@ -40,12 +41,15 @@ def replace_attributes(*, attributes: List[str], object: object, old: str, new: 
                 for v in value:
                     new_value.append(get_new_value(v))
                 value = new_value
+            elif isinstance(value, FieldFile):
+                value.name = value.name.replace(old, new)
             else:
                 value = value.replace(old, new)
         return value
 
     for attr in attributes:
         value = getattr(object, attr)
+
         value = get_new_value(value)
         setattr(object, attr, value)
 
