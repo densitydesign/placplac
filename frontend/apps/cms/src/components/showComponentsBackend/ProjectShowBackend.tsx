@@ -11,6 +11,7 @@ import { HashLink as LinkRR } from 'react-router-hash-link';
 import { LinkProps as LinkRRProps } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { client } from '../../dataProvider';
+import { ScrollToTop } from './ScrollToTop';
 interface LinkProps extends Omit<LinkRRProps, 'to'> {
   href: string;
 }
@@ -34,6 +35,7 @@ export const ProjectShowBackend = () => {
         path={'/'}
         element={
           <Layout project={project} linkComponent={Link} basePath={basePath}>
+            <ScrollToTop />
             <Outlet />
           </Layout>
         }
