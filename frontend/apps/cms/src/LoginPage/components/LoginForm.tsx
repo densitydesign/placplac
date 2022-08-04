@@ -76,6 +76,7 @@ export const LoginForm = (props: Props) => {
       })
       .catch((error) => {
         setLoading(false);
+        console.log(error.message);
         notify(
           typeof error === 'string'
             ? error

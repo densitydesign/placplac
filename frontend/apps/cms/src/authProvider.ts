@@ -17,11 +17,12 @@ function jwtTokenAuthProvider(options: Options = {}): AuthProvider {
         headers: new Headers({ 'Content-Type': 'application/json' }),
       });
       return fetch(request)
-        .then((response) => {
+        .then(async (response) => {
           if (response.status === 200) {
             return response.json();
+          } else {
+            throw new Error((await response.json()).detail);
           }
-          throw new Error('Credenziali errate');
         })
         .then((user) => localStorage.setItem('user', JSON.stringify(user)));
     },

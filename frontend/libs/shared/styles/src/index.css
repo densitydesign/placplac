@@ -143,3 +143,26 @@ iframe {
   position: relative;
   scroll-margin-top: 55px;
 }
+
+.PDFContainer {
+  margin: auto;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: auto;
+  position: relative;
+  display: flex;
+}
+.PDFDocument {
+  margin: auto;
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.PDFPage {
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+}
