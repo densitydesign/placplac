@@ -11,6 +11,7 @@ import { Form, PasswordInput, SaveButton, TextInput } from 'react-admin';
 import axios from 'axios';
 import { url } from '../constants';
 import { useState } from 'react';
+import { FormSaveButton } from '../components/FormSaveButton';
 const PREFIX = 'SignUp';
 
 const classes = {
@@ -45,7 +46,6 @@ const StyledContainer = styled(Container)(({ theme }) => ({
 
 export default function SignUp() {
   const [registered, setRegistered] = useState(false);
-
   const onSubmit = (values: Record<string, any>) => {
     return axios
       .post(`${url}/register/`, values)
@@ -86,64 +86,62 @@ export default function SignUp() {
             </Grid>
           </>
         ) : (
-          <form className={classes.form} noValidate>
-            <Form onSubmit={onSubmit}>
-              <>
-                <Grid container spacing={1}>
-                  <Grid item xs={12} sm={6}>
-                    <TextInput
-                      helperText={false}
-                      fullWidth
-                      variant="outlined"
-                      source="first_name"
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextInput
-                      helperText={false}
-                      fullWidth
-                      variant="outlined"
-                      source="last_name"
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextInput
-                      helperText={false}
-                      fullWidth
-                      variant="outlined"
-                      type="email"
-                      source="email"
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <PasswordInput
-                      helperText={false}
-                      variant="outlined"
-                      fullWidth
-                      source="password"
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <PasswordInput
-                      helperText={false}
-                      variant="outlined"
-                      fullWidth
-                      label="Confirm password"
-                      source="password2"
-                    />
-                  </Grid>
+          <Form className={classes.form} onSubmit={onSubmit}>
+            <>
+              <Grid container spacing={1}>
+                <Grid item xs={12} sm={6}>
+                  <TextInput
+                    helperText={false}
+                    fullWidth
+                    variant="outlined"
+                    source="first_name"
+                  />
                 </Grid>
-                <SaveButton label="Sign up" />
-                <Grid container justifyContent="flex-end">
-                  <Grid item>
-                    <Link href="/" variant="body2">
-                      Already have an account? Sign in
-                    </Link>
-                  </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextInput
+                    helperText={false}
+                    fullWidth
+                    variant="outlined"
+                    source="last_name"
+                  />
                 </Grid>
-              </>
-            </Form>
-          </form>
+                <Grid item xs={12}>
+                  <TextInput
+                    helperText={false}
+                    fullWidth
+                    variant="outlined"
+                    type="email"
+                    source="email"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <PasswordInput
+                    helperText={false}
+                    variant="outlined"
+                    fullWidth
+                    source="password"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <PasswordInput
+                    helperText={false}
+                    variant="outlined"
+                    fullWidth
+                    label="Confirm password"
+                    source="password2"
+                  />
+                </Grid>
+              </Grid>
+              <FormSaveButton label="Sign up" />
+              <Grid container justifyContent="flex-end">
+                <Grid item>
+                  <Link href="/" variant="body2">
+                    Already have an account? Sign in
+                  </Link>
+                </Grid>
+              </Grid>
+            </>
+          </Form>
         )}
       </div>
     </StyledContainer>
