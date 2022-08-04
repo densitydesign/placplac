@@ -32,9 +32,10 @@ export const ReferenceActions = () => {
               )}
 
               <Link to={`/references/${record.id}`}>
-                <span className="breadcumb-item">
-                  {record.in_text_citation}
-                </span>
+                <span
+                  className="breadcumb-item"
+                  dangerouslySetInnerHTML={{ __html: record.in_text_citation }}
+                ></span>
               </Link>
             </Breadcrumbs>
           )}
