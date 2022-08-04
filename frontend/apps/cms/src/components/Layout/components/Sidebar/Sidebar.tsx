@@ -7,6 +7,7 @@ const StyledSidebar = styled(SidebarRa)(({ theme }) => ({
     background: 'transparent',
     borderRight: '1px solid rgba(0, 0, 0, 0.12)',
     borderTop: 'none',
+    overflow: 'hidden',
     [theme.breakpoints.up('sm')]: {
       background: '#fff',
     },
